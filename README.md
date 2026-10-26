@@ -79,21 +79,6 @@ and code submission instructions. Do not put raw datasets, checkpoints or
 credentials in Git. Everyone granted MLflow access can read and change shared
 experiment data, so keep a local copy of important checkpoints.
 
-## Start a local tracker instead
-
-From this repository, run:
-
-```sh
-pixi run server
-```
-
-Open http://127.0.0.1:5055. In another terminal, run
-`MLFLOW_TRACKING_URI=http://127.0.0.1:5055 pixi run check` to verify it. Set
-your training process's `MLFLOW_TRACKING_URI` to that local address too.
-
-The locked environment supports Linux, Apple Silicon macOS and Windows.
-Training and simulator dependencies are separate from this tracking environment.
-
 ## Storage and collaboration
 
 Metadata and artifacts live outside Git in `~/.local/share/mlai-vnc` by default.
