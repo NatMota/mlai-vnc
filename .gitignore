@@ -1,0 +1,17 @@
+.pixi/
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+.env
+.env.*
+!.env.example
+mlruns/
+mlartifacts/
+*.db
+*.db-shm
+*.db-wal
+*.pt
+*.pth
+data/
+outputs/
+.DS_Store

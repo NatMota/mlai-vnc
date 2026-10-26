@@ -1,0 +1,15 @@
+[workspace]
+name = "mlai-vnc"
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "win-64"]
+
+[dependencies]
+python = "3.11.*"
+pip = "*"
+
+[pypi-dependencies]
+mlflow = "==3.17.2"
+
+[tasks]
+server = "python tracking/server.py"
+check = "python tracking/check.py"
