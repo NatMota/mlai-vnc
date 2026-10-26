@@ -56,35 +56,6 @@ Then open http://127.0.0.1:5055 or set
 GitHub collaborator access does not grant an SSH account or MLflow access.
 Do not expose the tracking port publicly without authentication.
 
-### Access over the internet
-
-For team access without SSH accounts, install Tailscale on the server and
-sign it into the owner's tailnet. Mint does not currently have Tailscale
-installed, so the steps below require its owner to complete that install and
-sign-in first. Then serve the existing local MLflow port over tailnet HTTPS:
-
-```sh
-tailscale serve --bg 5055
-tailscale serve status
-```
-
-Tailscale may ask the tailnet owner to enable HTTPS certificates. Use the
-`https://...ts.net` address reported by `tailscale serve status`. Configure
-`MLFLOW_SERVER_ALLOWED_HOSTS` on the server to include that exact hostname
-and `localhost`, then restart `mlai-vnc-mlflow.service` and test the URL.
-
-Share **only the Mint device** with each teammate using Tailscale's device
-sharing feature, and restrict shared users to the served HTTPS port (443) in
-the tailnet policy. Review existing broad grants: adding a narrow grant does
-not remove a broad one. GitHub usernames do not identify Tailscale accounts;
-each teammate must accept a Tailscale share invitation separately.
-
-Once connected, each teammate opens the HTTPS address in a browser and sets
-`MLFLOW_TRACKING_URI` to that same address in their local PyTorch environment.
-MLflow in this configuration has shared read/write experiment access rather
-than separate per-person permissions. Do not use Tailscale Funnel, which
-would publish the dashboard to the open internet.
-
 ## Storage and collaboration
 
 Metadata and artifacts live outside Git in `~/.local/share/mlai-vnc` by default.
