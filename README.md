@@ -3,58 +3,96 @@
 Private COMP0245 team workspace for robot learning and reproducible experiments.
 Train models in PyTorch; use MLflow to compare runs and GitHub to review code.
 
-## Start tracking
+## Use the shared tracker
 
-Install [Pixi](https://pixi.sh), then:
+Install [Pixi](https://pixi.sh) and clone this private repository:
 
 ```sh
 git clone https://github.com/NatMota/mlai-vnc.git
 cd mlai-vnc
-pixi run server
 ```
 
-Open http://127.0.0.1:5055. In another terminal, run `pixi run check` to
-verify metric logging and artifact upload/download. Setup checks are labelled
-separately from real training experiments.
+Ask for access to the Mint device through Tailscale, then open
+https://nm-linmint-mlflow.taile381c0.ts.net/. GitHub repository access alone
+does not grant access to MLflow. The tracker is private to the tailnet; do not
+use Tailscale Funnel.
 
-The locked environment supports Linux, Apple Silicon macOS and Windows.
-Training and simulator dependencies are separate from this tracking environment.
+Set `MLFLOW_TRACKING_URI` to that URL in the environment where you train. For
+example, in a macOS or Linux shell:
+
+```sh
+export MLFLOW_TRACKING_URI=https://nm-linmint-mlflow.taile381c0.ts.net
+```
+
+On Windows PowerShell, use
+`$env:MLFLOW_TRACKING_URI = "https://nm-linmint-mlflow.taile381c0.ts.net"`.
+From this repository, run `pixi run check` to verify your connection. It creates
+one clearly labelled setup run and verifies a metric and artifact round trip.
 
 ## Log a training run
 
-Install `mlflow-skinny==3.17.2` in your existing PyTorch environment and add:
+Install `mlflow-skinny==3.17.2` in your existing PyTorch environment. Use one
+run for each training configuration and record enough information to reproduce
+it:
+
+```python
+import os
+import mlflow
+import torch
+
+mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
+mlflow.set_experiment("robot-behaviour-cloning")
+with mlflow.start_run() as run:
+    mlflow.log_params({"seed": 42, "learning_rate": 0.001, "hidden_sizes": "64,64"})
+    mlflow.set_tag("git_commit", "PUT_THE_TRAINING_CODE_COMMIT_HERE")
+    # Train and evaluate your model here, then log the actual results.
+    # mlflow.log_metric("validation_mse", measured_validation_mse, step=epoch)
+    # mlflow.log_metric("rollout_success_rate", successes / trials)
+    torch.save(model.state_dict(), "model_state.pt")
+    mlflow.log_artifact("model_state.pt", artifact_path="checkpoint")
+    print(run.info.run_id)
+```
+
+Replace the example values and `model` with your actual training code. Save the
+architecture/configuration with the code commit: weights alone are not enough
+to recreate a model. Log validation plots and selected checkpoints as artifacts,
+then compare runs in the web UI. Keep evaluation targets and data splits fixed
+when comparing model variants.
+
+To download a teammate's checkpoint, copy its run ID from the UI and use:
 
 ```python
 import mlflow
 
-mlflow.set_tracking_uri("http://127.0.0.1:5055")
-mlflow.set_experiment("robot-behaviour-cloning")
-with mlflow.start_run():
-    mlflow.log_params({"seed": 42, "learning_rate": 0.001, "hidden_sizes": "64,64"})
-    # Train and evaluate your model here.
-    # mlflow.log_metric("validation_mse", measured_validation_mse, step=epoch)
-    # mlflow.log_metric("rollout_success_rate", successes / trials)
-    # mlflow.log_artifact("outputs/model.pt")
+mlflow.set_tracking_uri("https://nm-linmint-mlflow.taile381c0.ts.net")
+path = mlflow.MlflowClient().download_artifacts(
+    "RUN_ID", "checkpoint/model_state.pt", dst_path="."
+)
+print(path)
 ```
 
-Record the Git commit, data version/split, seed, architecture, optimiser,
-training settings, validation errors and closed-loop rollout outcomes.
-Save plots and selected model checkpoints as artifacts. Keep evaluation targets
-and data splits fixed when comparing model variants.
+The checkpoint is stored by the MLflow server on Mint's Fast Drive, not in
+GitHub. **University OneDrive is not required to share a model within this
+team.** The COMP0245 assignment handout also says the Moodle submission need
+not include data or pretrained weights/checkpoints; follow its separate report
+and code submission instructions. Do not put raw datasets, checkpoints or
+credentials in Git. Everyone granted MLflow access can read and change shared
+experiment data, so keep a local copy of important checkpoints.
 
-## Connect to the shared server
+## Start a local tracker instead
 
-The server listens only on localhost. Someone with an authorised SSH account
-on the hosting machine can forward it:
+From this repository, run:
 
 ```sh
-ssh -N -L 5055:127.0.0.1:5055 YOUR_SSH_HOST
+pixi run server
 ```
 
-Then open http://127.0.0.1:5055 or set
-`MLFLOW_TRACKING_URI=http://127.0.0.1:5055` in training code.
-GitHub collaborator access does not grant an SSH account or MLflow access.
-Do not expose the tracking port publicly without authentication.
+Open http://127.0.0.1:5055. In another terminal, run
+`MLFLOW_TRACKING_URI=http://127.0.0.1:5055 pixi run check` to verify it. Set
+your training process's `MLFLOW_TRACKING_URI` to that local address too.
+
+The locked environment supports Linux, Apple Silicon macOS and Windows.
+Training and simulator dependencies are separate from this tracking environment.
 
 ## Storage and collaboration
 
