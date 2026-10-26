@@ -59,7 +59,9 @@ Do not expose the tracking port publicly without authentication.
 ## Storage and collaboration
 
 Metadata and artifacts live outside Git in `~/.local/share/mlai-vnc` by default.
-Set `MLAI_TRACKING_DIR` to a persistent data directory before starting the server.
+Set `MLAI_TRACKING_DIR` for the database and `MLAI_ARTIFACTS_DIR` for artifacts.
+On Mint, keep the SQLite database on its Linux filesystem and set
+`MLAI_ARTIFACTS_DIR` to a persistent Fast Drive directory.
 Back up both `mlflow.db` and the artifacts directory together.
 
 Commit code, configurations and small reports. Keep raw data, model checkpoints,
