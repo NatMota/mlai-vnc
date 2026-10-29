@@ -3,6 +3,15 @@
 Private COMP0245 team workspace for robot learning and reproducible experiments.
 Train models in PyTorch; use MLflow to compare runs and GitHub to review code.
 
+## Chester memory policy v5
+
+This branch publishes Chester's latest memory policy and its required shared
+controller code. See [the v5 guide](docs/chester_memory_policy.md) for setup,
+checkpoint download, evaluation, training and recorded results: 34/40 validation
+and 98/120 test targets within 1 cm. Earlier exploratory implementations are
+not included. Weights and evaluation files are shared through the separate
+team MLflow run `chester_memory_policy_v5_seed0`, rather than Git.
+
 ## Use the shared tracker
 
 Install [Pixi](https://pixi.sh) and clone this private repository:
