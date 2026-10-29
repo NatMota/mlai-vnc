@@ -1,0 +1,12 @@
+[workspace]
+name = "comp0245-collection-sampling"
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "linux-64"]
+
+[dependencies]
+python = "3.11.*"
+numpy = "*"
+pandas = "*"
+
+[tasks]
+check = "python check_sampling.py"

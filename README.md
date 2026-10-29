@@ -91,3 +91,7 @@ Commit code, configurations and small reports. Keep raw data, model checkpoints,
 credentials and generated run databases out of Git. Use branches and pull requests.
 This initial repository contains tracking infrastructure; existing coursework
 and notebooks remain in their original repositories.
+
+The [expert collection and sampling tools](collection/README.md) provide a
+CPU-only C++ collector at 1 kHz and compact 30 Hz preprocessing. Their Pixi
+environments are separate from the tracking and training environments.
