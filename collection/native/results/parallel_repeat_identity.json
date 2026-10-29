@@ -1,0 +1,126 @@
+{
+  "runs": 30,
+  "all_equal": true,
+  "checks": [
+    {
+      "run": "data/cpu_benchmark/workers_1/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_1/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_2/worker_0/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_2/worker_0/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_2/worker_1/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_2/worker_1/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_4/worker_0/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_4/worker_0/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_4/worker_1/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_4/worker_1/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_4/worker_2/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_4/worker_2/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_4/worker_3/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_4/worker_3/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_0/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_0/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_1/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_1/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_2/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_2/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_3/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_3/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_4/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_4/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_5/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_5/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_6/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_6/run_1",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_7/run_0",
+      "different_files": []
+    },
+    {
+      "run": "data/cpu_benchmark/workers_8/worker_7/run_1",
+      "different_files": []
+    }
+  ]
+}

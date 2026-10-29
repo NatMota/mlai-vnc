@@ -1,0 +1,39 @@
+{
+  "platform": "macOS-14.6.1-arm64-arm-64bit-Mach-O",
+  "machine": "arm64",
+  "pybullet": "3.2.5",
+  "runs": [
+    {
+      "profiled": false,
+      "wall_s": 5.848097041976871,
+      "summary": [
+        "==================================================================",
+        "Final Base Position          : [3.854e-01 1.000e-04]",
+        "Final End-Effector Position  : [1.1013 0.     0.5002]",
+        "Target End-Effector Position : [1.1 0.  0.5]",
+        "Final Cartesian Error (m)    : 0.0014",
+        "Fixed Finger Angles          : [0.1 0.1 0.1 0.1 0.1 0.1]",
+        "Final Finger Angles          : [0.1    0.1    0.1    0.1002 0.1    0.1   ]",
+        "Max Finger Deviation (rad)   : 0.000197",
+        "==================================================================",
+        "Headless run finished at t=8.00s"
+      ]
+    },
+    {
+      "profiled": true,
+      "wall_s": 7.099909374985145,
+      "summary": [
+        "==================================================================",
+        "Final Base Position          : [3.854e-01 1.000e-04]",
+        "Final End-Effector Position  : [1.1013 0.     0.5002]",
+        "Target End-Effector Position : [1.1 0.  0.5]",
+        "Final Cartesian Error (m)    : 0.0014",
+        "Fixed Finger Angles          : [0.1 0.1 0.1 0.1 0.1 0.1]",
+        "Final Finger Angles          : [0.1    0.1    0.1    0.1002 0.1    0.1   ]",
+        "Max Finger Deviation (rad)   : 0.000197",
+        "==================================================================",
+        "Headless run finished at t=8.00s"
+      ]
+    }
+  ]
+}

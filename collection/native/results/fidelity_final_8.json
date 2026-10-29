@@ -1,0 +1,166 @@
+{
+  "reference": "/Users/natanaelmota/github/LAB_SESSION_COMP_0245_2026_PUBLIC/final/robotnik_arm_task/inspection/run_009",
+  "candidate": "data/fidelity_final/run_8",
+  "tables": {
+    "target": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.0,
+      "worst_columns": {
+        "step": 0.0,
+        "time_s": 0.0,
+        "ee_target_world_m_x": 0.0,
+        "ee_target_world_m_y": 0.0,
+        "ee_target_world_m_z": 0.0,
+        "base_standoff_goal_world_m_x": 0.0
+      },
+      "allclose_rtol_1e-7_atol_1e-8": true,
+      "passed": true
+    },
+    "joint_state": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 1608.247197565961,
+      "worst_columns": {
+        "qdd_backward_rad_s2_j07": 1608.247197565961,
+        "qdd_backward_rad_s2_j11": 1394.003847954526,
+        "qdd_backward_rad_s2_j05": 933.0280559794389,
+        "qdd_backward_rad_s2_j09": 638.3973045586922,
+        "qdd_backward_rad_s2_j15": 594.5616681367864,
+        "qdd_backward_rad_s2_j06": 283.10118552618906
+      },
+      "allclose_rtol_1e-7_atol_1e-8": false,
+      "passed": false
+    },
+    "base_state": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.026213928125798702,
+      "worst_columns": {
+        "angular_velocity_body_rad_s_x": 0.026213928125798702,
+        "angular_velocity_world_rad_s_x": 0.02474286666875592,
+        "angular_velocity_world_rad_s_y": 0.00865841011702759,
+        "linear_velocity_body_m_s_y": 0.0031597521156072617,
+        "linear_velocity_world_m_s_y": 0.002988489372386255,
+        "angular_velocity_world_rad_s_z": 0.0018875464671117375
+      },
+      "allclose_rtol_1e-7_atol_1e-8": false,
+      "passed": false
+    },
+    "kinematics": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.0012446522460262677,
+      "worst_columns": {
+        "ee_rotation_r31": 0.0012446522460262677,
+        "ee_rotation_r23": 0.0012087800310145447,
+        "ee_rotation_r22": 0.0006574854272447944,
+        "shoulder_world_m_y": 0.0005517931586188352,
+        "ee_rotation_r32": 0.000529997639755142,
+        "ee_rotation_r21": 0.00047336461239921857
+      },
+      "allclose_rtol_1e-7_atol_1e-8": false,
+      "passed": false
+    },
+    "base_controller": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.0,
+      "worst_columns": {
+        "step": 0.0,
+        "time_s": 0.0,
+        "dist_to_goal": 0.0,
+        "heading_to_goal": 0.0,
+        "v_cmd": 0.0,
+        "w_cmd": 0.0
+      },
+      "allclose_rtol_1e-7_atol_1e-8": true,
+      "passed": true
+    },
+    "arm_controller": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 29.849570516904645,
+      "worst_columns": {
+        "tau_command_Nm_arm3": 29.849570516904645,
+        "pd_term_Nm_arm3": 29.841305593478353,
+        "pd_term_Nm_arm7": 24.62864828950631,
+        "tau_command_Nm_arm7": 24.628646562113918,
+        "pd_term_Nm_arm1": 19.83430953292815,
+        "tau_command_Nm_arm1": 19.817538354095646
+      },
+      "allclose_rtol_1e-7_atol_1e-8": false,
+      "passed": false
+    },
+    "commands": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 29.849570516904645,
+      "worst_columns": {
+        "mixed_command_j07": 29.849570516904645,
+        "sent_torque_Nm_j07": 29.849570516904645,
+        "mixed_command_j11": 24.628646562113918,
+        "sent_torque_Nm_j11": 24.628646562113918,
+        "mixed_command_j05": 19.817538354095646,
+        "sent_torque_Nm_j05": 19.817538354095646
+      },
+      "allclose_rtol_1e-7_atol_1e-8": false,
+      "passed": false
+    }
+  },
+  "passed": false,
+  "tensors": {
+    "mass_matrix": {
+      "recorded": false
+    },
+    "arm_jacobian": {
+      "recorded": true,
+      "passed": false,
+      "reference_shape": [
+        8001,
+        3,
+        7
+      ],
+      "candidate_shape": [
+        8001,
+        3,
+        7
+      ],
+      "max_absolute_error": 0.0007476504733332811
+    },
+    "q_pin": {
+      "recorded": true,
+      "passed": false,
+      "reference_shape": [
+        8001,
+        24
+      ],
+      "candidate_shape": [
+        8001,
+        24
+      ],
+      "max_absolute_error": 0.0009503183459962745
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "machine": "macOS-14.6.1-arm64-arm-64bit-Mach-O",
+  "cpu_count": 8,
+  "records": [
+    {
+      "workers": 1,
+      "episodes": 1,
+      "wall_seconds_external": 0.8466880830237642,
+      "seconds_per_saved_episode": 0.8466880830237642,
+      "episodes_per_second": 1.1810724870825102,
+      "result_records": 1,
+      "batch": {
+        "episodes": 1,
+        "episodes_per_second": 1.2453437112341237,
+        "ok": true,
+        "wall_seconds": 0.802990917,
+        "workers": 1
+      },
+      "runs": [
+        {
+          "base_final": [
+            0.3700355124311738,
+            2.4986478372698104e-05,
+            -0.002305211447038776
+          ],
+          "collector_source_sha256": "68ef7a587805bf64a9c6dc11d9fd5c20d216e3c24cf9c8c7c44b2d2cc63863a5",
+          "compiler": "Clang-19.1.7",
+          "controller_audit_only": false,
+          "default_engine_binary_sha256": "e79cbd0decbc0c70dc2dc751ad5222a4454e2c7833d40f1cc029625cfdfa0fcc",
+          "driving_only": true,
+          "dt_s": 0.001,
+          "engine": "Pinned PyBullet 3.25 native C API, no Python execution",
+          "engine_library_override": false,
+          "episode": 0,
+          "export_seconds": 0.009446792,
+          "final_pre_step_ee_error_m": 0.22521461376386587,
+          "final_pre_step_time_s": 1.941999999999897,
+          "fork_workers": false,
+          "joint_names": [
+            "robot_front_right_wheel_joint",
+            "robot_front_left_wheel_joint",
+            "robot_back_left_wheel_joint",
+            "robot_back_right_wheel_joint",
+            "robot_j2s7s300_joint_1",
+            "robot_j2s7s300_joint_2",
+            "robot_j2s7s300_joint_3",
+            "robot_j2s7s300_joint_4",
+            "robot_j2s7s300_joint_5",
+            "robot_j2s7s300_joint_6",
+            "robot_j2s7s300_joint_7",
+            "robot_j2s7s300_joint_finger_1",
+            "robot_j2s7s300_joint_finger_tip_1",
+            "robot_j2s7s300_joint_finger_2",
+            "robot_j2s7s300_joint_finger_tip_2",
+            "robot_j2s7s300_joint_finger_3",
+            "robot_j2s7s300_joint_finger_tip_3"
+          ],
+          "loop_seconds": 0.469306209,
+          "model_setup_seconds": 0.001231,
+          "parking_step": 1942,
+          "physics_setup_seconds": 0.322016292,
+          "runtime": "C++ CPU Bullet DIRECT + Pinocchio",
+          "sample_alignment": "pre-step state with command applied for that tick",
+          "simulated_duration_s": 1.943,
+          "steps": 1943,
+          "target_position_world_m": [
+            1.1,
+            0.0,
+            0.5
+          ],
+          "termination": "parked_command",
+          "visual_meshes_skipped": true
+        }
+      ],
+      "repeat_checks": [
+        {
+          "folder": "../../../../Volumes/COMP0245_RAM_BENCH/m1_driving_ram_cold/workers_1",
+          "numerical_arrays_equal": true,
+          "hashes": {
+            "arm_controller.npy": "6e7c2566ab28cd7d5d7ecf89dd67dfde1b7e36f52c1b25a3d2c10f01cd61b749",
+            "arm_jacobian.npy": "05a9fc63225ae49bd7f9813cbaf1352e28db23d9e3592dc6169b4cd72d8e9cda",
+            "base_controller.npy": "35115db0b865bd465a581c30901e2b2ee38090e43627c75159fe2f907d668abb",
+            "base_state.npy": "7a34e45d10e42a777b1575d1855993a71cf648f53ab6d19760aba8b12c77ad86",
+            "commands.npy": "d6ea21af411c8cff2dfe978d4d10cf4d1043474dbb93915c965ffeaf351880b2",
+            "joint_state.npy": "874f467aed8e31daeced84ecf64a3898b61c9062920dcd97946d913f01b8ff82",
+            "kinematics.npy": "66ead12c67af845e453137d7da98a386df3b664f60f5303330174345c601da5b",
+            "q_pin.npy": "383d82a7ed2c640f529c2a56396a8b1c99147bcb50d45a3d9f83dd97933f4b43",
+            "target.npy": "ff7dad93997f312daa87389c5e9cb9eaae9eba7261be6fc8e1f0979818ac9f0a"
+          },
+          "manifest": {
+            "base_final": [
+              0.3700355124311738,
+              2.4986478372698104e-05,
+              -0.002305211447038776
+            ],
+            "collector_source_sha256": "68ef7a587805bf64a9c6dc11d9fd5c20d216e3c24cf9c8c7c44b2d2cc63863a5",
+            "compiler": "Clang-19.1.7",
+            "controller_audit_only": false,
+            "default_engine_binary_sha256": "e79cbd0decbc0c70dc2dc751ad5222a4454e2c7833d40f1cc029625cfdfa0fcc",
+            "driving_only": true,
+            "dt_s": 0.001,
+            "engine": "Pinned PyBullet 3.25 native C API, no Python execution",
+            "engine_library_override": false,
+            "episode": 0,
+            "export_complete": true,
+            "final_pre_step_ee_error_m": 0.22521461376386587,
+            "final_pre_step_time_s": 1.941999999999897,
+            "fork_workers": false,
+            "joint_names": [
+              "robot_front_right_wheel_joint",
+              "robot_front_left_wheel_joint",
+              "robot_back_left_wheel_joint",
+              "robot_back_right_wheel_joint",
+              "robot_j2s7s300_joint_1",
+              "robot_j2s7s300_joint_2",
+              "robot_j2s7s300_joint_3",
+              "robot_j2s7s300_joint_4",
+              "robot_j2s7s300_joint_5",
+              "robot_j2s7s300_joint_6",
+              "robot_j2s7s300_joint_7",
+              "robot_j2s7s300_joint_finger_1",
+              "robot_j2s7s300_joint_finger_tip_1",
+              "robot_j2s7s300_joint_finger_2",
+              "robot_j2s7s300_joint_finger_tip_2",
+              "robot_j2s7s300_joint_finger_3",
+              "robot_j2s7s300_joint_finger_tip_3"
+            ],
+            "loop_seconds": 0.469306209,
+            "mass_matrix_recorded": false,
+            "model_setup_seconds": 0.001231,
+            "parking_step": 1942,
+            "physics_setup_seconds": 0.322016292,
+            "runtime": "C++ CPU Bullet DIRECT + Pinocchio",
+            "sample_alignment": "pre-step state with command applied for that tick",
+            "simulated_duration_s": 1.943,
+            "steps": 1943,
+            "table_format": "NPY float64 + JSON column/category schemas",
+            "target_position_world_m": [
+              1.1,
+              0.0,
+              0.5
+            ],
+            "tensor_format": "Separate standard NPY arrays; same tensor names and dimensions as reference NPZ",
+            "termination": "parked_command",
+            "visual_meshes_skipped": true
+          }
+        }
+      ],
+      "all_repeat_arrays_equal": true
+    }
+  ]
+}

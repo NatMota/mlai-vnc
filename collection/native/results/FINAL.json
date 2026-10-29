@@ -1,0 +1,23 @@
+{
+  "verified_runs": 10,
+  "verified_samples": 80010,
+  "all_exact": true,
+  "mass_matrices_included": true,
+  "source_sha256": "839477d353ef3d8a7694f81df3b71fe19ba810904dce0cb04a356665e599cbd7",
+  "engine_sha256": "e79cbd0decbc0c70dc2dc751ad5222a4454e2c7833d40f1cc029625cfdfa0fcc",
+  "full_benchmark_repeat_equality": true,
+  "asset_hashes_still_match": true,
+  "final_fast_shared_arrays_match_full": {
+    "commands.npy": true,
+    "base_state.npy": true,
+    "arm_controller.npy": true,
+    "q_pin.npy": true,
+    "joint_state.npy": true,
+    "kinematics.npy": true,
+    "arm_jacobian.npy": true,
+    "base_controller.npy": true,
+    "target.npy": true
+  },
+  "final_fast_batch_seconds_per_episode": 0.6402220884992857,
+  "final_full_batch_seconds_per_episode": 1.0905302656246931
+}

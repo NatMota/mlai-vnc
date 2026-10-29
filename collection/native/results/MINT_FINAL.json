@@ -1,0 +1,160 @@
+{
+  "status": "Mint CPU benchmarks and driving-only implementation complete",
+  "source_sha256": "68ef7a587805bf64a9c6dc11d9fd5c20d216e3c24cf9c8c7c44b2d2cc63863a5",
+  "linux_original_full_audits": [
+    true,
+    true
+  ],
+  "linux_original_driving_prefix_audits": [
+    true,
+    true
+  ],
+  "benchmark_validation": {
+    "all_passed": true,
+    "distinct_target_and_duration_cases": 11,
+    "total_episodes": 339,
+    "benchmarks": [
+      {
+        "benchmark": "mint_driving.json",
+        "workers": 1,
+        "episodes": 4,
+        "seconds_per_saved_episode": 0.8377934065647423,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving.json",
+        "workers": 2,
+        "episodes": 8,
+        "seconds_per_saved_episode": 0.47139208612497896,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving.json",
+        "workers": 4,
+        "episodes": 16,
+        "seconds_per_saved_episode": 0.28966461116215214,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving.json",
+        "workers": 8,
+        "episodes": 32,
+        "seconds_per_saved_episode": 0.21610524735297076,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving_cold.json",
+        "workers": 1,
+        "episodes": 1,
+        "seconds_per_saved_episode": 1.3933009058237076,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving_fork.json",
+        "workers": 4,
+        "episodes": 16,
+        "seconds_per_saved_episode": 0.26987970556365326,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving_fork.json",
+        "workers": 8,
+        "episodes": 32,
+        "seconds_per_saved_episode": 0.19989993970375508,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving_fork_recheck.json",
+        "workers": 8,
+        "episodes": 32,
+        "seconds_per_saved_episode": 0.19338505901396275,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving_ram.json",
+        "workers": 4,
+        "episodes": 16,
+        "seconds_per_saved_episode": 0.2557142451405525,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving_ram.json",
+        "workers": 8,
+        "episodes": 32,
+        "seconds_per_saved_episode": 0.21100549516268075,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving_ram_fork.json",
+        "workers": 8,
+        "episodes": 32,
+        "seconds_per_saved_episode": 0.17493884699069895,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_driving_ram_fork_recheck.json",
+        "workers": 8,
+        "episodes": 32,
+        "seconds_per_saved_episode": 0.17562376172281802,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_full.json",
+        "workers": 1,
+        "episodes": 2,
+        "seconds_per_saved_episode": 3.3812189288437366,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_full.json",
+        "workers": 2,
+        "episodes": 4,
+        "seconds_per_saved_episode": 1.9795374234672636,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_full.json",
+        "workers": 4,
+        "episodes": 8,
+        "seconds_per_saved_episode": 1.1459405310451984,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_full.json",
+        "workers": 8,
+        "episodes": 16,
+        "seconds_per_saved_episode": 0.8822051004390232,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_full_diagnostics.json",
+        "workers": 8,
+        "episodes": 16,
+        "seconds_per_saved_episode": 1.37656333274208,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_varied_dynamic.json",
+        "workers": 4,
+        "episodes": 20,
+        "seconds_per_saved_episode": 0.4477914782706648,
+        "all_arrays_match_same_target_other_modes": true
+      },
+      {
+        "benchmark": "mint_varied_static.json",
+        "workers": 4,
+        "episodes": 20,
+        "seconds_per_saved_episode": 0.414525025524199,
+        "all_arrays_match_same_target_other_modes": true
+      }
+    ]
+  },
+  "no_training_started": true,
+  "report": "MINT-BENCHMARKS.md",
+  "limits": [
+    "Measurements include other running desktop workloads.",
+    "Batch throughput is not single-run latency.",
+    "The first navigation_done tick is retained; no settled tail is collected.",
+    "Two original full Linux cases were audited; cross-platform bitwise equality is not assumed."
+  ]
+}

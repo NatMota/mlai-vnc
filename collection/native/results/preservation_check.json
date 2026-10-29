@@ -1,0 +1,8 @@
+{
+  "all_assets_unchanged": true,
+  "asset_count": 55,
+  "source_matches_reference_snapshot": {
+    "robotnik_arm_task.py": true,
+    "robotnik_arm_control.py": true
+  }
+}

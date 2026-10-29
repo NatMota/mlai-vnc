@@ -1,0 +1,992 @@
+Analysis of sampling expert_compatible (pid 95257) every 1 millisecond
+Process:         expert_compatible [95257]
+Path:            /Users/USER/*/expert_compatible
+Load Address:    0x100f44000
+Identifier:      expert_compatible
+Version:         0
+Code Type:       ARM64
+Platform:        macOS
+Parent Process:  python3.14 [95247]
+
+Date/Time:       2026-10-29 00:52:13.238 +0000
+Launch Time:     2026-10-29 00:52:10.995 +0000
+OS Version:      macOS 14.6.1 (23G93)
+Report Version:  7
+Analysis Tool:   /usr/bin/sample
+
+Physical footprint:         59.9M
+Physical footprint (peak):  80.5M
+Idle exit:                  untracked
+----
+
+Call graph:
+    2401 Thread_6233058   DispatchQueue_1: com.apple.main-thread  (serial)
+      2399 start  (in dyld) + 2476  [0x19c3d3154]
+      + 2322 main  (in expert_compatible) + 8240  [0x100f4d55c]
+      + ! 2318 Physics::step(State const&, Action const&, bool)  (in expert_compatible) + 1416  [0x100f734d0]
+      + ! : 2316 b3SubmitClientCommandAndWaitStatus  (in pybullet.cpython-314-darwin.so) + 144  [0x107d1e00c]
+      + ! : | 2316 PhysicsDirect::submitClientCommand(SharedMemoryCommand const&)  (in pybullet.cpython-314-darwin.so) + 204  [0x107d35394]
+      + ! : |   2316 PhysicsServerCommandProcessor::processCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 944  [0x107d6c854]
+      + ! : |     2301 PhysicsServerCommandProcessor::processForwardDynamicsCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 392  [0x107d59df0]
+      + ! : |     + 2299 btDiscreteDynamicsWorld::stepSimulation(double, int, double)  (in pybullet.cpython-314-darwin.so) + 284  [0x107f43138]
+      + ! : |     + ! 2299 btSoftMultiBodyDynamicsWorld::internalSingleStepSimulation(double)  (in pybullet.cpython-314-darwin.so) + 96  [0x107ede008]
+      + ! : |     + !   2001 btDiscreteDynamicsWorld::internalSingleStepSimulation(double)  (in pybullet.cpython-314-darwin.so) + 204  [0x107f4325c]
+      + ! : |     + !   : 1919 btMultiBodyDynamicsWorld::solveConstraints(btContactSolverInfo&)  (in pybullet.cpython-314-darwin.so) + 52  [0x107f85ab4]
+      + ! : |     + !   : | 1916 btSimulationIslandManager::processIslands(btDispatcher*, btCollisionWorld*, btSimulationIslandManager::IslandCallback*)  (in pybullet.cpython-314-darwin.so) + 896  [0x107ef58ec]
+      + ! : |     + !   : | + 1914 MultiBodyInplaceSolverIslandCallback::processConstraints(int)  (in pybullet.cpython-314-darwin.so) + 128  [0x107eade40]
+      + ! : |     + !   : | + ! 958 btMultiBodyConstraintSolver::solveMultiBodyGroup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btMultiBodyConstraint**, int, btContactSolverInfo const&, btIDebugDraw*, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 204  [0x107f93b5c]
+      + ! : |     + !   : | + ! : 957 btSequentialImpulseConstraintSolver::solveGroupCacheFriendlyIterations(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 248  [0x107f68fdc]
+      + ! : |     + !   : | + ! : | 468 btMultiBodyConstraintSolver::solveSingleIteration(int, btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 664  [0x107f8d628]
+      + ! : |     + !   : | + ! : | + 468 btMultiBodyConstraintSolver::resolveSingleConstraintRowGeneric(btMultiBodySolverConstraint const&)  (in pybullet.cpython-314-darwin.so) + 764,900,...  [0x107f8db1c,0x107f8dba4,...]
+      + ! : |     + !   : | + ! : | 272 btMultiBodyConstraintSolver::solveSingleIteration(int, btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 316  [0x107f8d4cc]
+      + ! : |     + !   : | + ! : | + 272 btMultiBodyConstraintSolver::resolveSingleConstraintRowGeneric(btMultiBodySolverConstraint const&)  (in pybullet.cpython-314-darwin.so) + 764,332,...  [0x107f8db1c,0x107f8d96c,...]
+      + ! : |     + !   : | + ! : | 149 btMultiBodyConstraintSolver::solveSingleIteration(int, btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 176  [0x107f8d440]
+      + ! : |     + !   : | + ! : | + 149 btMultiBodyConstraintSolver::resolveSingleConstraintRowGeneric(btMultiBodySolverConstraint const&)  (in pybullet.cpython-314-darwin.so) + 1604,900,...  [0x107f8de64,0x107f8dba4,...]
+      + ! : |     + !   : | + ! : | 65 btMultiBodyConstraintSolver::solveSingleIteration(int, btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 624,572,...  [0x107f8d600,0x107f8d5cc,...]
+      + ! : |     + !   : | + ! : | 2 btMultiBodyConstraintSolver::solveSingleIteration(int, btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 52  [0x107f8d3c4]
+      + ! : |     + !   : | + ! : | + 2 btSequentialImpulseConstraintSolver::solveSingleIteration(int, btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 792  [0x107f6884c]
+      + ! : |     + !   : | + ! : | 1 btSequentialImpulseConstraintSolver::solveSingleIteration(int, btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 1792  [0x107f68c34]
+      + ! : |     + !   : | + ! : 1 btMultiBodyConstraintSolver::solveSingleIteration(int, btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 1156  [0x107f8d814]
+      + ! : |     + !   : | + ! 955 btMultiBodyConstraintSolver::solveMultiBodyGroup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btMultiBodyConstraint**, int, btContactSolverInfo const&, btIDebugDraw*, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 156  [0x107f93b2c]
+      + ! : |     + !   : | + ! : 955 btMultiBodyConstraintSolver::solveGroupCacheFriendlySetup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 1068  [0x107f8f348]
+      + ! : |     + !   : | + ! :   955 btSequentialImpulseConstraintSolver::solveGroupCacheFriendlySetup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 240  [0x107f5b97c]
+      + ! : |     + !   : | + ! :     756 btMultiBodyConstraintSolver::convertContacts(btPersistentManifold**, int, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 56  [0x107f93158]
+      + ! : |     + !   : | + ! :     | 256 btMultiBodyConstraintSolver::convertMultiBodyContact(btPersistentManifold*, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 1868  [0x107f92e94]
+      + ! : |     + !   : | + ! :     | + 255 btMultiBodyConstraintSolver::addMultiBodyFrictionConstraint(btVector3 const&, double const&, btPersistentManifold*, int, btManifoldPoint&, btCollisionObject*, btCollisionObject*, double, btContactSolverInfo const&, double, double)  (in pybullet.cpython-314-darwin.so) + 536  [0x107f920b4]
+      + ! : |     + !   : | + ! :     | + ! 227 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3140  [0x107f90070]
+      + ! : |     + !   : | + ! :     | + ! : 185 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 1020,2128,...  [0x107f808f0,0x107f80d44,...]
+      + ! : |     + !   : | + ! :     | + ! : 27 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 1712  [0x107f80ba4]
+      + ! : |     + !   : | + ! :     | + ! : | 27 btMultiBody::solveImatrix(btSpatialForceVector const&, btSpatialMotionVector&) const  (in pybullet.cpython-314-darwin.so) + 48,432,...  [0x107f7f7b8,0x107f7f938,...]
+      + ! : |     + !   : | + ! :     | + ! : 9 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3224,3236,...  [0x107f900c4,0x107f900d0,...]
+      + ! : |     + !   : | + ! :     | + ! : 6 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 800  [0x107f80814]
+      + ! : |     + !   : | + ! :     | + ! :   6 _platform_memset  (in libsystem_platform.dylib) + 140,160  [0x19c78df5c,0x19c78df70]
+      + ! : |     + !   : | + ! :     | + ! 12 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3100  [0x107f90048]
+      + ! : |     + !   : | + ! :     | + ! : 11 btMultiBody::fillConstraintJacobianMultiDof(int, btVector3 const&, btVector3 const&, btVector3 const&, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&) const  (in pybullet.cpython-314-darwin.so) + 720,796,...  [0x107f82550,0x107f8259c,...]
+      + ! : |     + !   : | + ! :     | + ! : 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3112  [0x107f90054]
+      + ! : |     + !   : | + ! :     | + ! 4 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1856  [0x107f8fb6c]
+      + ! : |     + !   : | + ! :     | + ! : 4 btMultiBody::fillConstraintJacobianMultiDof(int, btVector3 const&, btVector3 const&, btVector3 const&, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&) const  (in pybullet.cpython-314-darwin.so) + 984,1156,...  [0x107f82658,0x107f82704,...]
+      + ! : |     + !   : | + ! :     | + ! 4 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1896  [0x107f8fb94]
+      + ! : |     + !   : | + ! :     | + ! : 3 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1972,2660  [0x107f8fbe0,0x107f8fe90]
+      + ! : |     + !   : | + ! :     | + ! : 1 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 2840  [0x107f8100c]
+      + ! : |     + !   : | + ! :     | + ! 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 104  [0x107f8f494]
+      + ! : |     + !   : | + ! :     | + ! : 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1216,1476  [0x107f8f8ec,0x107f8f9f0]
+      + ! : |     + !   : | + ! :     | + ! 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1784  [0x107f8fb24]
+      + ! : |     + !   : | + ! :     | + ! : 1 _platform_memset  (in libsystem_platform.dylib) + 180  [0x19c78df84]
+      + ! : |     + !   : | + ! :     | + ! : 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1852  [0x107f8fb68]
+      + ! : |     + !   : | + ! :     | + ! 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 2684  [0x107f8fea8]
+      + ! : |     + !   : | + ! :     | + ! : 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 2716,2976  [0x107f8fec8,0x107f8ffcc]
+      + ! : |     + !   : | + ! :     | + ! 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3000  [0x107f8ffe4]
+      + ! : |     + !   : | + ! :     | + ! : 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3000  [0x107f8ffe4]
+      + ! : |     + !   : | + ! :     | + ! 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 5444  [0x107f90970]
+      + ! : |     + !   : | + ! :     | + 1 btMultiBodyConstraintSolver::addMultiBodyFrictionConstraint(btVector3 const&, double const&, btPersistentManifold*, int, btManifoldPoint&, btCollisionObject*, btCollisionObject*, double, btContactSolverInfo const&, double, double)  (in pybullet.cpython-314-darwin.so) + 96  [0x107f91efc]
+      + ! : |     + !   : | + ! :     | +   1 CProfileSample::CProfileSample(char const*)  (in pybullet.cpython-314-darwin.so) + 20  [0x107fb0a68]
+      + ! : |     + !   : | + ! :     | 251 btMultiBodyConstraintSolver::convertMultiBodyContact(btPersistentManifold*, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 1532  [0x107f92d44]
+      + ! : |     + !   : | + ! :     | + 246 btMultiBodyConstraintSolver::addMultiBodyFrictionConstraint(btVector3 const&, double const&, btPersistentManifold*, int, btManifoldPoint&, btCollisionObject*, btCollisionObject*, double, btContactSolverInfo const&, double, double)  (in pybullet.cpython-314-darwin.so) + 536  [0x107f920b4]
+      + ! : |     + !   : | + ! :     | + ! 217 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3140  [0x107f90070]
+      + ! : |     + !   : | + ! :     | + ! : 184 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 2368,932,...  [0x107f80e34,0x107f80898,...]
+      + ! : |     + !   : | + ! :     | + ! : 20 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 1712  [0x107f80ba4]
+      + ! : |     + !   : | + ! :     | + ! : | 20 btMultiBody::solveImatrix(btSpatialForceVector const&, btSpatialMotionVector&) const  (in pybullet.cpython-314-darwin.so) + 284,432,...  [0x107f7f8a4,0x107f7f938,...]
+      + ! : |     + !   : | + ! :     | + ! : 8 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 4952,3880,...  [0x107f90784,0x107f90354,...]
+      + ! : |     + !   : | + ! :     | + ! : 5 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 800  [0x107f80814]
+      + ! : |     + !   : | + ! :     | + ! :   5 _platform_memset  (in libsystem_platform.dylib) + 140,160,...  [0x19c78df5c,0x19c78df70,...]
+      + ! : |     + !   : | + ! :     | + ! 11 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3100  [0x107f90048]
+      + ! : |     + !   : | + ! :     | + ! : 11 btMultiBody::fillConstraintJacobianMultiDof(int, btVector3 const&, btVector3 const&, btVector3 const&, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&) const  (in pybullet.cpython-314-darwin.so) + 2244,52,...  [0x107f82b44,0x107f822b4,...]
+      + ! : |     + !   : | + ! :     | + ! 8 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1856  [0x107f8fb6c]
+      + ! : |     + !   : | + ! :     | + ! : 8 btMultiBody::fillConstraintJacobianMultiDof(int, btVector3 const&, btVector3 const&, btVector3 const&, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&) const  (in pybullet.cpython-314-darwin.so) + 64,816,...  [0x107f822c0,0x107f825b0,...]
+      + ! : |     + !   : | + ! :     | + ! 3 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1500  [0x107f8fa08]
+      + ! : |     + !   : | + ! :     | + ! : 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1528  [0x107f8fa24]
+      + ! : |     + !   : | + ! :     | + ! : 1 DYLD-STUB$$bzero  (in pybullet.cpython-314-darwin.so) + 4  [0x107fba37c]
+      + ! : |     + !   : | + ! :     | + ! 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 104  [0x107f8f494]
+      + ! : |     + !   : | + ! :     | + ! : 1 CProfileSample::CProfileSample(char const*)  (in pybullet.cpython-314-darwin.so) + 20  [0x107fb0a68]
+      + ! : |     + !   : | + ! :     | + ! : 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 384  [0x107f8f5ac]
+      + ! : |     + !   : | + ! :     | + ! 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1784  [0x107f8fb24]
+      + ! : |     + !   : | + ! :     | + ! : 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1784,1824  [0x107f8fb24,0x107f8fb4c]
+      + ! : |     + !   : | + ! :     | + ! 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1896  [0x107f8fb94]
+      + ! : |     + !   : | + ! :     | + ! : 1 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 76  [0x107f80540]
+      + ! : |     + !   : | + ! :     | + ! 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3000  [0x107f8ffe4]
+      + ! : |     + !   : | + ! :     | + ! : 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3000  [0x107f8ffe4]
+      + ! : |     + !   : | + ! :     | + ! 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 5388  [0x107f90938]
+      + ! : |     + !   : | + ! :     | + !   1 CProfileSample::~CProfileSample()  (in pybullet.cpython-314-darwin.so) + 20  [0x107fb0ac8]
+      + ! : |     + !   : | + ! :     | + 3 btMultiBodyConstraintSolver::addMultiBodyFrictionConstraint(btVector3 const&, double const&, btPersistentManifold*, int, btManifoldPoint&, btCollisionObject*, btCollisionObject*, double, btContactSolverInfo const&, double, double)  (in pybullet.cpython-314-darwin.so) + 76,556,...  [0x107f91ee8,0x107f920c8,...]
+      + ! : |     + !   : | + ! :     | + 1 CProfileSample::~CProfileSample()  (in pybullet.cpython-314-darwin.so) + 36  [0x107fb0ad8]
+      + ! : |     + !   : | + ! :     | + 1 btMultiBodyConstraintSolver::addMultiBodyFrictionConstraint(btVector3 const&, double const&, btPersistentManifold*, int, btManifoldPoint&, btCollisionObject*, btCollisionObject*, double, btContactSolverInfo const&, double, double)  (in pybullet.cpython-314-darwin.so) + 544  [0x107f920bc]
+      + ! : |     + !   : | + ! :     | +   1 CProfileSample::~CProfileSample()  (in pybullet.cpython-314-darwin.so) + 4  [0x107fb0ab8]
+      + ! : |     + !   : | + ! :     | 245 btMultiBodyConstraintSolver::convertMultiBodyContact(btPersistentManifold*, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 628  [0x107f929bc]
+      + ! : |     + !   : | + ! :     | + 220 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3140  [0x107f90070]
+      + ! : |     + !   : | + ! :     | + ! 184 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 2760,2024,...  [0x107f80fbc,0x107f80cdc,...]
+      + ! : |     + !   : | + ! :     | + ! 17 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 1712  [0x107f80ba4]
+      + ! : |     + !   : | + ! :     | + ! : 17 btMultiBody::solveImatrix(btSpatialForceVector const&, btSpatialMotionVector&) const  (in pybullet.cpython-314-darwin.so) + 48,1128,...  [0x107f7f7b8,0x107f7fbf0,...]
+      + ! : |     + !   : | + ! :     | + ! 13 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3824,3956,...  [0x107f9031c,0x107f903a0,...]
+      + ! : |     + !   : | + ! :     | + ! 6 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 800  [0x107f80814]
+      + ! : |     + !   : | + ! :     | + !   6 _platform_memset  (in libsystem_platform.dylib) + 140,160  [0x19c78df5c,0x19c78df70]
+      + ! : |     + !   : | + ! :     | + 8 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3100  [0x107f90048]
+      + ! : |     + !   : | + ! :     | + ! 7 btMultiBody::fillConstraintJacobianMultiDof(int, btVector3 const&, btVector3 const&, btVector3 const&, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&) const  (in pybullet.cpython-314-darwin.so) + 472,756,...  [0x107f82458,0x107f82574,...]
+      + ! : |     + !   : | + ! :     | + ! 1 btMultiBody::fillConstraintJacobianMultiDof(int, btVector3 const&, btVector3 const&, btVector3 const&, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&) const  (in pybullet.cpython-314-darwin.so) + 720  [0x107f82550]
+      + ! : |     + !   : | + ! :     | + !   1 _platform_memset  (in libsystem_platform.dylib) + 160  [0x19c78df70]
+      + ! : |     + !   : | + ! :     | + 7 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1856  [0x107f8fb6c]
+      + ! : |     + !   : | + ! :     | + ! 7 btMultiBody::fillConstraintJacobianMultiDof(int, btVector3 const&, btVector3 const&, btVector3 const&, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&) const  (in pybullet.cpython-314-darwin.so) + 1344,252,...  [0x107f827c0,0x107f8237c,...]
+      + ! : |     + !   : | + ! :     | + 3 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 2684  [0x107f8fea8]
+      + ! : |     + !   : | + ! :     | + ! 3 _platform_memset  (in libsystem_platform.dylib) + 140,160  [0x19c78df5c,0x19c78df70]
+      + ! : |     + !   : | + ! :     | + 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3000  [0x107f8ffe4]
+      + ! : |     + !   : | + ! :     | + ! 1 DYLD-STUB$$bzero  (in pybullet.cpython-314-darwin.so) + 4  [0x107fba37c]
+      + ! : |     + !   : | + ! :     | + ! 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 3000  [0x107f8ffe4]
+      + ! : |     + !   : | + ! :     | + 2 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 5388  [0x107f90938]
+      + ! : |     + !   : | + ! :     | + ! 2 CProfileSample::~CProfileSample()  (in pybullet.cpython-314-darwin.so) + 32  [0x107fb0ad4]
+      + ! : |     + !   : | + ! :     | + 1 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 2960  [0x107f81084]
+      + ! : |     + !   : | + ! :     | + 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 1896  [0x107f8fb94]
+      + ! : |     + !   : | + ! :     | + ! 1 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 76  [0x107f80540]
+      + ! : |     + !   : | + ! :     | + 1 btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 5436  [0x107f90968]
+      + ! : |     + !   : | + ! :     | 3 btMultiBodyConstraintSolver::convertMultiBodyContact(btPersistentManifold*, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 856,1460,...  [0x107f92aa0,0x107f92cfc,...]
+      + ! : |     + !   : | + ! :     | 1 btMultiBodyConstraintSolver::addMultiBodyFrictionConstraint(btVector3 const&, double const&, btPersistentManifold*, int, btManifoldPoint&, btCollisionObject*, btCollisionObject*, double, btContactSolverInfo const&, double, double)  (in pybullet.cpython-314-darwin.so) + 592  [0x107f920ec]
+      + ! : |     + !   : | + ! :     199 btMultiBodyConstraintSolver::convertContacts(btPersistentManifold**, int, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 200  [0x107f931e8]
+      + ! : |     + !   : | + ! :       177 btMultiBodyJointMotor::createConstraintRows(btAlignedObjectArray<btMultiBodySolverConstraint>&, btMultiBodyJacobianData&, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 824  [0x107f89cc4]
+      + ! : |     + !   : | + ! :       + 86 btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so) + 1712  [0x107f8a470]
+      + ! : |     + !   : | + ! :       + ! 78 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 1020,932,...  [0x107f808f0,0x107f80898,...]
+      + ! : |     + !   : | + ! :       + ! 8 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 1712  [0x107f80ba4]
+      + ! : |     + !   : | + ! :       + !   8 btMultiBody::solveImatrix(btSpatialForceVector const&, btSpatialMotionVector&) const  (in pybullet.cpython-314-darwin.so) + 128,400,...  [0x107f7f808,0x107f7f918,...]
+      + ! : |     + !   : | + ! :       + 84 btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so) + 3328  [0x107f8aac0]
+      + ! : |     + !   : | + ! :       + ! 66 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 2024,984,...  [0x107f80cdc,0x107f808cc,...]
+      + ! : |     + !   : | + ! :       + ! 10 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 1712  [0x107f80ba4]
+      + ! : |     + !   : | + ! :       + ! : 10 btMultiBody::solveImatrix(btSpatialForceVector const&, btSpatialMotionVector&) const  (in pybullet.cpython-314-darwin.so) + 188,432,...  [0x107f7f844,0x107f7f938,...]
+      + ! : |     + !   : | + ! :       + ! 4 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 800  [0x107f80814]
+      + ! : |     + !   : | + ! :       + ! : 3 _platform_memset  (in libsystem_platform.dylib) + 140  [0x19c78df5c]
+      + ! : |     + !   : | + ! :       + ! : 1 DYLD-STUB$$bzero  (in pybullet.cpython-314-darwin.so) + 4  [0x107fba37c]
+      + ! : |     + !   : | + ! :       + ! 4 btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so) + 3732,4364,...  [0x107f8ac54,0x107f8aecc,...]
+      + ! : |     + !   : | + ! :       + 3 btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so) + 1204  [0x107f8a274]
+      + ! : |     + !   : | + ! :       + ! 3 btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so) + 1208,1216  [0x107f8a278,0x107f8a280]
+      + ! : |     + !   : | + ! :       + 3 btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so) + 2760  [0x107f8a888]
+      + ! : |     + !   : | + ! :       + ! 2 btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so) + 2868,3008  [0x107f8a8f4,0x107f8a980]
+      + ! : |     + !   : | + ! :       + ! 1 _platform_memset  (in libsystem_platform.dylib) + 160  [0x19c78df70]
+      + ! : |     + !   : | + ! :       + 1 btMultiBodyJointMotor::createConstraintRows(btAlignedObjectArray<btMultiBodySolverConstraint>&, btMultiBodyJacobianData&, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 824  [0x107f89cc4]
+      + ! : |     + !   : | + ! :       +   1 btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so) + 148  [0x107f89e54]
+      + ! : |     + !   : | + ! :       14 btMultiBodyJointLimitConstraint::createConstraintRows(btAlignedObjectArray<btMultiBodySolverConstraint>&, btMultiBodyJacobianData&, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 876  [0x107f988e4]
+      + ! : |     + !   : | + ! :       + 9 btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so) + 3328  [0x107f8aac0]
+      + ! : |     + !   : | + ! :       + ! 6 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 932,1056,...  [0x107f80898,0x107f80914,...]
+      + ! : |     + !   : | + ! :       + ! 3 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 1712  [0x107f80ba4]
+      + ! : |     + !   : | + ! :       + !   3 btMultiBody::solveImatrix(btSpatialForceVector const&, btSpatialMotionVector&) const  (in pybullet.cpython-314-darwin.so) + 48,216,...  [0x107f7f7b8,0x107f7f860,...]
+      + ! : |     + !   : | + ! :       + 5 btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so) + 1712  [0x107f8a470]
+      + ! : |     + !   : | + ! :       +   5 btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 932,968,...  [0x107f80898,0x107f808bc,...]
+      + ! : |     + !   : | + ! :       3 btMultiBodyJointLimitConstraint::createConstraintRows(btAlignedObjectArray<btMultiBodySolverConstraint>&, btMultiBodyJacobianData&, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 1192,24  [0x107f98a20,0x107f98590]
+      + ! : |     + !   : | + ! :       3 btMultiBodyJointMotor::createConstraintRows(btAlignedObjectArray<btMultiBodySolverConstraint>&, btMultiBodyJacobianData&, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 56,632,...  [0x107f899c4,0x107f89c04,...]
+      + ! : |     + !   : | + ! :       1 btMultiBodyConstraintSolver::convertContacts(btPersistentManifold**, int, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 200  [0x107f931e8]
+      + ! : |     + !   : | + ! :       + 1 btMultiBodyJointLimitConstraint::createConstraintRows(btAlignedObjectArray<btMultiBodySolverConstraint>&, btMultiBodyJacobianData&, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 1140  [0x107f989ec]
+      + ! : |     + !   : | + ! :       1 btMultiBodyJointMotor::createConstraintRows(btAlignedObjectArray<btMultiBodySolverConstraint>&, btMultiBodyJacobianData&, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 904  [0x107f89d14]
+      + ! : |     + !   : | + ! :         1 btMatrix3x3::getRotation(btQuaternion&) const  (in pybullet.cpython-314-darwin.so) + 0  [0x107c6cc94]
+      + ! : |     + !   : | + ! 1 btMultiBodyConstraintSolver::solveMultiBodyGroup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btMultiBodyConstraint**, int, btContactSolverInfo const&, btIDebugDraw*, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 232  [0x107f93b78]
+      + ! : |     + !   : | + !   1 btMultiBodyConstraintSolver::solveGroupCacheFriendlyFinish(btCollisionObject**, int, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 180  [0x107f9396c]
+      + ! : |     + !   : | + !     1 btMultiBodyConstraintSolver::writeBackSolverBodyToMultiBody(btMultiBodySolverConstraint&, double)  (in pybullet.cpython-314-darwin.so) + 312  [0x107f9386c]
+      + ! : |     + !   : | + 1 MultiBodyInplaceSolverIslandCallback::processConstraints(int)  (in pybullet.cpython-314-darwin.so) + 660  [0x107eae054]
+      + ! : |     + !   : | + 1 MultiBodyInplaceSolverIslandCallback::processIsland(btCollisionObject**, int, btPersistentManifold**, int, int)  (in pybullet.cpython-314-darwin.so) + 540  [0x107ead2f0]
+      + ! : |     + !   : | 2 btSimulationIslandManager::buildAndProcessIslands(btDispatcher*, btCollisionWorld*, btSimulationIslandManager::IslandCallback*)  (in pybullet.cpython-314-darwin.so) + 36  [0x107ef554c]
+      + ! : |     + !   : | + 1 btSimulationIslandManager::buildIslands(btDispatcher*, btCollisionWorld*)  (in pybullet.cpython-314-darwin.so) + 276  [0x107ef5088]
+      + ! : |     + !   : | + ! 1 btAlignedObjectArray<btElement>::quickSortInternal<btUnionFindElementSortPredicate>(btUnionFindElementSortPredicate const&, int, int)  (in pybullet.cpython-314-darwin.so) + 132  [0x107f3f530]
+      + ! : |     + !   : | + 1 btSimulationIslandManager::buildIslands(btDispatcher*, btCollisionWorld*)  (in pybullet.cpython-314-darwin.so) + 504  [0x107ef516c]
+      + ! : |     + !   : | 1 btSimulationIslandManager::processIslands(btDispatcher*, btCollisionWorld*, btSimulationIslandManager::IslandCallback*)  (in pybullet.cpython-314-darwin.so) + 256  [0x107ef566c]
+      + ! : |     + !   : 73 btMultiBodyDynamicsWorld::solveConstraints(btContactSolverInfo&)  (in pybullet.cpython-314-darwin.so) + 32  [0x107f85aa0]
+      + ! : |     + !   : | 55 btMultiBodyDynamicsWorld::solveExternalForces(btContactSolverInfo&)  (in pybullet.cpython-314-darwin.so) + 928  [0x107f86418]
+      + ! : |     + !   : | + 42 ???  (in <unknown binary>)  [0x122073ab0]
+      + ! : |     + !   : | + ! 42 btMultiBody::computeAccelerationsArticulatedBodyAlgorithmMultiDof(double, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&, bool, bool, bool)  (in pybullet.cpython-314-darwin.so) + 4992,6688,...  [0x107f7ce14,0x107f7d4b4,...]
+      + ! : |     + !   : | + 13 btMultiBody::computeAccelerationsArticulatedBodyAlgorithmMultiDof(double, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&, bool, bool, bool)  (in pybullet.cpython-314-darwin.so) + 6320  [0x107f7d344]
+      + ! : |     + !   : | +   13 btSpatialTransformationMatrix::transformInverse(btSymmetricSpatialDyad const&, btSymmetricSpatialDyad&, btSpatialTransformationMatrix::eOutputOperation)  (in pybullet.cpython-314-darwin.so) + 2492,1784,...  [0x107f7ee9c,0x107f7ebd8,...]
+      + ! : |     + !   : | 10 btMultiBodyDynamicsWorld::solveExternalForces(btContactSolverInfo&)  (in pybullet.cpython-314-darwin.so) + 704  [0x107f86338]
+      + ! : |     + !   : | + 4 btAlignedObjectArray<btMultiBodyConstraint*>::quickSortInternal<btSortMultiBodyConstraintOnIslandPredicate>(btSortMultiBodyConstraintOnIslandPredicate const&, int, int)  (in pybullet.cpython-314-darwin.so) + 420  [0x107eae6d8]
+      + ! : |     + !   : | + ! 3 btAlignedObjectArray<btMultiBodyConstraint*>::quickSortInternal<btSortMultiBodyConstraintOnIslandPredicate>(btSortMultiBodyConstraintOnIslandPredicate const&, int, int)  (in pybullet.cpython-314-darwin.so) + 420  [0x107eae6d8]
+      + ! : |     + !   : | + ! : 2 btAlignedObjectArray<btMultiBodyConstraint*>::quickSortInternal<btSortMultiBodyConstraintOnIslandPredicate>(btSortMultiBodyConstraintOnIslandPredicate const&, int, int)  (in pybullet.cpython-314-darwin.so) + 288,392  [0x107eae654,0x107eae6bc]
+      + ! : |     + !   : | + ! : 1 btAlignedObjectArray<btMultiBodyConstraint*>::quickSortInternal<btSortMultiBodyConstraintOnIslandPredicate>(btSortMultiBodyConstraintOnIslandPredicate const&, int, int)  (in pybullet.cpython-314-darwin.so) + 184  [0x107eae5ec]
+      + ! : |     + !   : | + ! :   1 btMultiBodyJointMotor::getIslandIdB() const  (in pybullet.cpython-314-darwin.so) + 24  [0x107f8996c]
+      + ! : |     + !   : | + ! 1 btAlignedObjectArray<btMultiBodyConstraint*>::quickSortInternal<btSortMultiBodyConstraintOnIslandPredicate>(btSortMultiBodyConstraintOnIslandPredicate const&, int, int)  (in pybullet.cpython-314-darwin.so) + 208  [0x107eae604]
+      + ! : |     + !   : | + !   1 btMultiBodyJointMotor::getIslandIdA() const  (in pybullet.cpython-314-darwin.so) + 24  [0x107f89934]
+      + ! : |     + !   : | + 4 btAlignedObjectArray<btMultiBodyConstraint*>::quickSortInternal<btSortMultiBodyConstraintOnIslandPredicate>(btSortMultiBodyConstraintOnIslandPredicate const&, int, int)  (in pybullet.cpython-314-darwin.so) + 172,216,...  [0x107eae5e0,0x107eae60c,...]
+      + ! : |     + !   : | + 1 btAlignedObjectArray<btMultiBodyConstraint*>::quickSortInternal<btSortMultiBodyConstraintOnIslandPredicate>(btSortMultiBodyConstraintOnIslandPredicate const&, int, int)  (in pybullet.cpython-314-darwin.so) + 164  [0x107eae5d8]
+      + ! : |     + !   : | + ! 1 btMultiBodyJointLimitConstraint::getIslandIdA() const  (in pybullet.cpython-314-darwin.so) + 0  [0x107f98500]
+      + ! : |     + !   : | + 1 btAlignedObjectArray<btMultiBodyConstraint*>::quickSortInternal<btSortMultiBodyConstraintOnIslandPredicate>(btSortMultiBodyConstraintOnIslandPredicate const&, int, int)  (in pybullet.cpython-314-darwin.so) + 324  [0x107eae678]
+      + ! : |     + !   : | +   1 btMultiBodyJointLimitConstraint::getIslandIdA() const  (in pybullet.cpython-314-darwin.so) + 0  [0x107f98500]
+      + ! : |     + !   : | 7 btMultiBodyDynamicsWorld::solveExternalForces(btContactSolverInfo&)  (in pybullet.cpython-314-darwin.so) + 100  [0x107f860dc]
+      + ! : |     + !   : | + 7 btMultiBody::forwardKinematics(btAlignedObjectArray<btQuaternion>&, btAlignedObjectArray<btVector3>&)  (in pybullet.cpython-314-darwin.so) + 408,424,...  [0x107f830ec,0x107f830fc,...]
+      + ! : |     + !   : | 1 btMultiBodyDynamicsWorld::solveExternalForces(btContactSolverInfo&)  (in pybullet.cpython-314-darwin.so) + 432  [0x107f86228]
+      + ! : |     + !   : |   1 btMultiBodyDynamicsWorld::solveExternalForces(btContactSolverInfo&)  (in pybullet.cpython-314-darwin.so) + 664  [0x107f86310]
+      + ! : |     + !   : 7 btMultiBodyDynamicsWorld::solveInternalConstraints(btContactSolverInfo&)  (in pybullet.cpython-314-darwin.so) + 76  [0x107f85b30]
+      + ! : |     + !   : | 7 MultiBodyInplaceSolverIslandCallback::processConstraints(int)  (in pybullet.cpython-314-darwin.so) + 128  [0x107eade40]
+      + ! : |     + !   : |   5 btMultiBodyConstraintSolver::solveMultiBodyGroup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btMultiBodyConstraint**, int, btContactSolverInfo const&, btIDebugDraw*, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 156  [0x107f93b2c]
+      + ! : |     + !   : |   + 4 btMultiBodyConstraintSolver::solveGroupCacheFriendlySetup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 1068  [0x107f8f348]
+      + ! : |     + !   : |   + ! 2 btSequentialImpulseConstraintSolver::solveGroupCacheFriendlySetup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 160,188  [0x107f5b92c,0x107f5b948]
+      + ! : |     + !   : |   + ! 1 btSequentialImpulseConstraintSolver::solveGroupCacheFriendlySetup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 184  [0x107f5b944]
+      + ! : |     + !   : |   + ! : 1 btSequentialImpulseConstraintSolver::convertBodies(btCollisionObject**, int, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 980  [0x107f684d4]
+      + ! : |     + !   : |   + ! :   1 CProfileSample::~CProfileSample()  (in pybullet.cpython-314-darwin.so) + 20  [0x107fb0ac8]
+      + ! : |     + !   : |   + ! 1 btSequentialImpulseConstraintSolver::solveGroupCacheFriendlySetup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 212  [0x107f5b960]
+      + ! : |     + !   : |   + !   1 btSequentialImpulseConstraintSolver::convertJoints(btTypedConstraint**, int, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 416  [0x107f67f60]
+      + ! : |     + !   : |   + 1 btMultiBodyConstraintSolver::solveGroupCacheFriendlySetup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 684  [0x107f8f1c8]
+      + ! : |     + !   : |   1 btMultiBodyConstraintSolver::solveMultiBodyGroup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btMultiBodyConstraint**, int, btContactSolverInfo const&, btIDebugDraw*, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 204  [0x107f93b5c]
+      + ! : |     + !   : |   + 1 btSequentialImpulseConstraintSolver::solveGroupCacheFriendlyIterations(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 172  [0x107f68f90]
+      + ! : |     + !   : |   +   1 btSequentialImpulseConstraintSolver::solveGroupCacheFriendlySplitImpulseIterations(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 112  [0x107f68e0c]
+      + ! : |     + !   : |   1 btMultiBodyConstraintSolver::solveMultiBodyGroup(btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btMultiBodyConstraint**, int, btContactSolverInfo const&, btIDebugDraw*, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 232  [0x107f93b78]
+      + ! : |     + !   : |     1 btMultiBodyConstraintSolver::solveGroupCacheFriendlyFinish(btCollisionObject**, int, btContactSolverInfo const&)  (in pybullet.cpython-314-darwin.so) + 368  [0x107f93a28]
+      + ! : |     + !   : 1 btMultiBodyDynamicsWorld::solveInternalConstraints(btContactSolverInfo&)  (in pybullet.cpython-314-darwin.so) + 528  [0x107f85cf4]
+      + ! : |     + !   : | 1 __bzero  (in libsystem_platform.dylib) + 0  [0x19c78de70]
+      + ! : |     + !   : 1 btMultiBodyDynamicsWorld::solveInternalConstraints(btContactSolverInfo&)  (in pybullet.cpython-314-darwin.so) + 224  [0x107f85bc4]
+      + ! : |     + !   276 btDiscreteDynamicsWorld::internalSingleStepSimulation(double)  (in pybullet.cpython-314-darwin.so) + 164  [0x107f43234]
+      + ! : |     + !   : 144 btCollisionWorld::performDiscreteCollisionDetection()  (in pybullet.cpython-314-darwin.so) + 160  [0x107efef4c]
+      + ! : |     + !   : | 144 btCollisionDispatcher::dispatchAllCollisionPairs(btOverlappingPairCache*, btDispatcherInfo const&, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 112  [0x107efb744]
+      + ! : |     + !   : |   144 btHashedOverlappingPairCache::processAllOverlappingPairs(btOverlapCallback*, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 136  [0x107ee3df8]
+      + ! : |     + !   : |     143 btCollisionPairCallback::processOverlap(btBroadphasePair&)  (in pybullet.cpython-314-darwin.so) + 28  [0x107f37e08]
+      + ! : |     + !   : |     + 136 btCollisionDispatcher::defaultNearCallback(btBroadphasePair&, btCollisionDispatcher&, btDispatcherInfo const&)  (in pybullet.cpython-314-darwin.so) + 268  [0x107efaf00]
+      + ! : |     + !   : |     + ! 131 btCompoundCompoundCollisionAlgorithm::processCollision(btCollisionObjectWrapper const*, btCollisionObjectWrapper const*, btDispatcherInfo const&, btManifoldResult*)  (in pybullet.cpython-314-darwin.so) + 2524  [0x107eeef10]
+      + ! : |     + !   : |     + ! : 131 btCompoundCompoundLeafCallback::Process(btDbvtNode const*, btDbvtNode const*)  (in pybullet.cpython-314-darwin.so) + 1368  [0x107f360e8]
+      + ! : |     + !   : |     + ! :   128 btConvexConvexAlgorithm::processCollision(btCollisionObjectWrapper const*, btCollisionObjectWrapper const*, btDispatcherInfo const&, btManifoldResult*)  (in pybullet.cpython-314-darwin.so) + 1828  [0x107ef7d70]
+      + ! : |     + !   : |     + ! :   | 47 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 3352  [0x107f0c1ac]
+      + ! : |     + !   : |     + ! :   | + 44 btGjkEpaPenetrationDepthSolver::calcPenDepth(btVoronoiSimplexSolver&, btConvexShape const*, btConvexShape const*, btTransform const&, btTransform const&, btVector3&, btVector3&, btVector3&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 488  [0x107f0a370]
+      + ! : |     + !   : |     + ! :   | + ! 19 btGjkEpaSolver2::Penetration(btConvexShape const*, btTransform const&, btConvexShape const*, btTransform const&, btVector3 const&, btGjkEpaSolver2::sResults&, bool)  (in pybullet.cpython-314-darwin.so) + 364  [0x107f0a598]
+      + ! : |     + !   : |     + ! :   | + ! : 7 gjkepa2_impl::EPA::Evaluate(gjkepa2_impl::GJK&, btVector3 const&)  (in pybullet.cpython-314-darwin.so) + 900  [0x107f0feac]
+      + ! : |     + !   : |     + ! :   | + ! : | 2 gjkepa2_impl::EPA::expand(unsigned int, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::EPA::sFace*, unsigned int, gjkepa2_impl::EPA::sHorizon&)  (in pybullet.cpython-314-darwin.so) + 164  [0x107f3ac00]
+      + ! : |     + !   : |     + ! :   | + ! : | + 1 gjkepa2_impl::EPA::newface(gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, bool)  (in pybullet.cpython-314-darwin.so) + 316  [0x107f3aa1c]
+      + ! : |     + !   : |     + ! :   | + ! : | + ! 1 gjkepa2_impl::EPA::getedgedist(gjkepa2_impl::EPA::sFace*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, double&)  (in pybullet.cpython-314-darwin.so) + 80  [0x107f3ad84]
+      + ! : |     + !   : |     + ! :   | + ! : | + 1 gjkepa2_impl::EPA::newface(gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, bool)  (in pybullet.cpython-314-darwin.so) + 224  [0x107f3a9c0]
+      + ! : |     + !   : |     + ! :   | + ! : | 2 gjkepa2_impl::EPA::expand(unsigned int, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::EPA::sFace*, unsigned int, gjkepa2_impl::EPA::sHorizon&)  (in pybullet.cpython-314-darwin.so) + 292  [0x107f3ac80]
+      + ! : |     + !   : |     + ! :   | + ! : | + 2 gjkepa2_impl::EPA::expand(unsigned int, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::EPA::sFace*, unsigned int, gjkepa2_impl::EPA::sHorizon&)  (in pybullet.cpython-314-darwin.so) + 164  [0x107f3ac00]
+      + ! : |     + !   : |     + ! :   | + ! : | +   1 gjkepa2_impl::EPA::newface(gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, bool)  (in pybullet.cpython-314-darwin.so) + 316  [0x107f3aa1c]
+      + ! : |     + !   : |     + ! :   | + ! : | +   ! 1 gjkepa2_impl::EPA::getedgedist(gjkepa2_impl::EPA::sFace*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, double&)  (in pybullet.cpython-314-darwin.so) + 72  [0x107f3ad7c]
+      + ! : |     + !   : |     + ! :   | + ! : | +   1 gjkepa2_impl::EPA::newface(gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, bool)  (in pybullet.cpython-314-darwin.so) + 372  [0x107f3aa54]
+      + ! : |     + !   : |     + ! :   | + ! : | +     1 gjkepa2_impl::EPA::getedgedist(gjkepa2_impl::EPA::sFace*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, double&)  (in pybullet.cpython-314-darwin.so) + 116  [0x107f3ada8]
+      + ! : |     + !   : |     + ! :   | + ! : | 1 gjkepa2_impl::EPA::Evaluate(gjkepa2_impl::GJK&, btVector3 const&)  (in pybullet.cpython-314-darwin.so) + 900  [0x107f0feac]
+      + ! : |     + !   : |     + ! :   | + ! : | + 1 gjkepa2_impl::EPA::expand(unsigned int, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::EPA::sFace*, unsigned int, gjkepa2_impl::EPA::sHorizon&)  (in pybullet.cpython-314-darwin.so) + 128  [0x107f3abdc]
+      + ! : |     + !   : |     + ! :   | + ! : | 1 gjkepa2_impl::EPA::expand(unsigned int, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::EPA::sFace*, unsigned int, gjkepa2_impl::EPA::sHorizon&)  (in pybullet.cpython-314-darwin.so) + 464  [0x107f3ad2c]
+      + ! : |     + !   : |     + ! :   | + ! : | 1 gjkepa2_impl::EPA::newface(gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, bool)  (in pybullet.cpython-314-darwin.so) + 632  [0x107f3ab58]
+      + ! : |     + !   : |     + ! :   | + ! : 5 gjkepa2_impl::EPA::Evaluate(gjkepa2_impl::GJK&, btVector3 const&)  (in pybullet.cpython-314-darwin.so) + 932  [0x107f0fecc]
+      + ! : |     + !   : |     + ! :   | + ! : | 5 gjkepa2_impl::EPA::expand(unsigned int, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::EPA::sFace*, unsigned int, gjkepa2_impl::EPA::sHorizon&)  (in pybullet.cpython-314-darwin.so) + 164  [0x107f3ac00]
+      + ! : |     + !   : |     + ! :   | + ! : |   3 gjkepa2_impl::EPA::newface(gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, bool)  (in pybullet.cpython-314-darwin.so) + 396,604  [0x107f3aa6c,0x107f3ab3c]
+      + ! : |     + !   : |     + ! :   | + ! : |   2 gjkepa2_impl::EPA::newface(gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, bool)  (in pybullet.cpython-314-darwin.so) + 316  [0x107f3aa1c]
+      + ! : |     + !   : |     + ! :   | + ! : |     2 gjkepa2_impl::EPA::getedgedist(gjkepa2_impl::EPA::sFace*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, double&)  (in pybullet.cpython-314-darwin.so) + 32  [0x107f3ad54]
+      + ! : |     + !   : |     + ! :   | + ! : 3 gjkepa2_impl::EPA::Evaluate(gjkepa2_impl::GJK&, btVector3 const&)  (in pybullet.cpython-314-darwin.so) + 824  [0x107f0fe60]
+      + ! : |     + !   : |     + ! :   | + ! : | 2 gjkepa2_impl::MinkowskiDiff::Support(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 72,176  [0x107f3a230,0x107f3a298]
+      + ! : |     + !   : |     + ! :   | + ! : | 1 gjkepa2_impl::MinkowskiDiff::Support(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 204  [0x107f3a2b4]
+      + ! : |     + !   : |     + ! :   | + ! : |   1 btConvexShape::localGetSupportVertexNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 236  [0x107f15efc]
+      + ! : |     + !   : |     + ! :   | + ! : 3 gjkepa2_impl::EPA::Evaluate(gjkepa2_impl::GJK&, btVector3 const&)  (in pybullet.cpython-314-darwin.so) + 808,984,...  [0x107f0fe50,0x107f0ff00,...]
+      + ! : |     + !   : |     + ! :   | + ! : 1 gjkepa2_impl::EPA::Evaluate(gjkepa2_impl::GJK&, btVector3 const&)  (in pybullet.cpython-314-darwin.so) + 396  [0x107f0fcb4]
+      + ! : |     + !   : |     + ! :   | + ! :   1 gjkepa2_impl::EPA::newface(gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, bool)  (in pybullet.cpython-314-darwin.so) + 272  [0x107f3a9f0]
+      + ! : |     + !   : |     + ! :   | + ! 13 btGjkEpaSolver2::Penetration(btConvexShape const*, btTransform const&, btConvexShape const*, btTransform const&, btVector3 const&, btGjkEpaSolver2::sResults&, bool)  (in pybullet.cpython-314-darwin.so) + 164  [0x107f0a4d0]
+      + ! : |     + !   : |     + ! :   | + ! : 8 gjkepa2_impl::GJK::Evaluate(gjkepa2_impl::MinkowskiDiff const&, btVector3 const&)  (in pybullet.cpython-314-darwin.so) + 612  [0x107f0f72c]
+      + ! : |     + !   : |     + ! :   | + ! : | 4 gjkepa2_impl::MinkowskiDiff::Support(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 204  [0x107f3a2b4]
+      + ! : |     + !   : |     + ! :   | + ! : | + 3 btConvexShape::localGetSupportVertexNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 160  [0x107f15eb0]
+      + ! : |     + !   : |     + ! :   | + ! : | + ! 3 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 400,436  [0x107f0d408,0x107f0d42c]
+      + ! : |     + !   : |     + ! :   | + ! : | + 1 btConvexShape::localGetSupportVertexNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 160  [0x107f15eb0]
+      + ! : |     + !   : |     + ! :   | + ! : | 4 gjkepa2_impl::MinkowskiDiff::Support(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 52,104,...  [0x107f3a21c,0x107f3a250,...]
+      + ! : |     + !   : |     + ! :   | + ! : 2 gjkepa2_impl::GJK::Evaluate(gjkepa2_impl::MinkowskiDiff const&, btVector3 const&)  (in pybullet.cpython-314-darwin.so) + 1100  [0x107f0f914]
+      + ! : |     + !   : |     + ! :   | + ! : | 2 gjkepa2_impl::GJK::projectorigin(btVector3 const&, btVector3 const&, btVector3 const&, double*, unsigned int&)  (in pybullet.cpython-314-darwin.so) + 148,160  [0x107f39b74,0x107f39b80]
+      + ! : |     + !   : |     + ! :   | + ! : 2 gjkepa2_impl::GJK::Evaluate(gjkepa2_impl::MinkowskiDiff const&, btVector3 const&)  (in pybullet.cpython-314-darwin.so) + 1140  [0x107f0f93c]
+      + ! : |     + !   : |     + ! :   | + ! : | 2 gjkepa2_impl::GJK::projectorigin(btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double*, unsigned int&)  (in pybullet.cpython-314-darwin.so) + 64,136  [0x107f39e7c,0x107f39ec4]
+      + ! : |     + !   : |     + ! :   | + ! : 1 gjkepa2_impl::GJK::Evaluate(gjkepa2_impl::MinkowskiDiff const&, btVector3 const&)  (in pybullet.cpython-314-darwin.so) + 348  [0x107f0f624]
+      + ! : |     + !   : |     + ! :   | + ! :   1 gjkepa2_impl::MinkowskiDiff::Support(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 80  [0x107f3a238]
+      + ! : |     + !   : |     + ! :   | + ! :     1 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 1092  [0x107f0d6bc]
+      + ! : |     + !   : |     + ! :   | + ! 10 btGjkEpaSolver2::Penetration(btConvexShape const*, btTransform const&, btConvexShape const*, btTransform const&, btVector3 const&, btGjkEpaSolver2::sResults&, bool)  (in pybullet.cpython-314-darwin.so) + 272,264,...  [0x107f0a53c,0x107f0a534,...]
+      + ! : |     + !   : |     + ! :   | + ! 2 btGjkEpaSolver2::Penetration(btConvexShape const*, btTransform const&, btConvexShape const*, btTransform const&, btVector3 const&, btGjkEpaSolver2::sResults&, bool)  (in pybullet.cpython-314-darwin.so) + 452  [0x107f0a5f0]
+      + ! : |     + !   : |     + ! :   | + !   1 btConvexShape::localGetSupportVertexNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 160  [0x107f15eb0]
+      + ! : |     + !   : |     + ! :   | + !   | 1 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 28  [0x107f0d294]
+      + ! : |     + !   : |     + ! :   | + !   1 btConvexShape::localGetSupportVertexNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 144  [0x107f15ea0]
+      + ! : |     + !   : |     + ! :   | + 2 btGjkEpaPenetrationDepthSolver::calcPenDepth(btVoronoiSimplexSolver&, btConvexShape const*, btConvexShape const*, btTransform const&, btTransform const&, btVector3&, btVector3&, btVector3&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 224,408  [0x107f0a268,0x107f0a320]
+      + ! : |     + !   : |     + ! :   | + 1 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 3664  [0x107f0c2e4]
+      + ! : |     + !   : |     + ! :   | 20 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 2752  [0x107f0bf54]
+      + ! : |     + !   : |     + ! :   | + 13 btVoronoiSimplexSolver::updateClosestVectorAndPoints()  (in pybullet.cpython-314-darwin.so) + 148  [0x107f11a2c]
+      + ! : |     + !   : |     + ! :   | + ! 7 btVoronoiSimplexSolver::updateClosestVectorAndPoints()  (in pybullet.cpython-314-darwin.so) + 148  [0x107f11a2c]
+      + ! : |     + !   : |     + ! :   | + ! : 7 btVoronoiSimplexSolver::closestPtPointTetrahedron(btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btSubSimplexClosestResult&)  (in pybullet.cpython-314-darwin.so) + 108,120,...  [0x107f12574,0x107f12580,...]
+      + ! : |     + !   : |     + ! :   | + ! 3 btVoronoiSimplexSolver::closestPtPointTetrahedron(btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btSubSimplexClosestResult&)  (in pybullet.cpython-314-darwin.so) + 784  [0x107f12818]
+      + ! : |     + !   : |     + ! :   | + ! : 3 btVoronoiSimplexSolver::closestPtPointTriangle(btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btSubSimplexClosestResult&)  (in pybullet.cpython-314-darwin.so) + 416,568,...  [0x107f12398,0x107f12430,...]
+      + ! : |     + !   : |     + ! :   | + ! 2 btVoronoiSimplexSolver::closestPtPointTetrahedron(btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btSubSimplexClosestResult&)  (in pybullet.cpython-314-darwin.so) + 1080  [0x107f12940]
+      + ! : |     + !   : |     + ! :   | + ! : 2 btVoronoiSimplexSolver::closestPtPointTriangle(btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btSubSimplexClosestResult&)  (in pybullet.cpython-314-darwin.so) + 380  [0x107f12374]
+      + ! : |     + !   : |     + ! :   | + ! 1 btVoronoiSimplexSolver::closestPtPointTetrahedron(btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btSubSimplexClosestResult&)  (in pybullet.cpython-314-darwin.so) + 928  [0x107f128a8]
+      + ! : |     + !   : |     + ! :   | + !   1 btVoronoiSimplexSolver::closestPtPointTriangle(btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btSubSimplexClosestResult&)  (in pybullet.cpython-314-darwin.so) + 592  [0x107f12448]
+      + ! : |     + !   : |     + ! :   | + 4 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 2084,2092,...  [0x107f0bcb8,0x107f0bcc0,...]
+      + ! : |     + !   : |     + ! :   | + 3 btVoronoiSimplexSolver::updateClosestVectorAndPoints()  (in pybullet.cpython-314-darwin.so) + 32,72,...  [0x107f119b8,0x107f119e0,...]
+      + ! : |     + !   : |     + ! :   | 9 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 1740  [0x107f0bb60]
+      + ! : |     + !   : |     + ! :   | + 4 btDoSimplex3(btSimplex*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 84  [0x107f395a8]
+      + ! : |     + !   : |     + ! :   | + ! 4 btVec3PointTriDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 216,256,...  [0x107f0cacc,0x107f0caf4,...]
+      + ! : |     + !   : |     + ! :   | + 4 btDoSimplex3(btSimplex*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 124,408,...  [0x107f395d0,0x107f396ec,...]
+      + ! : |     + !   : |     + ! :   | + 1 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 1748  [0x107f0bb68]
+      + ! : |     + !   : |     + ! :   | 9 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 2140  [0x107f0bcf0]
+      + ! : |     + !   : |     + ! :   | + 6 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 2384,2616,...  [0x107f0bde4,0x107f0becc,...]
+      + ! : |     + !   : |     + ! :   | + 3 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 344,348,...  [0x107f0d3d0,0x107f0d3d4,...]
+      + ! : |     + !   : |     + ! :   | 8 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 620  [0x107f0b700]
+      + ! : |     + !   : |     + ! :   | + 4 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 624,688,...  [0x107f0b704,0x107f0b744,...]
+      + ! : |     + !   : |     + ! :   | + 2 btComputeSupport(btConvexShape const*, btTransform const&, btConvexShape const*, btTransform const&, btVector3 const&, bool, btVector3&, btVector3&, btVector3&)  (in pybullet.cpython-314-darwin.so) + 156,208  [0x107f0d0f4,0x107f0d128]
+      + ! : |     + !   : |     + ! :   | + 1 btComputeSupport(btConvexShape const*, btTransform const&, btConvexShape const*, btTransform const&, btVector3 const&, bool, btVector3&, btVector3&, btVector3&)  (in pybullet.cpython-314-darwin.so) + 244  [0x107f0d14c]
+      + ! : |     + !   : |     + ! :   | + ! 1 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 404  [0x107f0d40c]
+      + ! : |     + !   : |     + ! :   | + 1 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 1092  [0x107f0d6bc]
+      + ! : |     + !   : |     + ! :   | 8 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 1012  [0x107f0b888]
+      + ! : |     + !   : |     + ! :   | + 6 btVec3PointTriDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 80,256,...  [0x107f0ca44,0x107f0caf4,...]
+      + ! : |     + !   : |     + ! :   | + 2 btVec3PointTriDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 580  [0x107f0cc38]
+      + ! : |     + !   : |     + ! :   | +   2 btVec3PointSegmentDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 40,88  [0x107f0cf20,0x107f0cf50]
+      + ! : |     + !   : |     + ! :   | 7 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 1092  [0x107f0b8d8]
+      + ! : |     + !   : |     + ! :   | + 5 btVec3PointTriDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 108,560,...  [0x107f0ca60,0x107f0cc24,...]
+      + ! : |     + !   : |     + ! :   | + 2 btVec3PointTriDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 580  [0x107f0cc38]
+      + ! : |     + !   : |     + ! :   | +   2 btVec3PointSegmentDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 148,340  [0x107f0cf8c,0x107f0d04c]
+      + ! : |     + !   : |     + ! :   | 5 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 964  [0x107f0b858]
+      + ! : |     + !   : |     + ! :   | + 5 btVec3PointTriDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 120,204,...  [0x107f0ca6c,0x107f0cac0,...]
+      + ! : |     + !   : |     + ! :   | 3 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 1132  [0x107f0b900]
+      + ! : |     + !   : |     + ! :   | + 2 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 1364,1544  [0x107f0b9e8,0x107f0ba9c]
+      + ! : |     + !   : |     + ! :   | + 1 btVec3PointTriDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 356  [0x107f0cb58]
+      + ! : |     + !   : |     + ! :   | 3 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 2116  [0x107f0bcd8]
+      + ! : |     + !   : |     + ! :   | + 2 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 460  [0x107f0d444]
+      + ! : |     + !   : |     + ! :   | + 1 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 2132  [0x107f0bce8]
+      + ! : |     + !   : |     + ! :   | 3 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 4192  [0x107f0c4f4]
+      + ! : |     + !   : |     + ! :   | + 3 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 396,436,...  [0x107f0d404,0x107f0d42c,...]
+      + ! : |     + !   : |     + ! :   | 2 btConvexConvexAlgorithm::processCollision(btCollisionObjectWrapper const*, btCollisionObjectWrapper const*, btDispatcherInfo const&, btManifoldResult*)  (in pybullet.cpython-314-darwin.so) + 1828  [0x107ef7d70]
+      + ! : |     + !   : |     + ! :   | + 2 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 100,176  [0x107f0b4f8,0x107f0b544]
+      + ! : |     + !   : |     + ! :   | 2 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 464  [0x107f0b664]
+      + ! : |     + !   : |     + ! :   | + 1 btComputeSupport(btConvexShape const*, btTransform const&, btConvexShape const*, btTransform const&, btVector3 const&, bool, btVector3&, btVector3&, btVector3&)  (in pybullet.cpython-314-darwin.so) + 244  [0x107f0d14c]
+      + ! : |     + !   : |     + ! :   | + ! 1 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 216  [0x107f0d350]
+      + ! : |     + !   : |     + ! :   | + 1 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 584  [0x107f0b6dc]
+      + ! : |     + !   : |     + ! :   | 1 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 1092  [0x107f0d6bc]
+      + ! : |     + !   : |     + ! :   | 1 btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 4556  [0x107f0c660]
+      + ! : |     + !   : |     + ! :   |   1 btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 1060  [0x107f0d69c]
+      + ! : |     + !   : |     + ! :   2 btConvexConvexAlgorithm::processCollision(btCollisionObjectWrapper const*, btCollisionObjectWrapper const*, btDispatcherInfo const&, btManifoldResult*)  (in pybullet.cpython-314-darwin.so) + 3664  [0x107ef849c]
+      + ! : |     + !   : |     + ! :   | 1 btConvexConvexAlgorithm::processCollision(btCollisionObjectWrapper const*, btCollisionObjectWrapper const*, btDispatcherInfo const&, btManifoldResult*)  (in pybullet.cpython-314-darwin.so) + 3676  [0x107ef84a8]
+      + ! : |     + !   : |     + ! :   | 1 btPersistentManifold::refreshContactPoints(btTransform const&, btTransform const&)  (in pybullet.cpython-314-darwin.so) + 332  [0x107f111f0]
+      + ! : |     + !   : |     + ! :   1 btConvexConvexAlgorithm::processCollision(btCollisionObjectWrapper const*, btCollisionObjectWrapper const*, btDispatcherInfo const&, btManifoldResult*)  (in pybullet.cpython-314-darwin.so) + 3732  [0x107ef84e0]
+      + ! : |     + !   : |     + ! 3 btCompoundCompoundCollisionAlgorithm::processCollision(btCollisionObjectWrapper const*, btCollisionObjectWrapper const*, btDispatcherInfo const&, btManifoldResult*)  (in pybullet.cpython-314-darwin.so) + 1244  [0x107eeea10]
+      + ! : |     + !   : |     + ! : 3 btConvexConvexAlgorithm::getAllContactManifolds(btAlignedObjectArray<btPersistentManifold*>&)  (in pybullet.cpython-314-darwin.so) + 36  [0x107f31e6c]
+      + ! : |     + !   : |     + ! 2 btCollisionDispatcher::defaultNearCallback(btBroadphasePair&, btCollisionDispatcher&, btDispatcherInfo const&)  (in pybullet.cpython-314-darwin.so) + 268  [0x107efaf00]
+      + ! : |     + !   : |     + !   2 btCompoundCompoundCollisionAlgorithm::processCollision(btCollisionObjectWrapper const*, btCollisionObjectWrapper const*, btDispatcherInfo const&, btManifoldResult*)  (in pybullet.cpython-314-darwin.so) + 1436  [0x107eeead0]
+      + ! : |     + !   : |     + 6 btCollisionDispatcher::defaultNearCallback(btBroadphasePair&, btCollisionDispatcher&, btDispatcherInfo const&)  (in pybullet.cpython-314-darwin.so) + 88  [0x107efae4c]
+      + ! : |     + !   : |     + ! 5 btCollisionDispatcher::needsCollision(btCollisionObject const*, btCollisionObject const*)  (in pybullet.cpython-314-darwin.so) + 112  [0x107efb694]
+      + ! : |     + !   : |     + ! : 3 btMultiBodyLinkCollider::checkCollideWithOverride(btCollisionObject const*) const  (in pybullet.cpython-314-darwin.so) + 40,12  [0x107c7961c,0x107c79600]
+      + ! : |     + !   : |     + ! : 2 btCollisionDispatcher::needsCollision(btCollisionObject const*, btCollisionObject const*)  (in pybullet.cpython-314-darwin.so) + 112  [0x107efb694]
+      + ! : |     + !   : |     + ! 1 btCollisionDispatcher::defaultNearCallback(btBroadphasePair&, btCollisionDispatcher&, btDispatcherInfo const&)  (in pybullet.cpython-314-darwin.so) + 88  [0x107efae4c]
+      + ! : |     + !   : |     + !   1 btCollisionDispatcher::needsCollision(btCollisionObject const*, btCollisionObject const*)  (in pybullet.cpython-314-darwin.so) + 76  [0x107efb670]
+      + ! : |     + !   : |     + 1 btCollisionDispatcher::defaultNearCallback(btBroadphasePair&, btCollisionDispatcher&, btDispatcherInfo const&)  (in pybullet.cpython-314-darwin.so) + 68  [0x107efae38]
+      + ! : |     + !   : |     1 btCollisionPairCallback::processOverlap(btBroadphasePair&)  (in pybullet.cpython-314-darwin.so) + 32  [0x107f37e0c]
+      + ! : |     + !   : 125 btCollisionWorld::performDiscreteCollisionDetection()  (in pybullet.cpython-314-darwin.so) + 76  [0x107efeef8]
+      + ! : |     + !   : | 123 btCollisionWorld::updateAabbs()  (in pybullet.cpython-314-darwin.so) + 144  [0x107efedc8]
+      + ! : |     + !   : | + 122 btCollisionWorld::updateSingleAabb(btCollisionObject*)  (in pybullet.cpython-314-darwin.so) + 504  [0x107efec74]
+      + ! : |     + !   : | + ! 73 btDbvtBroadphase::setAabb(btBroadphaseProxy*, btVector3 const&, btVector3 const&, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 628  [0x107ee5b34]
+      + ! : |     + !   : | + ! : 53 btDbvt::collideTTpersistentStack(btDbvtNode const*, btDbvtNode const*, btDbvt::ICollide&)  (in pybullet.cpython-314-darwin.so) + 320,728,...  [0x107ee5d58,0x107ee5ef0,...]
+      + ! : |     + !   : | + ! : 20 btDbvt::collideTTpersistentStack(btDbvtNode const*, btDbvtNode const*, btDbvt::ICollide&)  (in pybullet.cpython-314-darwin.so) + 796  [0x107ee5f34]
+      + ! : |     + !   : | + ! :   18 btDbvtTreeCollider::Process(btDbvtNode const*, btDbvtNode const*)  (in pybullet.cpython-314-darwin.so) + 56  [0x107f35b08]
+      + ! : |     + !   : | + ! :   + 10 btHashedOverlappingPairCache::internalAddPair(btBroadphaseProxy*, btBroadphaseProxy*)  (in pybullet.cpython-314-darwin.so) + 140,164,...  [0x107ee3970,0x107ee3988,...]
+      + ! : |     + !   : | + ! :   + 8 btHashedOverlappingPairCache::addOverlappingPair(btBroadphaseProxy*, btBroadphaseProxy*)  (in pybullet.cpython-314-darwin.so) + 40  [0x107f30cb8]
+      + ! : |     + !   : | + ! :   +   5 MyOverlapFilterCallback::needBroadphaseCollision(btBroadphaseProxy*, btBroadphaseProxy*) const  (in pybullet.cpython-314-darwin.so) + 40  [0x107d71b48]
+      + ! : |     + !   : | + ! :   +   : 5 b3PluginManager::getCollisionInterface()  (in pybullet.cpython-314-darwin.so) + 32,120  [0x107da5100,0x107da5158]
+      + ! : |     + !   : | + ! :   +   3 MyOverlapFilterCallback::needBroadphaseCollision(btBroadphaseProxy*, btBroadphaseProxy*) const  (in pybullet.cpython-314-darwin.so) + 96,40  [0x107d71b80,0x107d71b48]
+      + ! : |     + !   : | + ! :   1 btDbvtTreeCollider::Process(btDbvtNode const*, btDbvtNode const*)  (in pybullet.cpython-314-darwin.so) + 40  [0x107f35af8]
+      + ! : |     + !   : | + ! :   1 btHashedOverlappingPairCache::internalAddPair(btBroadphaseProxy*, btBroadphaseProxy*)  (in pybullet.cpython-314-darwin.so) + 548  [0x107ee3b08]
+      + ! : |     + !   : | + ! 41 btDbvtBroadphase::setAabb(btBroadphaseProxy*, btVector3 const&, btVector3 const&, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 832  [0x107ee5c00]
+      + ! : |     + !   : | + ! : 24 btDbvt::update(btDbvtNode*, btDbvtAabbMm&, btVector3 const&, double)  (in pybullet.cpython-314-darwin.so) + 364  [0x107ee269c]
+      + ! : |     + !   : | + ! : | 24 insertleaf(btDbvt*, btDbvtNode*, btDbvtNode*)  (in pybullet.cpython-314-darwin.so) + 424,164,...  [0x107ee2224,0x107ee2120,...]
+      + ! : |     + !   : | + ! : 13 btDbvt::update(btDbvtNode*, btDbvtAabbMm&, btVector3 const&, double)  (in pybullet.cpython-314-darwin.so) + 288  [0x107ee2650]
+      + ! : |     + !   : | + ! : | 13 removeleaf(btDbvt*, btDbvtNode*)  (in pybullet.cpython-314-darwin.so) + 324,300,...  [0x107ee2478,0x107ee2460,...]
+      + ! : |     + !   : | + ! : 2 removeleaf(btDbvt*, btDbvtNode*)  (in pybullet.cpython-314-darwin.so) + 376  [0x107ee24ac]
+      + ! : |     + !   : | + ! : 1 btDbvt::update(btDbvtNode*, btDbvtAabbMm&, btVector3 const&, double)  (in pybullet.cpython-314-darwin.so) + 296  [0x107ee2658]
+      + ! : |     + !   : | + ! : 1 insertleaf(btDbvt*, btDbvtNode*, btDbvtNode*)  (in pybullet.cpython-314-darwin.so) + 688  [0x107ee232c]
+      + ! : |     + !   : | + ! 8 btDbvtBroadphase::setAabb(btBroadphaseProxy*, btVector3 const&, btVector3 const&, btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 776,72,...  [0x107ee5bc8,0x107ee5908,...]
+      + ! : |     + !   : | + 1 btCollisionWorld::updateSingleAabb(btCollisionObject*)  (in pybullet.cpython-314-darwin.so) + 72  [0x107efeac4]
+      + ! : |     + !   : | +   1 btCompoundShape::getAabb(btTransform const&, btVector3&, btVector3&) const  (in pybullet.cpython-314-darwin.so) + 372  [0x107f1b83c]
+      + ! : |     + !   : | 1 btCollisionWorld::updateAabbs()  (in pybullet.cpython-314-darwin.so) + 128  [0x107efedb8]
+      + ! : |     + !   : | 1 btCollisionWorld::updateSingleAabb(btCollisionObject*)  (in pybullet.cpython-314-darwin.so) + 536  [0x107efec94]
+      + ! : |     + !   : 7 btCollisionWorld::performDiscreteCollisionDetection()  (in pybullet.cpython-314-darwin.so) + 92  [0x107efef08]
+      + ! : |     + !   :   7 btCollisionWorld::computeOverlappingPairs()  (in pybullet.cpython-314-darwin.so) + 72  [0x107efee64]
+      + ! : |     + !   :     7 btDbvtBroadphase::calculateOverlappingPairs(btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 24  [0x107ee61ac]
+      + ! : |     + !   :       4 btDbvtBroadphase::collide(btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 756,676,...  [0x107ee64b4,0x107ee6464,...]
+      + ! : |     + !   :       3 btDbvtBroadphase::collide(btDispatcher*)  (in pybullet.cpython-314-darwin.so) + 100  [0x107ee6224]
+      + ! : |     + !   :         1 btDbvt::optimizeIncremental(int)  (in pybullet.cpython-314-darwin.so) + 152  [0x107ee1e7c]
+      + ! : |     + !   :         ! 1 insertleaf(btDbvt*, btDbvtNode*, btDbvtNode*)  (in pybullet.cpython-314-darwin.so) + 156  [0x107ee2118]
+      + ! : |     + !   :         1 btDbvt::optimizeIncremental(int)  (in pybullet.cpython-314-darwin.so) + 252  [0x107ee1ee0]
+      + ! : |     + !   :         1 removeleaf(btDbvt*, btDbvtNode*)  (in pybullet.cpython-314-darwin.so) + 376  [0x107ee24ac]
+      + ! : |     + !   11 btDiscreteDynamicsWorld::internalSingleStepSimulation(double)  (in pybullet.cpython-314-darwin.so) + 224  [0x107f43270]
+      + ! : |     + !   : 8 btMultiBodyDynamicsWorld::integrateMultiBodyTransforms(double)  (in pybullet.cpython-314-darwin.so) + 984  [0x107f87f94]
+      + ! : |     + !   : | 8 btMultiBody::updateCollisionObjectWorldTransforms(btAlignedObjectArray<btQuaternion>&, btAlignedObjectArray<btVector3>&)  (in pybullet.cpython-314-darwin.so) + 1300,800,...  [0x107f83a14,0x107f83820,...]
+      + ! : |     + !   : 3 btMultiBodyDynamicsWorld::integrateMultiBodyTransforms(double)  (in pybullet.cpython-314-darwin.so) + 660  [0x107f87e50]
+      + ! : |     + !   :   2 btMultiBody::stepPositionsMultiDof(double, double*, double*)  (in pybullet.cpython-314-darwin.so) + 1484  [0x107f82224]
+      + ! : |     + !   :   + 1 btMultibodyLink::updateCacheMultiDof(double*)  (in pybullet.cpython-314-darwin.so) + 1224  [0x107f79c48]
+      + ! : |     + !   :   + ! 1 cos  (in libsystem_m.dylib) + 28  [0x1a93336f8]
+      + ! : |     + !   :   + 1 btMultibodyLink::updateCacheMultiDof(double*)  (in pybullet.cpython-314-darwin.so) + 100  [0x107f797e4]
+      + ! : |     + !   :   1 btMultiBody::stepPositionsMultiDof(double, double*, double*)  (in pybullet.cpython-314-darwin.so) + 404  [0x107f81dec]
+      + ! : |     + !   :     1 btMultiBody::stepPositionsMultiDof(double, double*, double*)  (in pybullet.cpython-314-darwin.so) + 508  [0x107f81e54]
+      + ! : |     + !   7 btDiscreteDynamicsWorld::internalSingleStepSimulation(double)  (in pybullet.cpython-314-darwin.so) + 180  [0x107f43244]
+      + ! : |     + !   : 4 btMultiBodyDynamicsWorld::calculateSimulationIslands()  (in pybullet.cpython-314-darwin.so) + 80  [0x107f84e54]
+      + ! : |     + !   : | 4 btSimulationIslandManager::findUnions(btDispatcher*, btCollisionWorld*)  (in pybullet.cpython-314-darwin.so) + 252,180,...  [0x107ef4e04,0x107ef4dbc,...]
+      + ! : |     + !   : 2 btMultiBodyDynamicsWorld::calculateSimulationIslands()  (in pybullet.cpython-314-darwin.so) + 0,688  [0x107f84e04,0x107f850b4]
+      + ! : |     + !   : 1 btMultiBodyDynamicsWorld::calculateSimulationIslands()  (in pybullet.cpython-314-darwin.so) + 912  [0x107f85194]
+      + ! : |     + !   :   1 btMultiBodyJointMotor::getIslandIdA() const  (in pybullet.cpython-314-darwin.so) + 32  [0x107f8993c]
+      + ! : |     + !   2 btDiscreteDynamicsWorld::internalSingleStepSimulation(double)  (in pybullet.cpython-314-darwin.so) + 328  [0x107f432d8]
+      + ! : |     + !   : 2 btMultiBodyDynamicsWorld::updateActivationState(double)  (in pybullet.cpython-314-darwin.so) + 104,220  [0x107f85308,0x107f8537c]
+      + ! : |     + !   1 btDiscreteDynamicsWorld::internalSingleStepSimulation(double)  (in pybullet.cpython-314-darwin.so) + 100  [0x107f431f4]
+      + ! : |     + !   : 1 btSoftMultiBodyDynamicsWorld::predictUnconstraintMotion(double)  (in pybullet.cpython-314-darwin.so) + 48  [0x107eddf34]
+      + ! : |     + !   :   1 btDiscreteDynamicsWorld::predictUnconstraintMotion(double)  (in pybullet.cpython-314-darwin.so) + 160  [0x107f456f8]
+      + ! : |     + !   1 btDiscreteDynamicsWorld::internalSingleStepSimulation(double)  (in pybullet.cpython-314-darwin.so) + 148  [0x107f43224]
+      + ! : |     + !     1 btDiscreteDynamicsWorld::createPredictiveContacts(double)  (in pybullet.cpython-314-darwin.so) + 68  [0x107f4505c]
+      + ! : |     + !       1 CProfileSample::CProfileSample(char const*)  (in pybullet.cpython-314-darwin.so) + 40  [0x107fb0a7c]
+      + ! : |     + 2 btDiscreteDynamicsWorld::stepSimulation(double, int, double)  (in pybullet.cpython-314-darwin.so) + 344  [0x107f43174]
+      + ! : |     +   2 btMultiBodyDynamicsWorld::clearMultiBodyForces()  (in pybullet.cpython-314-darwin.so) + 144  [0x107f88fcc]
+      + ! : |     12 PhysicsServerCommandProcessor::processForwardDynamicsCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 428  [0x107d59e14]
+      + ! : |     + 4 PhysicsServerCommandProcessor::addBodyChangedNotifications()  (in pybullet.cpython-314-darwin.so) + 512  [0x107d5a178]
+      + ! : |     + ! 4 btMatrix3x3::getRotation(btQuaternion&) const  (in pybullet.cpython-314-darwin.so) + 40,212,...  [0x107c6ccbc,0x107c6cd68,...]
+      + ! : |     + 3 PhysicsServerCommandProcessor::addBodyChangedNotifications()  (in pybullet.cpython-314-darwin.so) + 532  [0x107d5a18c]
+      + ! : |     + ! 3 btMatrix3x3::getRotation(btQuaternion&) const  (in pybullet.cpython-314-darwin.so) + 40,332,...  [0x107c6ccbc,0x107c6cde0,...]
+      + ! : |     + 1 PhysicsServerCommandProcessor::addBodyChangedNotifications()  (in pybullet.cpython-314-darwin.so) + 108  [0x107d59fe4]
+      + ! : |     + ! 1 b3ResizablePool<b3PoolBodyHandle<InternalBodyData>>::getUsedHandles(b3AlignedObjectArray<int>&) const  (in pybullet.cpython-314-darwin.so) + 404  [0x107d4fbc4]
+      + ! : |     + !   1 free_tiny  (in libsystem_malloc.dylib) + 0  [0x19c572500]
+      + ! : |     + 1 PhysicsServerCommandProcessor::addBodyChangedNotifications()  (in pybullet.cpython-314-darwin.so) + 324  [0x107d5a0bc]
+      + ! : |     + ! 1 btMatrix3x3::getRotation(btQuaternion&) const  (in pybullet.cpython-314-darwin.so) + 356  [0x107c6cdf8]
+      + ! : |     + 1 PhysicsServerCommandProcessor::addBodyChangedNotifications()  (in pybullet.cpython-314-darwin.so) + 572  [0x107d5a1b4]
+      + ! : |     + ! 1 btMatrix3x3::getRotation(btQuaternion&) const  (in pybullet.cpython-314-darwin.so) + 340  [0x107c6cde8]
+      + ! : |     + 1 PhysicsServerCommandProcessor::addBodyChangedNotifications()  (in pybullet.cpython-314-darwin.so) + 596  [0x107d5a1cc]
+      + ! : |     + ! 1 btCompoundShape::getLocalScaling() const  (in pybullet.cpython-314-darwin.so) + 0  [0x107f335b4]
+      + ! : |     + 1 PhysicsServerCommandProcessor::addBodyChangedNotifications()  (in pybullet.cpython-314-darwin.so) + 60  [0x107d59fb4]
+      + ! : |     1 PhysicsServerCommandProcessor::processForwardDynamicsCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 288  [0x107d59d88]
+      + ! : |     + 1 btMultiBody::addJointTorqueMultiDof(int, int, double)  (in pybullet.cpython-314-darwin.so) + 24  [0x107f7b900]
+      + ! : |     1 PhysicsServerCommandProcessor::processForwardDynamicsCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 212  [0x107d59d3c]
+      + ! : |     1 btDiscreteDynamicsWorld::stepSimulation(double, int, double)  (in pybullet.cpython-314-darwin.so) + 364  [0x107f43188]
+      + ! : 1 b3SubmitClientCommandAndWaitStatus  (in pybullet.cpython-314-darwin.so) + 204  [0x107d1e048]
+      + ! : | 1 b3Clock::getTimeInSeconds()  (in pybullet.cpython-314-darwin.so) + 48  [0x107e636dc]
+      + ! : |   1 gettimeofday  (in libsystem_c.dylib) + 56  [0x19c5fadd4]
+      + ! : |     1 __commpage_gettimeofday_internal  (in libsystem_kernel.dylib) + 44  [0x19c71ecd8]
+      + ! : |       1 mach_absolute_time  (in libsystem_kernel.dylib) + 108  [0x19c71d2c0]
+      + ! : 1 b3SubmitClientCommandAndWaitStatus  (in pybullet.cpython-314-darwin.so) + 264  [0x107d1e084]
+      + ! :   1 PhysicsDirect::processServerStatus()  (in pybullet.cpython-314-darwin.so) + 132  [0x107d31f30]
+      + ! :     1 PhysicsDirect::postProcessStatus(SharedMemoryStatus const&)  (in pybullet.cpython-314-darwin.so) + 6860  [0x107d31c04]
+      + ! 2 Physics::step(State const&, Action const&, bool)  (in expert_compatible) + 544  [0x100f73168]
+      + ! : 1 b3SubmitClientCommandAndWaitStatus  (in pybullet.cpython-314-darwin.so) + 144  [0x107d1e00c]
+      + ! : | 1 PhysicsDirect::submitClientCommand(SharedMemoryCommand const&)  (in pybullet.cpython-314-darwin.so) + 204  [0x107d35394]
+      + ! : |   1 PhysicsServerCommandProcessor::processCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 660  [0x107d6c738]
+      + ! : |     1 PhysicsServerCommandProcessor::processSendDesiredStateCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 13800  [0x107d540ac]
+      + ! : 1 b3SubmitClientCommandAndWaitStatus  (in pybullet.cpython-314-darwin.so) + 204  [0x107d1e048]
+      + ! :   1 b3Clock::getTimeInSeconds()  (in pybullet.cpython-314-darwin.so) + 48  [0x107e636dc]
+      + ! :     1 gettimeofday  (in libsystem_c.dylib) + 56  [0x19c5fadd4]
+      + ! :       1 __commpage_gettimeofday_internal  (in libsystem_kernel.dylib) + 44  [0x19c71ecd8]
+      + ! :         1 mach_absolute_time  (in libsystem_kernel.dylib) + 108  [0x19c71d2c0]
+      + ! 1 Physics::step(State const&, Action const&, bool)  (in expert_compatible) + 452  [0x100f7310c]
+      + ! : 1 b3JointControlSetDesiredForceTorque  (in pybullet.cpython-314-darwin.so) + 40  [0x107d1b4b0]
+      + ! 1 Physics::step(State const&, Action const&, bool)  (in expert_compatible) + 1400  [0x100f734c0]
+      + !   1 b3InitStepSimulationCommand  (in pybullet.cpython-314-darwin.so) + 0  [0x107d1ac6c]
+      + 51 main  (in expert_compatible) + 7656  [0x100f4d314]
+      + ! 15 Expert::act(State const&, double)  (in expert_compatible) + 2580  [0x100f7d180]
+      + ! : 15 numpy_sigma_min(Eigen::Matrix<double, 3, 7, 0, 3, 7> const&)  (in expert_compatible) + 208  [0x100f7dff8]
+      + ! :   4 dgesdd_  (in libopenblas.0.dylib) + 8920  [0x102439478]
+      + ! :   | 3 dbdsdc_  (in libopenblas.0.dylib) + 1756  [0x1027abd7c]
+      + ! :   | + 3 dlasdq_  (in libopenblas.0.dylib) + 1232  [0x1027c13f0]
+      + ! :   | +   2 dbdsqr_  (in libopenblas.0.dylib) + 7076  [0x1027ae2a4]
+      + ! :   | +   ! 2 dlasq1_  (in libopenblas.0.dylib) + 508  [0x1027c1d1c]
+      + ! :   | +   !   2 dlasq2_  (in libopenblas.0.dylib) + 1624,1752  [0x1027c2598,0x1027c2618]
+      + ! :   | +   1 dbdsqr_  (in libopenblas.0.dylib) + 108  [0x1027ac76c]
+      + ! :   | +     1 lsame_  (in libopenblas.0.dylib) + 32  [0x1022ff050]
+      + ! :   | 1 dbdsdc_  (in libopenblas.0.dylib) + 1668  [0x1027abd24]
+      + ! :   3 dgesdd_  (in libopenblas.0.dylib) + 2936  [0x102437d18]
+      + ! :   | 2 dlange_  (in libopenblas.0.dylib) + 204  [0x102469b8c]
+      + ! :   | + 2 disnan_  (in libopenblas.0.dylib) + 0  [0x1027c9320]
+      + ! :   | 1 dgebrd_  (in libopenblas.0.dylib) + 332  [0x1024286ec]
+      + ! :   |   1 ilaenv_  (in libopenblas.0.dylib) + 2280  [0x1027ca248]
+      + ! :   |     1 _platform_memcmp  (in libsystem_platform.dylib) + 272  [0x19c78be60]
+      + ! :   3 dgesdd_  (in libopenblas.0.dylib) + 8664  [0x102439378]
+      + ! :   | 2 dgelqf_  (in libopenblas.0.dylib) + 1172  [0x10242eaf4]
+      + ! :   | + 1 dgelq2_  (in libopenblas.0.dylib) + 248  [0x10242e578]
+      + ! :   | + ! 1 dlarfg_  (in libopenblas.0.dylib) + 132  [0x10247b764]
+      + ! :   | + !   1 dlapy2_  (in libopenblas.0.dylib) + 40  [0x1027b57e8]
+      + ! :   | + !     1 disnan_  (in libopenblas.0.dylib) + 16  [0x1027c9330]
+      + ! :   | + 1 dgelq2_  (in libopenblas.0.dylib) + 332  [0x10242e5cc]
+      + ! :   | +   1 daxpy_  (in libopenblas.0.dylib) + 420  [0x1020b17ec]
+      + ! :   | 1 dgelqf_  (in libopenblas.0.dylib) + 148  [0x10242e6f4]
+      + ! :   |   1 ilaenv_  (in libopenblas.0.dylib) + 184  [0x1027c9a18]
+      + ! :   2 dgesdd_  (in libopenblas.0.dylib) + 8836  [0x102439424]
+      + ! :   | 2 dgebrd_  (in libopenblas.0.dylib) + 512  [0x1024287a0]
+      + ! :   |   1 dgebd2_  (in libopenblas.0.dylib) + 1028  [0x1024284e4]
+      + ! :   |   + 1 daxpy_  (in libopenblas.0.dylib) + 420  [0x1020b17ec]
+      + ! :   |   1 dgebd2_  (in libopenblas.0.dylib) + 1188  [0x102428584]
+      + ! :   |     1 dlarf1f_  (in libopenblas.0.dylib) + 84  [0x10247e614]
+      + ! :   1 dgesdd_  (in libopenblas.0.dylib) + 1540  [0x1024377a4]
+      + ! :   | 1 dlange_  (in libopenblas.0.dylib) + 204  [0x102469b8c]
+      + ! :   1 dgesdd_  (in libopenblas.0.dylib) + 3064  [0x102437d98]
+      + ! :   | 1 dorglq_  (in libopenblas.0.dylib) + 168  [0x10248cf48]
+      + ! :   1 dgesdd_  (in libopenblas.0.dylib) + 3256  [0x102437e58]
+      + ! :     1 dormbr_  (in libopenblas.0.dylib) + 1220  [0x1024916a4]
+      + ! :       1 ilaenv_  (in libopenblas.0.dylib) + 932  [0x1027c9d04]
+      + ! 13 Expert::act(State const&, double)  (in expert_compatible) + 5040  [0x100f7db1c]
+      + ! : 6 pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>::TangentVectorType const& pinocchio::impl::computeGeneralizedGravity<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>(pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&)  (in libpinocchio_default.4.1.0.dylib) + 232  [0x1044e2ba8]
+      + ! : | 4 pinocchio::impl::ComputeGeneralizedGravityForwardStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>::algo<pinocchio::JointModelRevoluteTpl<double, 0, 2>>(pinocchio::JointModelBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>> const&, pinocchio::JointDataBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>::JointDataDerived>&, pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&)  (in libpinocchio_default.4.1.0.dylib) + 16,212,...  [0x1045021cc,0x104502290,...]
+      + ! : | 2 pinocchio::impl::ComputeGeneralizedGravityForwardStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>::algo<pinocchio::JointModelRevoluteTpl<double, 0, 1>>(pinocchio::JointModelBase<pinocchio::JointModelRevoluteTpl<double, 0, 1>> const&, pinocchio::JointDataBase<pinocchio::JointModelRevoluteTpl<double, 0, 1>::JointDataDerived>&, pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&)  (in libpinocchio_default.4.1.0.dylib) + 52,596  [0x104501f14,0x104502134]
+      + ! : 6 pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>::TangentVectorType const& pinocchio::impl::computeGeneralizedGravity<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>(pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&)  (in libpinocchio_default.4.1.0.dylib) + 352  [0x1044e2c20]
+      + ! : | 4 pinocchio::fusion::JointUnaryVisitorBase<pinocchio::impl::ComputeGeneralizedGravityBackwardStep<double, 0, pinocchio::JointCollectionDefaultTpl>, void>::InternalVisitorModelAndData<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, pinocchio::JointDataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, boost::fusion::vector<pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::Matrix<double, -1, 1, 0, -1, 1>&>>::operator()<pinocchio::JointModelRevoluteTpl<double, 0, 1>>(pinocchio::JointModelBase<pinocchio::JointModelRevoluteTpl<double, 0, 1>> const&) const  (in libpinocchio_default.4.1.0.dylib) + 0,240,...  [0x1045070b8,0x1045071a8,...]
+      + ! : | 1 pinocchio::fusion::JointUnaryVisitorBase<pinocchio::impl::ComputeGeneralizedGravityBackwardStep<double, 0, pinocchio::JointCollectionDefaultTpl>, void>::InternalVisitorModelAndData<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, pinocchio::JointDataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, boost::fusion::vector<pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::Matrix<double, -1, 1, 0, -1, 1>&>>::operator()<pinocchio::JointModelRevoluteTpl<double, 0, 2>>(pinocchio::JointModelBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>> const&) const  (in libpinocchio_default.4.1.0.dylib) + 36  [0x104507298]
+      + ! : | 1 pinocchio::fusion::JointUnaryVisitorBase<pinocchio::impl::ComputeGeneralizedGravityBackwardStep<double, 0, pinocchio::JointCollectionDefaultTpl>, void>::InternalVisitorModelAndData<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, pinocchio::JointDataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, boost::fusion::vector<pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::Matrix<double, -1, 1, 0, -1, 1>&>>::result_type boost::variant<pinocchio::JointModelRevoluteTpl<double, 0, 0>, pinocchio::JointModelRevoluteTpl<double, 0, 1>, pinocchio::JointModelRevoluteTpl<double, 0, 2>, pinocchio::JointModelFreeFlyerTpl<double, 0>, pinocchio::JointModelPlanarTpl<double, 0>, pinocchio::JointModelRevoluteUnalignedTpl<double, 0>, pinocchio::JointModelSphericalTpl<double, 0>, pinocchio::JointModelSphericalZYXTpl<double, 0>, pinocchio::JointModelEllipsoidTpl<double, 0>, pinocchio::JointModelPrismaticTpl<double, 0, 0>, pinocchio::JointModelPrismaticTpl<double, 0, 1>, pinocchio::JointModelPrismaticTpl<double, 0, 2>, pinocchio::JointModelPrismaticUnalignedTpl<double, 0>, pinocchio::JointModelTranslationTpl<double, 0>, pinocchio::JointModelRevoluteUnboundedTpl<double, 0, 0>, pinocchio::JointModelRevoluteUnboundedTpl<double, 0, 1>, pinocchio::JointModelRevoluteUnboundedTpl<double, 0, 2>, pinocchio::JointModelRevoluteUnboundedUnalignedTpl<double, 0>, pinocchio::JointModelHelicalTpl<double, 0, 0>, pinocchio::JointModelHelicalTpl<double, 0, 1>, pinocchio::JointModelHelicalTpl<double, 0, 2>, pinocchio::JointModelHelicalUnalignedTpl<double, 0>, pinocchio::JointModelUniversalTpl<double, 0>, boost::recursive_wrapper<pinocchio::JointModelCompositeTpl<double, 0, pinocchio::JointCollectionDefaultTpl>>, boost::recursive_wrapper<pinocchio::JointModelMimicTpl<double, 0, pinocchio::JointCollectionDefaultTpl>>>::apply_visitor<pinocchio::fusion::JointUnaryVisitorBase<pinocchio::impl::ComputeGeneralizedGravityBackwardStep<double, 0, pinocchio::JointCollectionDefaultTpl>, void>::InternalVisitorModelAndData<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, pinocchio::JointDataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, boost::fusion::vector<pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::Matrix<double, -1, 1, 0, -1, 1>&>>>(pinocchio::fusion::JointUnaryVisitorBase<pinocchio::impl::ComputeGeneralizedGravityBackwardStep<double, 0, pinocchio::JointCollectionDefaultTpl>, void>::InternalVisitorModelAndData<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, pinocchio::JointDataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, boost::fusion::vector<pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::Matrix<double, -1, 1, 0, -1, 1>&>>&) const &  (in libpinocchio_default.4.1.0.dylib) + 56  [0x104506900]
+      + ! : 1 pinocchio::impl::ComputeGeneralizedGravityForwardStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>::algo<pinocchio::JointModelRevoluteTpl<double, 0, 2>>(pinocchio::JointModelBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>> const&, pinocchio::JointDataBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>::JointDataDerived>&, pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&)  (in libpinocchio_default.4.1.0.dylib) + 716  [0x104502488]
+      + ! 11 Expert::act(State const&, double)  (in expert_compatible) + 3060  [0x100f7d360]
+      + ! : 4 numpy_ik(Eigen::Matrix<double, 3, 7, 0, 3, 7> const&, std::array<bool, 7ul> const&, double, Eigen::Matrix<double, 3, 1, 0, 3, 1> const&)  (in expert_compatible) + 728  [0x100f7e354]
+      + ! : | 4 dgesv_  (in libopenblas.0.dylib) + 368  [0x1020c0edc]
+      + ! : |   3 dgetrs_N_single  (in libopenblas.0.dylib) + 124  [0x102308f3c]
+      + ! : |   + 3 dtrsv_NLU  (in libopenblas.0.dylib) + 0,280,...  [0x1020fd9a4,0x1020fdabc,...]
+      + ! : |   1 dgetrs_N_single  (in libopenblas.0.dylib) + 148  [0x102308f54]
+      + ! : |     1 dtrsv_NUN  (in libopenblas.0.dylib) + 384  [0x1020fd918]
+      + ! : |       1 .Ldaxpy_kernel_L999  (in libopenblas.0.dylib) + 0  [0x10224fc38]
+      + ! : 2 Expert::act(State const&, double)  (in expert_compatible) + 3616,4216  [0x100f7d58c,0x100f7d7e4]
+      + ! : 2 numpy_ik(Eigen::Matrix<double, 3, 7, 0, 3, 7> const&, std::array<bool, 7ul> const&, double, Eigen::Matrix<double, 3, 1, 0, 3, 1> const&)  (in expert_compatible) + 592  [0x100f7e2cc]
+      + ! : | 2 cblas_dsyrk  (in libopenblas.0.dylib) + 712  [0x1020bdb8c]
+      + ! : |   1 dsyrk_LN  (in libopenblas.0.dylib) + 308  [0x102185c64]
+      + ! : |   + 1 .Lscal_kernel_zero  (in libopenblas.0.dylib) + 0  [0x102250b34]
+      + ! : |   1 dsyrk_LN  (in libopenblas.0.dylib) + 976  [0x102185f00]
+      + ! : |     1 dsyrk_kernel_L  (in libopenblas.0.dylib) + 712  [0x1021892c0]
+      + ! : |       1 .Ldgemm_kernel_L1_M4_BEGIN  (in libopenblas.0.dylib) + 0  [0x102254cd8]
+      + ! : 2 numpy_ik(Eigen::Matrix<double, 3, 7, 0, 3, 7> const&, std::array<bool, 7ul> const&, double, Eigen::Matrix<double, 3, 1, 0, 3, 1> const&)  (in expert_compatible) + 792  [0x100f7e394]
+      + ! : | 1 cblas_dgemv  (in libopenblas.0.dylib) + 836  [0x1020b61d4]
+      + ! : | + 1 omp_in_parallel  (in libomp.dylib) + 80  [0x1018dfdf8]
+      + ! : | 1 cblas_dgemv  (in libopenblas.0.dylib) + 148  [0x1020b5f24]
+      + ! : 1 numpy_ik(Eigen::Matrix<double, 3, 7, 0, 3, 7> const&, std::array<bool, 7ul> const&, double, Eigen::Matrix<double, 3, 1, 0, 3, 1> const&)  (in expert_compatible) + 16  [0x100f7e08c]
+      + ! 6 Expert::act(State const&, double)  (in expert_compatible) + 540  [0x100f7c988]
+      + ! : 4 pinocchio::impl::forwardKinematics<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>(pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&)  (in libpinocchio_default.4.1.0.dylib) + 128  [0x1044c9f5c]
+      + ! : | 3 pinocchio::impl::ForwardKinematicZeroStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>::algo<pinocchio::JointModelRevoluteTpl<double, 0, 2>>(pinocchio::JointModelBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>> const&, pinocchio::JointDataBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>::JointDataDerived>&, pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&)  (in libpinocchio_default.4.1.0.dylib) + 56,172,...  [0x1044ccb28,0x1044ccb9c,...]
+      + ! : | 1 pinocchio::impl::ForwardKinematicZeroStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>::algo<pinocchio::JointModelRevoluteTpl<double, 0, 2>>(pinocchio::JointModelBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>> const&, pinocchio::JointDataBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>::JointDataDerived>&, pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&)  (in libpinocchio_default.4.1.0.dylib) + 68  [0x1044ccb34]
+      + ! : |   1 pinocchio::JointModelRevoluteTpl<double, 0, 2>::calc<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>(pinocchio::JointDataRevoluteTpl<double, 0, 2>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&) const  (in libpinocchio_default.4.1.0.dylib) + 24  [0x10422f490]
+      + ! : 1 Expert::act(State const&, double)  (in expert_compatible) + 772  [0x100f7ca70]
+      + ! : 1 pinocchio::impl::forwardKinematics<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>(pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&)  (in libpinocchio_default.4.1.0.dylib) + 132  [0x1044c9f60]
+      + ! 4 Expert::act(State const&, double)  (in expert_compatible) + 2444  [0x100f7d0f8]
+      + ! : 2 pinocchio::computeFrameJacobian<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Matrix<double, -1, 1, 0, -1, 1>, Eigen::Matrix<double, 6, -1, 0, 6, -1>>(pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Matrix<double, -1, 1, 0, -1, 1>> const&, unsigned long, pinocchio::ReferenceFrame, Eigen::MatrixBase<Eigen::Matrix<double, 6, -1, 0, 6, -1>> const&)  (in libpinocchio_default.4.1.0.dylib) + 576  [0x1044715f8]
+      + ! : | 1 pinocchio::fusion::JointUnaryVisitorBase<pinocchio::impl::JointJacobianLocalWorldAlignedForwardStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Matrix<double, 6, -1, 0, 6, -1>>, void>::InternalVisitorModelAndData<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, pinocchio::JointDataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, boost::fusion::vector<pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::SE3Tpl<double, 0> const&, Eigen::Matrix<double, 6, -1, 0, 6, -1>&>>::operator()<pinocchio::JointModelFreeFlyerTpl<double, 0>>(pinocchio::JointModelBase<pinocchio::JointModelFreeFlyerTpl<double, 0>> const&) const  (in libpinocchio_default.4.1.0.dylib) + 392  [0x10447ff4c]
+      + ! : | 1 pinocchio::fusion::JointUnaryVisitorBase<pinocchio::impl::JointJacobianLocalWorldAlignedForwardStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Matrix<double, 6, -1, 0, 6, -1>>, void>::InternalVisitorModelAndData<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, pinocchio::JointDataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, boost::fusion::vector<pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::SE3Tpl<double, 0> const&, Eigen::Matrix<double, 6, -1, 0, 6, -1>&>>::result_type boost::variant<pinocchio::JointModelRevoluteTpl<double, 0, 0>, pinocchio::JointModelRevoluteTpl<double, 0, 1>, pinocchio::JointModelRevoluteTpl<double, 0, 2>, pinocchio::JointModelFreeFlyerTpl<double, 0>, pinocchio::JointModelPlanarTpl<double, 0>, pinocchio::JointModelRevoluteUnalignedTpl<double, 0>, pinocchio::JointModelSphericalTpl<double, 0>, pinocchio::JointModelSphericalZYXTpl<double, 0>, pinocchio::JointModelEllipsoidTpl<double, 0>, pinocchio::JointModelPrismaticTpl<double, 0, 0>, pinocchio::JointModelPrismaticTpl<double, 0, 1>, pinocchio::JointModelPrismaticTpl<double, 0, 2>, pinocchio::JointModelPrismaticUnalignedTpl<double, 0>, pinocchio::JointModelTranslationTpl<double, 0>, pinocchio::JointModelRevoluteUnboundedTpl<double, 0, 0>, pinocchio::JointModelRevoluteUnboundedTpl<double, 0, 1>, pinocchio::JointModelRevoluteUnboundedTpl<double, 0, 2>, pinocchio::JointModelRevoluteUnboundedUnalignedTpl<double, 0>, pinocchio::JointModelHelicalTpl<double, 0, 0>, pinocchio::JointModelHelicalTpl<double, 0, 1>, pinocchio::JointModelHelicalTpl<double, 0, 2>, pinocchio::JointModelHelicalUnalignedTpl<double, 0>, pinocchio::JointModelUniversalTpl<double, 0>, boost::recursive_wrapper<pinocchio::JointModelCompositeTpl<double, 0, pinocchio::JointCollectionDefaultTpl>>, boost::recursive_wrapper<pinocchio::JointModelMimicTpl<double, 0, pinocchio::JointCollectionDefaultTpl>>>::apply_visitor<pinocchio::fusion::JointUnaryVisitorBase<pinocchio::impl::JointJacobianLocalWorldAlignedForwardStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Matrix<double, 6, -1, 0, 6, -1>>, void>::InternalVisitorModelAndData<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, pinocchio::JointDataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, boost::fusion::vector<pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::SE3Tpl<double, 0> const&, Eigen::Matrix<double, 6, -1, 0, 6, -1>&>>>(pinocchio::fusion::JointUnaryVisitorBase<pinocchio::impl::JointJacobianLocalWorldAlignedForwardStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Matrix<double, 6, -1, 0, 6, -1>>, void>::InternalVisitorModelAndData<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, pinocchio::JointDataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>, boost::fusion::vector<pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::SE3Tpl<double, 0> const&, Eigen::Matrix<double, 6, -1, 0, 6, -1>&>>&) const &  (in libpinocchio_default.4.1.0.dylib) + 1000  [0x10447f298]
+      + ! : 1 pinocchio::computeFrameJacobian<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Matrix<double, -1, 1, 0, -1, 1>, Eigen::Matrix<double, 6, -1, 0, 6, -1>>(pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Matrix<double, -1, 1, 0, -1, 1>> const&, unsigned long, pinocchio::ReferenceFrame, Eigen::MatrixBase<Eigen::Matrix<double, 6, -1, 0, 6, -1>> const&)  (in libpinocchio_default.4.1.0.dylib) + 216  [0x104471490]
+      + ! : | 1 pinocchio::impl::ForwardKinematicZeroStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Matrix<double, -1, 1, 0, -1, 1>>::algo<pinocchio::JointModelRevoluteTpl<double, 0, 2>>(pinocchio::JointModelBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>> const&, pinocchio::JointDataBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>::JointDataDerived>&, pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Matrix<double, -1, 1, 0, -1, 1>> const&)  (in libpinocchio_default.4.1.0.dylib) + 368  [0x10447b16c]
+      + ! : 1 pinocchio::computeFrameJacobian<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Matrix<double, -1, 1, 0, -1, 1>, Eigen::Matrix<double, 6, -1, 0, 6, -1>>(pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Matrix<double, -1, 1, 0, -1, 1>> const&, unsigned long, pinocchio::ReferenceFrame, Eigen::MatrixBase<Eigen::Matrix<double, 6, -1, 0, 6, -1>> const&)  (in libpinocchio_default.4.1.0.dylib) + 196  [0x10447147c]
+      + ! 2 Expert::act(State const&, double)  (in expert_compatible) + 1240  [0x100f7cc44]
+      + !   1 pinocchio::rpy::matrixToRpy<Eigen::Matrix<double, 3, 3, 0, 3, 3>>(Eigen::MatrixBase<Eigen::Matrix<double, 3, 3, 0, 3, 3>> const&)  (in expert_compatible) + 280  [0x100f7de30]
+      + !   | 1 __sincos_stret  (in libsystem_m.dylib) + 372  [0x1a9333994]
+      + !   |   1 __sincos_stret  (in libsystem_m.dylib) + 372  [0x1a9333994]
+      + !   |     1 ???  (in libsystem_m.dylib)  load address 0x1a9332000 + 0x1d58  [0x1a9333d58]
+      + !   1 pinocchio::rpy::matrixToRpy<Eigen::Matrix<double, 3, 3, 0, 3, 3>>(Eigen::MatrixBase<Eigen::Matrix<double, 3, 3, 0, 3, 3>> const&)  (in expert_compatible) + 460  [0x100f7dee4]
+      + 22 main  (in expert_compatible) + 9256  [0x100f4d954]
+      + ! 22 Physics::state()  (in expert_compatible) + 164  [0x100f72b8c]
+      + !   11 b3SubmitClientCommandAndWaitStatus  (in pybullet.cpython-314-darwin.so) + 264  [0x107d1e084]
+      + !   : 11 PhysicsDirect::processServerStatus()  (in pybullet.cpython-314-darwin.so) + 132  [0x107d31f30]
+      + !   :   11 PhysicsDirect::postProcessStatus(SharedMemoryStatus const&)  (in pybullet.cpython-314-darwin.so) + 2956  [0x107d30cc4]
+      + !   :     11 _platform_memmove  (in libsystem_platform.dylib) + 88  [0x19c78e1f8]
+      + !   10 b3SubmitClientCommandAndWaitStatus  (in pybullet.cpython-314-darwin.so) + 144  [0x107d1e00c]
+      + !   : 10 PhysicsDirect::submitClientCommand(SharedMemoryCommand const&)  (in pybullet.cpython-314-darwin.so) + 204  [0x107d35394]
+      + !   :   9 PhysicsServerCommandProcessor::processCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 576  [0x107d6c6e4]
+      + !   :   | 4 PhysicsServerCommandProcessor::processRequestActualStateCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 3176  [0x107d55be4]
+      + !   :   | + 4 btMatrix3x3::getRotation(btQuaternion&) const  (in pybullet.cpython-314-darwin.so) + 104,312,...  [0x107c6ccfc,0x107c6cdcc,...]
+      + !   :   | 4 PhysicsServerCommandProcessor::processRequestActualStateCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 2548,3104,...  [0x107d55970,0x107d55b9c,...]
+      + !   :   | 1 PhysicsServerCommandProcessor::processRequestActualStateCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 3136  [0x107d55bbc]
+      + !   :   |   1 btMatrix3x3::getRotation(btQuaternion&) const  (in pybullet.cpython-314-darwin.so) + 32  [0x107c6ccb4]
+      + !   :   1 PhysicsServerCommandProcessor::processRequestActualStateCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so) + 1564  [0x107d55598]
+      + !   1 b3SubmitClientCommandAndWaitStatus  (in pybullet.cpython-314-darwin.so) + 76  [0x107d1dfc8]
+      + !     1 b3Clock::getTimeInSeconds()  (in pybullet.cpython-314-darwin.so) + 48  [0x107e636dc]
+      + !       1 gettimeofday  (in libsystem_c.dylib) + 56  [0x19c5fadd4]
+      + !         1 __commpage_gettimeofday_internal  (in libsystem_kernel.dylib) + 44  [0x19c71ecd8]
+      + !           1 mach_absolute_time  (in libsystem_kernel.dylib) + 108  [0x19c71d2c0]
+      + 2 main  (in expert_compatible) + 8456  [0x100f4d634]
+      + ! 1 main  (in expert_compatible) + 9052  [0x100f4d888]
+      + ! 1 std::chrono::steady_clock::now()  (in libc++.1.dylib) + 28  [0x19c683a84]
+      + !   1 clock_gettime  (in libsystem_c.dylib) + 72  [0x19c6025a8]
+      + !     1 clock_gettime_nsec_np  (in libsystem_c.dylib) + 300  [0x19c5f55d8]
+      + !       1 mach_continuous_time  (in libsystem_kernel.dylib) + 84  [0x19c71d230]
+      + 1 main  (in expert_compatible) + 7284  [0x100f4d1a0]
+      + ! 1 Expert::Expert(std::basic_string<char> const&, Physics const&, State const&, Eigen::Matrix<double, 3, 1, 0, 3, 1>)  (in expert_compatible) + 428  [0x100f75730]
+      + !   1 pinocchio::urdf::buildModel<double, 0, pinocchio::JointCollectionDefaultTpl>(std::basic_string<char> const&, pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>::JointModel const&, std::basic_string<char> const&, pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, bool, bool)  (in expert_compatible) + 200  [0x100f76890]
+      + !     1 pinocchio::urdf::details::parseRootTree(std::basic_string<char> const&, pinocchio::urdf::details::UrdfVisitor&, boost::optional<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&>, boost::optional<std::basic_string<char> const&>, bool)  (in libpinocchio_parsers.4.1.0.dylib) + 108  [0x1015ad700]
+      + !       1 pinocchio::urdf::details::parseRootTree(urdf::ModelInterface const*, pinocchio::urdf::details::UrdfVisitor&, boost::optional<pinocchio::JointModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&>, boost::optional<std::basic_string<char> const&>, bool)  (in libpinocchio_parsers.4.1.0.dylib) + 280  [0x1015ad590]
+      + !         1 pinocchio::urdf::details::parseTree(std::shared_ptr<urdf::Link const>, pinocchio::urdf::details::UrdfVisitor&, bool)  (in libpinocchio_parsers.4.1.0.dylib) + 8504  [0x1015ab8b0]
+      + !           1 pinocchio::urdf::details::parseTree(std::shared_ptr<urdf::Link const>, pinocchio::urdf::details::UrdfVisitor&, bool)  (in libpinocchio_parsers.4.1.0.dylib) + 8504  [0x1015ab8b0]
+      + !             1 pinocchio::urdf::details::parseTree(std::shared_ptr<urdf::Link const>, pinocchio::urdf::details::UrdfVisitor&, bool)  (in libpinocchio_parsers.4.1.0.dylib) + 8240  [0x1015ab7a8]
+      + 1 main  (in expert_compatible) + 8324  [0x100f4d5b0]
+      +   1 std::chrono::steady_clock::now()  (in libc++.1.dylib) + 28  [0x19c683a84]
+      +     1 clock_gettime  (in libsystem_c.dylib) + 72  [0x19c6025a8]
+      +       1 clock_gettime_nsec_np  (in libsystem_c.dylib) + 300  [0x19c5f55d8]
+      +         1 mach_continuous_time  (in libsystem_kernel.dylib) + 84  [0x19c71d230]
+      1 ???  (in <unknown binary>)  [0x951f8fcdad1]
+      + 1 dormbr_  (in libopenblas.0.dylib) + 1404  [0x10249175c]
+      +   1 _gfortran_concat_string  (in libgfortran.5.dylib) + 0  [0x102e80820]
+      1 ilaenv_  (in libopenblas.0.dylib) + 512  [0x1027c9b60]
+        1 _platform_memcmp  (in libsystem_platform.dylib) + 280  [0x19c78be68]
+
+Total number in stack (recursive counted multiple, when >=5):
+        16       btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so) + 0  [0x107f8f42c]
+        11       btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so) + 0  [0x107f0d278]
+        11       btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 0  [0x107f804f4]
+        9       btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so) + 0  [0x107f0b494]
+        8       _platform_memset  (in libsystem_platform.dylib) + 0  [0x19c78ded0]
+        7       btMatrix3x3::getRotation(btQuaternion&) const  (in pybullet.cpython-314-darwin.so) + 0  [0x107c6cc94]
+        6       btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so) + 1712  [0x107f80ba4]
+        6       btMultiBody::fillConstraintJacobianMultiDof(int, btVector3 const&, btVector3 const&, btVector3 const&, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&) const  (in pybullet.cpython-314-darwin.so) + 0  [0x107f82280]
+        6       btMultiBody::solveImatrix(btSpatialForceVector const&, btSpatialMotionVector&) const  (in pybullet.cpython-314-darwin.so) + 0  [0x107f7f788]
+        5       CProfileSample::~CProfileSample()  (in pybullet.cpython-314-darwin.so) + 0  [0x107fb0ab4]
+        5       btVec3PointTriDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so) + 0  [0x107f0c9f4]
+
+Sort by top of stack, same collapsed (when >= 5):
+        btMultiBodyConstraintSolver::resolveSingleConstraintRowGeneric(btMultiBodySolverConstraint const&)  (in pybullet.cpython-314-darwin.so)        889
+        btMultiBody::calcAccelerationDeltasMultiDof(double const*, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&) const  (in pybullet.cpython-314-darwin.so)        712
+        btMultiBody::solveImatrix(btSpatialForceVector const&, btSpatialMotionVector&) const  (in pybullet.cpython-314-darwin.so)        85
+        btMultiBodyConstraintSolver::solveSingleIteration(int, btCollisionObject**, int, btPersistentManifold**, int, btTypedConstraint**, int, btContactSolverInfo const&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so)        66
+        btDbvt::collideTTpersistentStack(btDbvtNode const*, btDbvtNode const*, btDbvt::ICollide&)  (in pybullet.cpython-314-darwin.so)        53
+        btMultiBodyConstraintSolver::setupMultiBodyContactConstraint(btMultiBodySolverConstraint&, btVector3 const&, double const&, btManifoldPoint&, btContactSolverInfo const&, double&, bool, double, double)  (in pybullet.cpython-314-darwin.so)        49
+        btMultiBody::fillConstraintJacobianMultiDof(int, btVector3 const&, btVector3 const&, btVector3 const&, double*, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&) const  (in pybullet.cpython-314-darwin.so)        48
+        btMultiBody::computeAccelerationsArticulatedBodyAlgorithmMultiDof(double, btAlignedObjectArray<double>&, btAlignedObjectArray<btVector3>&, btAlignedObjectArray<btMatrix3x3>&, bool, bool, bool)  (in pybullet.cpython-314-darwin.so)        42
+        _platform_memset  (in libsystem_platform.dylib)        26
+        insertleaf(btDbvt*, btDbvtNode*, btDbvtNode*)  (in pybullet.cpython-314-darwin.so)        26
+        btGjkPairDetector::getClosestPointsNonVirtual(btDiscreteCollisionDetectorInterface::ClosestPointInput const&, btDiscreteCollisionDetectorInterface::Result&, btIDebugDraw*)  (in pybullet.cpython-314-darwin.so)        22
+        btVec3PointTriDist2(btVector3 const*, btVector3 const*, btVector3 const*, btVector3 const*, btVector3*)  (in pybullet.cpython-314-darwin.so)        21
+        btConvexShape::localGetSupportVertexWithoutMarginNonVirtual(btVector3 const&) const  (in pybullet.cpython-314-darwin.so)        18
+        removeleaf(btDbvt*, btDbvtNode*)  (in pybullet.cpython-314-darwin.so)        16
+        btMatrix3x3::getRotation(btQuaternion&) const  (in pybullet.cpython-314-darwin.so)        15
+        btSpatialTransformationMatrix::transformInverse(btSymmetricSpatialDyad const&, btSymmetricSpatialDyad&, btSpatialTransformationMatrix::eOutputOperation)  (in pybullet.cpython-314-darwin.so)        13
+        _platform_memmove  (in libsystem_platform.dylib)        11
+        btHashedOverlappingPairCache::internalAddPair(btBroadphaseProxy*, btBroadphaseProxy*)  (in pybullet.cpython-314-darwin.so)        11
+        btGjkEpaSolver2::Penetration(btConvexShape const*, btTransform const&, btConvexShape const*, btTransform const&, btVector3 const&, btGjkEpaSolver2::sResults&, bool)  (in pybullet.cpython-314-darwin.so)        10
+        btMultiBodyConstraint::fillMultiBodyConstraint(btMultiBodySolverConstraint&, btMultiBodyJacobianData&, double*, double*, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, double, btContactSolverInfo const&, double, double, bool, double, bool, double, double, double)  (in pybullet.cpython-314-darwin.so)        10
+        btDbvtBroadphase::setAabb(btBroadphaseProxy*, btVector3 const&, btVector3 const&, btDispatcher*)  (in pybullet.cpython-314-darwin.so)        8
+        btMultiBody::updateCollisionObjectWorldTransforms(btAlignedObjectArray<btQuaternion>&, btAlignedObjectArray<btVector3>&)  (in pybullet.cpython-314-darwin.so)        8
+        btMultiBody::forwardKinematics(btAlignedObjectArray<btQuaternion>&, btAlignedObjectArray<btVector3>&)  (in pybullet.cpython-314-darwin.so)        7
+        btVoronoiSimplexSolver::closestPtPointTetrahedron(btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btSubSimplexClosestResult&)  (in pybullet.cpython-314-darwin.so)        7
+        CProfileSample::~CProfileSample()  (in pybullet.cpython-314-darwin.so)        6
+        btAlignedObjectArray<btMultiBodyConstraint*>::quickSortInternal<btSortMultiBodyConstraintOnIslandPredicate>(btSortMultiBodyConstraintOnIslandPredicate const&, int, int)  (in pybullet.cpython-314-darwin.so)        6
+        btVoronoiSimplexSolver::closestPtPointTriangle(btVector3 const&, btVector3 const&, btVector3 const&, btVector3 const&, btSubSimplexClosestResult&)  (in pybullet.cpython-314-darwin.so)        6
+        gjkepa2_impl::EPA::newface(gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, bool)  (in pybullet.cpython-314-darwin.so)        6
+        gjkepa2_impl::MinkowskiDiff::Support(btVector3 const&) const  (in pybullet.cpython-314-darwin.so)        6
+        PhysicsServerCommandProcessor::processRequestActualStateCommand(SharedMemoryCommand const&, SharedMemoryStatus&, char*, int)  (in pybullet.cpython-314-darwin.so)        5
+        b3PluginManager::getCollisionInterface()  (in pybullet.cpython-314-darwin.so)        5
+        gjkepa2_impl::EPA::getedgedist(gjkepa2_impl::EPA::sFace*, gjkepa2_impl::GJK::sSV*, gjkepa2_impl::GJK::sSV*, double&)  (in pybullet.cpython-314-darwin.so)        5
+        pinocchio::impl::ComputeGeneralizedGravityForwardStep<double, 0, pinocchio::JointCollectionDefaultTpl, Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>>::algo<pinocchio::JointModelRevoluteTpl<double, 0, 2>>(pinocchio::JointModelBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>> const&, pinocchio::JointDataBase<pinocchio::JointModelRevoluteTpl<double, 0, 2>::JointDataDerived>&, pinocchio::ModelTpl<double, 0, pinocchio::JointCollectionDefaultTpl> const&, pinocchio::DataTpl<double, 0, pinocchio::JointCollectionDefaultTpl>&, Eigen::MatrixBase<Eigen::Ref<Eigen::Matrix<double, -1, 1, 0, -1, 1> const, 0, Eigen::InnerStride<1>>> const&)  (in libpinocchio_default.4.1.0.dylib)        5
+
+Binary Images:
+       0x100f44000 -        0x100f87fff +expert_compatible (0) <7251CD22-210F-33FD-B9F7-AC52889D9C18> /Users/*/expert_compatible
+       0x101414000 -        0x10141bfff +liburdfdom_sensor.6.0.2.dylib (0) <348EE17C-367F-37B0-B99E-79D6A7C3CE69> /Users/*/liburdfdom_sensor.6.0.2.dylib
+       0x101430000 -        0x101437fff +libgz-utils.4.0.0.dylib (0) <1566FA4A-D705-3B86-8846-ACA0DC7AEB42> /Users/*/libgz-utils.4.0.0.dylib
+       0x101448000 -        0x10144fffb +libpinocchio_collision.4.1.0.dylib (0) <135BBCC2-93A7-31BD-B678-A42B217FA7F2> /Users/*/libpinocchio_collision.4.1.0.dylib
+       0x101468000 -        0x101483ff7 +liburdfdom_model.6.0.2.dylib (0) <1B622484-FE20-33CB-998D-06BE2DC6AC4B> /Users/*/liburdfdom_model.6.0.2.dylib
+       0x1014a0000 -        0x1014bbff3 +liburdfdom_world.6.0.2.dylib (0) <9740350D-6867-33F5-9614-A8FEFCF4F400> /Users/*/liburdfdom_world.6.0.2.dylib
+       0x1014d8000 -        0x1014dbffb +liboctomath.1.10.1.dylib (0) <9C50C7BA-53BD-397B-9BCF-7ABA33FEE235> /Users/*/liboctomath.1.10.1.dylib
+       0x1014ec000 -        0x1014effff +libconsole_bridge.1.0.dylib (0) <09A80624-033C-380E-A112-F9629BD3BD69> /Users/*/libconsole_bridge.1.0.dylib
+       0x101510000 -        0x1015d7ff3 +libpinocchio_parsers.4.1.0.dylib (0) <C047AE49-86FF-3655-AE28-79A1168EE11B> /Users/*/libpinocchio_parsers.4.1.0.dylib
+       0x101628000 -        0x10163fff3 +libboost_filesystem.dylib (0) <87126A2E-C8F7-34DA-9C73-297DC1F73385> /Users/*/libboost_filesystem.dylib
+       0x101654000 -        0x101667fff +libz.1.3.2.dylib (0) <65BDD247-7313-3578-9C4F-DA34382F2090> /Users/*/libz.1.3.2.dylib
+       0x101684000 -        0x1016b3ff7 +libgz-math.9.3.0.dylib (0) <DFA617ED-3844-3A6F-A699-75071FD6323B> /Users/*/libgz-math.9.3.0.dylib
+       0x1016e0000 -        0x1016f3ff7 +libpinocchio_extra.4.1.0.dylib (0) <8578738C-72A2-378A-BF27-54DB4D918528> /Users/*/libpinocchio_extra.4.1.0.dylib
+       0x101734000 -        0x101763ff7 +liboctomap.1.10.1.dylib (0) <10A3CC61-F01D-3E7D-8EED-7F9D0EF10644> /Users/*/liboctomap.1.10.1.dylib
+       0x101788000 -        0x10179ffff +libgcc_s.1.1.dylib (0) <3FB7F965-E2FA-362E-9977-6E74A311C69A> /Users/*/libgcc_s.1.1.dylib
+       0x1017b4000 -        0x1017c3ffb +libtinyxml2.11.0.0.dylib (0) <14175E77-F173-35F2-89B8-6BE70D0FCDAE> /Users/*/libtinyxml2.11.0.0.dylib
+       0x1017ec000 -        0x10180ffff +libboost_serialization.dylib (0) <CD93CFFE-21BE-3830-BC82-F1B06CDEBD9A> /Users/*/libboost_serialization.dylib
+       0x101858000 -        0x1018efffb +libomp.dylib (0) <071C447E-EF2D-39A0-A950-FA8823E788E3> /Users/*/libomp.dylib
+       0x101934000 -        0x101b93fff +libsdformat.16.1.0.dylib (0) <0A44429F-1C3A-390B-8325-2BFC524A33CF> /Users/*/libsdformat.16.1.0.dylib
+       0x101c40000 -        0x101c7ffff +libquadmath.0.dylib (0) <AFD0FFE8-DF55-362E-BEDA-073A1A839EA7> /Users/*/libquadmath.0.dylib
+       0x101cb0000 -        0x101d0ffff +libqhull_r.8.0.2.dylib (0) <0BD701D2-5F96-3702-A85C-786C22981429> /Users/*/libqhull_r.8.0.2.dylib
+       0x101e44000 -        0x101f03fe7 +libc++.1.0.dylib (0) <C14EAB2E-BC69-35ED-AC60-10DC4A730C64> /Users/*/libc++.1.0.dylib
+       0x102098000 -        0x102c7bfff +libopenblas.0.dylib (0) <E7FDCCFB-F623-32BF-9645-8518B523C067> /Users/*/libopenblas.0.dylib
+       0x102d4c000 -        0x102ed7fe7 +libgfortran.5.dylib (0) <90AE7868-AD38-3C5F-8F4E-551A792DA50F> /Users/*/libgfortran.5.dylib
+       0x103410000 -        0x103713ff7 +libcoal.3.0.4.dylib (0) <8144ADAE-C5FD-3CAD-A67B-9B410BBA943B> /Users/*/libcoal.3.0.4.dylib
+       0x104224000 -        0x1047dbffb +libpinocchio_default.4.1.0.dylib (0) <DACF0773-EF92-3C17-AB21-A4852C652411> /Users/*/libpinocchio_default.4.1.0.dylib
+       0x104970000 -        0x104e03fc3 +libpython3.14.dylib (0) <BC90F76C-466A-3354-B477-D56E29915EA2> /Users/*/libpython3.14.dylib
+       0x1052e8000 -        0x10590fffb +libassimp.6.0.5.dylib (0) <A73DA033-5F4E-3737-B515-7E66B02136F6> /Users/*/libassimp.6.0.5.dylib
+       0x107c60000 -        0x1080efff3 +pybullet.cpython-314-darwin.so (0) <5F5FEC08-B143-3D33-A45C-E6266EC01705> /Users/*/pybullet.cpython-314-darwin.so
+       0x19c37c000 -        0x19c3cce0b  libobjc.A.dylib (912.7) <5C6386BD-F308-3370-BCE9-63D1A89DAB87> /usr/lib/libobjc.A.dylib
+       0x19c3cd000 -        0x19c456507  dyld (1.0.0 - 1165.3) <F635824E-318B-3F0C-842C-C369737F2B68> /usr/lib/dyld
+       0x19c457000 -        0x19c45bff8  libsystem_blocks.dylib (90) <6BC23DD4-94AC-3BB0-BC84-93E6D7813ACE> /usr/lib/system/libsystem_blocks.dylib
+       0x19c45c000 -        0x19c4a6fff  libxpc.dylib (2748.140.10) <987AF6AA-AB54-39CE-84CF-C6D2D1DC9464> /usr/lib/system/libxpc.dylib
+       0x19c4a7000 -        0x19c4c1fff  libsystem_trace.dylib (1510.140.4) <72852AF1-4BCC-326A-BE13-6C6F22A44E4A> /usr/lib/system/libsystem_trace.dylib
+       0x19c4c2000 -        0x19c56bfcf  libcorecrypto.dylib (1638.140.6) <717EA919-DB53-3DDA-AFA1-D87BFD649A83> /usr/lib/system/libcorecrypto.dylib
+       0x19c56c000 -        0x19c5a8ff7  libsystem_malloc.dylib (521.120.7) <8A69A1AC-6D54-3B64-9860-CD0DB47473ED> /usr/lib/system/libsystem_malloc.dylib
+       0x19c5a9000 -        0x19c5f0fff  libdispatch.dylib (1477.100.9) <1A1CE00A-89CD-36BA-9678-5038AEDD0D8D> /usr/lib/system/libdispatch.dylib
+       0x19c5f1000 -        0x19c5f3fff  libsystem_featureflags.dylib (86) <F9E56A3B-6350-3D8B-BEC6-6BC253B19355> /usr/lib/system/libsystem_featureflags.dylib
+       0x19c5f4000 -        0x19c672ff7  libsystem_c.dylib (1592.100.35) <D30F1830-93D0-3D0B-8CBA-9544E84BFD5B> /usr/lib/system/libsystem_c.dylib
+       0x19c673000 -        0x19c6ffff7  libc++.1.dylib (1700.255.5) <AAA5636D-6F3F-3FA7-9F4A-CF966F0308FE> /usr/lib/libc++.1.dylib
+       0x19c700000 -        0x19c71bffb  libc++abi.dylib (1700.255.5) <68E3EB36-B4BA-30E0-A240-31E942936D06> /usr/lib/libc++abi.dylib
+       0x19c71c000 -        0x19c756ffb  libsystem_kernel.dylib (10063.141.2) <71FF45B8-F14E-3666-9E96-6CF58315B91D> /usr/lib/system/libsystem_kernel.dylib
+       0x19c757000 -        0x19c763fff  libsystem_pthread.dylib (519.120.4) <E03E8478-6F5C-3D21-A79A-58408F514000> /usr/lib/system/libsystem_pthread.dylib
+       0x19c764000 -        0x19c789ff7  libdyld.dylib (1165.3) <C433509D-7CD3-3884-B24D-5D68B9B95627> /usr/lib/system/libdyld.dylib
+       0x19c78a000 -        0x19c791fe7  libsystem_platform.dylib (316.100.10) <B4BF9F89-31D7-3742-8CE7-AB3554F9F525> /usr/lib/system/libsystem_platform.dylib
+       0x19c792000 -        0x19c7beffb  libsystem_info.dylib (583.0.1) <827E8091-520E-3537-8E72-678CED1BAAAE> /usr/lib/system/libsystem_info.dylib
+       0x19c7bf000 -        0x19cc97fff  com.apple.CoreFoundation (6.9 - 2602) <55720EE0-D8C3-33A1-9854-8E61A6F44895> /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
+       0x19cc98000 -        0x19cf52fff  com.apple.LaunchServices (1141.1 - 1141.1) <0D5F4D3D-A719-359D-85C4-9EB0BC650379> /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/LaunchServices
+       0x19cf53000 -        0x19d09efff  com.apple.gpusw.MetalTools (1.0 - 1) <F12B3038-C47E-368B-A977-4CCF7DB469A1> /System/Library/PrivateFrameworks/MetalTools.framework/Versions/A/MetalTools
+       0x19d09f000 -        0x19d43afef  libBLAS.dylib (1447.120.2) <4D213641-4F79-3A14-857E-A665AE007AD7> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+       0x19d43b000 -        0x19d52cff7  com.apple.Lexicon-framework (1.0 - 134.9) <9ED46359-C232-3D74-A39E-382598CCAB31> /System/Library/PrivateFrameworks/Lexicon.framework/Versions/A/Lexicon
+       0x19d52d000 -        0x19d593fff  libSparse.dylib (125) <B69EDD3A-C67B-331D-8B29-92BD7AD6C536> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libSparse.dylib
+       0x19d594000 -        0x19d627fff  com.apple.SystemConfiguration (1.21 - 1.21) <3346C680-6149-30B1-9876-9DC594F84221> /System/Library/Frameworks/SystemConfiguration.framework/Versions/A/SystemConfiguration
+       0x19d628000 -        0x19d65cff3  libCRFSuite.dylib (52) <F00E2EB4-3ABF-3DFD-B549-048F84397578> /usr/lib/libCRFSuite.dylib
+       0x19d914000 -        0x19e571fff  com.apple.Foundation (6.9 - 2602) <C6949F67-60F6-3735-B583-BF1E069A8A0B> /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation
+       0x19e572000 -        0x19e757fff  com.apple.LanguageModeling (1.0 - 366.9) <CB72FB9E-9192-36E9-968E-49432E6D0943> /System/Library/PrivateFrameworks/LanguageModeling.framework/Versions/A/LanguageModeling
+       0x19e758000 -        0x19e87bfff  com.apple.CoreDisplay (285 - 285) <5D57B973-04EF-30D2-999F-5371BF269751> /System/Library/Frameworks/CoreDisplay.framework/Versions/A/CoreDisplay
+       0x19e87c000 -        0x19ebebfff  com.apple.audio.AudioToolboxCore (1.0 - 1387.7.4) <52026256-ADB3-3909-9CC2-308FDFB3FEB1> /System/Library/PrivateFrameworks/AudioToolboxCore.framework/Versions/A/AudioToolboxCore
+       0x19ebec000 -        0x19ede0fff  com.apple.CoreText (800.6.0.1 - 800.6.0.1) <31B726EB-F0EA-3DD9-AB73-E2BEE2B89409> /System/Library/Frameworks/CoreText.framework/Versions/A/CoreText
+       0x19ede1000 -        0x19f4e7fff  com.apple.audio.CoreAudio (5.0 - 5.0) <16DFFE81-3F0F-36A1-988C-0EAFD523F149> /System/Library/Frameworks/CoreAudio.framework/Versions/A/CoreAudio
+       0x19f4e8000 -        0x19f8bafff  com.apple.security (7.0 - 61123.141.1) <179DB057-449C-3592-853F-09F78A4AD4F4> /System/Library/Frameworks/Security.framework/Versions/A/Security
+       0x19f8bb000 -        0x19fb81fff  libicucore.A.dylib (74000.403) <ACB4FCE3-712B-32D4-85C5-5F8923DC1578> /usr/lib/libicucore.A.dylib
+       0x19fb82000 -        0x19fb8cff3  libsystem_darwin.dylib (1592.100.35) <4DD0C579-C2FC-37A7-B6D7-1BA7268DD8B3> /usr/lib/system/libsystem_darwin.dylib
+       0x19fb8d000 -        0x19fe92fff  com.apple.CoreServices.CarbonCore (1333 - 1333) <057F373D-C1D6-3FBD-A137-2D0AFC26CDB6> /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/CarbonCore.framework/Versions/A/CarbonCore
+       0x19fe93000 -        0x19fed3ff7  com.apple.CoreServicesInternal (505 - 505) <D612092D-F4BB-3DFB-AEE9-37860758FF5C> /System/Library/PrivateFrameworks/CoreServicesInternal.framework/Versions/A/CoreServicesInternal
+       0x19fed4000 -        0x19ff14fff  com.apple.CSStore (1141.1 - 1141.1) <3DAD70D2-07A5-3372-9DD3-3F0E038875BB> /System/Library/PrivateFrameworks/CoreServicesStore.framework/Versions/A/CoreServicesStore
+       0x19ff15000 -        0x19fff7fff  com.apple.framework.IOKit (2.0.2 - 100076.120.9) <34C164ED-8DC0-3EC5-AA47-BE0DB1121990> /System/Library/Frameworks/IOKit.framework/Versions/A/IOKit
+       0x19fff8000 -        0x1a0008fff  libsystem_notify.dylib (317.120.2) <6902E910-4F75-32C7-BBF3-D46CD6743BFA> /usr/lib/system/libsystem_notify.dylib
+       0x1a0061000 -        0x1a139ffff  com.apple.AppKit (6.9 - 2487.70.105) <7ACBEEF9-A453-3E4D-98AC-F9441D86E183> /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit
+       0x1a13a0000 -        0x1a1554fff  com.apple.UIFoundation (1.0 - 909.7) <209F887D-5D64-3A9E-978C-39D8E4031832> /System/Library/PrivateFrameworks/UIFoundation.framework/Versions/A/UIFoundation
+       0x1a1555000 -        0x1a156afff  com.apple.UniformTypeIdentifiers (709 - 709) <1E8EB026-DE8A-3168-A723-C72355B257CB> /System/Library/Frameworks/UniformTypeIdentifiers.framework/Versions/A/UniformTypeIdentifiers
+       0x1a1a79000 -        0x1a1a79fff  libnetwork.dylib (3762.140.6) <D91F182D-02D2-3FD6-B5C9-49DBEE61ACB4> /usr/lib/libnetwork.dylib
+       0x1a1a7a000 -        0x1a1e4dfff  com.apple.CFNetwork (1.0 - 1498.700.2) <33F7B4A0-DE02-353D-8B3D-89E20966E2E9> /System/Library/Frameworks/CFNetwork.framework/Versions/A/CFNetwork
+       0x1a1e4e000 -        0x1a1e68fff  libsystem_networkextension.dylib (1838.140.5.0.1) <9ADD8A04-8F8C-3916-A9ED-20F6947294BD> /usr/lib/system/libsystem_networkextension.dylib
+       0x1a1e69000 -        0x1a1e6afff  libenergytrace.dylib (23) <ECDFD58A-515C-373B-87E1-5051E74F849D> /usr/lib/libenergytrace.dylib
+       0x1a1e6b000 -        0x1a1ee0fff  libMobileGestalt.dylib (1332.120.2) <AD887E7D-F70B-3413-88E6-AA1131CF54BF> /usr/lib/libMobileGestalt.dylib
+       0x1a1ee1000 -        0x1a1ef8ff7  libsystem_asl.dylib (398) <138939F9-52A2-35BF-A8E5-4B2154A3F1B0> /usr/lib/system/libsystem_asl.dylib
+       0x1a1ef9000 -        0x1a1f19ff0  com.apple.TCC (1.0 - 1) <5F9BEC02-CFD0-375E-8B2C-E2ECFCDC8D1A> /System/Library/PrivateFrameworks/TCC.framework/Versions/A/TCC
+       0x1a1f1a000 -        0x1a23bbfff  com.apple.SkyLight (1.600.0 - 846.8) <2B8CC0CB-BCED-39D7-AACA-5035567E114D> /System/Library/PrivateFrameworks/SkyLight.framework/Versions/A/SkyLight
+       0x1a23bc000 -        0x1a2a9bfff  com.apple.CoreGraphics (2.0 - 1774.6.3) <54B50036-0BF6-331D-B1F9-5EA02CDC971E> /System/Library/Frameworks/CoreGraphics.framework/Versions/A/CoreGraphics
+       0x1a2a9c000 -        0x1a2c4aff7  com.apple.ColorSync (4.13.0 - 3735) <37511016-4EBE-3E9F-B3CE-CAD72D25A9CF> /System/Library/Frameworks/ColorSync.framework/Versions/A/ColorSync
+       0x1a2c4b000 -        0x1a2caefff  com.apple.HIServices (1.22 - 777) <5EDC02BC-3474-3577-A9D5-8D543BC1521E> /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/HIServices
+       0x1a30d0000 -        0x1a34adfff  com.apple.CoreData (120 - 1347) <33496DBD-5F02-3492-AAD9-F374EA824ED1> /System/Library/Frameworks/CoreData.framework/Versions/A/CoreData
+       0x1a34ae000 -        0x1a34c7fff  com.apple.ProtocolBuffer (1 - 300.26.4.18.2) <19B40E7E-EC18-3679-AF63-2AE0B7B14F44> /System/Library/PrivateFrameworks/ProtocolBuffer.framework/Versions/A/ProtocolBuffer
+       0x1a34c8000 -        0x1a367afff  libsqlite3.dylib (351.4) <C553F523-14E5-3615-90F8-B092F9BE721E> /usr/lib/libsqlite3.dylib
+       0x1a3714000 -        0x1a37ecfff  com.apple.BaseBoard (652.301 - 652.301) <8776A434-EE18-3055-8876-2DBBB9DBEE8B> /System/Library/PrivateFrameworks/BaseBoard.framework/Versions/A/BaseBoard
+       0x1a37ed000 -        0x1a3853fff  com.apple.RunningBoardServices (1.0 - 874.140.4) <E0E3EB28-1E6E-3265-8CA2-801ED1D7C6D6> /System/Library/PrivateFrameworks/RunningBoardServices.framework/Versions/A/RunningBoardServices
+       0x1a3854000 -        0x1a38c7ff7  com.apple.AE (944 - 944) <AD857A12-6FC7-3E06-AB66-317B526736BB> /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE
+       0x1a38c8000 -        0x1a38d2fff  libdns_services.dylib (2200.140.11) <889C0A4B-F3CE-3C4F-BD01-5AC89C61C6E4> /usr/lib/libdns_services.dylib
+       0x1a38d3000 -        0x1a38dbff3  libsystem_symptoms.dylib (1871.140.6) <3E5E0270-E98C-303F-A566-624005886B88> /usr/lib/system/libsystem_symptoms.dylib
+       0x1a38dc000 -        0x1a4528fff  com.apple.Network (1.0 - 1) <D1429DAF-4144-3281-A4D9-34EEBDFFF5B1> /System/Library/Frameworks/Network.framework/Versions/A/Network
+       0x1a4529000 -        0x1a4557fff  com.apple.analyticsd (1.0 - 1) <35829BD9-2962-3C92-9AD2-845DB7710D14> /System/Library/PrivateFrameworks/CoreAnalytics.framework/Versions/A/CoreAnalytics
+       0x1a4558000 -        0x1a4559fff  libDiagnosticMessagesClient.dylib (113) <61643068-DB8F-3F4C-859A-B5C79DC01FEE> /usr/lib/libDiagnosticMessagesClient.dylib
+       0x1a455a000 -        0x1a45a0fff  com.apple.spotlight.metadata.utilities (1.0 - 2274.38) <1AE5021C-CA36-3E9F-87C8-09813308420A> /System/Library/PrivateFrameworks/MetadataUtilities.framework/Versions/A/MetadataUtilities
+       0x1a45a1000 -        0x1a463bfff  com.apple.Metadata (14.6 - 2274.38) <4D2BC1EA-26B7-3469-8449-9B2E9B569ABE> /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Metadata
+       0x1a463c000 -        0x1a4644ffb  com.apple.DiskArbitration (2.7 - 2.7) <D85ED36D-84E7-3CA5-B9A3-42925DB8592E> /System/Library/Frameworks/DiskArbitration.framework/Versions/A/DiskArbitration
+       0x1a4645000 -        0x1a4a2efc7  com.apple.vImage (8.1 - 587.100.1) <716F299D-CE66-3589-A03E-880C2DFE859D> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vImage.framework/Versions/A/vImage
+       0x1a4a2f000 -        0x1a4ddefff  com.apple.QuartzCore (1.11 - 1120.34.6) <A432E553-ACD6-33FA-9DF4-EBDF7A0BA1E5> /System/Library/Frameworks/QuartzCore.framework/Versions/A/QuartzCore
+       0x1a4ddf000 -        0x1a4e30fff  libFontRegistry.dylib (366.1.0.1) <2CB1E7CF-7CCF-31E7-A786-C38089C80914> /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/Resources/libFontRegistry.dylib
+       0x1a4e31000 -        0x1a4f7efff  com.apple.coreui (2.1 - 868) <B47CB194-197E-3ADF-9855-8378957246CE> /System/Library/PrivateFrameworks/CoreUI.framework/Versions/A/CoreUI
+       0x1a508f000 -        0x1a509afff  com.apple.PerformanceAnalysis (1.347.4 - 347.4) <8BC17A61-E23A-3BC4-A8F7-B316F021D5EA> /System/Library/PrivateFrameworks/PerformanceAnalysis.framework/Versions/A/PerformanceAnalysis
+       0x1a509b000 -        0x1a50aafff  com.apple.OpenDirectory (14.6 - 642) <74E23861-23C5-39CA-8B89-D07D9A0E62AE> /System/Library/Frameworks/OpenDirectory.framework/Versions/A/OpenDirectory
+       0x1a50ab000 -        0x1a50caffb  com.apple.CFOpenDirectory (14.6 - 642) <0CE2B2BB-EB4F-3524-B93B-0D4FF73B2021> /System/Library/Frameworks/OpenDirectory.framework/Versions/A/Frameworks/CFOpenDirectory.framework/Versions/A/CFOpenDirectory
+       0x1a50cb000 -        0x1a50d7ff7  com.apple.CoreServices.FSEvents (1376.120.2 - 1376.120.2) <F8DB4FE7-DA9F-37B7-A143-E1A99E8DFA63> /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/FSEvents.framework/Versions/A/FSEvents
+       0x1a50d8000 -        0x1a5102fff  com.apple.coreservices.SharedFileList (225 - 225) <7980A0D2-0734-3B92-9FA1-9B46ED0092FA> /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/SharedFileList.framework/Versions/A/SharedFileList
+       0x1a5103000 -        0x1a5109fff  libapp_launch_measurement.dylib (17) <98B63547-6AA5-3BDB-A0A0-3E3CBCE3F963> /usr/lib/libapp_launch_measurement.dylib
+       0x1a510a000 -        0x1a5153fff  com.apple.CoreAutoLayout (1.0 - 32) <7176BC5E-A893-3F96-ACFB-945CC0310571> /System/Library/PrivateFrameworks/CoreAutoLayout.framework/Versions/A/CoreAutoLayout
+       0x1a5154000 -        0x1a523dfff  libxml2.2.dylib (37.18) <49214D58-E8A0-3132-8CE2-B03279C543EA> /usr/lib/libxml2.2.dylib
+       0x1a523e000 -        0x1a529cfff  com.apple.CoreVideo (1.8 - 612.8) <017833C5-A847-39E0-95CC-05B45A9B4443> /System/Library/Frameworks/CoreVideo.framework/Versions/A/CoreVideo
+       0x1a52da000 -        0x1a5303fff  com.apple.UserManagement (1.0 - 1) <66D96AF4-2C83-3C68-A837-2A55B99AECDE> /System/Library/PrivateFrameworks/UserManagement.framework/Versions/A/UserManagement
+       0x1a6a61000 -        0x1a6a8bffb  libsystem_containermanager.dylib (582.140.2) <230DEE13-0738-3710-A305-2D87D2522E52> /usr/lib/system/libsystem_containermanager.dylib
+       0x1a6a8c000 -        0x1a6aa3fff  com.apple.IOSurface (352.50.1 - 352.50.1) <3D9A5F98-65F0-3746-A35D-B7C8F3889906> /System/Library/Frameworks/IOSurface.framework/Versions/A/IOSurface
+       0x1a6aa4000 -        0x1a6aadfff  com.apple.IOAccelerator (481.40.2 - 481.40.2) <9CC40A5F-8E3A-3892-8969-2A96A80B3528> /System/Library/PrivateFrameworks/IOAccelerator.framework/Versions/A/IOAccelerator
+       0x1a6aae000 -        0x1a6cd9fff  com.apple.Metal (343.21 - 343.21) <5E0FFDF8-E2DA-3E6F-B6CE-82BDD502C20E> /System/Library/Frameworks/Metal.framework/Versions/A/Metal
+       0x1a6cda000 -        0x1a6d03fff  com.apple.audio.caulk (1.0 - 149.5.9) <66A74D85-E137-3FA4-9394-64C24225EB7C> /System/Library/PrivateFrameworks/caulk.framework/Versions/A/caulk
+       0x1a6d04000 -        0x1a6e4cfff  com.apple.CoreMedia (1.0 - 3115.7.1) <22844A73-1E2D-3900-B371-F844CA54540A> /System/Library/Frameworks/CoreMedia.framework/Versions/A/CoreMedia
+       0x1a6e4d000 -        0x1a6fb1fff  libFontParser.dylib (379.6.0.1) <CBBD1CD2-AB8F-3151-BF52-93844A7AF7A6> /System/Library/PrivateFrameworks/FontServices.framework/libFontParser.dylib
+       0x1a6fb2000 -        0x1a7275fff  com.apple.HIToolbox (2.1.1 - 1204.0.1) <4166F6CB-B599-306C-8568-823BD29A74C3> /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/HIToolbox
+       0x1a7276000 -        0x1a728dfff  com.apple.framework.DFRFoundation (1.0 - 285) <817EFB4E-6866-39FC-97D1-0CEE49C320DF> /System/Library/PrivateFrameworks/DFRFoundation.framework/Versions/A/DFRFoundation
+       0x1a728e000 -        0x1a7293fff  com.apple.dt.XCTTargetBootstrap (14.6 - 22714.3) <D9629F42-3994-3C9E-8361-4967E82CB38D> /System/Library/PrivateFrameworks/XCTTargetBootstrap.framework/Versions/A/XCTTargetBootstrap
+       0x1a7294000 -        0x1a72cefff  com.apple.CoreSVG (1.0 - 329.6.0.1) <5838C70E-3C4C-3DF6-AE3A-E61723CBEC30> /System/Library/PrivateFrameworks/CoreSVG.framework/Versions/A/CoreSVG
+       0x1a72cf000 -        0x1a75f0fff  com.apple.ImageIO (3.3.0 - 2488.6.2) <3303C96F-C985-3060-912E-652B44769630> /System/Library/Frameworks/ImageIO.framework/Versions/A/ImageIO
+       0x1a75f1000 -        0x1a7976fff  com.apple.CoreImage (18.0.0 - 1440.3) <EB490BF8-BF3F-30E5-A8D9-ABCA5851F33B> /System/Library/Frameworks/CoreImage.framework/Versions/A/CoreImage
+       0x1a7977000 -        0x1a7a24fff  com.apple.MetalPerformanceShaders.MPSCore (1.0 - 1) <311B707E-C3B0-3952-B020-6F51ABBF2AEE> /System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSCore.framework/Versions/A/MPSCore
+       0x1a7a25000 -        0x1a7a29fff  libsystem_configuration.dylib (1300.120.2) <4F21FA09-0224-337E-9843-10109C019B1E> /usr/lib/system/libsystem_configuration.dylib
+       0x1a7a2a000 -        0x1a7a2ffff  libsystem_sandbox.dylib (2190.140.13) <DA843F8C-6155-3B7C-99B0-DEB74CF9F109> /usr/lib/system/libsystem_sandbox.dylib
+       0x1a7a30000 -        0x1a7a31fff  com.apple.AggregateDictionary (1.0 - 1) <8BD076E9-AE2B-37B2-92E1-8831206CDD95> /System/Library/PrivateFrameworks/AggregateDictionary.framework/Versions/A/AggregateDictionary
+       0x1a7a32000 -        0x1a7a35ffb  com.apple.AppleSystemInfo (3.1.5 - 3.1.5) <A7B727FA-7CE7-3808-B18F-58D5A852BC0B> /System/Library/PrivateFrameworks/AppleSystemInfo.framework/Versions/A/AppleSystemInfo
+       0x1a7a36000 -        0x1a7a37fff  liblangid.dylib (138) <66B29B5E-264D-3FE3-A412-EF2A1EA23CC2> /usr/lib/liblangid.dylib
+       0x1a7a38000 -        0x1a7b5afff  com.apple.CoreNLP (1.0 - 313) <82FE6CCD-420D-331F-8BFE-C9E70C3BF4D3> /System/Library/PrivateFrameworks/CoreNLP.framework/Versions/A/CoreNLP
+       0x1a7b5b000 -        0x1a7b60fff  com.apple.LinguisticData (1.0 - 483.10) <FBAA8093-8115-3A12-92E0-6DCC3BB5A681> /System/Library/PrivateFrameworks/LinguisticData.framework/Versions/A/LinguisticData
+       0x1a7b61000 -        0x1a8434fef  libBNNS.dylib (830.120.10) <DE6D980B-63E1-3ABE-8C21-BD50D7FA561D> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBNNS.dylib
+       0x1a8435000 -        0x1a8525f87  libvDSP.dylib (1043.120.8) <DA5D4B32-1C3E-300F-9EA3-02D2D35FC4BD> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libvDSP.dylib
+       0x1a8526000 -        0x1a8559fff  com.apple.CoreEmoji (1.0 - 200.401) <54F6C19A-29F7-3E9A-98E1-FB2190343AD3> /System/Library/PrivateFrameworks/CoreEmoji.framework/Versions/A/CoreEmoji
+       0x1a855a000 -        0x1a8569ff7  com.apple.IOMobileFramebuffer (343.0.0 - 343.0.0) <6F69AA2F-1783-3BA2-BA44-D12B8144C534> /System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/Versions/A/IOMobileFramebuffer
+       0x1a85e7000 -        0x1a8764fff  com.apple.CoreUtils (7.4.2 - 742.5) <B111F808-DF12-356D-8385-DF8ACE9C3D7F> /System/Library/PrivateFrameworks/CoreUtils.framework/Versions/A/CoreUtils
+       0x1a8765000 -        0x1a877dfff  com.apple.MobileKeyBag (2.0 - 1.0) <4F2A4E09-2C00-37EF-85EF-5208BB4FA6F9> /System/Library/PrivateFrameworks/MobileKeyBag.framework/Versions/A/MobileKeyBag
+       0x1a877e000 -        0x1a878bfff  com.apple.AssertionServices (1.0 - 874.140.4) <1E4583E3-AA8C-374C-BA4B-693E279CCBDC> /System/Library/PrivateFrameworks/AssertionServices.framework/Versions/A/AssertionServices
+       0x1a878c000 -        0x1a8819fff  com.apple.securityfoundation (6.0 - 55283) <4C3BFFA3-58B4-308B-963B-9999A5025166> /System/Library/Frameworks/SecurityFoundation.framework/Versions/A/SecurityFoundation
+       0x1a881a000 -        0x1a8841fff  com.apple.coreservices.BackgroundTaskManagement (1.0 - 104) <BD4F4313-D6C3-3490-B52B-C0BB8FAB3583> /System/Library/PrivateFrameworks/BackgroundTaskManagement.framework/Versions/A/BackgroundTaskManagement
+       0x1a884d000 -        0x1a884ffff  libquarantine.dylib (172.140.2) <1F514E6F-7D94-356E-A5DC-6E8DCDD40846> /usr/lib/system/libquarantine.dylib
+       0x1a8850000 -        0x1a885bfff  libCheckFix.dylib (32) <66CA2CDD-A818-3843-B62A-EFEA159F6B88> /usr/lib/libCheckFix.dylib
+       0x1a885c000 -        0x1a8873fff  libcoretls.dylib (186) <B87D532B-B785-3D43-A825-A36611297431> /usr/lib/libcoretls.dylib
+       0x1a8874000 -        0x1a8885ffb  libbsm.0.dylib (89) <D049EEAA-BF5A-3390-BD20-CA48D067D628> /usr/lib/libbsm.0.dylib
+       0x1a8886000 -        0x1a88e1fff  libmecab.dylib (1062.400.200) <D05BCA65-E409-338C-82AC-79F4D389D006> /usr/lib/libmecab.dylib
+       0x1a88e2000 -        0x1a88e4ffb  libgermantok.dylib (29) <C896ECD0-D60F-371C-8EF0-CD4AF07028FA> /usr/lib/libgermantok.dylib
+       0x1a88e5000 -        0x1a88f9fff  libLinearAlgebra.dylib (1447.120.2) <40AE047A-25AD-3044-8B0C-E89BA59F31AB> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLinearAlgebra.dylib
+       0x1a88fa000 -        0x1a8b4ffff  com.apple.MetalPerformanceShaders.MPSNeuralNetwork (1.0 - 1) <C8AD447C-A03F-358A-BE46-91278D078E12> /System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSNeuralNetwork.framework/Versions/A/MPSNeuralNetwork
+       0x1a8b50000 -        0x1a8ba7fff  com.apple.MetalPerformanceShaders.MPSRayIntersector (1.0 - 1) <8F05D25F-2C2E-3C70-9459-337ED8201A26> /System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSRayIntersector.framework/Versions/A/MPSRayIntersector
+       0x1a8d45000 -        0x1a8d76fff  com.apple.MetalPerformanceShaders.MPSMatrix (1.0 - 1) <C96C5764-1309-353A-B295-FDE2FF6AFB47> /System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSMatrix.framework/Versions/A/MPSMatrix
+       0x1a8d77000 -        0x1a8ea0fff  com.apple.MetalPerformanceShaders.MPSNDArray (1.0 - 1) <B1EF5ECA-4FE9-3A02-BAAB-E2F3965956F5> /System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSNDArray.framework/Versions/A/MPSNDArray
+       0x1a8ea1000 -        0x1a8f32fff  com.apple.MetalPerformanceShaders.MPSImage (1.0 - 1) <7E25C7DA-730F-3032-9E2E-9E24082DC4F0> /System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSImage.framework/Versions/A/MPSImage
+       0x1a8f33000 -        0x1a8ff6fdf  com.apple.AppleFSCompression (163.140.2 - 1.0) <F0DBABE8-C60B-3809-BD9C-C5756E745024> /System/Library/PrivateFrameworks/AppleFSCompression.framework/Versions/A/AppleFSCompression
+       0x1a8ff7000 -        0x1a9003ffb  libbz2.1.0.dylib (45) <AE9CAD30-1B40-3682-870D-8497FB043D8B> /usr/lib/libbz2.1.0.dylib
+       0x1a9004000 -        0x1a9009fff  libsystem_coreservices.dylib (152.5.3) <CF38F1DD-9C1B-34D8-8C4D-DC5899486CD1> /usr/lib/system/libsystem_coreservices.dylib
+       0x1a900a000 -        0x1a903bfff  com.apple.CoreServices.OSServices (1141.1 - 1141.1) <29A26974-940B-3A01-906F-A01C4FDCA85C> /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/OSServices.framework/Versions/A/OSServices
+       0x1a9323000 -        0x1a9331fff  libz.1.dylib (91.40.4) <590BA915-A4A0-34C4-92B5-7ED2890BC505> /usr/lib/libz.1.dylib
+       0x1a9332000 -        0x1a9368ff3  libsystem_m.dylib (3252.100.9) <0BE2E009-9F7F-331D-B4AC-F39136591F6F> /usr/lib/system/libsystem_m.dylib
+       0x1a9369000 -        0x1a936cfff  libcharset.1.dylib (102) <56C33416-C658-3BA4-9210-3D463DFDC945> /usr/lib/libcharset.1.dylib
+       0x1a936d000 -        0x1a9374ffb  libmacho.dylib (1010.6) <BB441E41-3804-3949-B620-0B29D7975490> /usr/lib/system/libmacho.dylib
+       0x1a9375000 -        0x1a9394fff  libkxld.dylib (10063.141.2) <DC5D8B64-7CA8-3DBC-8563-94CE1D5581BD> /usr/lib/system/libkxld.dylib
+       0x1a9395000 -        0x1a93a2ff7  libcommonCrypto.dylib (600028.100.1) <B0A2DDA7-420D-3DDE-9FE2-3AFDD2188F14> /usr/lib/system/libcommonCrypto.dylib
+       0x1a93a3000 -        0x1a93aefff  libunwind.dylib (1700.242) <40A5125B-1225-337B-9D1A-968356D29580> /usr/lib/system/libunwind.dylib
+       0x1a93af000 -        0x1a93b6fff  liboah.dylib (318.9) <749BB71D-B6F2-3C9D-A96D-65D22F7A42B3> /usr/lib/liboah.dylib
+       0x1a93b7000 -        0x1a93c0fff  libcopyfile.dylib (196.120.5) <3F3A181E-C6AB-3F09-BC74-37B8AC2BBE57> /usr/lib/system/libcopyfile.dylib
+       0x1a93c1000 -        0x1a93c4fff  libcompiler_rt.dylib (103.2) <D133BCC9-EFB7-3C69-83D2-A33BB6AFA430> /usr/lib/system/libcompiler_rt.dylib
+       0x1a93c5000 -        0x1a93c9ffb  libsystem_collections.dylib (1592.100.35) <E08997D8-CC79-3A51-A3E0-B7706A78CC50> /usr/lib/system/libsystem_collections.dylib
+       0x1a93ca000 -        0x1a93cdffb  libsystem_secinit.dylib (147.140.2) <1F043FF2-1603-32F0-A8FB-DC6CBB118581> /usr/lib/system/libsystem_secinit.dylib
+       0x1a93ce000 -        0x1a93d0ffb  libremovefile.dylib (70.100.4) <01FAC88B-53F2-36C6-91EE-1EC62AC11CC8> /usr/lib/system/libremovefile.dylib
+       0x1a93d1000 -        0x1a93d1ffb  libkeymgr.dylib (31) <59B09DF8-56B7-3FAC-94D3-CC946797E98E> /usr/lib/system/libkeymgr.dylib
+       0x1a93d2000 -        0x1a93dafff  libsystem_dnssd.dylib (2200.140.11) <4E11F9C6-8BD5-380C-A46F-7AB5DD6E91B6> /usr/lib/system/libsystem_dnssd.dylib
+       0x1a93db000 -        0x1a93e0fff  libcache.dylib (93) <291EEBA0-190B-30E0-A7FF-1ED0CA3505B4> /usr/lib/system/libcache.dylib
+       0x1a93e1000 -        0x1a93e2fff  libSystem.B.dylib (1345.120.2) <2C0809B3-B3E0-3921-BB57-569E6984EC1A> /usr/lib/libSystem.B.dylib
+       0x1a93e3000 -        0x1a93e6fff  libfakelink.dylib (5) <6ED86900-759A-3C75-ACEB-CFBA5E319A72> /usr/lib/libfakelink.dylib
+       0x1a93e7000 -        0x1a93e7ffb  com.apple.SoftLinking (1.0 - 47) <6B5FD217-7903-353F-9887-6D0D50A28F2F> /System/Library/PrivateFrameworks/SoftLinking.framework/Versions/A/SoftLinking
+       0x1a93e8000 -        0x1a941dff3  libpcap.A.dylib (131) <356BCCED-4526-32B4-B92F-B4317AA95A6B> /usr/lib/libpcap.A.dylib
+       0x1a941e000 -        0x1a9424ff7  libiconv.2.dylib (102) <132D5CDF-9E1F-3595-A92D-22C4B22F7A92> /usr/lib/libiconv.2.dylib
+       0x1a9425000 -        0x1a9436fff  libcmph.dylib (8) <DF19D857-B33F-3D8D-8C65-7FA21FFFDCD7> /usr/lib/libcmph.dylib
+       0x1a9437000 -        0x1a94bffff  libarchive.2.dylib (131.140.2) <D412275B-040D-32F6-BB47-120D1CE9595E> /usr/lib/libarchive.2.dylib
+       0x1a94c0000 -        0x1a9536ff3  com.apple.SearchKit (1.4.1 - 1.4.1) <1B18EE05-38BB-33C3-90D3-86EAA7F709AD> /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/SearchKit.framework/Versions/A/SearchKit
+       0x1a9537000 -        0x1a9538ff7  libThaiTokenizer.dylib (15) <56C75CC1-7EBA-3FF6-81F2-8FC9E932DF09> /usr/lib/libThaiTokenizer.dylib
+       0x1a9539000 -        0x1a955fff7  com.apple.applesauce (1.0 - 16.60.1) <AFCCF574-5DE1-347E-8AE6-E34D527B0DB6> /System/Library/PrivateFrameworks/AppleSauce.framework/Versions/A/AppleSauce
+       0x1a9560000 -        0x1a957affb  libapple_nghttp2.dylib (20.120.2) <7D3364DD-5489-39DE-AA71-91A03E67FFF3> /usr/lib/libapple_nghttp2.dylib
+       0x1a957b000 -        0x1a958dff3  libSparseBLAS.dylib (1447.120.2) <1FEAAF44-337D-380E-9919-FED202CB1D9B> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libSparseBLAS.dylib
+       0x1a958e000 -        0x1a958ffff  com.apple.MetalPerformanceShaders.MetalPerformanceShaders (1.0 - 1) <894F977B-5E7B-377A-9E38-601CA20C5234> /System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/MetalPerformanceShaders
+       0x1a9590000 -        0x1a9595fff  libpam.2.dylib (33) <6FA86132-1E46-38DE-98C9-F7011B2662BE> /usr/lib/libpam.2.dylib
+       0x1a9596000 -        0x1a9665ff7  libcompression.dylib (169.100.2) <10B32CF8-FB85-3414-AC13-FCF02C0D1AE0> /usr/lib/libcompression.dylib
+       0x1a9666000 -        0x1a966affb  libQuadrature.dylib (7) <7F24A040-0576-36C8-8A6B-1BBFC44BE38E> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libQuadrature.dylib
+       0x1a966b000 -        0x1aa7e5fcf  libLAPACK.dylib (1447.120.2) <9CBFAFCE-10E6-3A43-BA8F-92C684591DC2> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLAPACK.dylib
+       0x1aa7e6000 -        0x1aa83cfff  com.apple.DictionaryServices (1.2 - 355) <7CEC6B2A-5D93-3E70-9068-37C7EBF3DD0E> /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/DictionaryServices.framework/Versions/A/DictionaryServices
+       0x1aa83d000 -        0x1aa85bff7  liblzma.5.dylib (20) <1744B75A-D9F2-3E3A-9E46-B888FF8095FC> /usr/lib/liblzma.5.dylib
+       0x1aa85c000 -        0x1aa85dffb  libcoretls_cfhelpers.dylib (186) <684E9481-84CB-3BD2-B7EA-0E3BB488616B> /usr/lib/libcoretls_cfhelpers.dylib
+       0x1aa85e000 -        0x1aa8cdff7  com.apple.APFS (2236.141.1 - 2236.141.1) <66F4F5C9-C65B-3059-8373-F015BA369F08> /System/Library/PrivateFrameworks/APFS.framework/Versions/A/APFS
+       0x1aa8ce000 -        0x1aa8dcffb  libxar.1.dylib (498) <9CFA3E69-001E-3507-94C6-06D58E0472B9> /usr/lib/libxar.1.dylib
+       0x1aa8dd000 -        0x1aa8e0ff7  libutil.dylib (72) <C89FF98C-5D68-3365-84DB-33144DCC9A3C> /usr/lib/libutil.dylib
+       0x1aa8e1000 -        0x1aa90cff3  libxslt.1.dylib (20.3) <429FF7C2-BFC0-3173-AF3A-60818BB1C4D7> /usr/lib/libxslt.1.dylib
+       0x1aa915000 -        0x1aa990fff  libvMisc.dylib (1043.120.8) <A40032F8-D882-332B-975A-2284391F52D7> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libvMisc.dylib
+       0x1aa991000 -        0x1aaa21fff  libate.dylib (3.0.8) <34B97402-2B76-35A6-B3D5-0FDDE7FEC860> /usr/lib/libate.dylib
+       0x1aaa2b000 -        0x1aaa3efff  com.apple.CrashReporterSupport (10.13 - 15125.4) <9FC8187F-2CFD-39DE-ABFB-1877259C15B8> /System/Library/PrivateFrameworks/CrashReporterSupport.framework/Versions/A/CrashReporterSupport
+       0x1aab89000 -        0x1aabc8fff  com.apple.pluginkit.framework (1.0 - 1) <D6F2DC57-3C42-3451-8647-1F58B543030D> /System/Library/PrivateFrameworks/PlugInKit.framework/Versions/A/PlugInKit
+       0x1aac55000 -        0x1aaca0ff3  com.apple.AppleVAFramework (6.2.7 - 6.2.7) <94E7E634-8171-33C7-B834-E87F5C46CD71> /System/Library/PrivateFrameworks/AppleVA.framework/Versions/A/AppleVA
+       0x1aaca1000 -        0x1aacbbfff  libexpat.1.dylib (35) <CD2963DE-A1F1-3353-A607-E33A3992C63C> /usr/lib/libexpat.1.dylib
+       0x1aacbc000 -        0x1aacc6fff  libheimdal-asn1.dylib (689.140.1) <B2C1B5BC-C9B8-39DD-98D6-4BA325146C65> /usr/lib/libheimdal-asn1.dylib
+       0x1aacc7000 -        0x1aace4fff  com.apple.IconFoundation (493 - 493) <3E4EA49B-36CA-3CE6-89F4-97644DFDBBE0> /System/Library/PrivateFrameworks/IconFoundation.framework/Versions/A/IconFoundation
+       0x1aace5000 -        0x1aad5ffff  com.apple.IconServices (493 - 493) <73C9FA11-1400-3D10-BB32-36FDC1727D0E> /System/Library/PrivateFrameworks/IconServices.framework/Versions/A/IconServices
+       0x1aad60000 -        0x1aadfafff  com.apple.MediaExperience (1.0 - 1) <4FAC028A-07B2-37D1-B4A8-CC3659287A53> /System/Library/PrivateFrameworks/MediaExperience.framework/Versions/A/MediaExperience
+       0x1aae26000 -        0x1aae31fff  com.apple.GraphVisualizer (1.0 - 100.1) <0B7B173F-5D31-3CEC-A9BE-B03C3F1810D6> /System/Library/PrivateFrameworks/GraphVisualizer.framework/Versions/A/GraphVisualizer
+       0x1aae32000 -        0x1aae74fff  com.apple.OTSVG (1.0 - 800.6.0.1) <A51FE53E-14EE-3D3F-925E-5FB45BE48A02> /System/Library/PrivateFrameworks/OTSVG.framework/Versions/A/OTSVG
+       0x1aae75000 -        0x1aae7ffff  com.apple.xpc.AppServerSupport (1.0 - 2748.140.10) <FBCFBE88-A8F9-3932-960A-F8D323A3E403> /System/Library/PrivateFrameworks/AppServerSupport.framework/Versions/A/AppServerSupport
+       0x1aae80000 -        0x1aae8afff  libhvf.dylib (1.0 - 379.6.0.1) <FF9D1126-0A73-3C48-8CD7-DFC2A3FC5142> /System/Library/PrivateFrameworks/FontServices.framework/libhvf.dylib
+       0x1aae8b000 -        0x1aae90fff  libspindump.dylib (360.4) <349A6E98-F157-3A1A-905E-B81DE936CA37> /usr/lib/libspindump.dylib
+       0x1aae91000 -        0x1aaf60fff  com.apple.Heimdal (4.0 - 2.0) <CB86C78A-62AA-3E75-8C0E-AE481DF0AAA2> /System/Library/PrivateFrameworks/Heimdal.framework/Versions/A/Heimdal
+       0x1ab1ae000 -        0x1ab1f3ff7  com.apple.AppleJPEG (1.0 - 1) <419B2601-A9A7-3647-9528-12BD45522C32> /System/Library/PrivateFrameworks/AppleJPEG.framework/Versions/A/AppleJPEG
+       0x1ab1f4000 -        0x1ab2e3ff7  libJP2.dylib (2488.6.2) <CB772701-D0C8-3476-A869-1ADD58A2C90C> /System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libJP2.dylib
+       0x1ab2e4000 -        0x1ab2e7fff  com.apple.WatchdogClient.framework (1.0 - 254.120.4) <015BEF06-4C48-30D6-98A6-B4459FA17DB3> /System/Library/PrivateFrameworks/WatchdogClient.framework/Versions/A/WatchdogClient
+       0x1ab2e8000 -        0x1ab326fff  com.apple.MultitouchSupport.framework (7440.9 - 7440.9) <1CE2FD09-3E45-338A-B401-7BFFE2CEB488> /System/Library/PrivateFrameworks/MultitouchSupport.framework/Versions/A/MultitouchSupport
+       0x1ab327000 -        0x1ab79cfff  com.apple.VideoToolbox (1.0 - 3115.7.1) <D2411C16-7E23-32A3-8AEF-8417330C09E8> /System/Library/Frameworks/VideoToolbox.framework/Versions/A/VideoToolbox
+       0x1ab79d000 -        0x1ab7d5fff  libAudioToolboxUtility.dylib (1387.7.4) <31C0D964-3FFB-32F3-AE35-A5C481822DAC> /usr/lib/libAudioToolboxUtility.dylib
+       0x1ab7d6000 -        0x1ab800fff  libPng.dylib (2488.6.2) <47E6E639-3779-3985-AF30-C3EFAC9570F2> /System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libPng.dylib
+       0x1ab801000 -        0x1ab863fff  libTIFF.dylib (2488.6.2) <371B3ECA-C14F-333C-AF40-D1DE16162187> /System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libTIFF.dylib
+       0x1ab864000 -        0x1ab883fff  com.apple.IOPresentment (65 - 64) <57D12740-7AD7-39FA-B5B2-FA1D760D6A30> /System/Library/PrivateFrameworks/IOPresentment.framework/Versions/A/IOPresentment
+       0x1ab884000 -        0x1ab888fff  com.apple.GPUWrangler (8.1.9 - 8.1.9) <565DBB62-13C8-3842-AE45-67956735D48F> /System/Library/PrivateFrameworks/GPUWrangler.framework/Versions/A/GPUWrangler
+       0x1ab889000 -        0x1ab88bffb  libRadiance.dylib (2488.6.2) <82FC8D83-867F-3F3B-A9D0-6ACF1B7C6334> /System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libRadiance.dylib
+       0x1ab88c000 -        0x1ab891ffb  com.apple.DSExternalDisplay (3.1 - 380) <396FBA24-F24E-3EFC-B65B-24071CBCDCCE> /System/Library/PrivateFrameworks/DSExternalDisplay.framework/Versions/A/DSExternalDisplay
+       0x1ab892000 -        0x1ab8bcfd7  libJPEG.dylib (2488.6.2) <476C4522-AFE3-34C8-8C15-C41AE746BB3B> /System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libJPEG.dylib
+       0x1ab8bd000 -        0x1ab8ecffb  com.apple.ATSUI (1.0 - 1) <9857B9F3-1DD8-3639-95F7-2F03E6B9A62E> /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATSUI.framework/Versions/A/ATSUI
+       0x1ab8ed000 -        0x1ab8f2ffb  libGIF.dylib (2488.6.2) <16DFBB22-69B9-3C77-81F2-8A81CC9EB0B1> /System/Library/Frameworks/ImageIO.framework/Versions/A/Resources/libGIF.dylib
+       0x1ab8f3000 -        0x1ab900fff  com.apple.CMCaptureCore (1.0 - 478.3) <E5C9C05F-91B7-37AB-BED7-91AD3A558249> /System/Library/PrivateFrameworks/CMCaptureCore.framework/Versions/A/CMCaptureCore
+       0x1ab901000 -        0x1ab978fff  com.apple.print.framework.PrintCore (19 - 582.2) <0F320670-B0A2-30BC-ABAA-F79619940366> /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/PrintCore
+       0x1ab979000 -        0x1aba1efff  com.apple.TextureIO (3.10.10 - 3.10.10) <FE0C3BCC-CDBE-3189-BA78-6E95F8F0B64A> /System/Library/PrivateFrameworks/TextureIO.framework/Versions/A/TextureIO
+       0x1aba1f000 -        0x1aba2dfff  com.apple.InternationalSupport (1.0 - 74) <A361244E-2F94-3259-9364-378708A7B63D> /System/Library/PrivateFrameworks/InternationalSupport.framework/Versions/A/InternationalSupport
+       0x1aba2e000 -        0x1aba72fff  com.apple.datadetectorscore (8.0 - 758.7) <C4B64225-E2E6-38DC-B34B-6C1F38B3DBE5> /System/Library/PrivateFrameworks/DataDetectorsCore.framework/Versions/A/DataDetectorsCore
+       0x1aba73000 -        0x1abadefff  com.apple.UserActivity (551 - 551) <DAED2140-B96B-3A51-8DD0-35FD6B481273> /System/Library/PrivateFrameworks/UserActivity.framework/Versions/A/UserActivity
+       0x1ac42f000 -        0x1ac98cfff  libswiftCore.dylib (5.10 - 5.10.0.12.10) <7DB1818B-1D9A-328E-821B-21A33442746A> /usr/lib/swift/libswiftCore.dylib
+       0x1aca3c000 -        0x1aca7cfff  libSessionUtility.dylib (263.7.1) <F9CE0C7A-C0FD-3876-BD6B-A4BFD5D0BAAC> /System/Library/PrivateFrameworks/AudioSession.framework/libSessionUtility.dylib
+       0x1aca7d000 -        0x1acbfcfff  com.apple.audio.toolbox.AudioToolbox (1.14 - 1.14) <3A3594FB-AEF7-3498-97E5-EE73B8B338D8> /System/Library/Frameworks/AudioToolbox.framework/Versions/A/AudioToolbox
+       0x1acbfd000 -        0x1acc78fff  com.apple.audio.AudioSession (1.0 - 263.7.1) <E7E214D4-38DA-314F-90E4-E289607A6BBE> /System/Library/PrivateFrameworks/AudioSession.framework/Versions/A/AudioSession
+       0x1acc79000 -        0x1acc90fff  libAudioStatistics.dylib (209.6.6) <FF7B6454-CE28-3B43-B885-B0E968EB6497> /usr/lib/libAudioStatistics.dylib
+       0x1acc91000 -        0x1accc0fff  com.apple.speech.synthesis.framework (9.2.22 - 9.2.22) <A1F211D6-7CDF-316C-9664-975FF36DF073> /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/SpeechSynthesis.framework/Versions/A/SpeechSynthesis
+       0x1accc1000 -        0x1acd3ffff  com.apple.ApplicationServices.ATS (377 - 569.3.0.1) <9890D12E-47A6-3749-8D96-F850A81CC4C0> /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ATS.framework/Versions/A/ATS
+       0x1acd40000 -        0x1acd58ffb  libresolv.9.dylib (79) <FFEE152E-636A-3724-BECF-B68E129DC841> /usr/lib/libresolv.9.dylib
+       0x1acf52000 -        0x1ad031fff  libSMC.dylib (31) <2D9D3B9C-31BB-3D37-A2CF-A6C2A6BBA353> /usr/lib/libSMC.dylib
+       0x1ad032000 -        0x1ad091ff7  libcups.2.dylib (509.2) <6EA5409D-30E8-3792-AC88-5662A71AEC1C> /usr/lib/libcups.2.dylib
+       0x1ad09f000 -        0x1ad0aaffb  com.apple.ColorSyncLegacy (4.13.0 - 1) <E9C2534A-36CD-3CDE-A4A4-43DDCD3401EA> /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/ColorSyncLegacy.framework/Versions/A/ColorSyncLegacy
+       0x1ad0ab000 -        0x1ad0b6ff3  com.apple.QD (4.0 - 451) <EEFA850F-B4F1-350C-AE71-4E29573C010D> /System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/QD.framework/Versions/A/QD
+       0x1ad0b7000 -        0x1ad40afff  com.apple.audio.AudioResourceArbitration (1.0 - 1) <676E1902-3785-343A-8895-2DF951E38C81> /System/Library/PrivateFrameworks/AudioResourceArbitration.framework/Versions/A/AudioResourceArbitration
+       0x1ad40b000 -        0x1ad418fff  com.apple.perfdata (1.0 - 117) <FD544D47-8D40-39FE-A008-4C67717531FD> /System/Library/PrivateFrameworks/perfdata.framework/Versions/A/perfdata
+       0x1ad419000 -        0x1ad426fff  libperfcheck.dylib (46) <B6920A31-62A7-3806-AB97-99FE74435C8A> /usr/lib/libperfcheck.dylib
+       0x1ad427000 -        0x1ad437fff  com.apple.Kerberos (3.0 - 1) <4D9C5E84-B2BB-3500-8C75-1E789CDEBD7C> /System/Library/Frameworks/Kerberos.framework/Versions/A/Kerberos
+       0x1ad438000 -        0x1ad491ffb  com.apple.GSS (4.0 - 2.0) <1AC11BBA-A95C-35B9-AE40-5D157E563EB1> /System/Library/Frameworks/GSS.framework/Versions/A/GSS
+       0x1ad492000 -        0x1ad4a4fff  com.apple.CommonAuth (4.0 - 2.0) <C4AF17B2-9699-3A2C-85F4-C2A8AF8DC24E> /System/Library/PrivateFrameworks/CommonAuth.framework/Versions/A/CommonAuth
+       0x1ae712000 -        0x1ae7d1fff  com.apple.Bluetooth (1.0 - 1) <59774B43-C206-34ED-BA73-8A6B8717920B> /System/Library/Frameworks/IOBluetooth.framework/Versions/A/IOBluetooth
+       0x1ae973000 -        0x1aeab0fff  com.apple.combine (1.0 - 311) <62DC1874-9F4A-38C8-A145-B168B2804105> /System/Library/Frameworks/Combine.framework/Versions/A/Combine
+       0x1b0660000 -        0x1b068bfff  com.apple.RemoteViewServices (2.0 - 176) <E5126C2B-AB8F-3306-B62D-3F581C25EF0F> /System/Library/PrivateFrameworks/RemoteViewServices.framework/Versions/A/RemoteViewServices
+       0x1b068c000 -        0x1b069fffb  com.apple.SpeechRecognitionCore (6.2.83.7 - 6.2.83.7) <4AFDB87F-09FC-35FF-B504-978CB3A517A1> /System/Library/PrivateFrameworks/SpeechRecognitionCore.framework/Versions/A/SpeechRecognitionCore
+       0x1b06a0000 -        0x1b06a7fff  com.apple.speech.recognition.framework (6.0.4 - 6.0.4) <A65A86B3-3424-33AC-B9E0-2FD46AB89216> /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/SpeechRecognition.framework/Versions/A/SpeechRecognition
+       0x1b09f4000 -        0x1b0a0ffff  com.apple.Accessibility (1.0 - 1) <D50B6D4E-EE85-3B9D-8A3E-321B4FCD8132> /System/Library/Frameworks/Accessibility.framework/Versions/A/Accessibility
+       0x1b0a4e000 -        0x1b0a4efff  com.apple.Accelerate.vecLib (3.11 - vecLib 3.11) <EA7D09A7-FE99-33FF-85FB-063097801D7F> /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/vecLib
+       0x1b0a77000 -        0x1b0a77fff  com.apple.CoreServices (1226 - 1226) <A41750FF-C2C6-3490-A3F2-32D033878945> /System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices
+       0x1b0d3c000 -        0x1b0d3cfff  com.apple.Accelerate (1.11 - Accelerate 1.11) <375C2A3C-1105-3576-92FF-7710C719D5A7> /System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate
+       0x1b0d88000 -        0x1b0d9afff  com.apple.MediaAccessibility (1.0 - 153) <AEB4B0EA-81CB-350C-9617-D478C247E54A> /System/Library/Frameworks/MediaAccessibility.framework/Versions/A/MediaAccessibility
+       0x1b16b3000 -        0x1b1788fff  com.apple.CoreBluetooth (1.0 - 1) <DCFCC8B3-99BB-385F-8428-2DE201FDE1CA> /System/Library/Frameworks/CoreBluetooth.framework/Versions/A/CoreBluetooth
+       0x1b1795000 -        0x1b17bdfff  com.apple.PowerLog (1.0 - 1) <6EABA89E-DE25-3D58-8D9A-10ADDCA9A07E> /System/Library/PrivateFrameworks/PowerLog.framework/Versions/A/PowerLog
+       0x1b20e7000 -        0x1b20feff7  libswiftDispatch.dylib (41) <56E6BE07-3E0E-33C0-9E47-09E0525E79D2> /usr/lib/swift/libswiftDispatch.dylib
+       0x1b234b000 -        0x1b2406fff  com.apple.FrontBoardServices (867.314 - 867.314) <992B0CEB-86E8-3D0A-9913-2A88673C4CC5> /System/Library/PrivateFrameworks/FrontBoardServices.framework/Versions/A/FrontBoardServices
+       0x1b2407000 -        0x1b2469fff  com.apple.BoardServices (1.0 - 652.301) <0D69EAC0-0016-3572-A059-380CE1478E89> /System/Library/PrivateFrameworks/BoardServices.framework/Versions/A/BoardServices
+       0x1b27dd000 -        0x1b2821ff8  com.apple.DebugSymbols (195.1 - 195.1) <906CCA2A-B442-303F-8612-49F92CB4451A> /System/Library/PrivateFrameworks/DebugSymbols.framework/Versions/A/DebugSymbols
+       0x1b2822000 -        0x1b294ffff  com.apple.CoreSymbolication (15.3 - 64565.82) <728269D9-ADE1-31B8-8DB2-9C61129AD49C> /System/Library/PrivateFrameworks/CoreSymbolication.framework/Versions/A/CoreSymbolication
+       0x1b2950000 -        0x1b295afff  com.apple.CoreTime (327.0.3.1) <6CD471C5-412C-3752-89C9-E92912964475> /System/Library/PrivateFrameworks/CoreTime.framework/Versions/A/CoreTime
+       0x1b3e93000 -        0x1b3eb8fff  com.apple.BackBoardServices (1.0 - 1.0) <7AD9F1FF-952F-3660-9E7E-FE08D341461A> /System/Library/PrivateFrameworks/BackBoardServices.framework/Versions/A/BackBoardServices
+       0x1b44e7000 -        0x1b44e7fff  com.apple.ApplicationServices (48 - 64) <9266E911-6371-38BA-88FE-4CE2FF469F45> /System/Library/Frameworks/ApplicationServices.framework/Versions/A/ApplicationServices
+       0x1b48cf000 -        0x1b48cffff  libHeimdalProxy.dylib (82.100.3) <0A7D3EAB-D243-3DF9-9FF9-1044C85B90E9> /System/Library/Frameworks/Kerberos.framework/Versions/A/Libraries/libHeimdalProxy.dylib
+       0x1b48d0000 -        0x1b48d0fff  com.apple.audio.units.AudioUnit (1.14 - 1.14) <12A8A45B-048F-3EE5-815B-93B05373FFC1> /System/Library/Frameworks/AudioUnit.framework/Versions/A/AudioUnit
+       0x1b4962000 -        0x1b4965ff5  libswiftObjectiveC.dylib (8) <B4DD2799-4E43-3EFA-965D-F31DDEC54EA9> /usr/lib/swift/libswiftObjectiveC.dylib
+       0x1b4966000 -        0x1b4980fff  libswiftos.dylib (1049.100.4) <8457F3FB-87E1-3A93-979A-30665DC5580B> /usr/lib/swift/libswiftos.dylib
+       0x1b5a61000 -        0x1b5a70fff  com.apple.ASEProcessing (1.34.0 - 1.34.0) <C2E39FF2-692B-3055-8B54-B607ED646F34> /System/Library/PrivateFrameworks/ASEProcessing.framework/Versions/A/ASEProcessing
+       0x1b6950000 -        0x1b69e5fff  com.apple.audio.midi.CoreMIDI (2.0 - 88) <6ED2FB10-2637-3544-AA41-6CF10312ACD8> /System/Library/Frameworks/CoreMIDI.framework/Versions/A/CoreMIDI
+       0x1b73a8000 -        0x1b73abfff  com.apple.IOSurfaceAccelerator (1.0.0 - 1.0.0) <72D8EAE4-B467-30CF-A3B7-ECAAD367FDA9> /System/Library/PrivateFrameworks/IOSurfaceAccelerator.framework/Versions/A/IOSurfaceAccelerator
+       0x1babb2000 -        0x1baccffff  com.apple.RenderBox (5.4.37 - 5.4.37) <D3E6937D-0F7C-3B56-8B28-77F5CC055F17> /System/Library/PrivateFrameworks/RenderBox.framework/Versions/A/RenderBox
+       0x1bc852000 -        0x1bc85dfff  com.apple.OSAServicesClient (1.0 - 1) <B9F1A6A7-C34E-3F68-AEE8-BC96767EC909> /System/Library/PrivateFrameworks/OSAServicesClient.framework/Versions/A/OSAServicesClient
+       0x1bc8a1000 -        0x1bc8bffff  com.apple.accessibility.AXCoreUtilities (1.0 - 1) <5B11C9A9-6611-358F-A951-AF5D75AE8616> /System/Library/PrivateFrameworks/AXCoreUtilities.framework/Versions/A/AXCoreUtilities
+       0x1bc8c0000 -        0x1bc8e3fff  libAccessibility.dylib (3093.32.9) <1625A5DD-C399-383C-BCF4-E068A128B933> /usr/lib/libAccessibility.dylib
+       0x1bfbbf000 -        0x1bfbc5ff7  libswiftCoreGraphics.dylib (15) <AF6A9779-B658-3ED9-8BAC-3C14CEB1BE9E> /usr/lib/swift/libswiftCoreGraphics.dylib
+       0x1bfbc6000 -        0x1bfbcfff3  libswiftDarwin.dylib (5.10 - 5.10.0.12.10) <967216B4-DF7C-3033-82BA-593BB479944D> /usr/lib/swift/libswiftDarwin.dylib
+       0x1c1460000 -        0x1c1483fff  com.apple.private.SystemPolicy (1.0 - 1) <C4924495-D25E-3A3C-A263-172E973B3ABB> /System/Library/PrivateFrameworks/SystemPolicy.framework/Versions/A/SystemPolicy
+       0x1c2086000 -        0x1c20f7fff  com.apple.LoggingSupport (1.0 - 1510.140.4) <2B807EA4-BBFD-368F-B190-FC3FF588DB63> /System/Library/PrivateFrameworks/LoggingSupport.framework/Versions/A/LoggingSupport
+       0x1c20f8000 -        0x1c2103fff  com.apple.MallocStackLogging (1.0 - 64565.70.2) <996FAAAE-AA80-3D57-BBE4-727436BAF450> /System/Library/PrivateFrameworks/MallocStackLogging.framework/Versions/A/MallocStackLogging
+       0x1c2127000 -        0x1c214bfff  libmis.dylib (386.140.3) <2D163711-9D96-30E1-BBEF-118D9F6BB8FD> /usr/lib/libmis.dylib
+       0x1c214c000 -        0x1c214ffff  com.apple.gpusw.GPURawCounter (31 - 12.0) <D54746BF-1103-3694-83C9-0FFB5AE2C00E> /System/Library/PrivateFrameworks/GPURawCounter.framework/Versions/A/GPURawCounter
+       0x1c2159000 -        0x1c215ffff  libswiftCoreFoundation.dylib (2401) <F13802E4-2736-3F44-9B7B-A9B1E425FECC> /usr/lib/swift/libswiftCoreFoundation.dylib
+       0x1c216b000 -        0x1c21a2ff2  libswiftXPC.dylib (36.100.8) <E8EB03C8-52ED-35F1-829A-FA6EA080308A> /usr/lib/swift/libswiftXPC.dylib
+       0x1c21a3000 -        0x1c21a3fff  libswiftCoreImage.dylib (2) <36382314-5DA8-3367-AB9E-8A8424F347CD> /usr/lib/swift/libswiftCoreImage.dylib
+       0x1c21a4000 -        0x1c21a4fff  libswiftIOKit.dylib (1) <FBC27EF3-B20F-37CE-86D3-8D0488DF3285> /usr/lib/swift/libswiftIOKit.dylib
+       0x1c5435000 -        0x1c544dffb  libswiftsimd.dylib (18) <60A97403-9434-3D0D-9CB2-5F81039D27F7> /usr/lib/swift/libswiftsimd.dylib
+       0x1c54d1000 -        0x1c5596fff  com.apple.TextInput (1.0 - 1.0) <9AF69152-DF73-32CD-8C83-179A15D583C6> /System/Library/PrivateFrameworks/TextInput.framework/Versions/A/TextInput
+       0x1c6625000 -        0x1c662efff  com.apple.IOAccelMemoryInfo (1.0 - 1) <D98BD3F2-6B66-3307-ACCB-F8B20EC563E8> /System/Library/PrivateFrameworks/IOAccelMemoryInfo.framework/Versions/A/IOAccelMemoryInfo
+       0x1cdc2b000 -        0x1cdc31ff6  libswiftMetal.dylib (343.21) <63AA605B-B6B3-3BB7-B399-C8AB2B02DC5E> /usr/lib/swift/libswiftMetal.dylib
+       0x1d10af000 -        0x1d1104fff  com.apple.osanalytics.OSAnalytics (1.0 - 1) <BA41DF7E-3656-3953-A0A1-07A0C25E77E4> /System/Library/PrivateFrameworks/OSAnalytics.framework/Versions/A/OSAnalytics
+       0x1d2378000 -        0x1d2379ff5  libswiftQuartzCore.dylib (3) <1A8EA9DA-2A97-3D59-AF8B-B129E5FA222B> /usr/lib/swift/libswiftQuartzCore.dylib
+       0x1d2758000 -        0x1d275dffb  com.apple.kperf (1.0 - 1) <A4A4D2DB-C031-3210-9688-BD68F38B19CE> /System/Library/PrivateFrameworks/kperf.framework/Versions/A/kperf
+       0x1d285f000 -        0x1d2866fff  com.apple.MobileSystemServices (1.0 - 1) <B6C65CC8-BA6C-308A-98A5-893235CDF5EC> /System/Library/PrivateFrameworks/MobileSystemServices.framework/Versions/A/MobileSystemServices
+       0x1d6480000 -        0x1d648eff5  libswiftUniformTypeIdentifiers.dylib (791.2.13) <5D0FF411-93FB-3DD2-B58B-F600268CBBF2> /usr/lib/swift/libswiftUniformTypeIdentifiers.dylib
+       0x1db328000 -        0x1db329ffb  libswiftOSLog.dylib (4) <315A4037-9564-39F9-A641-0BBA52383207> /usr/lib/swift/libswiftOSLog.dylib
+       0x1de7b6000 -        0x1de892fff  com.apple.Symbolication (15.3 - 64565.70.2) <C17D7409-07C6-326B-B5C5-253CF3449854> /System/Library/PrivateFrameworks/Symbolication.framework/Versions/A/Symbolication
+       0x1e1e71000 -        0x1e1e81fff  com.apple.OSLog (1.0 - 1510.140.4) <150C9003-7817-3F6A-B3B4-1EF70F6E1E39> /System/Library/Frameworks/OSLog.framework/Versions/A/OSLog
+       0x1f0905000 -        0x1f0908fff  com.apple.ConfigProfileHelper (16.6 - 1672) <0985A929-798C-30AC-A2FD-ACB5650DAFDB> /System/Library/PrivateFrameworks/ConfigProfileHelper.framework/Versions/A/ConfigProfileHelper
+       0x1f34ee000 -        0x1f34f4ff3  libCoreFSCache.dylib (300.30) <D8A5E68B-B3F5-3DA5-A85A-3AEF396C27A9> /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libCoreFSCache.dylib
+       0x1f34f5000 -        0x1f34faffb  libCoreVMClient.dylib (300.30) <3153675A-7F77-3082-A9AD-89455C636DD7> /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libCoreVMClient.dylib
+       0x1f34fb000 -        0x1f350bffb  com.apple.opengl (21.0.19 - 21.0.19) <9A0872F4-B2BE-34EB-A7D2-16467518EBD0> /System/Library/Frameworks/OpenGL.framework/Versions/A/OpenGL
+       0x1f350c000 -        0x1f350eff3  libCVMSPluginSupport.dylib (21.0.19) <02373695-041E-3A94-8BC9-AF0F9A177E1E> /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libCVMSPluginSupport.dylib
+       0x1f350f000 -        0x1f3517ff7  libGFXShared.dylib (21.0.19) <64D5A70D-42A9-30C7-A2D3-61E938255C9B> /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGFXShared.dylib
+       0x1f3518000 -        0x1f354fffb  libGLImage.dylib (21.0.19) <61DA7AF0-CEC1-3A84-908F-F4F4242A2F0D> /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLImage.dylib
+       0x1f3550000 -        0x1f3589ff7  libGLU.dylib (21.0.19) <C37A19EA-7DBB-30A9-85D0-4FA7B9AE038D> /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGLU.dylib
+       0x1f36e8000 -        0x1f36f1fff  libGL.dylib (21.0.19) <FA828998-AA53-360A-93CB-A2192684404C> /System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib
+       0x1f7128000 -        0x1f724bfff  com.apple.audio.AVFAudio (1.0 - 629.6.2) <9F4D4D4A-C889-3A7E-A191-276AEEAFD009> /System/Library/Frameworks/AVFAudio.framework/Versions/A/AVFAudio
+       0x1f7d5b000 -        0x1f7d9afff  com.apple.CoreTransferable (1.0.1 - 1) <CA751ED8-0B00-361A-A01B-87ABBFD28281> /System/Library/Frameworks/CoreTransferable.framework/Versions/A/CoreTransferable
+       0x1f8220000 -        0x1f8228ff4  com.apple.dt.DeveloperToolsSupport (21.40.2 - 21.40.2) <F0549C8B-02FD-3184-B21A-97B06042A02A> /System/Library/Frameworks/DeveloperToolsSupport.framework/Versions/A/DeveloperToolsSupport
+       0x1f8344000 -        0x1f840efff  com.apple.ExtensionFoundation (97 - 97) <E000E9E3-E3E6-3F38-97D7-5AA9D839A35E> /System/Library/Frameworks/ExtensionFoundation.framework/Versions/A/ExtensionFoundation
+       0x1f9cff000 -        0x1f9d19fff  com.apple.MPSBenchmarkLoop (1.0 - 1) <43541560-CD09-3E14-98D9-8363B83DD6EC> /System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSBenchmarkLoop.framework/Versions/A/MPSBenchmarkLoop
+       0x1f9d1a000 -        0x1f9d2efff  com.apple.MPSFunctions (1.0 - 1) <C7CD5409-3A68-3A04-96E6-D1BD934BACB3> /System/Library/Frameworks/MetalPerformanceShaders.framework/Versions/A/Frameworks/MPSFunctions.framework/Versions/A/MPSFunctions
+       0x231e7f000 -        0x231e89fff  com.apple.Symbols (1.0 - 135.6.0.1) <B58903DC-ECCC-32A2-9284-D8B39F2FFCBF> /System/Library/Frameworks/Symbols.framework/Versions/A/Symbols
+       0x2352e2000 -        0x235311ffb  com.apple.AppleKeyStore (1.0 - 1.0) <BB29D307-F372-37CA-B733-46108BE77A8B> /System/Library/PrivateFrameworks/AppleKeyStore.framework/Versions/A/AppleKeyStore
+       0x2354a8000 -        0x2354bbfff  com.apple.private.AppleMobileFileIntegrity-fmk (1.0 - 1) <588D3BE0-123D-3AD1-B151-025D9C579BA2> /System/Library/PrivateFrameworks/AppleMobileFileIntegrity.framework/Versions/A/AppleMobileFileIntegrity
+       0x237cfc000 -        0x237d0ffff  com.apple.CollectionViewCore (1.0 - 1) <57847DE0-FB39-305A-9AAD-DC80308C0912> /System/Library/PrivateFrameworks/CollectionViewCore.framework/Versions/A/CollectionViewCore
+       0x237d10000 -        0x237e6ffff  com.apple.CollectionsInternal (1.1.0 - 22) <09432BEB-13DC-3DFC-A7B8-4A1587F9926E> /System/Library/PrivateFrameworks/CollectionsInternal.framework/Versions/A/CollectionsInternal
+       0x23afc5000 -        0x23afe2fff  com.apple.CoreUtilsExtras (7.4.2 - 742.5) <1A905414-2B9E-3885-9D80-636D3387F605> /System/Library/PrivateFrameworks/CoreUtilsExtras.framework/Versions/A/CoreUtilsExtras
+       0x23cd7e000 -        0x23cd7effb  com.apple.FontServices (1.0 - 1) <D81BA88B-0F72-371C-BDDB-FFDE3C11141F> /System/Library/PrivateFrameworks/FontServices.framework/Versions/A/FontServices
+       0x23cd7f000 -        0x23ce2afff  libXTFontStaticRegistryData.dylib (276.4.0.6) <E49BC16B-0F05-3BDD-8442-ECB1904A121A> /System/Library/PrivateFrameworks/FontServices.framework/libXTFontStaticRegistryData.dylib
+       0x23e9e4000 -        0x23e9e7fff  libGPUCompilerUtils.dylib (32023.196) <C010F766-1D6D-3CA8-8CBA-D7FF6FF52B15> /System/Library/PrivateFrameworks/GPUCompiler.framework/Versions/32023/Libraries/libGPUCompilerUtils.dylib
+       0x2417cc000 -        0x24180bffb  libllvm-flatbuffers.dylib (32023.196) <DDD9B2C4-DD2D-3D63-ACE3-518CEC53B1F2> /System/Library/PrivateFrameworks/GPUCompiler.framework/Versions/32023/Libraries/libllvm-flatbuffers.dylib
+       0x2455e0000 -        0x245633fff  com.apple.IO80211 (1.0 - 1) <0D9929E9-6958-3C4B-814F-E702535879A0> /System/Library/PrivateFrameworks/IO80211.framework/Versions/A/IO80211
+       0x245753000 -        0x245832fff  com.apple.InstalledContentLibrary (1.0 - 1.0) <2C2D3F03-0145-34CA-9742-13382CCAB635> /System/Library/PrivateFrameworks/InstalledContentLibrary.framework/Versions/A/InstalledContentLibrary
+       0x246cca000 -        0x246ccafff  com.apple.audio.CoreAudio.IsolatedCoreAudioClient (1.0 - 1) <F7433B9D-F132-3323-A704-15329A457121> /System/Library/PrivateFrameworks/IsolatedCoreAudioClient.framework/Versions/A/IsolatedCoreAudioClient
+       0x247600000 -        0x247b98fff  com.apple.MIL (3304.6 - 3304.6.1) <634DE429-8FA6-313D-AEAA-C558B353540C> /System/Library/PrivateFrameworks/MIL.framework/Versions/A/MIL
+       0x248eb1000 -        0x248efcfff  com.apple.MessageSecurity (1.0 - 101.100.4) <68E07A7B-6D13-33B5-B605-8681A9C45A0A> /System/Library/PrivateFrameworks/MessageSecurity.framework/Versions/A/MessageSecurity
+       0x24cda8000 -        0x24cdc7fff  com.apple.accessibility.PhotosensitivityProcessing (1.0 - 1) <F3FBCE93-3A4F-36B8-A1AA-94E8550936C5> /System/Library/PrivateFrameworks/PhotosensitivityProcessing.framework/Versions/A/PhotosensitivityProcessing
+       0x24dfbf000 -        0x24dfc7ff7  com.apple.ReflectionInternal (1.0.0 - 22) <35B21886-14A6-34D9-9DBF-A4E63EE4150B> /System/Library/PrivateFrameworks/ReflectionInternal.framework/Versions/A/ReflectionInternal
+       0x24e551000 -        0x24e568fff  com.apple.RuntimeInternal (1.0.0 - 22) <7F8505B8-CDCE-3A9E-91F3-A31BCBC796FE> /System/Library/PrivateFrameworks/RuntimeInternal.framework/Versions/A/RuntimeInternal
+       0x259d13000 -        0x259d16fff  com.apple.VideoToolboxParavirtualizationSupport (31.5.5 - 31.5.5) <07845055-E16B-3E73-B504-96F7D23FF21F> /System/Library/PrivateFrameworks/VideoToolboxParavirtualizationSupport.framework/Versions/A/VideoToolboxParavirtualizationSupport
+       0x25badd000 -        0x25bb12fff  com.apple.WindowManagement (175.400) <91586355-CC9A-32DE-A828-290E10A89525> /System/Library/PrivateFrameworks/WindowManagement.framework/Versions/A/WindowManagement
+       0x262995000 -        0x2629a0fff  libCoreEntitlements.dylib (53.100.4) <8497AF9C-BA0F-3066-B2FB-2F36B3DD3FFF> /usr/lib/libCoreEntitlements.dylib
+       0x262b3b000 -        0x262b42fff  libRosetta.dylib (318.9) <749BB71D-B6F2-3C9D-A96D-65D22F7A42B3> /usr/lib/libRosetta.dylib
+       0x262b83000 -        0x262b8efff  libTLE.dylib (53.100.4) <61C70ADF-1D43-37B6-8098-6FC042F10D4D> /usr/lib/libTLE.dylib
+       0x263f88000 -        0x263ff3ff7  libswift_Concurrency.dylib (5.10 - 5.10.0.12.10) <304344AE-67EB-3702-B525-14332583111E> /usr/lib/swift/libswift_Concurrency.dylib
+       0x264033000 -        0x2640dbff7  libswift_RegexParser.dylib (5.10 - 5.10.0.12.10) <A0AED893-ADF6-3CD2-B00D-2C7B5C7D05E5> /usr/lib/swift/libswift_RegexParser.dylib
+       0x2640dc000 -        0x26417eff7  libswift_StringProcessing.dylib (5.10 - 5.10.0.12.10) <50F95C25-911C-3776-99D1-FCD01298B764> /usr/lib/swift/libswift_StringProcessing.dylib
+       0x2642d5000 -        0x2642d8fff  libsystem_darwindirectory.dylib (86.0.2) <815D7896-79A3-36C4-8008-DD672DA625C5> /usr/lib/system/libsystem_darwindirectory.dylib
+       0x2642d9000 -        0x2642dcfff  libsystem_eligibility.dylib (47.140.3) <ADF6A9D2-C5C3-3A9C-9302-4618D9DFAD21> /usr/lib/system/libsystem_eligibility.dylib
+       0x2642dd000 -        0x2642e0ffb  libsystem_sanitizers.dylib (8) <6BBDFCBC-D608-3318-BC22-2172E5258046> /usr/lib/system/libsystem_sanitizers.dylib

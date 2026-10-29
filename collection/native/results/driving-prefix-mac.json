@@ -1,0 +1,172 @@
+[
+  {
+    "run": 0,
+    "steps": 1943,
+    "all_prefix_arrays_exact": true,
+    "checks": {
+      "commands.npy": true,
+      "base_state.npy": true,
+      "arm_controller.npy": true,
+      "q_pin.npy": true,
+      "joint_state.npy": true,
+      "kinematics.npy": true,
+      "arm_jacobian.npy": true,
+      "base_controller.npy": true,
+      "timing.npy": true,
+      "target.npy": true
+    }
+  },
+  {
+    "run": 1,
+    "steps": 4590,
+    "all_prefix_arrays_exact": true,
+    "checks": {
+      "commands.npy": true,
+      "base_state.npy": true,
+      "arm_controller.npy": true,
+      "q_pin.npy": true,
+      "joint_state.npy": true,
+      "kinematics.npy": true,
+      "arm_jacobian.npy": true,
+      "base_controller.npy": true,
+      "timing.npy": true,
+      "target.npy": true
+    }
+  },
+  {
+    "run": 2,
+    "steps": 5538,
+    "all_prefix_arrays_exact": true,
+    "checks": {
+      "commands.npy": true,
+      "base_state.npy": true,
+      "arm_controller.npy": true,
+      "q_pin.npy": true,
+      "joint_state.npy": true,
+      "kinematics.npy": true,
+      "arm_jacobian.npy": true,
+      "base_controller.npy": true,
+      "timing.npy": true,
+      "target.npy": true
+    }
+  },
+  {
+    "run": 3,
+    "steps": 4036,
+    "all_prefix_arrays_exact": true,
+    "checks": {
+      "commands.npy": true,
+      "base_state.npy": true,
+      "arm_controller.npy": true,
+      "q_pin.npy": true,
+      "joint_state.npy": true,
+      "kinematics.npy": true,
+      "arm_jacobian.npy": true,
+      "base_controller.npy": true,
+      "timing.npy": true,
+      "target.npy": true
+    }
+  },
+  {
+    "run": 4,
+    "steps": 4089,
+    "all_prefix_arrays_exact": true,
+    "checks": {
+      "commands.npy": true,
+      "base_state.npy": true,
+      "arm_controller.npy": true,
+      "q_pin.npy": true,
+      "joint_state.npy": true,
+      "kinematics.npy": true,
+      "arm_jacobian.npy": true,
+      "base_controller.npy": true,
+      "timing.npy": true,
+      "target.npy": true
+    }
+  },
+  {
+    "run": 5,
+    "steps": 5709,
+    "all_prefix_arrays_exact": true,
+    "checks": {
+      "commands.npy": true,
+      "base_state.npy": true,
+      "arm_controller.npy": true,
+      "q_pin.npy": true,
+      "joint_state.npy": true,
+      "kinematics.npy": true,
+      "arm_jacobian.npy": true,
+      "base_controller.npy": true,
+      "timing.npy": true,
+      "target.npy": true
+    }
+  },
+  {
+    "run": 6,
+    "steps": 5254,
+    "all_prefix_arrays_exact": true,
+    "checks": {
+      "commands.npy": true,
+      "base_state.npy": true,
+      "arm_controller.npy": true,
+      "q_pin.npy": true,
+      "joint_state.npy": true,
+      "kinematics.npy": true,
+      "arm_jacobian.npy": true,
+      "base_controller.npy": true,
+      "timing.npy": true,
+      "target.npy": true
+    }
+  },
+  {
+    "run": 7,
+    "steps": 3998,
+    "all_prefix_arrays_exact": true,
+    "checks": {
+      "commands.npy": true,
+      "base_state.npy": true,
+      "arm_controller.npy": true,
+      "q_pin.npy": true,
+      "joint_state.npy": true,
+      "kinematics.npy": true,
+      "arm_jacobian.npy": true,
+      "base_controller.npy": true,
+      "timing.npy": true,
+      "target.npy": true
+    }
+  },
+  {
+    "run": 8,
+    "steps": 2730,
+    "all_prefix_arrays_exact": true,
+    "checks": {
+      "commands.npy": true,
+      "base_state.npy": true,
+      "arm_controller.npy": true,
+      "q_pin.npy": true,
+      "joint_state.npy": true,
+      "kinematics.npy": true,
+      "arm_jacobian.npy": true,
+      "base_controller.npy": true,
+      "timing.npy": true,
+      "target.npy": true
+    }
+  },
+  {
+    "run": 9,
+    "steps": 4901,
+    "all_prefix_arrays_exact": true,
+    "checks": {
+      "commands.npy": true,
+      "base_state.npy": true,
+      "arm_controller.npy": true,
+      "q_pin.npy": true,
+      "joint_state.npy": true,
+      "kinematics.npy": true,
+      "arm_jacobian.npy": true,
+      "base_controller.npy": true,
+      "timing.npy": true,
+      "target.npy": true
+    }
+  }
+]

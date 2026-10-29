@@ -1,0 +1,3337 @@
+[
+  {
+    "path": "data/fidelity_final/run_2/commands.npy",
+    "sha256": "3f158ebf991364537e86c06d271e5ed5e145a682e7fdc415da1dc9cf8f9a2363",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_2/base_state.npy",
+    "sha256": "a40f48e2964f9f53eec80d280d7dc96edbb1d99410d8a7c6cf753aa32f16b525",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fidelity_final/run_2/arm_controller.npy",
+    "sha256": "f0cc048ee49929e2438a55efc29c3760b88e0e54cfe2e202238e20ea281cee8d",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fidelity_final/run_2/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fidelity_final/run_2/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fidelity_final/run_2/q_pin.npy",
+    "sha256": "f9cb93b7df426fd62350f970bcc81f831a05bb03fd7cecec33a9ad81aed7fb63",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fidelity_final/run_2/joint_state.npy",
+    "sha256": "d31f10bb15cef7175ea05f23f1e60eb5e4a527e768065d6c541977d953ad54c6",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_2/kinematics.npy",
+    "sha256": "26ab3309e1b742b05aed24ee2ca9f9eeb28cad05ebf5b7d7b9bd1bead3fac892",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_2/arm_jacobian.npy",
+    "sha256": "ef58ac07e2b28b593ba6a960493e963e7f098ecc082f17e3d88d150b68cb8972",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_2/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fidelity_final/run_2/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fidelity_final/run_2/base_controller.npy",
+    "sha256": "d1d504c30c2d05351d1a12820bf5e0c867631c2951547876ee48024357735d80",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fidelity_final/run_2/manifest.json",
+    "sha256": "2c1da315cf0ac88a41e17c0592c6c340188d8337f92b117cb501f2f4874cc4de",
+    "bytes": 1405
+  },
+  {
+    "path": "data/fidelity_final/run_2/timing.npy",
+    "sha256": "1411aaa4a281ea00e1833f757965514e47bd621abd678cc2bca3f3e4d9a88246",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fidelity_final/run_2/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fidelity_final/run_2/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fidelity_final/run_2/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fidelity_final/run_2/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/fidelity_final/run_2/target.npy",
+    "sha256": "e9d7aa856ad437c0bfc107025ade3e693d8dc5a3f56911fb2b57f1e2b4705a6e",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fidelity_final/run_5/commands.npy",
+    "sha256": "68c6ce88cd9bfe7b452d12170b35b0d4250f57f92f533926fc0c6b832abd30bb",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_5/base_state.npy",
+    "sha256": "3201b5149bac28a87346b3c2bbdf5cd00f3ec882824a9878655d4501e0409972",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fidelity_final/run_5/arm_controller.npy",
+    "sha256": "cfa46f2ad3d3467ec069c30c3334f791ff99ca021121d5181ca0efb603ae2808",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fidelity_final/run_5/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fidelity_final/run_5/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fidelity_final/run_5/q_pin.npy",
+    "sha256": "18b82b4e0ff48631519461653d8c1208fa45e19bb9ebe925e88ebc662043e9a0",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fidelity_final/run_5/joint_state.npy",
+    "sha256": "470d0f1f94d99d47ec12f4a80c9c043bbf3b3404b52eccaf754462e7b262c109",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_5/kinematics.npy",
+    "sha256": "bcb8b84c3763b8d65784da2835fe4cf48dd5ee41b79b7e29a4a4999d78ec2f6c",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_5/arm_jacobian.npy",
+    "sha256": "0ba613f217ab14feaf8e8222aaa0aa17d45af3569eb5ee7bffbd36e1dabc84e5",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_5/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fidelity_final/run_5/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fidelity_final/run_5/base_controller.npy",
+    "sha256": "45387a33515e0b6f8f33f95f66d518b9c3ba4ab6d886ecb0bbe95f7ecb0231e6",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fidelity_final/run_5/manifest.json",
+    "sha256": "8b2112c48b78073c275aba18f5dc339c9c6d562aac3dc5aa1d2a82563a291c75",
+    "bytes": 1405
+  },
+  {
+    "path": "data/fidelity_final/run_5/timing.npy",
+    "sha256": "8c32827dabc6c45705feaa4d22e85c69b3f91b13566abcf00526a10ccd3104ce",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fidelity_final/run_5/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fidelity_final/run_5/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fidelity_final/run_5/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fidelity_final/run_5/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/fidelity_final/run_5/target.npy",
+    "sha256": "aead85f31b030070fbfcf27282aed1a7286fff8af5789e8aa37e1353ff576e37",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fidelity_final/run_4/commands.npy",
+    "sha256": "93abfb586dbed3204956f03a4dec1be662746d55f18c76837027dad292336872",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_4/base_state.npy",
+    "sha256": "9ec72c53d843e9c368b7f05cb8b6f5305160d54d1487a3659b6850575ed21c65",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fidelity_final/run_4/arm_controller.npy",
+    "sha256": "daaa1b563c9e870a05d3d45c8e5872bb46ef6835ce5f5ac039bdf15927582cb2",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fidelity_final/run_4/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fidelity_final/run_4/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fidelity_final/run_4/q_pin.npy",
+    "sha256": "140ee09a3cb51d50a2ddb0b501be203ce0fcba5b25e209ffd495da62accd17e0",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fidelity_final/run_4/joint_state.npy",
+    "sha256": "d6e08a20d33d7879e3ce4e9b34a6e2103ea4b75b52c73fd6633fc4280fba9d5d",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_4/kinematics.npy",
+    "sha256": "2f013f477100ec725155c58f429393a83f0ac3ec1b2d7e521525683c0eb6f9c1",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_4/arm_jacobian.npy",
+    "sha256": "44cc9dda9b75bf1291cb29856745ba4114b620ae95b245f5fdf1cc64974eb097",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_4/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fidelity_final/run_4/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fidelity_final/run_4/base_controller.npy",
+    "sha256": "0f81ac10ff13500cfc83c616a8aae466811cf5b910a0ec536624876432c063bb",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fidelity_final/run_4/manifest.json",
+    "sha256": "944423eca9cb1b13a5f4b69849eac1b61c129f4cba83cc8b7533bbb85e8d5daa",
+    "bytes": 1402
+  },
+  {
+    "path": "data/fidelity_final/run_4/timing.npy",
+    "sha256": "fb7436c9d4ab3685a7a0a02e952e17fad109785e11c946870e9f166affb9c552",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fidelity_final/run_4/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fidelity_final/run_4/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fidelity_final/run_4/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fidelity_final/run_4/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/fidelity_final/run_4/target.npy",
+    "sha256": "02ed7b6f0706a6fc42bc56de39d23f11f1e7efc445c5942cce71c4afa5cf4c95",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fidelity_final/run_3/commands.npy",
+    "sha256": "a1a2aa259a67d6ae7256ccc51fad97bfd30f1b2e96b87bee636e3b19729fa9f4",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_3/base_state.npy",
+    "sha256": "7521bec40e61667cb633e7c18ec81d890bd1ab92dae8116efaf9dbb8817672f3",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fidelity_final/run_3/arm_controller.npy",
+    "sha256": "34c6c87034ef1fbf0889cec5321b0278b120f6e8a8504b6b3ddeecdac1ece385",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fidelity_final/run_3/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fidelity_final/run_3/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fidelity_final/run_3/q_pin.npy",
+    "sha256": "71f302ba43e16c46bedba63ac7b5830f7713a20dd66e4180f14d44a95a5cd27b",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fidelity_final/run_3/joint_state.npy",
+    "sha256": "6488d5587aae6524dae0eae9a5b91ce63a60dbb2bff103a7bff9d1adfcb5c501",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_3/kinematics.npy",
+    "sha256": "f0ef0fa2b367f308457f6c4840b0222338d399874dca4ec708e24c4cb2f06e58",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_3/arm_jacobian.npy",
+    "sha256": "35aef99bedeed4b1653d2924510afc4528c083b46603f85229884039e64d6111",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_3/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fidelity_final/run_3/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fidelity_final/run_3/base_controller.npy",
+    "sha256": "b196499222492582984fdd03fbcec18bf0505b9ac9a988e2b6f4494e30ad7506",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fidelity_final/run_3/manifest.json",
+    "sha256": "1b91e4e899f99bc7d081ed9d8d1c0ca7b379eb01bd658e9ed71b0f17af01e880",
+    "bytes": 1399
+  },
+  {
+    "path": "data/fidelity_final/run_3/timing.npy",
+    "sha256": "64696296c5fdeed042ef335675f650aec78fa243df206a64f3f9175c612090eb",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fidelity_final/run_3/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fidelity_final/run_3/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fidelity_final/run_3/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fidelity_final/run_3/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/fidelity_final/run_3/target.npy",
+    "sha256": "6574fba63ca75327d43b2da8858c096fd3104b864486b3cf5440e89cebbd3de8",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fidelity_final/run_6/commands.npy",
+    "sha256": "09b1b6650af9ab356a29e2ddff38cb420b73e63356547d4549eaf8820a85c939",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_6/base_state.npy",
+    "sha256": "838df6c00a6b17e5804ed175e87588ca1a7a71f5751121eb0f1d36d3ee1b1b22",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fidelity_final/run_6/arm_controller.npy",
+    "sha256": "9b0dec13eecd1d4613f1b9ac396c34d4f0f58b53a01225db715265147e220365",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fidelity_final/run_6/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fidelity_final/run_6/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fidelity_final/run_6/q_pin.npy",
+    "sha256": "8c064f4e1d3c7b521b5a117d9e52a34fe6ed7e62c23883be7a51dd089cbf2182",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fidelity_final/run_6/joint_state.npy",
+    "sha256": "7ac15f06a84dfe32b379a7c5c532b9ffb98e88e71a7c1683767696e7cb7aed0d",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_6/kinematics.npy",
+    "sha256": "ece782d55e9e67576db525f1653ec78fb32f3f9ec00acdbf954483dd69500750",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_6/arm_jacobian.npy",
+    "sha256": "6b3873521d59d73c80e68c38d849ec952fb04d3c1dff45855a67802098a14ff2",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_6/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fidelity_final/run_6/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fidelity_final/run_6/base_controller.npy",
+    "sha256": "13468be56cca6d6fe8cbbef4ff7ae2ec66a201f9f14f73031abd7361f737fc70",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fidelity_final/run_6/manifest.json",
+    "sha256": "6ef8d5f556450c26b22dcc127a86821f6d11e58e4973c84ae7754ede33dfff3f",
+    "bytes": 1405
+  },
+  {
+    "path": "data/fidelity_final/run_6/timing.npy",
+    "sha256": "9fc705ef0019a12e3841e7b9c5735b3d0ddb7f0bdd8bce5f8ef9ca88d8fcbbab",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fidelity_final/run_6/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fidelity_final/run_6/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fidelity_final/run_6/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fidelity_final/run_6/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/fidelity_final/run_6/target.npy",
+    "sha256": "a1ad4df23f6e308b97bc46371a9f30c487459a494ed5106a6f9a4268c2ff7ba1",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fidelity_final/run_1/commands.npy",
+    "sha256": "d78f40039d765fdd69d2c5c5a8c63ab99e456dcb51b0c5da246b781938be101a",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_1/base_state.npy",
+    "sha256": "9838c5f4109459bad6c471826deffaa70d9102cad267262e525e128fb1d62d20",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fidelity_final/run_1/arm_controller.npy",
+    "sha256": "cf32b0c001ef72d75b0e0cc34b6eeb6b32a2fe09f4ab6573505689562c5a7c10",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fidelity_final/run_1/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fidelity_final/run_1/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fidelity_final/run_1/q_pin.npy",
+    "sha256": "cd2f5207d6a450e7191d850a2c23d165a654c0d0630d1fbd513c5d86ebb4b91c",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fidelity_final/run_1/joint_state.npy",
+    "sha256": "34c8bcca1c505a756ca4fa6c9b8402455aece712ec58d948573776cf4e0daffe",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_1/kinematics.npy",
+    "sha256": "f82d15e08fd123555fcf573ade0b4143b1cedaa5c22fc91e5b7fab3e82968298",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_1/arm_jacobian.npy",
+    "sha256": "31f0d133021365be1b3e20dd92d7260571316a795c932eabbceb607431e6efb0",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_1/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fidelity_final/run_1/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fidelity_final/run_1/base_controller.npy",
+    "sha256": "89a9c5456efc848c156829b2f69c1351a5c5c7b91c437d6d59cc6ceda7189ac8",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fidelity_final/run_1/manifest.json",
+    "sha256": "f6a1ab878219d11ea8d96ea59b847d495f3da176d58f06e0eb77dce669e18522",
+    "bytes": 1403
+  },
+  {
+    "path": "data/fidelity_final/run_1/timing.npy",
+    "sha256": "44856fabce05a2814e716f1fc4cb4f0bec0e283d475b069e98533c5c2b840f53",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fidelity_final/run_1/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fidelity_final/run_1/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fidelity_final/run_1/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fidelity_final/run_1/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/fidelity_final/run_1/target.npy",
+    "sha256": "d847c8eebf19eefce6deedeb0ebec7aa1195fb12de59975a701c1072781bcaa4",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fidelity_final/run_8/commands.npy",
+    "sha256": "8388de3189089e27768250d8f0b73df1c168d02db8e019fc7d4fa8e6ed5b00e5",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_8/base_state.npy",
+    "sha256": "a0838053097624adcb7170ccafa4961aa0402f3a7e410ce39921358d8c44aeb6",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fidelity_final/run_8/arm_controller.npy",
+    "sha256": "45d6c0c79e1590574ac7fd08a08ecf682146c35844fbcd62d61cda7e84ed518b",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fidelity_final/run_8/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fidelity_final/run_8/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fidelity_final/run_8/q_pin.npy",
+    "sha256": "587325694efc33c3b0d8e8777e3bdc59a426e4e714fba6c9e81ef6e8ac5043ed",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fidelity_final/run_8/joint_state.npy",
+    "sha256": "20d78bccded901d0396e5fca08fd4306091df87dba378ab2edd65842f99e37a0",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_8/kinematics.npy",
+    "sha256": "b337a83adc3181a79774488e832da9945920e0a230ac0fc91546e258e984aee0",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_8/arm_jacobian.npy",
+    "sha256": "b3b283c8bea36186171cd612f201ff605bfa29820f8601b68922afd84192c7e3",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_8/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fidelity_final/run_8/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fidelity_final/run_8/base_controller.npy",
+    "sha256": "14c99cb375b158ab5a83182b431799d6f3206cb6408a6383f889765f5251095f",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fidelity_final/run_8/manifest.json",
+    "sha256": "db40d441685220e049db2f47996db2b4431cecb5d4ae48f241cac0e19d8c7d94",
+    "bytes": 1402
+  },
+  {
+    "path": "data/fidelity_final/run_8/timing.npy",
+    "sha256": "007110b5de75a5f5d470b46b554abff91b203cad4512a46e72f63850b2cb3fde",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fidelity_final/run_8/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fidelity_final/run_8/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fidelity_final/run_8/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fidelity_final/run_8/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/fidelity_final/run_8/target.npy",
+    "sha256": "ff0d51f583c2f477f3b1cc8f8b21b94a6ac8df9c068322a800961bbee89f6782",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fidelity_final/run_9/commands.npy",
+    "sha256": "284b6537a2add6da1264f97b1dd279ee9af1f28eb2c03dde48bb20ff8d552a7d",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_9/base_state.npy",
+    "sha256": "79b98b6d0e216b2640f91b2ee00b9399b7761ae910ec4d8456f7bd1b7ba0b52e",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fidelity_final/run_9/arm_controller.npy",
+    "sha256": "d10de76a2dfc7d3ae3a40b045126b0b75bd88de86cead4d308c8ee110db508cb",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fidelity_final/run_9/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fidelity_final/run_9/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fidelity_final/run_9/q_pin.npy",
+    "sha256": "4adb3f75988bc3018076bb7f1a17e15268b879017d14913e484ecdc0d3333a86",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fidelity_final/run_9/joint_state.npy",
+    "sha256": "12f5d709dc859757d14f50c9cfad068879b5fdce4d56780c127e9cd4d4a2613a",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_9/kinematics.npy",
+    "sha256": "b52d94a38d95c7c716f219409ab4e0730dd340290f98ef57ebe602f3ec174998",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_9/arm_jacobian.npy",
+    "sha256": "5faca26f780d3d182667c363ae23a5b0f4348d780d9bcbaa7bd1c13a0259a39a",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_9/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fidelity_final/run_9/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fidelity_final/run_9/base_controller.npy",
+    "sha256": "65060af95622a6e156780c9a33fd6743b31ea721456230a4b62dff595e60dde9",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fidelity_final/run_9/manifest.json",
+    "sha256": "3e3f199292a0c66f866b715f74056b9f04dc3ea2005b6fdfb54e39634cb57b7a",
+    "bytes": 1403
+  },
+  {
+    "path": "data/fidelity_final/run_9/timing.npy",
+    "sha256": "571dea2b7ca7505f783e8de1c6f8f86828301911123813013794dff7a33c0aee",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fidelity_final/run_9/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fidelity_final/run_9/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fidelity_final/run_9/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fidelity_final/run_9/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/fidelity_final/run_9/target.npy",
+    "sha256": "1584f9684b09134986ca8c1952787b6a30bc1772bf0104fa825918a6053aac66",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fidelity_final/run_0/commands.npy",
+    "sha256": "e9a22bc71694f085725d212fe89ac2ba5a628aa09dfaa731245a4b899e07dfd8",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_0/base_state.npy",
+    "sha256": "842b4ff5e59d2800241711115cdfebb8fe3bff9e5e35dd8ec24a3e6457217cb6",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fidelity_final/run_0/arm_controller.npy",
+    "sha256": "7838f09097a4f67d408c551f32e234fc320418cb1e65086247f7fe08024153eb",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fidelity_final/run_0/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fidelity_final/run_0/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fidelity_final/run_0/q_pin.npy",
+    "sha256": "3057f90b9529053a03838db545e2fee3b8dd936c60667ad255ba88fd304d3b93",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fidelity_final/run_0/joint_state.npy",
+    "sha256": "a3239bda48d8d1007cfd77dc40c9f4eaffbf73371a3b10c1e23441e47789967f",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_0/kinematics.npy",
+    "sha256": "7e88b794317d83c45ca45b75d62e09433567bd805e628b11509ee483a1f7bd59",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_0/arm_jacobian.npy",
+    "sha256": "df3f3e3d0e1565429c1181e4f0e066011f969dfe3107148e12436bd6d858a256",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_0/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fidelity_final/run_0/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fidelity_final/run_0/base_controller.npy",
+    "sha256": "22759cf5be947ed90662df5183c9aeac81f98391c0a395cba1e3dd77ebd1ec21",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fidelity_final/run_0/manifest.json",
+    "sha256": "4863e5bba01b6f36707299deb276870766415a23809f1880362a7f095ae125f2",
+    "bytes": 1404
+  },
+  {
+    "path": "data/fidelity_final/run_0/timing.npy",
+    "sha256": "7691f23481c7c6a6bc7260a137bb026b52e2e501650a0c5fb062a9a4f134b65f",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fidelity_final/run_0/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fidelity_final/run_0/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fidelity_final/run_0/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fidelity_final/run_0/base_controller.schema.json",
+    "sha256": "8c5b5cbf154efb8b41566f951dc58e94810a52ae3c2955e2c7b8270c9d907afa",
+    "bytes": 528
+  },
+  {
+    "path": "data/fidelity_final/run_0/target.npy",
+    "sha256": "8c394fe8c6bda4846b14264880a1ba7f94b77877109536bd81c3c8d72b3507a6",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fidelity_final/run_7/commands.npy",
+    "sha256": "816b62fbdeea3bd7f282a0175a0fc13782de051c7b99f91ff17761ad7eac3fbb",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_7/base_state.npy",
+    "sha256": "22235b3665ccf6be7a7aa16f14aa60544afdb7834900839f0ff39bd941a95688",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fidelity_final/run_7/arm_controller.npy",
+    "sha256": "3ff11d39dd8202202f28dd57d9a4952172dd0b5b79b8009d7f1f12d7a0f7a11b",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fidelity_final/run_7/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fidelity_final/run_7/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fidelity_final/run_7/q_pin.npy",
+    "sha256": "f1bf645dde26876224bfc2757563ca935ab6e1695518c381092388b6622fb0ec",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fidelity_final/run_7/joint_state.npy",
+    "sha256": "3c5a44a1f12b7ccb38c971308478e8cf6b43b73428bdd1efa32a5a01ca20c088",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fidelity_final/run_7/kinematics.npy",
+    "sha256": "7f4c80cd31d681b4a9f68819460c0ca1f0ee97d0236b603992040d5509538914",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_7/arm_jacobian.npy",
+    "sha256": "a2f038aa5e6f968f0df5fc231c0c10f59a2f9605d429818b847b97e7da26b273",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fidelity_final/run_7/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fidelity_final/run_7/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fidelity_final/run_7/base_controller.npy",
+    "sha256": "0aa1b6cf8ed11cd3db02335dc6827b02ff3f0bd230a62a030b1dcfbe6abc99c2",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fidelity_final/run_7/manifest.json",
+    "sha256": "284c91815b1df62b963112eeb3df94215cdf54716bc032e776b96b3700701ae9",
+    "bytes": 1400
+  },
+  {
+    "path": "data/fidelity_final/run_7/timing.npy",
+    "sha256": "7391c84502872c994db1ebdddec1dfa73d94023229ca48bfd02d6abca4cc0a0c",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fidelity_final/run_7/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fidelity_final/run_7/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fidelity_final/run_7/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fidelity_final/run_7/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/fidelity_final/run_7/target.npy",
+    "sha256": "42ea9aa488f0eada789c9d3a116c743e0b90517247aa6d4b845b3fc677222a0b",
+    "bytes": 640208
+  },
+  {
+    "path": "data/diagnostics_final/commands.npy",
+    "sha256": "e9a22bc71694f085725d212fe89ac2ba5a628aa09dfaa731245a4b899e07dfd8",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/diagnostics_final/base_state.npy",
+    "sha256": "842b4ff5e59d2800241711115cdfebb8fe3bff9e5e35dd8ec24a3e6457217cb6",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/diagnostics_final/arm_controller.npy",
+    "sha256": "7838f09097a4f67d408c551f32e234fc320418cb1e65086247f7fe08024153eb",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/diagnostics_final/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/diagnostics_final/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/diagnostics_final/q_pin.npy",
+    "sha256": "3057f90b9529053a03838db545e2fee3b8dd936c60667ad255ba88fd304d3b93",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/diagnostics_final/joint_state.npy",
+    "sha256": "a3239bda48d8d1007cfd77dc40c9f4eaffbf73371a3b10c1e23441e47789967f",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/diagnostics_final/kinematics.npy",
+    "sha256": "7e88b794317d83c45ca45b75d62e09433567bd805e628b11509ee483a1f7bd59",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/diagnostics_final/arm_jacobian.npy",
+    "sha256": "df3f3e3d0e1565429c1181e4f0e066011f969dfe3107148e12436bd6d858a256",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/diagnostics_final/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/diagnostics_final/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/diagnostics_final/base_controller.npy",
+    "sha256": "22759cf5be947ed90662df5183c9aeac81f98391c0a395cba1e3dd77ebd1ec21",
+    "bytes": 960248
+  },
+  {
+    "path": "data/diagnostics_final/manifest.json",
+    "sha256": "f1e04f9a17c8f6b3a8e0819b92842792dfa4668df565a3010cd03a3069f14e54",
+    "bytes": 1399
+  },
+  {
+    "path": "data/diagnostics_final/timing.npy",
+    "sha256": "9b3f5db3ae4264e2f17929f5ed41025e195aa6b4559f112ab0419ada651ae6bc",
+    "bytes": 320168
+  },
+  {
+    "path": "data/diagnostics_final/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/diagnostics_final/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/diagnostics_final/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/diagnostics_final/mass_matrix.npy",
+    "sha256": "fdca9272172aeb8368f56ea976495c438b6842e035c39d3f0fb454593eeebc46",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/diagnostics_final/base_controller.schema.json",
+    "sha256": "8c5b5cbf154efb8b41566f951dc58e94810a52ae3c2955e2c7b8270c9d907afa",
+    "bytes": 528
+  },
+  {
+    "path": "data/diagnostics_final/target.npy",
+    "sha256": "8c394fe8c6bda4846b14264880a1ba7f94b77877109536bd81c3c8d72b3507a6",
+    "bytes": 640208
+  },
+  {
+    "path": "data/low_target_corrected/commands.npy",
+    "sha256": "874783e2f46389b5636965eb380f6dcdc8832148dfd7d23ccdddd603651194e6",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/low_target_corrected/base_state.npy",
+    "sha256": "4e05820cefab65a19ed57306e1c1b1d42fd8242697ad836bd48df3843c3cb6fa",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/low_target_corrected/arm_controller.npy",
+    "sha256": "c527bcf814a5a25cc5ab0eab89b20cc5ed47942f0b85e207f5ace92487a67000",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/low_target_corrected/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/low_target_corrected/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/low_target_corrected/q_pin.npy",
+    "sha256": "991387ce8aebce8054ecf81fe84f886575cbca4d25d115818efe3c1cc25418ee",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/low_target_corrected/joint_state.npy",
+    "sha256": "c95efe701ef23848192bfcb16da7f12b97efae775dc8888845ef172029205057",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/low_target_corrected/kinematics.npy",
+    "sha256": "fe1a8680e67c742ca1049f22d17c15e95115f2e7aba3467dd2cb4401e468b49d",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/low_target_corrected/arm_jacobian.npy",
+    "sha256": "616d106b37fad6a1780f6e43c96b740b2ab300db76d881133ad5b4c6cd75ed4d",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/low_target_corrected/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/low_target_corrected/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/low_target_corrected/base_controller.npy",
+    "sha256": "14c99cb375b158ab5a83182b431799d6f3206cb6408a6383f889765f5251095f",
+    "bytes": 960248
+  },
+  {
+    "path": "data/low_target_corrected/manifest.json",
+    "sha256": "fb1c323f640412c27b063e16749efb62876895a0e4e012dc7ebf8420f023a756",
+    "bytes": 1400
+  },
+  {
+    "path": "data/low_target_corrected/timing.npy",
+    "sha256": "01278cf15d1820dab3c38aee22da12cb7240ba8a9ca842bcb851fad0c67d99dd",
+    "bytes": 320168
+  },
+  {
+    "path": "data/low_target_corrected/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/low_target_corrected/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/low_target_corrected/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/low_target_corrected/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/low_target_corrected/target.npy",
+    "sha256": "ff0d51f583c2f477f3b1cc8f8b21b94a6ac8df9c068322a800961bbee89f6782",
+    "bytes": 640208
+  },
+  {
+    "path": "data/validated/run_2/commands.npy",
+    "sha256": "3f158ebf991364537e86c06d271e5ed5e145a682e7fdc415da1dc9cf8f9a2363",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_2/base_state.npy",
+    "sha256": "a40f48e2964f9f53eec80d280d7dc96edbb1d99410d8a7c6cf753aa32f16b525",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/validated/run_2/arm_controller.npy",
+    "sha256": "f0cc048ee49929e2438a55efc29c3760b88e0e54cfe2e202238e20ea281cee8d",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/validated/run_2/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/validated/run_2/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/validated/run_2/q_pin.npy",
+    "sha256": "f9cb93b7df426fd62350f970bcc81f831a05bb03fd7cecec33a9ad81aed7fb63",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/validated/run_2/joint_state.npy",
+    "sha256": "d31f10bb15cef7175ea05f23f1e60eb5e4a527e768065d6c541977d953ad54c6",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_2/kinematics.npy",
+    "sha256": "26ab3309e1b742b05aed24ee2ca9f9eeb28cad05ebf5b7d7b9bd1bead3fac892",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_2/arm_jacobian.npy",
+    "sha256": "ef58ac07e2b28b593ba6a960493e963e7f098ecc082f17e3d88d150b68cb8972",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_2/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/validated/run_2/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/validated/run_2/base_controller.npy",
+    "sha256": "d1d504c30c2d05351d1a12820bf5e0c867631c2951547876ee48024357735d80",
+    "bytes": 960248
+  },
+  {
+    "path": "data/validated/run_2/manifest.json",
+    "sha256": "d35161cee7b5693976bd1e5edf38fdb578272820f551410d5881359ac54e5158",
+    "bytes": 1874
+  },
+  {
+    "path": "data/validated/run_2/timing.npy",
+    "sha256": "6691e38c9403aebbb528ed3e39eca2b2dba7aead2e721a8ab43d60c615773b8e",
+    "bytes": 320168
+  },
+  {
+    "path": "data/validated/run_2/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/validated/run_2/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/validated/run_2/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/validated/run_2/mass_matrix.npy",
+    "sha256": "1b38101de6855d15483c317b9589685e417346bc7a54833386a1861526f07daf",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/validated/run_2/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/validated/run_2/target.npy",
+    "sha256": "e9d7aa856ad437c0bfc107025ade3e693d8dc5a3f56911fb2b57f1e2b4705a6e",
+    "bytes": 640208
+  },
+  {
+    "path": "data/validated/run_5/commands.npy",
+    "sha256": "68c6ce88cd9bfe7b452d12170b35b0d4250f57f92f533926fc0c6b832abd30bb",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_5/base_state.npy",
+    "sha256": "3201b5149bac28a87346b3c2bbdf5cd00f3ec882824a9878655d4501e0409972",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/validated/run_5/arm_controller.npy",
+    "sha256": "cfa46f2ad3d3467ec069c30c3334f791ff99ca021121d5181ca0efb603ae2808",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/validated/run_5/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/validated/run_5/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/validated/run_5/q_pin.npy",
+    "sha256": "18b82b4e0ff48631519461653d8c1208fa45e19bb9ebe925e88ebc662043e9a0",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/validated/run_5/joint_state.npy",
+    "sha256": "470d0f1f94d99d47ec12f4a80c9c043bbf3b3404b52eccaf754462e7b262c109",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_5/kinematics.npy",
+    "sha256": "bcb8b84c3763b8d65784da2835fe4cf48dd5ee41b79b7e29a4a4999d78ec2f6c",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_5/arm_jacobian.npy",
+    "sha256": "0ba613f217ab14feaf8e8222aaa0aa17d45af3569eb5ee7bffbd36e1dabc84e5",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_5/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/validated/run_5/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/validated/run_5/base_controller.npy",
+    "sha256": "45387a33515e0b6f8f33f95f66d518b9c3ba4ab6d886ecb0bbe95f7ecb0231e6",
+    "bytes": 960248
+  },
+  {
+    "path": "data/validated/run_5/manifest.json",
+    "sha256": "0143c38e30780a24a2377f4a3b2f0c88d45a6759dcd45057a121f7bc8dbc7bf5",
+    "bytes": 1874
+  },
+  {
+    "path": "data/validated/run_5/timing.npy",
+    "sha256": "2400881b5d38a5bfcd453473a675f96d47e152a6b3b8ae45ee6b091c40185969",
+    "bytes": 320168
+  },
+  {
+    "path": "data/validated/run_5/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/validated/run_5/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/validated/run_5/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/validated/run_5/mass_matrix.npy",
+    "sha256": "e2284653970fdc9ae309af2f77adf0950c3ac5ece2658d3a612134ff2daf2151",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/validated/run_5/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/validated/run_5/target.npy",
+    "sha256": "aead85f31b030070fbfcf27282aed1a7286fff8af5789e8aa37e1353ff576e37",
+    "bytes": 640208
+  },
+  {
+    "path": "data/validated/run_4/commands.npy",
+    "sha256": "93abfb586dbed3204956f03a4dec1be662746d55f18c76837027dad292336872",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_4/base_state.npy",
+    "sha256": "9ec72c53d843e9c368b7f05cb8b6f5305160d54d1487a3659b6850575ed21c65",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/validated/run_4/arm_controller.npy",
+    "sha256": "daaa1b563c9e870a05d3d45c8e5872bb46ef6835ce5f5ac039bdf15927582cb2",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/validated/run_4/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/validated/run_4/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/validated/run_4/q_pin.npy",
+    "sha256": "140ee09a3cb51d50a2ddb0b501be203ce0fcba5b25e209ffd495da62accd17e0",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/validated/run_4/joint_state.npy",
+    "sha256": "d6e08a20d33d7879e3ce4e9b34a6e2103ea4b75b52c73fd6633fc4280fba9d5d",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_4/kinematics.npy",
+    "sha256": "2f013f477100ec725155c58f429393a83f0ac3ec1b2d7e521525683c0eb6f9c1",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_4/arm_jacobian.npy",
+    "sha256": "44cc9dda9b75bf1291cb29856745ba4114b620ae95b245f5fdf1cc64974eb097",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_4/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/validated/run_4/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/validated/run_4/base_controller.npy",
+    "sha256": "0f81ac10ff13500cfc83c616a8aae466811cf5b910a0ec536624876432c063bb",
+    "bytes": 960248
+  },
+  {
+    "path": "data/validated/run_4/manifest.json",
+    "sha256": "ca62706967b821b88f07c86e8f26fbc796f25e22f6ad6d8a7b878586318f8683",
+    "bytes": 1873
+  },
+  {
+    "path": "data/validated/run_4/timing.npy",
+    "sha256": "38cb9d43ae42c2f6a15ff55837ceaf22318766f9b8c686074f9000bcb0d485ec",
+    "bytes": 320168
+  },
+  {
+    "path": "data/validated/run_4/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/validated/run_4/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/validated/run_4/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/validated/run_4/mass_matrix.npy",
+    "sha256": "816d1c91960603feb46997c855b11fdc7fec4d7af070907fb3332f56d3d041ee",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/validated/run_4/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/validated/run_4/target.npy",
+    "sha256": "02ed7b6f0706a6fc42bc56de39d23f11f1e7efc445c5942cce71c4afa5cf4c95",
+    "bytes": 640208
+  },
+  {
+    "path": "data/validated/run_3/commands.npy",
+    "sha256": "a1a2aa259a67d6ae7256ccc51fad97bfd30f1b2e96b87bee636e3b19729fa9f4",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_3/base_state.npy",
+    "sha256": "7521bec40e61667cb633e7c18ec81d890bd1ab92dae8116efaf9dbb8817672f3",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/validated/run_3/arm_controller.npy",
+    "sha256": "34c6c87034ef1fbf0889cec5321b0278b120f6e8a8504b6b3ddeecdac1ece385",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/validated/run_3/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/validated/run_3/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/validated/run_3/q_pin.npy",
+    "sha256": "71f302ba43e16c46bedba63ac7b5830f7713a20dd66e4180f14d44a95a5cd27b",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/validated/run_3/joint_state.npy",
+    "sha256": "6488d5587aae6524dae0eae9a5b91ce63a60dbb2bff103a7bff9d1adfcb5c501",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_3/kinematics.npy",
+    "sha256": "f0ef0fa2b367f308457f6c4840b0222338d399874dca4ec708e24c4cb2f06e58",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_3/arm_jacobian.npy",
+    "sha256": "35aef99bedeed4b1653d2924510afc4528c083b46603f85229884039e64d6111",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_3/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/validated/run_3/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/validated/run_3/base_controller.npy",
+    "sha256": "b196499222492582984fdd03fbcec18bf0505b9ac9a988e2b6f4494e30ad7506",
+    "bytes": 960248
+  },
+  {
+    "path": "data/validated/run_3/manifest.json",
+    "sha256": "33064e60439287e6b206805bea4ff6c5bdfa7f95c4c86341be8f936a214c8310",
+    "bytes": 1865
+  },
+  {
+    "path": "data/validated/run_3/timing.npy",
+    "sha256": "d407d273a08d376a780382b53f9a491a2e60393dc2547d8ce565780abd327206",
+    "bytes": 320168
+  },
+  {
+    "path": "data/validated/run_3/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/validated/run_3/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/validated/run_3/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/validated/run_3/mass_matrix.npy",
+    "sha256": "64f2f7a0067d56ad7b59492d42d69ec4d5f0441fe39ec766147077a8514d643b",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/validated/run_3/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/validated/run_3/target.npy",
+    "sha256": "6574fba63ca75327d43b2da8858c096fd3104b864486b3cf5440e89cebbd3de8",
+    "bytes": 640208
+  },
+  {
+    "path": "data/validated/run_6/commands.npy",
+    "sha256": "09b1b6650af9ab356a29e2ddff38cb420b73e63356547d4549eaf8820a85c939",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_6/base_state.npy",
+    "sha256": "838df6c00a6b17e5804ed175e87588ca1a7a71f5751121eb0f1d36d3ee1b1b22",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/validated/run_6/arm_controller.npy",
+    "sha256": "9b0dec13eecd1d4613f1b9ac396c34d4f0f58b53a01225db715265147e220365",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/validated/run_6/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/validated/run_6/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/validated/run_6/q_pin.npy",
+    "sha256": "8c064f4e1d3c7b521b5a117d9e52a34fe6ed7e62c23883be7a51dd089cbf2182",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/validated/run_6/joint_state.npy",
+    "sha256": "7ac15f06a84dfe32b379a7c5c532b9ffb98e88e71a7c1683767696e7cb7aed0d",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_6/kinematics.npy",
+    "sha256": "ece782d55e9e67576db525f1653ec78fb32f3f9ec00acdbf954483dd69500750",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_6/arm_jacobian.npy",
+    "sha256": "6b3873521d59d73c80e68c38d849ec952fb04d3c1dff45855a67802098a14ff2",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_6/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/validated/run_6/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/validated/run_6/base_controller.npy",
+    "sha256": "13468be56cca6d6fe8cbbef4ff7ae2ec66a201f9f14f73031abd7361f737fc70",
+    "bytes": 960248
+  },
+  {
+    "path": "data/validated/run_6/manifest.json",
+    "sha256": "6e72e1169b63a5ed907e8010befdc9ce15ca4a9bffdf1ae2a971dca72aa0ce6e",
+    "bytes": 1874
+  },
+  {
+    "path": "data/validated/run_6/timing.npy",
+    "sha256": "a460e2f78de5e69d31abce34a20231781cd159f13389aacb81b47d7f0326e7f1",
+    "bytes": 320168
+  },
+  {
+    "path": "data/validated/run_6/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/validated/run_6/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/validated/run_6/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/validated/run_6/mass_matrix.npy",
+    "sha256": "e9fa9d3d1f8436db6c0bf87527c30de78b6d8b023c9a1b646d3a0d58af37b04c",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/validated/run_6/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/validated/run_6/target.npy",
+    "sha256": "a1ad4df23f6e308b97bc46371a9f30c487459a494ed5106a6f9a4268c2ff7ba1",
+    "bytes": 640208
+  },
+  {
+    "path": "data/validated/run_1/commands.npy",
+    "sha256": "d78f40039d765fdd69d2c5c5a8c63ab99e456dcb51b0c5da246b781938be101a",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_1/base_state.npy",
+    "sha256": "9838c5f4109459bad6c471826deffaa70d9102cad267262e525e128fb1d62d20",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/validated/run_1/arm_controller.npy",
+    "sha256": "cf32b0c001ef72d75b0e0cc34b6eeb6b32a2fe09f4ab6573505689562c5a7c10",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/validated/run_1/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/validated/run_1/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/validated/run_1/q_pin.npy",
+    "sha256": "cd2f5207d6a450e7191d850a2c23d165a654c0d0630d1fbd513c5d86ebb4b91c",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/validated/run_1/joint_state.npy",
+    "sha256": "34c8bcca1c505a756ca4fa6c9b8402455aece712ec58d948573776cf4e0daffe",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_1/kinematics.npy",
+    "sha256": "f82d15e08fd123555fcf573ade0b4143b1cedaa5c22fc91e5b7fab3e82968298",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_1/arm_jacobian.npy",
+    "sha256": "31f0d133021365be1b3e20dd92d7260571316a795c932eabbceb607431e6efb0",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_1/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/validated/run_1/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/validated/run_1/base_controller.npy",
+    "sha256": "89a9c5456efc848c156829b2f69c1351a5c5c7b91c437d6d59cc6ceda7189ac8",
+    "bytes": 960248
+  },
+  {
+    "path": "data/validated/run_1/manifest.json",
+    "sha256": "f107f865ba36827d735444bf1d77a050c91456ecf688175a52a27a78cc54736d",
+    "bytes": 1873
+  },
+  {
+    "path": "data/validated/run_1/timing.npy",
+    "sha256": "e72f6d17ea14be50398dc6c884e2f60a33a772318454c5a6a0abceaca6557430",
+    "bytes": 320168
+  },
+  {
+    "path": "data/validated/run_1/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/validated/run_1/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/validated/run_1/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/validated/run_1/mass_matrix.npy",
+    "sha256": "084a8fcbdd4573e455e983ce8785c837fbade3202ad8de7d034cfa89ab80bb96",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/validated/run_1/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/validated/run_1/target.npy",
+    "sha256": "d847c8eebf19eefce6deedeb0ebec7aa1195fb12de59975a701c1072781bcaa4",
+    "bytes": 640208
+  },
+  {
+    "path": "data/validated/run_8/commands.npy",
+    "sha256": "874783e2f46389b5636965eb380f6dcdc8832148dfd7d23ccdddd603651194e6",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_8/base_state.npy",
+    "sha256": "4e05820cefab65a19ed57306e1c1b1d42fd8242697ad836bd48df3843c3cb6fa",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/validated/run_8/arm_controller.npy",
+    "sha256": "c527bcf814a5a25cc5ab0eab89b20cc5ed47942f0b85e207f5ace92487a67000",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/validated/run_8/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/validated/run_8/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/validated/run_8/q_pin.npy",
+    "sha256": "991387ce8aebce8054ecf81fe84f886575cbca4d25d115818efe3c1cc25418ee",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/validated/run_8/joint_state.npy",
+    "sha256": "c95efe701ef23848192bfcb16da7f12b97efae775dc8888845ef172029205057",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_8/kinematics.npy",
+    "sha256": "fe1a8680e67c742ca1049f22d17c15e95115f2e7aba3467dd2cb4401e468b49d",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_8/arm_jacobian.npy",
+    "sha256": "616d106b37fad6a1780f6e43c96b740b2ab300db76d881133ad5b4c6cd75ed4d",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_8/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/validated/run_8/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/validated/run_8/base_controller.npy",
+    "sha256": "14c99cb375b158ab5a83182b431799d6f3206cb6408a6383f889765f5251095f",
+    "bytes": 960248
+  },
+  {
+    "path": "data/validated/run_8/manifest.json",
+    "sha256": "f8e25b7bc818e66954482c5c2e74db6af586638b1ca6a5da9271a12f61603755",
+    "bytes": 1868
+  },
+  {
+    "path": "data/validated/run_8/timing.npy",
+    "sha256": "6db9ce211db751c58f3bbb84bebdaebf696abd90f846d802b80f20050ff45860",
+    "bytes": 320168
+  },
+  {
+    "path": "data/validated/run_8/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/validated/run_8/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/validated/run_8/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/validated/run_8/mass_matrix.npy",
+    "sha256": "2b5965051037c13bffcaf3a42b69f3f925b1b82db3ac2f55d6988a78cb599c57",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/validated/run_8/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/validated/run_8/target.npy",
+    "sha256": "ff0d51f583c2f477f3b1cc8f8b21b94a6ac8df9c068322a800961bbee89f6782",
+    "bytes": 640208
+  },
+  {
+    "path": "data/validated/run_9/commands.npy",
+    "sha256": "284b6537a2add6da1264f97b1dd279ee9af1f28eb2c03dde48bb20ff8d552a7d",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_9/base_state.npy",
+    "sha256": "79b98b6d0e216b2640f91b2ee00b9399b7761ae910ec4d8456f7bd1b7ba0b52e",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/validated/run_9/arm_controller.npy",
+    "sha256": "d10de76a2dfc7d3ae3a40b045126b0b75bd88de86cead4d308c8ee110db508cb",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/validated/run_9/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/validated/run_9/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/validated/run_9/q_pin.npy",
+    "sha256": "4adb3f75988bc3018076bb7f1a17e15268b879017d14913e484ecdc0d3333a86",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/validated/run_9/joint_state.npy",
+    "sha256": "12f5d709dc859757d14f50c9cfad068879b5fdce4d56780c127e9cd4d4a2613a",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_9/kinematics.npy",
+    "sha256": "b52d94a38d95c7c716f219409ab4e0730dd340290f98ef57ebe602f3ec174998",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_9/arm_jacobian.npy",
+    "sha256": "5faca26f780d3d182667c363ae23a5b0f4348d780d9bcbaa7bd1c13a0259a39a",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_9/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/validated/run_9/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/validated/run_9/base_controller.npy",
+    "sha256": "65060af95622a6e156780c9a33fd6743b31ea721456230a4b62dff595e60dde9",
+    "bytes": 960248
+  },
+  {
+    "path": "data/validated/run_9/manifest.json",
+    "sha256": "4908fbba5a073bd5a34bbb961016bb7aabe65258c096628709010a3b19b1dfb4",
+    "bytes": 1871
+  },
+  {
+    "path": "data/validated/run_9/timing.npy",
+    "sha256": "2eda734aeb354bd521a9860ad48d07e442f19b9da585068bdc2dbbb29d14c8d5",
+    "bytes": 320168
+  },
+  {
+    "path": "data/validated/run_9/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/validated/run_9/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/validated/run_9/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/validated/run_9/mass_matrix.npy",
+    "sha256": "d5177646cd49e682b7ce81608456283af4315066011d8683c2e19f957bc30c3b",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/validated/run_9/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/validated/run_9/target.npy",
+    "sha256": "1584f9684b09134986ca8c1952787b6a30bc1772bf0104fa825918a6053aac66",
+    "bytes": 640208
+  },
+  {
+    "path": "data/validated/run_0/commands.npy",
+    "sha256": "e9a22bc71694f085725d212fe89ac2ba5a628aa09dfaa731245a4b899e07dfd8",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_0/base_state.npy",
+    "sha256": "842b4ff5e59d2800241711115cdfebb8fe3bff9e5e35dd8ec24a3e6457217cb6",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/validated/run_0/arm_controller.npy",
+    "sha256": "7838f09097a4f67d408c551f32e234fc320418cb1e65086247f7fe08024153eb",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/validated/run_0/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/validated/run_0/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/validated/run_0/q_pin.npy",
+    "sha256": "3057f90b9529053a03838db545e2fee3b8dd936c60667ad255ba88fd304d3b93",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/validated/run_0/joint_state.npy",
+    "sha256": "a3239bda48d8d1007cfd77dc40c9f4eaffbf73371a3b10c1e23441e47789967f",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_0/kinematics.npy",
+    "sha256": "7e88b794317d83c45ca45b75d62e09433567bd805e628b11509ee483a1f7bd59",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_0/arm_jacobian.npy",
+    "sha256": "df3f3e3d0e1565429c1181e4f0e066011f969dfe3107148e12436bd6d858a256",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_0/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/validated/run_0/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/validated/run_0/base_controller.npy",
+    "sha256": "22759cf5be947ed90662df5183c9aeac81f98391c0a395cba1e3dd77ebd1ec21",
+    "bytes": 960248
+  },
+  {
+    "path": "data/validated/run_0/manifest.json",
+    "sha256": "89a5e7fd73de5d43bbef833217bb1af55a2975a8abd261c35f6859cfaf4037d1",
+    "bytes": 1873
+  },
+  {
+    "path": "data/validated/run_0/timing.npy",
+    "sha256": "4eacc7ce18f5c283d3fa672848fc773050ac4c7fbbe23c0367246c33f8cf8c17",
+    "bytes": 320168
+  },
+  {
+    "path": "data/validated/run_0/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/validated/run_0/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/validated/run_0/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/validated/run_0/mass_matrix.npy",
+    "sha256": "1e88d44e5594af085fdf183cabd965a1bb32bfba7e620cd7a1f4c8633032562e",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/validated/run_0/base_controller.schema.json",
+    "sha256": "8c5b5cbf154efb8b41566f951dc58e94810a52ae3c2955e2c7b8270c9d907afa",
+    "bytes": 528
+  },
+  {
+    "path": "data/validated/run_0/target.npy",
+    "sha256": "8c394fe8c6bda4846b14264880a1ba7f94b77877109536bd81c3c8d72b3507a6",
+    "bytes": 640208
+  },
+  {
+    "path": "data/validated/run_7/commands.npy",
+    "sha256": "816b62fbdeea3bd7f282a0175a0fc13782de051c7b99f91ff17761ad7eac3fbb",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_7/base_state.npy",
+    "sha256": "22235b3665ccf6be7a7aa16f14aa60544afdb7834900839f0ff39bd941a95688",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/validated/run_7/arm_controller.npy",
+    "sha256": "3ff11d39dd8202202f28dd57d9a4952172dd0b5b79b8009d7f1f12d7a0f7a11b",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/validated/run_7/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/validated/run_7/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/validated/run_7/q_pin.npy",
+    "sha256": "f1bf645dde26876224bfc2757563ca935ab6e1695518c381092388b6622fb0ec",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/validated/run_7/joint_state.npy",
+    "sha256": "3c5a44a1f12b7ccb38c971308478e8cf6b43b73428bdd1efa32a5a01ca20c088",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/validated/run_7/kinematics.npy",
+    "sha256": "7f4c80cd31d681b4a9f68819460c0ca1f0ee97d0236b603992040d5509538914",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_7/arm_jacobian.npy",
+    "sha256": "a2f038aa5e6f968f0df5fc231c0c10f59a2f9605d429818b847b97e7da26b273",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/validated/run_7/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/validated/run_7/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/validated/run_7/base_controller.npy",
+    "sha256": "0aa1b6cf8ed11cd3db02335dc6827b02ff3f0bd230a62a030b1dcfbe6abc99c2",
+    "bytes": 960248
+  },
+  {
+    "path": "data/validated/run_7/manifest.json",
+    "sha256": "9bc9036dd957ff1343115d7df3187d9ef03b24e4e44463a716a62aefc58120a9",
+    "bytes": 1863
+  },
+  {
+    "path": "data/validated/run_7/timing.npy",
+    "sha256": "f18a5f709cbed677455e4c70a9a39221a693b3eae4b45e921a01a97ba025a409",
+    "bytes": 320168
+  },
+  {
+    "path": "data/validated/run_7/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/validated/run_7/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/validated/run_7/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/validated/run_7/mass_matrix.npy",
+    "sha256": "1f809700600cf2394a056e4395ddc7c4087701e42852e9dca06ea0404301bddc",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/validated/run_7/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/validated/run_7/target.npy",
+    "sha256": "42ea9aa488f0eada789c9d3a116c743e0b90517247aa6d4b845b3fc677222a0b",
+    "bytes": 640208
+  },
+  {
+    "path": "data/release_validation/run_2/commands.npy",
+    "sha256": "3f158ebf991364537e86c06d271e5ed5e145a682e7fdc415da1dc9cf8f9a2363",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_2/base_state.npy",
+    "sha256": "a40f48e2964f9f53eec80d280d7dc96edbb1d99410d8a7c6cf753aa32f16b525",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/release_validation/run_2/arm_controller.npy",
+    "sha256": "f0cc048ee49929e2438a55efc29c3760b88e0e54cfe2e202238e20ea281cee8d",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/release_validation/run_2/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/release_validation/run_2/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/release_validation/run_2/q_pin.npy",
+    "sha256": "f9cb93b7df426fd62350f970bcc81f831a05bb03fd7cecec33a9ad81aed7fb63",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/release_validation/run_2/joint_state.npy",
+    "sha256": "d31f10bb15cef7175ea05f23f1e60eb5e4a527e768065d6c541977d953ad54c6",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_2/kinematics.npy",
+    "sha256": "26ab3309e1b742b05aed24ee2ca9f9eeb28cad05ebf5b7d7b9bd1bead3fac892",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_2/arm_jacobian.npy",
+    "sha256": "ef58ac07e2b28b593ba6a960493e963e7f098ecc082f17e3d88d150b68cb8972",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_2/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/release_validation/run_2/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/release_validation/run_2/base_controller.npy",
+    "sha256": "d1d504c30c2d05351d1a12820bf5e0c867631c2951547876ee48024357735d80",
+    "bytes": 960248
+  },
+  {
+    "path": "data/release_validation/run_2/manifest.json",
+    "sha256": "842762f3f58c8ee545272ac158108b4c7669c67ec0afab6d2574a22c0feeaf23",
+    "bytes": 1896
+  },
+  {
+    "path": "data/release_validation/run_2/timing.npy",
+    "sha256": "fc6972302464b2476da37c47224003265a278f16bf274a51ea23339f7e27645f",
+    "bytes": 320168
+  },
+  {
+    "path": "data/release_validation/run_2/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/release_validation/run_2/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/release_validation/run_2/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/release_validation/run_2/mass_matrix.npy",
+    "sha256": "1b38101de6855d15483c317b9589685e417346bc7a54833386a1861526f07daf",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/release_validation/run_2/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/release_validation/run_2/target.npy",
+    "sha256": "e9d7aa856ad437c0bfc107025ade3e693d8dc5a3f56911fb2b57f1e2b4705a6e",
+    "bytes": 640208
+  },
+  {
+    "path": "data/release_validation/run_5/commands.npy",
+    "sha256": "68c6ce88cd9bfe7b452d12170b35b0d4250f57f92f533926fc0c6b832abd30bb",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_5/base_state.npy",
+    "sha256": "3201b5149bac28a87346b3c2bbdf5cd00f3ec882824a9878655d4501e0409972",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/release_validation/run_5/arm_controller.npy",
+    "sha256": "cfa46f2ad3d3467ec069c30c3334f791ff99ca021121d5181ca0efb603ae2808",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/release_validation/run_5/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/release_validation/run_5/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/release_validation/run_5/q_pin.npy",
+    "sha256": "18b82b4e0ff48631519461653d8c1208fa45e19bb9ebe925e88ebc662043e9a0",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/release_validation/run_5/joint_state.npy",
+    "sha256": "470d0f1f94d99d47ec12f4a80c9c043bbf3b3404b52eccaf754462e7b262c109",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_5/kinematics.npy",
+    "sha256": "bcb8b84c3763b8d65784da2835fe4cf48dd5ee41b79b7e29a4a4999d78ec2f6c",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_5/arm_jacobian.npy",
+    "sha256": "0ba613f217ab14feaf8e8222aaa0aa17d45af3569eb5ee7bffbd36e1dabc84e5",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_5/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/release_validation/run_5/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/release_validation/run_5/base_controller.npy",
+    "sha256": "45387a33515e0b6f8f33f95f66d518b9c3ba4ab6d886ecb0bbe95f7ecb0231e6",
+    "bytes": 960248
+  },
+  {
+    "path": "data/release_validation/run_5/manifest.json",
+    "sha256": "2b6c81f24cca1b1aa196ab5d0d1fa9733d00e6c8da03a20e39bf8baa3e174dce",
+    "bytes": 1896
+  },
+  {
+    "path": "data/release_validation/run_5/timing.npy",
+    "sha256": "716218b9ba73d7fd759c68ba2b8f230a63a60ff9e78aef2ff19b45f0e442c25d",
+    "bytes": 320168
+  },
+  {
+    "path": "data/release_validation/run_5/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/release_validation/run_5/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/release_validation/run_5/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/release_validation/run_5/mass_matrix.npy",
+    "sha256": "e2284653970fdc9ae309af2f77adf0950c3ac5ece2658d3a612134ff2daf2151",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/release_validation/run_5/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/release_validation/run_5/target.npy",
+    "sha256": "aead85f31b030070fbfcf27282aed1a7286fff8af5789e8aa37e1353ff576e37",
+    "bytes": 640208
+  },
+  {
+    "path": "data/release_validation/run_4/commands.npy",
+    "sha256": "93abfb586dbed3204956f03a4dec1be662746d55f18c76837027dad292336872",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_4/base_state.npy",
+    "sha256": "9ec72c53d843e9c368b7f05cb8b6f5305160d54d1487a3659b6850575ed21c65",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/release_validation/run_4/arm_controller.npy",
+    "sha256": "daaa1b563c9e870a05d3d45c8e5872bb46ef6835ce5f5ac039bdf15927582cb2",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/release_validation/run_4/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/release_validation/run_4/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/release_validation/run_4/q_pin.npy",
+    "sha256": "140ee09a3cb51d50a2ddb0b501be203ce0fcba5b25e209ffd495da62accd17e0",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/release_validation/run_4/joint_state.npy",
+    "sha256": "d6e08a20d33d7879e3ce4e9b34a6e2103ea4b75b52c73fd6633fc4280fba9d5d",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_4/kinematics.npy",
+    "sha256": "2f013f477100ec725155c58f429393a83f0ac3ec1b2d7e521525683c0eb6f9c1",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_4/arm_jacobian.npy",
+    "sha256": "44cc9dda9b75bf1291cb29856745ba4114b620ae95b245f5fdf1cc64974eb097",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_4/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/release_validation/run_4/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/release_validation/run_4/base_controller.npy",
+    "sha256": "0f81ac10ff13500cfc83c616a8aae466811cf5b910a0ec536624876432c063bb",
+    "bytes": 960248
+  },
+  {
+    "path": "data/release_validation/run_4/manifest.json",
+    "sha256": "d338fa0b287cdba96bb085ed7a9fda68823849ae35343dbe3766456a2ec0ae40",
+    "bytes": 1896
+  },
+  {
+    "path": "data/release_validation/run_4/timing.npy",
+    "sha256": "4c2f6623c3d4c42a9d704b9a5074bc17482ff6b0e1ad9a3efbba14251c604a93",
+    "bytes": 320168
+  },
+  {
+    "path": "data/release_validation/run_4/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/release_validation/run_4/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/release_validation/run_4/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/release_validation/run_4/mass_matrix.npy",
+    "sha256": "816d1c91960603feb46997c855b11fdc7fec4d7af070907fb3332f56d3d041ee",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/release_validation/run_4/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/release_validation/run_4/target.npy",
+    "sha256": "02ed7b6f0706a6fc42bc56de39d23f11f1e7efc445c5942cce71c4afa5cf4c95",
+    "bytes": 640208
+  },
+  {
+    "path": "data/release_validation/run_3/commands.npy",
+    "sha256": "a1a2aa259a67d6ae7256ccc51fad97bfd30f1b2e96b87bee636e3b19729fa9f4",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_3/base_state.npy",
+    "sha256": "7521bec40e61667cb633e7c18ec81d890bd1ab92dae8116efaf9dbb8817672f3",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/release_validation/run_3/arm_controller.npy",
+    "sha256": "34c6c87034ef1fbf0889cec5321b0278b120f6e8a8504b6b3ddeecdac1ece385",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/release_validation/run_3/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/release_validation/run_3/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/release_validation/run_3/q_pin.npy",
+    "sha256": "71f302ba43e16c46bedba63ac7b5830f7713a20dd66e4180f14d44a95a5cd27b",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/release_validation/run_3/joint_state.npy",
+    "sha256": "6488d5587aae6524dae0eae9a5b91ce63a60dbb2bff103a7bff9d1adfcb5c501",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_3/kinematics.npy",
+    "sha256": "f0ef0fa2b367f308457f6c4840b0222338d399874dca4ec708e24c4cb2f06e58",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_3/arm_jacobian.npy",
+    "sha256": "35aef99bedeed4b1653d2924510afc4528c083b46603f85229884039e64d6111",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_3/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/release_validation/run_3/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/release_validation/run_3/base_controller.npy",
+    "sha256": "b196499222492582984fdd03fbcec18bf0505b9ac9a988e2b6f4494e30ad7506",
+    "bytes": 960248
+  },
+  {
+    "path": "data/release_validation/run_3/manifest.json",
+    "sha256": "e6756d26e0856dd91e37e29dc36d7a68c45c69793a6b9c9a4e640fddecf22eff",
+    "bytes": 1892
+  },
+  {
+    "path": "data/release_validation/run_3/timing.npy",
+    "sha256": "356c96ded1d7cbf23cb22bcd50fa9bd607f8f9cdaf331ef5c84ee97fe65d4068",
+    "bytes": 320168
+  },
+  {
+    "path": "data/release_validation/run_3/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/release_validation/run_3/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/release_validation/run_3/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/release_validation/run_3/mass_matrix.npy",
+    "sha256": "64f2f7a0067d56ad7b59492d42d69ec4d5f0441fe39ec766147077a8514d643b",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/release_validation/run_3/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/release_validation/run_3/target.npy",
+    "sha256": "6574fba63ca75327d43b2da8858c096fd3104b864486b3cf5440e89cebbd3de8",
+    "bytes": 640208
+  },
+  {
+    "path": "data/release_validation/run_6/commands.npy",
+    "sha256": "09b1b6650af9ab356a29e2ddff38cb420b73e63356547d4549eaf8820a85c939",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_6/base_state.npy",
+    "sha256": "838df6c00a6b17e5804ed175e87588ca1a7a71f5751121eb0f1d36d3ee1b1b22",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/release_validation/run_6/arm_controller.npy",
+    "sha256": "9b0dec13eecd1d4613f1b9ac396c34d4f0f58b53a01225db715265147e220365",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/release_validation/run_6/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/release_validation/run_6/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/release_validation/run_6/q_pin.npy",
+    "sha256": "8c064f4e1d3c7b521b5a117d9e52a34fe6ed7e62c23883be7a51dd089cbf2182",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/release_validation/run_6/joint_state.npy",
+    "sha256": "7ac15f06a84dfe32b379a7c5c532b9ffb98e88e71a7c1683767696e7cb7aed0d",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_6/kinematics.npy",
+    "sha256": "ece782d55e9e67576db525f1653ec78fb32f3f9ec00acdbf954483dd69500750",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_6/arm_jacobian.npy",
+    "sha256": "6b3873521d59d73c80e68c38d849ec952fb04d3c1dff45855a67802098a14ff2",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_6/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/release_validation/run_6/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/release_validation/run_6/base_controller.npy",
+    "sha256": "13468be56cca6d6fe8cbbef4ff7ae2ec66a201f9f14f73031abd7361f737fc70",
+    "bytes": 960248
+  },
+  {
+    "path": "data/release_validation/run_6/manifest.json",
+    "sha256": "b94028c0c6991384798e9e2b3ce47100f356bab6317fc89b4c8c8ce308dd68db",
+    "bytes": 1896
+  },
+  {
+    "path": "data/release_validation/run_6/timing.npy",
+    "sha256": "02aeeb4e473a33dd1b63755d51cc25462927e8a5beff20fcb9c7e401c5af084f",
+    "bytes": 320168
+  },
+  {
+    "path": "data/release_validation/run_6/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/release_validation/run_6/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/release_validation/run_6/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/release_validation/run_6/mass_matrix.npy",
+    "sha256": "e9fa9d3d1f8436db6c0bf87527c30de78b6d8b023c9a1b646d3a0d58af37b04c",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/release_validation/run_6/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/release_validation/run_6/target.npy",
+    "sha256": "a1ad4df23f6e308b97bc46371a9f30c487459a494ed5106a6f9a4268c2ff7ba1",
+    "bytes": 640208
+  },
+  {
+    "path": "data/release_validation/run_1/commands.npy",
+    "sha256": "d78f40039d765fdd69d2c5c5a8c63ab99e456dcb51b0c5da246b781938be101a",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_1/base_state.npy",
+    "sha256": "9838c5f4109459bad6c471826deffaa70d9102cad267262e525e128fb1d62d20",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/release_validation/run_1/arm_controller.npy",
+    "sha256": "cf32b0c001ef72d75b0e0cc34b6eeb6b32a2fe09f4ab6573505689562c5a7c10",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/release_validation/run_1/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/release_validation/run_1/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/release_validation/run_1/q_pin.npy",
+    "sha256": "cd2f5207d6a450e7191d850a2c23d165a654c0d0630d1fbd513c5d86ebb4b91c",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/release_validation/run_1/joint_state.npy",
+    "sha256": "34c8bcca1c505a756ca4fa6c9b8402455aece712ec58d948573776cf4e0daffe",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_1/kinematics.npy",
+    "sha256": "f82d15e08fd123555fcf573ade0b4143b1cedaa5c22fc91e5b7fab3e82968298",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_1/arm_jacobian.npy",
+    "sha256": "31f0d133021365be1b3e20dd92d7260571316a795c932eabbceb607431e6efb0",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_1/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/release_validation/run_1/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/release_validation/run_1/base_controller.npy",
+    "sha256": "89a9c5456efc848c156829b2f69c1351a5c5c7b91c437d6d59cc6ceda7189ac8",
+    "bytes": 960248
+  },
+  {
+    "path": "data/release_validation/run_1/manifest.json",
+    "sha256": "38885a9c67829283d258195ed9fce0c2e4f1782100843e90cda710e82780c604",
+    "bytes": 1897
+  },
+  {
+    "path": "data/release_validation/run_1/timing.npy",
+    "sha256": "41579cdc0a9b596228aa5f0e04474cbf9ae5566a7441361fcaf09e63614d12a7",
+    "bytes": 320168
+  },
+  {
+    "path": "data/release_validation/run_1/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/release_validation/run_1/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/release_validation/run_1/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/release_validation/run_1/mass_matrix.npy",
+    "sha256": "084a8fcbdd4573e455e983ce8785c837fbade3202ad8de7d034cfa89ab80bb96",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/release_validation/run_1/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/release_validation/run_1/target.npy",
+    "sha256": "d847c8eebf19eefce6deedeb0ebec7aa1195fb12de59975a701c1072781bcaa4",
+    "bytes": 640208
+  },
+  {
+    "path": "data/release_validation/run_8/commands.npy",
+    "sha256": "874783e2f46389b5636965eb380f6dcdc8832148dfd7d23ccdddd603651194e6",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_8/base_state.npy",
+    "sha256": "4e05820cefab65a19ed57306e1c1b1d42fd8242697ad836bd48df3843c3cb6fa",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/release_validation/run_8/arm_controller.npy",
+    "sha256": "c527bcf814a5a25cc5ab0eab89b20cc5ed47942f0b85e207f5ace92487a67000",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/release_validation/run_8/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/release_validation/run_8/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/release_validation/run_8/q_pin.npy",
+    "sha256": "991387ce8aebce8054ecf81fe84f886575cbca4d25d115818efe3c1cc25418ee",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/release_validation/run_8/joint_state.npy",
+    "sha256": "c95efe701ef23848192bfcb16da7f12b97efae775dc8888845ef172029205057",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_8/kinematics.npy",
+    "sha256": "fe1a8680e67c742ca1049f22d17c15e95115f2e7aba3467dd2cb4401e468b49d",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_8/arm_jacobian.npy",
+    "sha256": "616d106b37fad6a1780f6e43c96b740b2ab300db76d881133ad5b4c6cd75ed4d",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_8/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/release_validation/run_8/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/release_validation/run_8/base_controller.npy",
+    "sha256": "14c99cb375b158ab5a83182b431799d6f3206cb6408a6383f889765f5251095f",
+    "bytes": 960248
+  },
+  {
+    "path": "data/release_validation/run_8/manifest.json",
+    "sha256": "69968118d9129316465932e9255124ea15689c0005e1c414805ac07482242e32",
+    "bytes": 1894
+  },
+  {
+    "path": "data/release_validation/run_8/timing.npy",
+    "sha256": "cd03e02ed14726f5856492c176fa5476e44e975917e41b91bfb6940fe3e264b0",
+    "bytes": 320168
+  },
+  {
+    "path": "data/release_validation/run_8/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/release_validation/run_8/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/release_validation/run_8/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/release_validation/run_8/mass_matrix.npy",
+    "sha256": "2b5965051037c13bffcaf3a42b69f3f925b1b82db3ac2f55d6988a78cb599c57",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/release_validation/run_8/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/release_validation/run_8/target.npy",
+    "sha256": "ff0d51f583c2f477f3b1cc8f8b21b94a6ac8df9c068322a800961bbee89f6782",
+    "bytes": 640208
+  },
+  {
+    "path": "data/release_validation/run_9/commands.npy",
+    "sha256": "284b6537a2add6da1264f97b1dd279ee9af1f28eb2c03dde48bb20ff8d552a7d",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_9/base_state.npy",
+    "sha256": "79b98b6d0e216b2640f91b2ee00b9399b7761ae910ec4d8456f7bd1b7ba0b52e",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/release_validation/run_9/arm_controller.npy",
+    "sha256": "d10de76a2dfc7d3ae3a40b045126b0b75bd88de86cead4d308c8ee110db508cb",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/release_validation/run_9/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/release_validation/run_9/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/release_validation/run_9/q_pin.npy",
+    "sha256": "4adb3f75988bc3018076bb7f1a17e15268b879017d14913e484ecdc0d3333a86",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/release_validation/run_9/joint_state.npy",
+    "sha256": "12f5d709dc859757d14f50c9cfad068879b5fdce4d56780c127e9cd4d4a2613a",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_9/kinematics.npy",
+    "sha256": "b52d94a38d95c7c716f219409ab4e0730dd340290f98ef57ebe602f3ec174998",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_9/arm_jacobian.npy",
+    "sha256": "5faca26f780d3d182667c363ae23a5b0f4348d780d9bcbaa7bd1c13a0259a39a",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_9/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/release_validation/run_9/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/release_validation/run_9/base_controller.npy",
+    "sha256": "65060af95622a6e156780c9a33fd6743b31ea721456230a4b62dff595e60dde9",
+    "bytes": 960248
+  },
+  {
+    "path": "data/release_validation/run_9/manifest.json",
+    "sha256": "9b58da1ca6d1b815808d1c7b81bb8b532c4ed9bc91d79bfe16135423a2dcdd0c",
+    "bytes": 1896
+  },
+  {
+    "path": "data/release_validation/run_9/timing.npy",
+    "sha256": "fb2491217b140fe6f1c684d76815be3a7b287964919ae868a8de99048daa330c",
+    "bytes": 320168
+  },
+  {
+    "path": "data/release_validation/run_9/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/release_validation/run_9/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/release_validation/run_9/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/release_validation/run_9/mass_matrix.npy",
+    "sha256": "d5177646cd49e682b7ce81608456283af4315066011d8683c2e19f957bc30c3b",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/release_validation/run_9/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/release_validation/run_9/target.npy",
+    "sha256": "1584f9684b09134986ca8c1952787b6a30bc1772bf0104fa825918a6053aac66",
+    "bytes": 640208
+  },
+  {
+    "path": "data/release_validation/run_0/commands.npy",
+    "sha256": "e9a22bc71694f085725d212fe89ac2ba5a628aa09dfaa731245a4b899e07dfd8",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_0/base_state.npy",
+    "sha256": "842b4ff5e59d2800241711115cdfebb8fe3bff9e5e35dd8ec24a3e6457217cb6",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/release_validation/run_0/arm_controller.npy",
+    "sha256": "7838f09097a4f67d408c551f32e234fc320418cb1e65086247f7fe08024153eb",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/release_validation/run_0/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/release_validation/run_0/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/release_validation/run_0/q_pin.npy",
+    "sha256": "3057f90b9529053a03838db545e2fee3b8dd936c60667ad255ba88fd304d3b93",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/release_validation/run_0/joint_state.npy",
+    "sha256": "a3239bda48d8d1007cfd77dc40c9f4eaffbf73371a3b10c1e23441e47789967f",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_0/kinematics.npy",
+    "sha256": "7e88b794317d83c45ca45b75d62e09433567bd805e628b11509ee483a1f7bd59",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_0/arm_jacobian.npy",
+    "sha256": "df3f3e3d0e1565429c1181e4f0e066011f969dfe3107148e12436bd6d858a256",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_0/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/release_validation/run_0/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/release_validation/run_0/base_controller.npy",
+    "sha256": "22759cf5be947ed90662df5183c9aeac81f98391c0a395cba1e3dd77ebd1ec21",
+    "bytes": 960248
+  },
+  {
+    "path": "data/release_validation/run_0/manifest.json",
+    "sha256": "40fe97bce67d6cb1a6d7925ecab570667dd15b47cafbfb9065674039e325d986",
+    "bytes": 1894
+  },
+  {
+    "path": "data/release_validation/run_0/timing.npy",
+    "sha256": "e73f2556664498e0c9042195091c450237c38f2acb13b83d44f1cbba76ac7b73",
+    "bytes": 320168
+  },
+  {
+    "path": "data/release_validation/run_0/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/release_validation/run_0/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/release_validation/run_0/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/release_validation/run_0/mass_matrix.npy",
+    "sha256": "1e88d44e5594af085fdf183cabd965a1bb32bfba7e620cd7a1f4c8633032562e",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/release_validation/run_0/base_controller.schema.json",
+    "sha256": "8c5b5cbf154efb8b41566f951dc58e94810a52ae3c2955e2c7b8270c9d907afa",
+    "bytes": 528
+  },
+  {
+    "path": "data/release_validation/run_0/target.npy",
+    "sha256": "8c394fe8c6bda4846b14264880a1ba7f94b77877109536bd81c3c8d72b3507a6",
+    "bytes": 640208
+  },
+  {
+    "path": "data/release_validation/run_7/commands.npy",
+    "sha256": "816b62fbdeea3bd7f282a0175a0fc13782de051c7b99f91ff17761ad7eac3fbb",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_7/base_state.npy",
+    "sha256": "22235b3665ccf6be7a7aa16f14aa60544afdb7834900839f0ff39bd941a95688",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/release_validation/run_7/arm_controller.npy",
+    "sha256": "3ff11d39dd8202202f28dd57d9a4952172dd0b5b79b8009d7f1f12d7a0f7a11b",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/release_validation/run_7/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/release_validation/run_7/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/release_validation/run_7/q_pin.npy",
+    "sha256": "f1bf645dde26876224bfc2757563ca935ab6e1695518c381092388b6622fb0ec",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/release_validation/run_7/joint_state.npy",
+    "sha256": "3c5a44a1f12b7ccb38c971308478e8cf6b43b73428bdd1efa32a5a01ca20c088",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/release_validation/run_7/kinematics.npy",
+    "sha256": "7f4c80cd31d681b4a9f68819460c0ca1f0ee97d0236b603992040d5509538914",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_7/arm_jacobian.npy",
+    "sha256": "a2f038aa5e6f968f0df5fc231c0c10f59a2f9605d429818b847b97e7da26b273",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/release_validation/run_7/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/release_validation/run_7/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/release_validation/run_7/base_controller.npy",
+    "sha256": "0aa1b6cf8ed11cd3db02335dc6827b02ff3f0bd230a62a030b1dcfbe6abc99c2",
+    "bytes": 960248
+  },
+  {
+    "path": "data/release_validation/run_7/manifest.json",
+    "sha256": "162d9fa833264dee4689fb6e25b581222a570e425e6e7aa31445b714b175d4a0",
+    "bytes": 1894
+  },
+  {
+    "path": "data/release_validation/run_7/timing.npy",
+    "sha256": "e3216ac48d7c6ae504dfcfe4d3f718a291b8e3d8ec1d155e04878235810edfb6",
+    "bytes": 320168
+  },
+  {
+    "path": "data/release_validation/run_7/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/release_validation/run_7/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/release_validation/run_7/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/release_validation/run_7/mass_matrix.npy",
+    "sha256": "1f809700600cf2394a056e4395ddc7c4087701e42852e9dca06ea0404301bddc",
+    "bytes": 33860360
+  },
+  {
+    "path": "data/release_validation/run_7/base_controller.schema.json",
+    "sha256": "c9318c219ce0d5001a96b6e6dc0ba8860a722ba3364be7efc5a7e42f5a771cae",
+    "bytes": 543
+  },
+  {
+    "path": "data/release_validation/run_7/target.npy",
+    "sha256": "42ea9aa488f0eada789c9d3a116c743e0b90517247aa6d4b845b3fc677222a0b",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fork_probe/worker_1/commands.npy",
+    "sha256": "e9a22bc71694f085725d212fe89ac2ba5a628aa09dfaa731245a4b899e07dfd8",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fork_probe/worker_1/base_state.npy",
+    "sha256": "842b4ff5e59d2800241711115cdfebb8fe3bff9e5e35dd8ec24a3e6457217cb6",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fork_probe/worker_1/arm_controller.npy",
+    "sha256": "7838f09097a4f67d408c551f32e234fc320418cb1e65086247f7fe08024153eb",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fork_probe/worker_1/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fork_probe/worker_1/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fork_probe/worker_1/q_pin.npy",
+    "sha256": "3057f90b9529053a03838db545e2fee3b8dd936c60667ad255ba88fd304d3b93",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fork_probe/worker_1/joint_state.npy",
+    "sha256": "a3239bda48d8d1007cfd77dc40c9f4eaffbf73371a3b10c1e23441e47789967f",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fork_probe/worker_1/kinematics.npy",
+    "sha256": "7e88b794317d83c45ca45b75d62e09433567bd805e628b11509ee483a1f7bd59",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fork_probe/worker_1/arm_jacobian.npy",
+    "sha256": "df3f3e3d0e1565429c1181e4f0e066011f969dfe3107148e12436bd6d858a256",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fork_probe/worker_1/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fork_probe/worker_1/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fork_probe/worker_1/base_controller.npy",
+    "sha256": "22759cf5be947ed90662df5183c9aeac81f98391c0a395cba1e3dd77ebd1ec21",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fork_probe/worker_1/manifest.json",
+    "sha256": "c8ad59ea0fa20605ae0c28097cbdf72b5bcc8fd34cc97991d4fe225023fcf202",
+    "bytes": 1895
+  },
+  {
+    "path": "data/fork_probe/worker_1/timing.npy",
+    "sha256": "c1f498a8bbe235d487d30da8c3140f2f59df20e29f045f570ef455756b0c23b5",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fork_probe/worker_1/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fork_probe/worker_1/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fork_probe/worker_1/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fork_probe/worker_1/base_controller.schema.json",
+    "sha256": "8c5b5cbf154efb8b41566f951dc58e94810a52ae3c2955e2c7b8270c9d907afa",
+    "bytes": 528
+  },
+  {
+    "path": "data/fork_probe/worker_1/target.npy",
+    "sha256": "8c394fe8c6bda4846b14264880a1ba7f94b77877109536bd81c3c8d72b3507a6",
+    "bytes": 640208
+  },
+  {
+    "path": "data/fork_probe/worker_0/commands.npy",
+    "sha256": "e9a22bc71694f085725d212fe89ac2ba5a628aa09dfaa731245a4b899e07dfd8",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fork_probe/worker_0/base_state.npy",
+    "sha256": "842b4ff5e59d2800241711115cdfebb8fe3bff9e5e35dd8ec24a3e6457217cb6",
+    "bytes": 1408304
+  },
+  {
+    "path": "data/fork_probe/worker_0/arm_controller.npy",
+    "sha256": "7838f09097a4f67d408c551f32e234fc320418cb1e65086247f7fe08024153eb",
+    "bytes": 3840608
+  },
+  {
+    "path": "data/fork_probe/worker_0/joint_state.schema.json",
+    "sha256": "d2cf721740df1a8a291430cd5ef31481ad61e5ef844b7edc5495000f8828bbfc",
+    "bytes": 1224
+  },
+  {
+    "path": "data/fork_probe/worker_0/target.schema.json",
+    "sha256": "a54e13d99978e0819d18e9fcbe31b4262feab8f92d227e02a82476ba173409bd",
+    "bytes": 352
+  },
+  {
+    "path": "data/fork_probe/worker_0/q_pin.npy",
+    "sha256": "3057f90b9529053a03838db545e2fee3b8dd936c60667ad255ba88fd304d3b93",
+    "bytes": 1536320
+  },
+  {
+    "path": "data/fork_probe/worker_0/joint_state.npy",
+    "sha256": "a3239bda48d8d1007cfd77dc40c9f4eaffbf73371a3b10c1e23441e47789967f",
+    "bytes": 3392552
+  },
+  {
+    "path": "data/fork_probe/worker_0/kinematics.npy",
+    "sha256": "7e88b794317d83c45ca45b75d62e09433567bd805e628b11509ee483a1f7bd59",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fork_probe/worker_0/arm_jacobian.npy",
+    "sha256": "df3f3e3d0e1565429c1181e4f0e066011f969dfe3107148e12436bd6d858a256",
+    "bytes": 1344296
+  },
+  {
+    "path": "data/fork_probe/worker_0/arm_controller.schema.json",
+    "sha256": "add28bc9dbc90281cf1cc6bd74396235bfa3747427a6a78f2d3343939afdd07e",
+    "bytes": 1496
+  },
+  {
+    "path": "data/fork_probe/worker_0/kinematics.schema.json",
+    "sha256": "7d431a77531c7043fd4886e6ff2ae2a23d912186466398238b2e352f82ece243",
+    "bytes": 518
+  },
+  {
+    "path": "data/fork_probe/worker_0/base_controller.npy",
+    "sha256": "22759cf5be947ed90662df5183c9aeac81f98391c0a395cba1e3dd77ebd1ec21",
+    "bytes": 960248
+  },
+  {
+    "path": "data/fork_probe/worker_0/manifest.json",
+    "sha256": "88f3289fedfff4f3be38905d010a94e76217b890d2a58947ddcc746f6bbeae87",
+    "bytes": 1898
+  },
+  {
+    "path": "data/fork_probe/worker_0/timing.npy",
+    "sha256": "eab78b17dd340d56499e777ff461b44604301c2df758257d6918c19eebb61edd",
+    "bytes": 320168
+  },
+  {
+    "path": "data/fork_probe/worker_0/commands.schema.json",
+    "sha256": "3ac2d99501b2d91c7eb167686f413b9e31de1fbe2f555cd5e28771f2fe95128a",
+    "bytes": 1979
+  },
+  {
+    "path": "data/fork_probe/worker_0/timing.schema.json",
+    "sha256": "3b33433dea43fd386709ea6e31669f4c43b410288df9f36cac6e1d61cba80cc5",
+    "bytes": 141
+  },
+  {
+    "path": "data/fork_probe/worker_0/base_state.schema.json",
+    "sha256": "f60e564b89e5c8f7cce49b16825302f352ee87aecd3490c76af6d4d2ca74ab05",
+    "bytes": 655
+  },
+  {
+    "path": "data/fork_probe/worker_0/base_controller.schema.json",
+    "sha256": "8c5b5cbf154efb8b41566f951dc58e94810a52ae3c2955e2c7b8270c9d907afa",
+    "bytes": 528
+  },
+  {
+    "path": "data/fork_probe/worker_0/target.npy",
+    "sha256": "8c394fe8c6bda4846b14264880a1ba7f94b77877109536bd81c3c8d72b3507a6",
+    "bytes": 640208
+  }
+]

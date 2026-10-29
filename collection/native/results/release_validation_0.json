@@ -1,0 +1,190 @@
+{
+  "reference": "/Users/natanaelmota/github/LAB_SESSION_COMP_0245_2026_PUBLIC/final/robotnik_arm_task/inspection/run_ahead_001",
+  "candidate": "data/release_validation/run_0",
+  "tables": {
+    "target": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.0,
+      "worst_columns": {
+        "step": 0.0,
+        "time_s": 0.0,
+        "ee_target_world_m_x": 0.0,
+        "ee_target_world_m_y": 0.0,
+        "ee_target_world_m_z": 0.0,
+        "base_standoff_goal_world_m_x": 0.0
+      },
+      "allclose_rtol_1e-7_atol_1e-8": true,
+      "exact_values": true,
+      "passed": true
+    },
+    "joint_state": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.0,
+      "worst_columns": {
+        "step": 0.0,
+        "time_s": 0.0,
+        "q_rad_j01": 0.0,
+        "q_rad_j02": 0.0,
+        "q_rad_j03": 0.0,
+        "q_rad_j04": 0.0
+      },
+      "allclose_rtol_1e-7_atol_1e-8": true,
+      "exact_values": true,
+      "passed": true
+    },
+    "base_state": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.0,
+      "worst_columns": {
+        "step": 0.0,
+        "time_s": 0.0,
+        "position_m_x": 0.0,
+        "position_m_y": 0.0,
+        "position_m_z": 0.0,
+        "quaternion_x": 0.0
+      },
+      "allclose_rtol_1e-7_atol_1e-8": true,
+      "exact_values": true,
+      "passed": true
+    },
+    "kinematics": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.0,
+      "worst_columns": {
+        "step": 0.0,
+        "time_s": 0.0,
+        "ee_distance_error_m": 0.0,
+        "ee_world_m_x": 0.0,
+        "ee_world_m_y": 0.0,
+        "ee_world_m_z": 0.0
+      },
+      "allclose_rtol_1e-7_atol_1e-8": true,
+      "exact_values": true,
+      "passed": true
+    },
+    "base_controller": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.0,
+      "worst_columns": {
+        "step": 0.0,
+        "time_s": 0.0,
+        "dist_to_goal": 0.0,
+        "heading_to_goal": 0.0,
+        "v_cmd": 0.0,
+        "w_cmd": 0.0
+      },
+      "allclose_rtol_1e-7_atol_1e-8": true,
+      "exact_values": true,
+      "passed": true
+    },
+    "arm_controller": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.0,
+      "worst_columns": {
+        "step": 0.0,
+        "time_s": 0.0,
+        "sigma_min": 0.0,
+        "ik_damping": 0.0,
+        "q_input_rad_arm1": 0.0,
+        "q_input_rad_arm2": 0.0
+      },
+      "allclose_rtol_1e-7_atol_1e-8": true,
+      "exact_values": true,
+      "passed": true
+    },
+    "commands": {
+      "rows_reference": 8001,
+      "rows_candidate": 8001,
+      "schema_equal": true,
+      "labels_equal": true,
+      "nan_mask_equal": true,
+      "max_absolute_error": 0.0,
+      "worst_columns": {
+        "step": 0.0,
+        "time_s": 0.0,
+        "mixed_command_j01": 0.0,
+        "mixed_command_j02": 0.0,
+        "mixed_command_j03": 0.0,
+        "mixed_command_j04": 0.0
+      },
+      "allclose_rtol_1e-7_atol_1e-8": true,
+      "exact_values": true,
+      "passed": true
+    }
+  },
+  "passed": false,
+  "exact_recorded_values": false,
+  "simulation_timestamps_equal": false,
+  "tensors": {
+    "mass_matrix": {
+      "recorded": true,
+      "passed": true,
+      "reference_shape": [
+        8001,
+        23,
+        23
+      ],
+      "candidate_shape": [
+        8001,
+        23,
+        23
+      ],
+      "exact_values": true,
+      "max_absolute_error": 0.0
+    },
+    "arm_jacobian": {
+      "recorded": true,
+      "passed": true,
+      "reference_shape": [
+        8001,
+        3,
+        7
+      ],
+      "candidate_shape": [
+        8001,
+        3,
+        7
+      ],
+      "exact_values": true,
+      "max_absolute_error": 0.0
+    },
+    "q_pin": {
+      "recorded": true,
+      "passed": true,
+      "reference_shape": [
+        8001,
+        24
+      ],
+      "candidate_shape": [
+        8001,
+        24
+      ],
+      "exact_values": true,
+      "max_absolute_error": 0.0
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "runs": [
+    {
+      "tag": "m1_driving_ram_fork_a",
+      "workers": 8,
+      "episodes": 32,
+      "wall_seconds": 4.651576791977277,
+      "seconds_per_saved_episode": 0.1453617747492899,
+      "exact_arrays_match_validated_mac_prefix": true
+    },
+    {
+      "tag": "m1_driving_ram_fork_b",
+      "workers": 8,
+      "episodes": 32,
+      "wall_seconds": 4.110841415997129,
+      "seconds_per_saved_episode": 0.12846379424991028,
+      "exact_arrays_match_validated_mac_prefix": true
+    },
+    {
+      "tag": "m1_driving_ram_cold",
+      "workers": 1,
+      "episodes": 1,
+      "wall_seconds": 0.8466880830237642,
+      "seconds_per_saved_episode": 0.8466880830237642,
+      "exact_arrays_match_validated_mac_prefix": true
+    }
+  ],
+  "ram_disk_mb": 512,
+  "data_archived": "data/m1-ram-benchmark-saved",
+  "all_archive_hashes_verified": true,
+  "time_step_s": 0.001,
+  "samples_per_episode": 1943,
+  "comparison_note": "Mint and M1 measurements had different background workloads; batch time is not single-episode latency."
+}

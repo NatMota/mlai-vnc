@@ -1,0 +1,26 @@
+[
+  {
+    "imports_s": 1.3457884160161484,
+    "main_s": 5.466423416975886,
+    "total_s": 6.812211832992034,
+    "profiled": false,
+    "exported_dataset": false,
+    "external_wall_s": 7.004245374992024
+  },
+  {
+    "imports_s": 0.7048201250145212,
+    "main_s": 5.456559540994931,
+    "total_s": 6.161379666009452,
+    "profiled": false,
+    "exported_dataset": false,
+    "external_wall_s": 6.3017068750050385
+  },
+  {
+    "imports_s": 0.6642691669985652,
+    "main_s": 5.773933457996463,
+    "total_s": 6.438202624995029,
+    "profiled": false,
+    "exported_dataset": false,
+    "external_wall_s": 6.582443291001255
+  }
+]

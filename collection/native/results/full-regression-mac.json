@@ -1,0 +1,12 @@
+{
+  "commands.npy": true,
+  "base_state.npy": true,
+  "arm_controller.npy": true,
+  "q_pin.npy": true,
+  "joint_state.npy": true,
+  "kinematics.npy": true,
+  "arm_jacobian.npy": true,
+  "base_controller.npy": true,
+  "timing.npy": true,
+  "target.npy": true
+}

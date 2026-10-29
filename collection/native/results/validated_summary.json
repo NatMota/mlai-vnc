@@ -1,0 +1,82 @@
+[
+  {
+    "target": 0,
+    "reference": "run_ahead_001",
+    "passed": true,
+    "exact_recorded_values": true,
+    "max_table_error": 0.0,
+    "max_tensor_error": 0.0
+  },
+  {
+    "target": 1,
+    "reference": "run_001",
+    "passed": true,
+    "exact_recorded_values": true,
+    "max_table_error": 0.0,
+    "max_tensor_error": 0.0
+  },
+  {
+    "target": 2,
+    "reference": "run_003",
+    "passed": true,
+    "exact_recorded_values": true,
+    "max_table_error": 0.0,
+    "max_tensor_error": 0.0
+  },
+  {
+    "target": 3,
+    "reference": "run_004",
+    "passed": true,
+    "exact_recorded_values": true,
+    "max_table_error": 0.0,
+    "max_tensor_error": 0.0
+  },
+  {
+    "target": 4,
+    "reference": "run_005",
+    "passed": true,
+    "exact_recorded_values": true,
+    "max_table_error": 0.0,
+    "max_tensor_error": 0.0
+  },
+  {
+    "target": 5,
+    "reference": "run_006",
+    "passed": true,
+    "exact_recorded_values": true,
+    "max_table_error": 0.0,
+    "max_tensor_error": 0.0
+  },
+  {
+    "target": 6,
+    "reference": "run_007",
+    "passed": true,
+    "exact_recorded_values": true,
+    "max_table_error": 0.0,
+    "max_tensor_error": 0.0
+  },
+  {
+    "target": 7,
+    "reference": "run_008",
+    "passed": true,
+    "exact_recorded_values": true,
+    "max_table_error": 0.0,
+    "max_tensor_error": 0.0
+  },
+  {
+    "target": 8,
+    "reference": "run_009",
+    "passed": true,
+    "exact_recorded_values": true,
+    "max_table_error": 0.0,
+    "max_tensor_error": 0.0
+  },
+  {
+    "target": 9,
+    "reference": "run_010",
+    "passed": true,
+    "exact_recorded_values": true,
+    "max_table_error": 0.0,
+    "max_tensor_error": 0.0
+  }
+]

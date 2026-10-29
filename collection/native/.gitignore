@@ -1,0 +1,11 @@
+.pixi/
+build*/
+data/
+vendor/bullet3-3.25
+vendor/*.tar.gz
+__pycache__/
+*.pyc
+reference/run_*/
+reference/states_*.csv
+.cache/
+backups/

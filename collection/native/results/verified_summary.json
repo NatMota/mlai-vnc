@@ -1,0 +1,96 @@
+{
+  "all_passed": true,
+  "all_exact": true,
+  "runs": [
+    {
+      "target_index": 0,
+      "reference": "run_ahead_001",
+      "passed": true,
+      "exact_recorded_values": true,
+      "simulation_timestamps_equal": true,
+      "max_table_error": 0.0,
+      "max_tensor_error": 0.0
+    },
+    {
+      "target_index": 1,
+      "reference": "run_001",
+      "passed": true,
+      "exact_recorded_values": true,
+      "simulation_timestamps_equal": true,
+      "max_table_error": 0.0,
+      "max_tensor_error": 0.0
+    },
+    {
+      "target_index": 2,
+      "reference": "run_003",
+      "passed": true,
+      "exact_recorded_values": true,
+      "simulation_timestamps_equal": true,
+      "max_table_error": 0.0,
+      "max_tensor_error": 0.0
+    },
+    {
+      "target_index": 3,
+      "reference": "run_004",
+      "passed": true,
+      "exact_recorded_values": true,
+      "simulation_timestamps_equal": true,
+      "max_table_error": 0.0,
+      "max_tensor_error": 0.0
+    },
+    {
+      "target_index": 4,
+      "reference": "run_005",
+      "passed": true,
+      "exact_recorded_values": true,
+      "simulation_timestamps_equal": true,
+      "max_table_error": 0.0,
+      "max_tensor_error": 0.0
+    },
+    {
+      "target_index": 5,
+      "reference": "run_006",
+      "passed": true,
+      "exact_recorded_values": true,
+      "simulation_timestamps_equal": true,
+      "max_table_error": 0.0,
+      "max_tensor_error": 0.0
+    },
+    {
+      "target_index": 6,
+      "reference": "run_007",
+      "passed": true,
+      "exact_recorded_values": true,
+      "simulation_timestamps_equal": true,
+      "max_table_error": 0.0,
+      "max_tensor_error": 0.0
+    },
+    {
+      "target_index": 7,
+      "reference": "run_008",
+      "passed": true,
+      "exact_recorded_values": true,
+      "simulation_timestamps_equal": true,
+      "max_table_error": 0.0,
+      "max_tensor_error": 0.0
+    },
+    {
+      "target_index": 8,
+      "reference": "run_009",
+      "passed": true,
+      "exact_recorded_values": true,
+      "simulation_timestamps_equal": true,
+      "max_table_error": 0.0,
+      "max_tensor_error": 0.0
+    },
+    {
+      "target_index": 9,
+      "reference": "run_010",
+      "passed": true,
+      "exact_recorded_values": true,
+      "simulation_timestamps_equal": true,
+      "max_table_error": 0.0,
+      "max_tensor_error": 0.0
+    }
+  ]
+}
