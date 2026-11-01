@@ -5,10 +5,10 @@ over time and was never saved. Replaying arm_controller on the saved states reco
 up to two approximations: base roll/pitch are taken as 0, fingers as their fixed 0.1 rad.
 This is labelling only; no expert code runs inside the learned policy.
 
-    python chester_hidden_state.py --verify data_dart2/run_1.npz    (compare with a recorded run)
-    python chester_hidden_state.py --workers 20                     (convert all of data_dart)
+    python hidden_state.py --verify data_dart2/run_1.npz    (compare with a recorded run)
+    python hidden_state.py --workers 20                     (convert all of data_dart)
 
-Converted runs go to data_dart_mem/run_<name>.npz in the same format as chester_collect.py.
+Converted runs go to data_dart_mem/run_<name>.npz in the same format as collect.py.
 """
 import argparse
 from concurrent.futures import ThreadPoolExecutor
@@ -25,7 +25,7 @@ OUT = ROOT / "data_dart_mem"
 
 
 def reach_start(labels):
-    """First row after the last nonzero wheel label (identical to chester_policies.phase_flags)."""
+    """First row after the last nonzero wheel label."""
     moving = np.nonzero(np.any(labels[:, :4] != 0, axis=1))[0]
     return int(moving[-1] + 1) if len(moving) else 0
 
@@ -33,7 +33,7 @@ def reach_start(labels):
 def rebuild(robot, state, labels, with_torque=False):
     import pinocchio as pin
     from robotnik_arm_control import ArmControllerParams, arm_controller
-    from chester_sim import ARM_REACH_LIMIT
+    from sim import ARM_REACH_LIMIT
     params = ArmControllerParams(reach_limit=ARM_REACH_LIMIT)
     T = len(state)
     target = state[0, 18:21]
@@ -66,7 +66,7 @@ def rebuild(robot, state, labels, with_torque=False):
 
 
 def convert_one(name):
-    from chester_sim import Robot
+    from sim import Robot
     data = np.load(ROOT / name)
     state, labels = data[:, :21], data[:, 21:32]
     robot = Robot(state[0, 18:21])
@@ -81,7 +81,7 @@ def convert_one(name):
 
 def verify(path):
     """Compare the rebuild with a run whose hidden reference was recorded during collection."""
-    from chester_sim import Robot
+    from sim import Robot
     d = np.load(path)
     robot = Robot(d["state"][0, 18:21])
     out = rebuild(robot, d["state"], d["label"], with_torque=True)

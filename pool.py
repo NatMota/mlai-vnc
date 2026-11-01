@@ -18,17 +18,17 @@ EPISODE_TIMEOUT_S = 900
 # Random target box of the expert data scripts (robotnik_arm_task_dart.py).
 TARGET_LOW = (-1.5, -1.5, 0.1)
 TARGET_HIGH = (1.5, 1.5, 1.25)
-# Row layout written by chester_sim.run_episode, before any labeler columns.
+# Row layout written by sim.run_episode, before any labeler columns.
 STATE, EE, REACH, LABEL_START = slice(0, 21), slice(21, 24), 24, 36
 
 
-# Expert base standoff table (robotnik_arm_task*.py): parking distance from the dot vs dot height.
+# Expert base standoff table (robotnik_arm_task*.py): parking distance from the goal vs goal height.
 STANDOFF_Z_POINTS = [0.1, 0.5, 1.1, 1.25]
 STANDOFF_POINTS = [0.80, 0.65, 0.65, 0.35]
 
 
 def parking_goal(target):
-    """The expert's parking spot (x, y) and final bearing for a dot, exactly as the expert computes them."""
+    """The expert's parking spot (x, y) and final bearing for a goal, exactly as the expert computes them."""
     target = np.asarray(target, dtype=float)
     standoff = float(np.interp(target[2], STANDOFF_Z_POINTS, STANDOFF_POINTS))
     xy = target[:2]

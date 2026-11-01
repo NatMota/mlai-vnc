@@ -1,10 +1,10 @@
-"""Train the four networks of chester_memory_policy from runs that record the expert's hidden reference.
+"""Train the four networks of memory_policy from runs that record the expert's hidden reference.
 
-    python chester_train_memory.py --data data_dart2 --output outputs/memory-seed0 --seed 0
-    python chester_train_memory.py --data data_dart2 data_dagger/iter1 --output outputs/dagger1-seed0
+    python train_memory.py --data data_dart2 --output outputs/memory-seed0 --seed 0
+    python train_memory.py --data data_dart2 data_dagger/iter1 --output outputs/dagger1-seed0
 
-Inputs are .npz runs written by chester_collect.py or chester_dagger.py. Expert runs are kept only if
-the expert itself ended within --good-cm of the dot (like ONLY_GOOD_RUNS); DAgger runs are always kept,
+Inputs are .npz runs written by collect.py or dagger.py. Expert runs are kept only if
+the expert itself ended within --good-cm of the goal (like ONLY_GOOD_RUNS); DAgger runs are always kept,
 because their labels are the expert's correction of the learner's own mistakes.
 Rows are subsampled (1 kHz rows are nearly identical) with a random offset per run.
 About 10% of runs (chosen by file-name hash) are held out for validation MSE; split.json val/test targets are never used here.
@@ -22,8 +22,8 @@ import numpy as np
 import torch
 from torch import nn
 
-from chester_memory_policy import features, torque_inputs, vel_scale
-from chester_pool import parking_goal
+from memory_policy import features, torque_inputs, vel_scale
+from pool import parking_goal
 from features import PHASE_COLS
 
 ROOT = Path(__file__).resolve().parent
@@ -110,7 +110,7 @@ def standardiser(a, skip_last=False):
     return mean.astype(np.float32), std.astype(np.float32)
 
 
-def train_net(name, train, val, args):
+def train_net(name, train, val, args, x_mask=None):
     x_tr, y_tr = train
     x_va, y_va = val
     classify = name == "phase"
@@ -119,9 +119,10 @@ def train_net(name, train, val, args):
         y_mean, y_std = np.zeros(1, np.float32), np.ones(1, np.float32)
     else:
         y_mean, y_std = standardiser(y_tr)
-    xs = torch.from_numpy((x_tr - x_mean) / x_std)
+    mask = np.ones(x_tr.shape[1], np.float32) if x_mask is None else x_mask.astype(np.float32)
+    xs = torch.from_numpy((x_tr - x_mean) / x_std * mask)
     ys = torch.from_numpy((y_tr - y_mean) / y_std)
-    xv = torch.from_numpy((x_va - x_mean) / x_std)
+    xv = torch.from_numpy((x_va - x_mean) / x_std * mask)
     yv = torch.from_numpy((y_va - y_mean) / y_std)
     net = mlp(x_tr.shape[1], y_tr.shape[1], args.width, args.depth)
     loss_fn = nn.BCEWithLogitsLoss() if classify else nn.MSELoss()
@@ -153,7 +154,7 @@ def train_net(name, train, val, args):
         if val_loss < best:
             best = val_loss
             best_state = {k: v.detach().clone() for k, v in net.state_dict().items()}
-    return {"weights": best_state, "x_mean": x_mean, "x_std": x_std, "y_mean": y_mean, "y_std": y_std,
+    return {"weights": best_state, "x_mean": x_mean, "x_std": x_std, "y_mean": y_mean, "y_std": y_std, "x_mask": x_mask,
             "best_val": best, "rows": len(xs), "history": history,
             "parameters": sum(p.numel() for p in net.parameters())}
 
@@ -217,7 +218,7 @@ def main():
     (out / "summary.json").write_text(json.dumps({"settings": settings, "nets": summary,
                                                   "val_run_names": val_names}, indent=2), encoding="utf-8")
     print("TRAINED " + json.dumps(summary), flush=True)
-    from chester_tracking import log_training
+    from local_tracking import log_training
     log_training(out / "policy.pt", settings, summary, files=[out / "summary.json"])
 
 

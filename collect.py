@@ -1,6 +1,6 @@
 """Collect extra DART expert runs in parallel, with the expert's hidden arm reference recorded.
 
-    python chester_collect.py --runs 2000 --first-seed 100000 --workers 20
+    python collect.py --runs 2000 --first-seed 100000 --workers 20
 
 Each run is saved as data_dart2/run_<seed>.npz (seed-based names, so parallel runs never collide):
     state   (T, 21)  base_pos 3, bearing, arm q 7, arm qd 7, target 3   (same as data_dart columns 0-20)
@@ -38,7 +38,7 @@ class Recorder:
 
 
 def collect_one(seed, max_steps):
-    from chester_sim import Expert, run_episode
+    from sim import Expert, run_episode
     rng = np.random.default_rng(seed)
     target = np.array([rng.uniform(-1.5, 1.5), rng.uniform(-1.5, 1.5), rng.uniform(0.1, 1.25)])
     rows = []

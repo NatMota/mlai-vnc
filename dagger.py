@@ -1,6 +1,6 @@
 """DAgger data collection: the learned policy drives, a shadow expert labels every state it visits.
 
-    python chester_dagger.py memory:outputs/memory-seed0/policy.pt --runs 600 --first-seed 300000 \
+    python dagger.py memory:outputs/memory-seed0/policy.pt --runs 600 --first-seed 300000 \
         --out data_dagger/iter1
 
 Labels (all from the unchanged expert functions in robotnik_arm_control.py):
@@ -11,7 +11,7 @@ Labels (all from the unchanged expert functions in robotnik_arm_control.py):
   arm          the expert arm controller started from the learner's own memory q_ref, so the torque
                label matches the memory the learner actually carries; qd_des is the expert velocity.
 Targets are random in the same box as the expert data, never split.json targets.
-Saved like chester_collect.py, plus phase_label and weight (1 where the wheel label is usable).
+Saved like collect.py, plus phase_label and weight (1 where the wheel label is usable).
 """
 import argparse
 import os
@@ -37,12 +37,12 @@ class BaseShadow:
     # Within this distance of the spot the label is always "turn in place to the final bearing".
     # The expert itself may still be heading for the spot there (align/drive) or already turning to
     # the final bearing (orient); from the pose alone the two look identical, and averaging opposite
-    # turn labels taught the learner to stall ~5-10 degrees short of facing the dot.
+    # turn labels taught the learner to stall ~5-10 degrees short of facing the goal.
     ORIENT_DISTANCE_M = 0.10
 
     def __init__(self, target):
         from robotnik_arm_control import BaseControllerParams, BaseNavState
-        from chester_pool import parking_goal
+        from pool import parking_goal
         self.goal_pos, self.goal_bearing = parking_goal(target)
         self.params = BaseControllerParams(nav_timeout=float("inf"))
         self.state = BaseNavState()
@@ -65,10 +65,10 @@ class BaseShadow:
 
 
 class ShadowExpert:
-    """Labeler for chester_sim.run_episode."""
+    """Labeler for sim.run_episode."""
 
     def reset(self, robot, target, obs0):
-        from chester_sim import Expert
+        from sim import Expert
         self.expert = Expert()
         self.expert.reset(robot, target, obs0)
         self.base = BaseShadow(target)
@@ -91,7 +91,7 @@ def relabel_base(src, dst, dt=0.001):
     Only base labels depend on the shadow's state machine, and they are a function of the saved
     poses alone, so no simulation is needed. Arm labels are copied unchanged.
     """
-    from chester_pool import save_npz_atomic
+    from pool import save_npz_atomic
     with np.load(src) as d:
         arrays = {k: d[k] for k in d.files}
     shadow = BaseShadow(arrays["state"][0, 18:21])
@@ -104,9 +104,9 @@ def relabel_base(src, dst, dt=0.001):
 
 
 def collect_one(spec, seed, out, max_steps):
-    from chester_parallel_eval import make_policy
-    from chester_pool import EE, LABEL_START, REACH, STATE, sample_target, save_npz_atomic
-    from chester_sim import run_episode
+    from parallel_eval import make_policy
+    from pool import EE, LABEL_START, REACH, STATE, sample_target, save_npz_atomic
+    from sim import run_episode
     rows = []
     result = run_episode(sample_target(seed), make_policy(spec), max_steps=max_steps, record=rows,
                          labeler=ShadowExpert())
@@ -119,7 +119,7 @@ def collect_one(spec, seed, out, max_steps):
 
 
 def main():
-    from chester_pool import run_pool, write_manifest
+    from pool import run_pool, write_manifest
     parser = argparse.ArgumentParser()
     parser.add_argument("policy")
     parser.add_argument("--runs", type=int, default=600)
@@ -142,9 +142,9 @@ def main():
             relabel_base(f, out / f.name)
             if n % 50 == 0:
                 print(f"relabelled {n}/{len(files)}", flush=True)
-        write_manifest(out, script="chester_dagger.py --relabel-from", source=str(src), runs=len(files))
+        write_manifest(out, script="dagger.py --relabel-from", source=str(src), runs=len(files))
         return
-    write_manifest(out, script="chester_dagger.py", policy=args.policy, runs=args.runs,
+    write_manifest(out, script="dagger.py", policy=args.policy, runs=args.runs,
                    first_seed=args.first_seed, max_steps=args.max_steps)
     seeds = [s for s in range(args.first_seed, args.first_seed + args.runs)
              if not (out / f"run_{s}.npz").exists()]   # resumable

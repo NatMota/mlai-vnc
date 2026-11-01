@@ -79,12 +79,16 @@ def log_evaluation(policy, summary, files=()):
             if summary.get(k) is not None:
                 metrics[f"{prefix}_{k}"] = summary[k]
         kind, _, paths = policy.partition(":")
-        single = bool(paths) and "+" not in paths
+        # Other control rates get their own run, so they never overwrite the checkpoint's own metrics.
+        goal_error = summary.get("goal_error_m") or 0.0
+        single = kind == "memory" and "+" not in paths and not goal_error
         run_id = _find(mlflow, _key(paths)) if single else None
         name = kind if not paths else ("ensemble" if "+" in paths else Path(_key(paths)).parent.name)
+        name = f"{name}-{kind}" if paths and kind != "memory" else name
+        name = f"{name}-error{goal_error * 1000:g}mm" if goal_error else name
         with mlflow.start_run(run_id=run_id, run_name=None if run_id else name):
             if run_id is None:
-                mlflow.set_tags({"policy": policy, "kind": "evaluation"})
+                mlflow.set_tags({"policy": policy, "kind": "evaluation", "goal_error_m": goal_error})
                 if single:
                     mlflow.set_tag("checkpoint", _key(paths))
             mlflow.log_metrics(metrics)

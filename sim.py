@@ -1,7 +1,7 @@
 """One self-contained rollout engine for the expert, learned policies and DAgger collection.
 
 Simulation setup, measurements and stop rules copy drive.py exactly, so success numbers are
-comparable with test.py. One process runs one episode; chester_parallel_eval.py runs many.
+comparable with test.py. One process runs one episode; parallel_eval.py runs many.
 
 Policy protocol:
     policy.reset(robot, target, obs0)

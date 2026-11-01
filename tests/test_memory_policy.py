@@ -5,9 +5,9 @@ import unittest
 import numpy as np
 import torch
 
-from chester_hidden_state import reach_start
-from chester_memory_policy import MAX_Q_LEAD, MemoryPolicy, NumpyMLP, features, torque_inputs
-from chester_train_memory import mlp, tables
+from hidden_state import reach_start
+from memory_policy import MAX_Q_LEAD, MemoryPolicy, NumpyMLP, features, torque_inputs
+from train_memory import mlp, tables
 
 
 class Const:
@@ -18,12 +18,12 @@ class Const:
         return np.repeat(self.value, len(np.atleast_2d(x)), axis=0)
 
 
-def make_policy(vel, phase_logit, scaled_vel=False):
+def make_policy(vel, phase_logit, scaled_vel=False, vel_every=1):
     nets = {"base": [Const(np.ones(4))], "phase": [Const([phase_logit])],
             "vel": [Const(vel)], "torque": [Const(np.zeros(7))]}
     robot = SimpleNamespace(dt=0.001, arm_lower=np.full(7, -10.0), arm_upper=np.full(7, 10.0))
     policy = MemoryPolicy(nets, (np.full(4, -5.0), np.full(4, 5.0)), (np.full(7, -30.0), np.full(7, 30.0)),
-                          scaled_vel=scaled_vel)
+                          scaled_vel=scaled_vel, vel_every=vel_every)
     obs = {"base_pos": np.zeros(3), "bearing": 0.0, "q": np.zeros(7), "qd": np.zeros(7), "ee": np.zeros(3)}
     policy.reset(robot, np.array([1.0, 0.0, 0.5]), obs)
     return policy, obs
@@ -85,10 +85,23 @@ class MemoryPolicyTests(unittest.TestCase):
 
     def test_scaled_velocity_is_multiplied_by_the_gap(self):
         policy, obs = make_policy(np.full(7, 2.0), phase_logit=5.0, scaled_vel=True)
-        obs["ee"] = np.array([1.0, 0.0, 0.3])        # 0.2 m below the dot at [1, 0, 0.5]
+        obs["ee"] = np.array([1.0, 0.0, 0.3])        # 0.2 m below the goal at [1, 0, 0.5]
         for _ in range(50):
             policy.act(obs)
         np.testing.assert_allclose(policy.v, np.full(7, 2.0 * 0.2))
+
+    def test_slow_velocity_is_held_while_memory_and_torque_run_every_step(self):
+        policy, obs = make_policy(np.full(7, 0.5), phase_logit=5.0, vel_every=33)
+        calls = []
+        vel_net = policy.nets["vel"][0]
+        torque_net = policy.nets["torque"][0]
+        policy.nets["vel"][0] = lambda x: calls.append("vel") or vel_net(x)
+        policy.nets["torque"][0] = lambda x: calls.append("torque") or torque_net(x)
+        for _ in range(49 + 34):
+            policy.act(obs)
+        self.assertEqual(calls.count("vel"), 2)                # reaching steps 0 and 33
+        self.assertEqual(calls.count("torque"), 49 + 34)
+        np.testing.assert_allclose(policy.q_ref, np.full(7, 0.5 * 0.001 * 34))
 
     def test_tables_route_rows_to_the_right_networks(self):
         run = {"x": np.zeros((4, 34), np.float32), "reach": np.array([0, 0, 1, 1], np.float32),
@@ -97,19 +110,19 @@ class MemoryPolicyTests(unittest.TestCase):
                "z": np.zeros((4, 7), np.float32), "ev": np.zeros((4, 7), np.float32),
                "qd_des": np.ones((4, 7), np.float32), "base_valid": np.array([1, 0, 1, 1], np.float32),
                "phase_valid": np.array([1, 1, 0, 1], np.float32)}
-        run["x"][:, 33] = [0.5, 0.5, 0.2, 0.001]      # end-effector gap distance
+        run["x"][:, 33] = [0.5, 0.5, 0.2, 0.001]      # end-effector position error
         t = tables([run])
         self.assertEqual(len(t["base"][0]), 1)
         self.assertEqual(len(t["vel"][0]), 2)
         self.assertEqual(t["torque"][0].shape, (4, 49))
         self.assertEqual(t["phase"][0].shape, (3, 14))
         self.assertEqual(t["phase"][1][:, 0].tolist(), [0, 1, 1])   # DAgger row (phase_valid 0) dropped
-        np.testing.assert_allclose(t["vel"][1][:, 0], [1 / 0.2, 1 / 0.005])  # gap-scaled, floor 5 mm
+        np.testing.assert_allclose(t["vel"][1][:, 0], [1 / 0.2, 1 / 0.005])  # error-scaled, floor 5 mm
 
 
 class BaseShadowTests(unittest.TestCase):
     def setUp(self):
-        from chester_dagger import BaseShadow
+        from dagger import BaseShadow
         self.shadow = BaseShadow(np.array([1.5, 0.0, 0.5]))      # goal (0.85, 0), facing 0 rad
 
     def test_parked_pose_gives_done_and_zero_wheels(self):
