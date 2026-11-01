@@ -21,6 +21,10 @@ from pool import run_pool, sample_target
 
 ROOT = Path(__file__).resolve().parent
 FRESH_FIRST_SEED = 900000   # far from every seed used for data collection or DAgger
+OUTSIDE_FIRST_SEED = 800000
+# name, smallest and biggest max(|x|, |y|), lowest and highest z; the expert's box is 1.5 m and 0.1-1.25 m.
+OUTSIDE_REGIONS = (("far", 1.5, 2.0, 0.1, 1.25), ("farther", 2.0, 3.0, 0.1, 1.25),
+                   ("higher", 0.0, 1.5, 1.25, 1.45), ("lower", 0.0, 1.5, 0.0, 0.1))
 SOURCES = ("parallel_eval.py", "fused_policy.py", "memory_policy.py", "sim.py",
            "features.py")
 
@@ -33,10 +37,22 @@ def target_of(name):
     return np.load(ROOT / name, mmap_mode="r")[0, 18:21].tolist()
 
 
+def outside_target(index):
+    """A goal outside the expert's target box; index % 4 picks the region in OUTSIDE_REGIONS."""
+    _, inner, outer, low_z, high_z = OUTSIDE_REGIONS[index % len(OUTSIDE_REGIONS)]
+    rng = np.random.default_rng(OUTSIDE_FIRST_SEED + index)
+    while True:
+        x, y = rng.uniform(-outer, outer, 2)
+        if max(abs(x), abs(y)) >= inner:
+            return [float(x), float(y), float(rng.uniform(low_z, high_z))]
+
+
 def target_for(group, index):
     """'fresh' goals are new random draws from the expert's target box, not in any data folder."""
     if group == "fresh":
         return sample_target(FRESH_FIRST_SEED + index).tolist()
+    if group == "outside":
+        return outside_target(index)
     return target_of(split_files(group)[index])
 
 
@@ -116,7 +132,7 @@ def provenance(policy):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("policy")
-    parser.add_argument("--group", choices=("train", "val", "test", "fresh"), default="val")
+    parser.add_argument("--group", choices=("train", "val", "test", "fresh", "outside"), default="val")
     parser.add_argument("--n", type=int, default=120, help="first n targets of the group")
     parser.add_argument("--index", type=int, help="internal: run one target in this process")
     parser.add_argument("--workers", type=int, default=12)
@@ -129,7 +145,7 @@ def main():
         return run_one(args)
     if args.out is None:
         raise SystemExit("--out is required")
-    available = 100000 if args.group == "fresh" else len(split_files(args.group))
+    available = 100000 if args.group in ("fresh", "outside") else len(split_files(args.group))
     if not 0 < args.n <= available:
         raise SystemExit(f"--n must be between 1 and {available} for group {args.group}")
     args.out.parent.mkdir(parents=True, exist_ok=True)
@@ -154,8 +170,8 @@ def main():
     summary = summarize(rows)
     summary.update({"policy": args.policy, "group": args.group, "n": args.n, "max_steps": args.max_steps, "goal_error_m": args.goal_error_m,
                     "wall_s": time.perf_counter() - started, **provenance(args.policy)})
-    if args.group == "fresh":
-        summary["first_seed"] = FRESH_FIRST_SEED
+    if args.group in ("fresh", "outside"):
+        summary["first_seed"] = FRESH_FIRST_SEED if args.group == "fresh" else OUTSIDE_FIRST_SEED
     args.out.with_suffix(".summary.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     print("SUMMARY " + json.dumps(summary), flush=True)
     from local_tracking import log_evaluation

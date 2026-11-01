@@ -19,6 +19,8 @@ Recorded results, computed from the saved evaluation files:
 | Test | 120/120; mean final error 0.5885568224 cm |
 | 500 new goals, final model | 492/500 (98.4%) |
 | Same 500 new goals, expert | 497/500 (99.4%) |
+| 400 goals outside the training box, final model | 279/400 (69.75%) |
+| Same 400 outside goals, expert | 279/400 (69.75%) |
 
 Success means reaching the goal with the simulated end effector. Grasping and
 lifting were not evaluated. The model was selected on validation results; the
@@ -71,18 +73,33 @@ Then evaluate, using fresh output filenames:
 ```text
 python -B parallel_eval.py fused30:outputs/ablation/all_world/policy.pt --group test --n 120 --workers 12 --out outputs/eval/repro_test120.jsonl
 python -B parallel_eval.py fused30:outputs/ablation/all_world/policy.pt --group fresh --n 500 --workers 12 --out outputs/eval/repro_fresh500.jsonl
+python -B parallel_eval.py fused30:outputs/ablation/all_world/policy.pt --group outside --n 400 --workers 12 --out outputs/eval/repro_outside400.jsonl
 ```
 
 With the same model, assets, simulator and targets, the expected recorded counts
-are 120/120 and 492/500. Fresh targets use seeds 900000 through 900499. Failed
-processes remain in the denominator. These are reproduction instructions;
-publication preparation does not run another scored test or fresh-goal evaluation.
+are 120/120 for test, 492/500 for fresh, and 279/400 for outside. Fresh targets
+use seeds 900000 through 900499 and lie inside the training target box.
+Outside targets use seeds 800000 through 800399; `target % 4` assigns each goal
+to far, farther, higher or lower, respectively, with 100 goals per category.
+The model reached 99, 95, 53 and 32 goals in those categories. Failed processes
+remain in the denominator. These are reproduction instructions; this release
+update uses saved results only and does not rerun any evaluation.
 
-The two original fresh-goal summary files predate the `dirty`, `source_sha256`
-and `first_seed` fields. Their recorded Git commit does not contain the then-dirty
-code used for evaluation. Those files are preserved unchanged; the new run's
-`git_commit` tag identifies this publication snapshot. Do not treat the old
-summary commit as a complete source record.
+The training target box is x/y in [-1.5, 1.5] m and z in [0.1, 1.25] m.
+For far and farther, max(abs(x), abs(y)) is in [1.5, 2.0) m and [2.0, 3.0) m.
+For higher and lower, x/y stay inside the box while z is in [1.25, 1.45) m and
+[0.0, 0.1) m. See `fusion_results.md` for model/expert comparisons. These success
+counts apply to the saved goal sets; outside-range performance is lower.
+
+The two original fresh500 summary files predate the `dirty`, `source_sha256`
+and `first_seed` fields. The two outside400 summaries include `dirty=true`,
+`source_sha256` and `first_seed`. Both groups record a Git commit that does not
+contain the actual code used for evaluation. All eight JSONL/summary files are
+preserved byte-for-byte. The outside hashes name the original local files with
+the `chester_` prefix; the published modules remove that prefix and update their
+imports, so published file hashes differ. The run's `git_commit` tag identifies
+the latest publication, and `initial_publication_git_commit` preserves the initial
+release commit. Do not treat either summary's commit as a complete source record.
 
 ## Collect data and retrain the arm
 

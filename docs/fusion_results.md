@@ -43,6 +43,34 @@ Every miss, by either policy, was a goal under 0.8 m from the start. The model a
 goals. Four of the model's eight misses were close, with final errors of 1.19-1.26 cm. This is a better
 estimate than the 120 test goals, but it covers one training seed and goals inside the training box only.
 
+## Goals outside the training box
+
+Both policies also ran on 400 goals outside the box (`--group outside`, seeds from 800000), 100 in each region.
+The training box is [-1.5, 1.5] m in x and y, and 0.1-1.25 m in height.
+
+| Region | Final model | Expert | Reached by both |
+| --- | ---: | ---: | ---: |
+| Far: max(abs(x), abs(y)) is 1.5-2 m | 99/100 | 100/100 | 99 |
+| Farther: max(abs(x), abs(y)) is 2-3 m | 95/100 | 100/100 | 95 |
+| Higher: 1.25-1.45 m | 53/100 | 41/100 | 36 |
+| Lower: 0-0.1 m | 32/100 | 38/100 | 23 |
+| Total | 279/400 | 279/400 | 253 |
+
+| Height | Final model | Expert |
+| ---: | ---: | ---: |
+| 1.253-1.301 m | 29/34 | 34/34 |
+| 1.301-1.372 m | 22/33 | 7/33 |
+| 1.372-1.446 m | 2/33 | 0/33 |
+| 0.066-0.100 m | 30/33 | 26/33 |
+| 0.030-0.066 m | 2/33 | 11/33 |
+| 0.003-0.030 m | 0/34 | 1/34 |
+
+The expert reaches every far goal. The model's misses there are mostly large, up to 99 cm, so distance beyond the
+box costs it some reliability. Height is harder for both policies, so many of those misses are not specific to
+the model. The expert is not an upper limit outside the box: at 1.30-1.37 m the model reached more goals. The
+model can also fail badly: its largest final error was 509 cm, on a higher goal where the expert ended 11.8 cm
+away. Do not rely on the model outside the box.
+
 The sections below use the 120 validation goals in `data_dart/split.json`, the simulator state as input, and
 the original stop rules: the end-effector must be within 1 cm of the goal after at least 8 s.
 

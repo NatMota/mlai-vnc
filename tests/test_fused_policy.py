@@ -103,6 +103,12 @@ class FreshGoalTests(unittest.TestCase):
     def test_fresh_seeds_stay_above_the_collection_and_dagger_seeds(self):
         self.assertGreater(FRESH_FIRST_SEED, 300399)
 
+    def test_outside_goals_are_repeatable_and_outside_the_box(self):
+        for i in range(40):
+            x, y, z = target_for("outside", i)
+            self.assertEqual([x, y, z], target_for("outside", i))
+            self.assertTrue(max(abs(x), abs(y)) > TARGET_HIGH[0] or z > TARGET_HIGH[2] or z < TARGET_LOW[2])
+
 
 if __name__ == "__main__":
     unittest.main()
