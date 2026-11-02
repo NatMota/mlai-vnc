@@ -233,6 +233,18 @@ NEW_ITERATIONS = {
                      ('Test results', '#testing-25-bearings-compared-with-iteration-6')],
             change='Iteration 6 with the six angle inputs (4 wheel angles, mean angle, right minus left angle) standardised with the training-set mean and standard deviation. The angles reach about 14 rad while the dot inputs stay between -1 and 1. The scaling is folded into the first layer, so the saved network takes raw inputs.',
             lesson='Every bearing where the dot starts in view now parks (11 of 11, up from 7), but the search for a dot behind the robot got worse (3 of 14, down from 9). One seed cannot separate the change from chance; iteration 9 measures that.'),
+    9: dict(name='camera+flag+time_to_park+scaled+seed1', file='camera_flag_ttp_scaled_seed1', seed=1, scale=True, tail=0, encoders=False,
+            anchors=[('What the seed changes', '#what-the-seed-changes'), ('What the seeds show', '#what-the-seeds-show')],
+            change='Iteration 8 trained with seed 1 instead of 7. Same data, inputs, outputs and training; only the starting weights differ.',
+            lesson='Parked counts across seeds 7, 1, 2 and 3 are 14, 0, 4 and 21 of 25 with nothing else changed, so single-seed differences mean little. Test losses are almost identical. Seed 1 ends within 20 cm of the expert in 19 of 25 runs but never parks, because its predicted time to park never drops below 0.35 s. The fixed 0.25 s threshold decides most of the outcome.'),
+    10: dict(name='camera+flag+time_to_park+scaled+seed2', file='camera_flag_ttp_scaled_seed2', seed=2, scale=True, tail=0, encoders=False,
+            anchors=[('What the seed changes', '#what-the-seed-changes'), ('What the seeds show', '#what-the-seeds-show')],
+            change='Iteration 8 trained with seed 2 instead of 7. Same data, inputs, outputs and training; only the starting weights differ.',
+            lesson='Parked counts across seeds 7, 1, 2 and 3 are 14, 0, 4 and 21 of 25 with nothing else changed, so single-seed differences mean little. Test losses are almost identical. Seed 1 ends within 20 cm of the expert in 19 of 25 runs but never parks, because its predicted time to park never drops below 0.35 s. The fixed 0.25 s threshold decides most of the outcome.'),
+    11: dict(name='camera+flag+time_to_park+scaled+seed3', file='camera_flag_ttp_scaled_seed3', seed=3, scale=True, tail=0, encoders=False,
+            anchors=[('What the seed changes', '#what-the-seed-changes'), ('What the seeds show', '#what-the-seeds-show')],
+            change='Iteration 8 trained with seed 3 instead of 7. Same data, inputs, outputs and training; only the starting weights differ.',
+            lesson='Parked counts across seeds 7, 1, 2 and 3 are 14, 0, 4 and 21 of 25 with nothing else changed, so single-seed differences mean little. Test losses are almost identical. Seed 1 ends within 20 cm of the expert in 19 of 25 runs but never parks, because its predicted time to park never drops below 0.35 s. The fixed 0.25 s threshold decides most of the outcome.'),
 }
 
 

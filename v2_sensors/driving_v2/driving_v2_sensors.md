@@ -4213,3 +4213,191 @@ iter8.pivot(index=['split', 'bearing', 'seen_at_start'], columns='model', values
 
 
 Scaling fixed every bearing where the dot starts in view (11 of 11, up from 7) but made the search for a dot behind the robot worse (3 of 14, down from 9). The total fell from 16 to 14 of 25. One seed is not enough to tell how much of this is the change and how much is chance, which is what iteration 9 measures.
+
+## Iterations 9 to 11: the same model with three new seeds
+
+### What the seed changes
+
+Iteration 8 trained once, with seed 7. The seed only sets the starting weights. Iterations 9, 10 and 11 train the same model on the same data with seeds 1, 2 and 3, and test each on the same 25 bearings. This shows how much of any result is chance.
+
+
+```python
+SEEDS = {'seed 7 (iteration 8)': 'camera_flag_ttp_scaled', 'seed 1 (iteration 9)': 'camera_flag_ttp_scaled_seed1',
+         'seed 2 (iteration 10)': 'camera_flag_ttp_scaled_seed2', 'seed 3 (iteration 11)': 'camera_flag_ttp_scaled_seed3'}
+seed_tests = pd.concat([v2_results.tests(f, s) for s, f in SEEDS.items()])
+seed_table = v2_results.summary(seed_tests)
+seed_table
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>parked (of 25)</th>
+      <th>dot in view at start (of 11)</th>
+      <th>dot out of view at start (of 14)</th>
+      <th>test runs (of 4)</th>
+      <th>median final error (cm)</th>
+      <th>median heading error (°)</th>
+    </tr>
+    <tr>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>seed 7 (iteration 8)</th>
+      <td>14</td>
+      <td>11</td>
+      <td>3</td>
+      <td>1</td>
+      <td>19.9</td>
+      <td>26.7</td>
+    </tr>
+    <tr>
+      <th>seed 1 (iteration 9)</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>12.5</td>
+      <td>21.7</td>
+    </tr>
+    <tr>
+      <th>seed 2 (iteration 10)</th>
+      <td>4</td>
+      <td>4</td>
+      <td>0</td>
+      <td>0</td>
+      <td>44.3</td>
+      <td>15.5</td>
+    </tr>
+    <tr>
+      <th>seed 3 (iteration 11)</th>
+      <td>21</td>
+      <td>8</td>
+      <td>13</td>
+      <td>4</td>
+      <td>20.6</td>
+      <td>3.6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+fig, ax = plt.subplots(1, 3, figsize=(16, 4))
+for (label, f), c in zip(SEEDS.items(), ['tab:purple', 'tab:blue', 'tab:green', 'tab:red']):
+    h = v2_results.history(f)
+    ax[0].plot(h.epoch, h.test_wheel_mse, color=c, label=label); ax[1].plot(h.epoch, h.test_time_to_park_mse, color=c, label=label)
+    mins = [min(l['ttp_s'] for l in json.loads(Path(f'camera_loop/{f}/run_{b}.json').read_text())['log']) for b in ref]
+    ax[2].hist(mins, bins=np.arange(-1.6, 2.8, 0.2), histtype='step', lw=2, color=c, label=label)
+ax[0].set(title='Wheel loss on the 4 test runs', xlabel='epoch', yscale='log', ylabel='MSE (rad/s)²')
+ax[1].set(title='Time to park loss on the 4 test runs', xlabel='epoch', yscale='log', ylabel='MSE of (seconds left / 3 s)')
+ax[2].axvline(THRESH, color='k', ls='--', label='PARK threshold 0.25 s')
+ax[2].set(title='Lowest predicted time to park in each test drive', xlabel='seconds', ylabel='runs (of 25)')
+for a in ax: a.legend(fontsize=8)
+plt.tight_layout(); plt.show()
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_92_0.png)
+    
+
+
+
+```python
+pd.DataFrame({'ended within 20 cm of the expert (of 25)': seed_tests.groupby('model', sort=False).final_error_cm.apply(lambda e: int((e < 20).sum())),
+              'parked (of 25)': seed_table['parked (of 25)']})
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ended within 20 cm of the expert (of 25)</th>
+      <th>parked (of 25)</th>
+    </tr>
+    <tr>
+      <th>model</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>seed 7 (iteration 8)</th>
+      <td>13</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>seed 1 (iteration 9)</th>
+      <td>19</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>seed 2 (iteration 10)</th>
+      <td>8</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>seed 3 (iteration 11)</th>
+      <td>12</td>
+      <td>21</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### What the seeds show
+
+- Parked counts run from 0 to 21 of 25 with nothing changed but the seed. A difference of a few runs between two single-seed results means nothing.
+- The losses on the test runs are almost the same for all four seeds. Training looks equally good offline.
+- The driving is better than the parked count suggests. Seed 1 ends within 20 cm of the expert in 19 of 25 runs and parks in none: its predicted time to park never drops below 0.35 s, so PARK never fires.
+- So the fixed 0.25 s threshold decides most of the outcome. The model has never seen what being parked looks like, because every expert run stops at the PARK row. Iteration 12 adds that.
