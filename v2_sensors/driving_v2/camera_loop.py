@@ -73,6 +73,10 @@ def policy(w, x):
 
 def run(weights_path, bearing, max_s, use_visible_flag=False):
     w = dict(np.load(weights_path))
+    use_encoders = int(w.get('info_encoders', 0)) == 1      # wheel inputs from simulated encoders (sensors.py)
+    if use_encoders:
+        import sensors
+        robot_sensors = sensors.Sensors()
     b = np.deg2rad(bearing); target = [1.1 * np.cos(b), 1.1 * np.sin(b), 0.5]
     env = dict(os.environ, EXPERT_SKIP_VISUALS='1', OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1')
     sim = subprocess.Popen([str(PIXI), 'run', 'build-clang19/sensor_parking', str(NATIVE / 'assets')], cwd=NATIVE,
@@ -93,6 +97,8 @@ def run(weights_path, bearing, max_s, use_visible_flag=False):
     state = call(dict(op='reset', target=target, max_duration_s=max_s))
     scene, tracker, log = Scene(), Tracker(), []
     q0 = np.array(state['frame']['joints'][:4]); parked = False
+    if use_encoders:
+        robot_sensors.reset(state['frame'])
     try:
         timing = dict(physics_s=0.0, camera_s=0.0, other_s=0.0)
         while not state['done']:
@@ -105,12 +111,17 @@ def run(weights_path, bearing, max_s, use_visible_flag=False):
             rgb, depth, _ = scene.fisheye(eye, np.c_[-B[:, 1], -B[:, 2], B[:, 0]])
             t1 = time.perf_counter(); timing['camera_s'] += t1 - t0
             seen = see_dot(rgb, depth)
-            dot = tracker.update(camera_to_robot(seen) if seen is not None else None, np.array(f['wheel_velocity']))
+            if use_encoders:
+                reading = robot_sensors.read(f)
+                wheel_x, wheel_speed = sensors.wheel_features(reading['wheel_angle'], reading['wheel_speed'])[0], reading['wheel_speed']
+            else:
+                wheel_x, wheel_speed = wheel_features(np.array(f['joints']), np.array(f['wheel_velocity']), q0), np.array(f['wheel_velocity'])
+            dot = tracker.update(camera_to_robot(seen) if seen is not None else None, wheel_speed)
             if dot is None:
                 dot_in = [0.0, 0.0, 0.0]            # never seen yet: no information
             else:
                 a = np.arctan2(dot[1], dot[0]); dot_in = [float(np.hypot(*dot)), np.sin(a), np.cos(a)]
-            x = np.r_[wheel_features(np.array(f['joints']), np.array(f['wheel_velocity']), q0), dot_in]
+            x = np.r_[wheel_x, dot_in]
             if use_visible_flag:
                 x = np.r_[x, float(seen is not None)]
             cmd, prob = policy(w, x.astype(np.float32))

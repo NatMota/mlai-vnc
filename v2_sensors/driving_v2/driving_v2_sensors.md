@@ -4691,3 +4691,568 @@ Reading the results:
 - Runs ending within 20 cm of the expert hardly changed (13.25 against 13 on average).
 - The training losses are not comparable with iteration 8, because a third of the rows are now easy parked rows.
 - The parked rows did not make PARK reliable. The bigger problem is that each seed learns a different time-to-park scale, and one fixed threshold cannot suit them all.
+
+## Iteration 13: wheel encoders instead of simulator wheel values
+
+### Iteration 13: what changed
+
+Until now the 12 wheel inputs came straight from the simulator's joint angles and joint speeds. Iteration 13 reads them from simulated wheel encoders (`sensors.py`):
+
+- Each wheel has an incremental encoder with 4096 counts per revolution (an assumed, common 12-bit resolution). The angle moves in steps of 2π/4096 rad.
+- Speed is not measured directly. It is the change in counted angle since the previous reading, divided by 1/30 s, so it lags the true speed.
+- The 12 inputs are built from these readings exactly as before, and the tracker uses the encoder speeds when the dot is hidden.
+
+The network now sees only sensor readings: wheel encoders and the camera. The outputs are unchanged (four wheel speed commands and time to park). Everything else is iteration 12, trained and tested with the same four seeds.
+
+`sensors.py` collects the sensors in one `Sensors` class. An IMU can be added there with a `reset()` and a `read(frame)`, and its readings added to the inputs.
+
+
+```python
+import sensors
+e24 = next(e for e in test if e['bearing'] == 24)
+a24 = np.load(DATA / next(r for r in episodes if r['bearing_deg'] == 24)['archive'])
+enc = sensors.WheelEncoders.features_for_run(a24['joint_positions'][:, :4])
+t24 = a24['time_s']
+fig, ax = plt.subplots(1, 2, figsize=(14, 3.8))
+ax[0].plot(t24, e24['x'][:, 4], label='simulator speed FR'); ax[0].plot(t24, enc[:, 4], '--', label='encoder speed FR')
+ax[0].set(xlabel='time (s)', ylabel='rad/s', title='24° test run: front right wheel speed input'); ax[0].legend()
+ax[1].plot(t24, e24['x'][:, 0] - enc[:, 0])
+ax[1].set(xlabel='time (s)', ylabel='rad', title='Angle input: simulator minus encoder (one count is 0.0015 rad)')
+plt.tight_layout(); plt.show()
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_102_0.png)
+    
+
+
+### Iteration 13: results over four seeds
+
+
+```python
+rows = []
+for s in (7, 1, 2, 3):
+    suffix = '' if s == 7 else f'_seed{s}'
+    for label, f in (('12: simulator wheel values', 'camera_flag_ttp_scaled_tail100' + suffix), ('13: wheel encoders', 'camera_flag_ttp_scaled_tail100_encoders' + suffix)):
+        d = v2_results.tests(f)
+        rows.append({'seed': s, 'model': label, 'parked (of 25)': int(d.parked.sum()),
+                     'dot in view at start (of 11)': int(d[d.seen_at_start].parked.sum()), 'dot out of view at start (of 14)': int(d[~d.seen_at_start].parked.sum()),
+                     'test runs (of 4)': int(d[d.split == 'test'].parked.sum()),
+                     'ended within 20 cm (of 25)': int((d.final_error_cm < 20).sum()), 'median final error (cm)': round(d.final_error_cm.median(), 1)})
+iter13 = pd.DataFrame(rows).set_index(['seed', 'model'])
+iter13
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>parked (of 25)</th>
+      <th>dot in view at start (of 11)</th>
+      <th>dot out of view at start (of 14)</th>
+      <th>test runs (of 4)</th>
+      <th>ended within 20 cm (of 25)</th>
+      <th>median final error (cm)</th>
+    </tr>
+    <tr>
+      <th>seed</th>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="2" valign="top">7</th>
+      <th>12: simulator wheel values</th>
+      <td>9</td>
+      <td>2</td>
+      <td>7</td>
+      <td>1</td>
+      <td>22</td>
+      <td>11.2</td>
+    </tr>
+    <tr>
+      <th>13: wheel encoders</th>
+      <td>24</td>
+      <td>10</td>
+      <td>14</td>
+      <td>4</td>
+      <td>24</td>
+      <td>7.4</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">1</th>
+      <th>12: simulator wheel values</th>
+      <td>12</td>
+      <td>2</td>
+      <td>10</td>
+      <td>2</td>
+      <td>19</td>
+      <td>13.0</td>
+    </tr>
+    <tr>
+      <th>13: wheel encoders</th>
+      <td>22</td>
+      <td>10</td>
+      <td>12</td>
+      <td>3</td>
+      <td>14</td>
+      <td>18.5</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">2</th>
+      <th>12: simulator wheel values</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>9</td>
+      <td>28.9</td>
+    </tr>
+    <tr>
+      <th>13: wheel encoders</th>
+      <td>11</td>
+      <td>8</td>
+      <td>3</td>
+      <td>1</td>
+      <td>14</td>
+      <td>17.1</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">3</th>
+      <th>12: simulator wheel values</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>39.1</td>
+    </tr>
+    <tr>
+      <th>13: wheel encoders</th>
+      <td>15</td>
+      <td>11</td>
+      <td>4</td>
+      <td>1</td>
+      <td>14</td>
+      <td>17.3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+iter13.groupby('model').agg(['mean', 'min', 'max'])[['parked (of 25)', 'ended within 20 cm (of 25)', 'median final error (cm)']].round(1)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">parked (of 25)</th>
+      <th colspan="3" halign="left">ended within 20 cm (of 25)</th>
+      <th colspan="3" halign="left">median final error (cm)</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>mean</th>
+      <th>min</th>
+      <th>max</th>
+      <th>mean</th>
+      <th>min</th>
+      <th>max</th>
+      <th>mean</th>
+      <th>min</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12: simulator wheel values</th>
+      <td>5.8</td>
+      <td>0</td>
+      <td>12</td>
+      <td>13.2</td>
+      <td>3</td>
+      <td>22</td>
+      <td>23.0</td>
+      <td>11.2</td>
+      <td>39.1</td>
+    </tr>
+    <tr>
+      <th>13: wheel encoders</th>
+      <td>18.0</td>
+      <td>11</td>
+      <td>24</td>
+      <td>16.5</td>
+      <td>14</td>
+      <td>24</td>
+      <td>15.1</td>
+      <td>7.4</td>
+      <td>18.5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+best = v2_results.tests('camera_flag_ttp_scaled_tail100_encoders', '13: wheel encoders, seed 7')
+best[['split', 'bearing', 'seen_at_start', 'parked', 'final_error_cm', 'heading_error_deg', 'park_time_vs_expert_s']].sort_values('final_error_cm', ascending=False).round(2)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>split</th>
+      <th>bearing</th>
+      <th>seen_at_start</th>
+      <th>parked</th>
+      <th>final_error_cm</th>
+      <th>heading_error_deg</th>
+      <th>park_time_vs_expert_s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>train</td>
+      <td>12</td>
+      <td>True</td>
+      <td>False</td>
+      <td>25.38</td>
+      <td>23.98</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>train</td>
+      <td>60</td>
+      <td>True</td>
+      <td>True</td>
+      <td>15.49</td>
+      <td>11.44</td>
+      <td>-0.44</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>train</td>
+      <td>168</td>
+      <td>False</td>
+      <td>True</td>
+      <td>10.16</td>
+      <td>7.20</td>
+      <td>-0.60</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>train</td>
+      <td>156</td>
+      <td>False</td>
+      <td>True</td>
+      <td>9.50</td>
+      <td>7.06</td>
+      <td>-0.36</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>train</td>
+      <td>192</td>
+      <td>False</td>
+      <td>True</td>
+      <td>9.20</td>
+      <td>5.01</td>
+      <td>-0.90</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>train</td>
+      <td>336</td>
+      <td>True</td>
+      <td>True</td>
+      <td>9.00</td>
+      <td>9.17</td>
+      <td>0.25</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>train</td>
+      <td>216</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.93</td>
+      <td>7.58</td>
+      <td>-0.98</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>train</td>
+      <td>348</td>
+      <td>True</td>
+      <td>True</td>
+      <td>8.73</td>
+      <td>17.57</td>
+      <td>-0.96</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>test</td>
+      <td>204</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.68</td>
+      <td>8.25</td>
+      <td>-0.98</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>test</td>
+      <td>132</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.31</td>
+      <td>5.77</td>
+      <td>0.26</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>train</td>
+      <td>180</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.49</td>
+      <td>1.86</td>
+      <td>-0.68</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>train</td>
+      <td>120</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.43</td>
+      <td>6.51</td>
+      <td>0.65</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>train</td>
+      <td>228</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.42</td>
+      <td>11.68</td>
+      <td>-0.92</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>train</td>
+      <td>240</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.27</td>
+      <td>9.30</td>
+      <td>-0.82</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>train</td>
+      <td>84</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.58</td>
+      <td>36.07</td>
+      <td>2.96</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>train</td>
+      <td>252</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.32</td>
+      <td>11.91</td>
+      <td>-0.56</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>train</td>
+      <td>312</td>
+      <td>True</td>
+      <td>True</td>
+      <td>6.07</td>
+      <td>1.57</td>
+      <td>-0.31</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>test</td>
+      <td>108</td>
+      <td>False</td>
+      <td>True</td>
+      <td>5.44</td>
+      <td>8.21</td>
+      <td>1.22</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>train</td>
+      <td>360</td>
+      <td>True</td>
+      <td>True</td>
+      <td>5.19</td>
+      <td>0.04</td>
+      <td>0.76</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>train</td>
+      <td>264</td>
+      <td>False</td>
+      <td>True</td>
+      <td>5.09</td>
+      <td>9.66</td>
+      <td>-0.48</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>train</td>
+      <td>300</td>
+      <td>True</td>
+      <td>True</td>
+      <td>5.03</td>
+      <td>1.65</td>
+      <td>-0.50</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>train</td>
+      <td>72</td>
+      <td>True</td>
+      <td>True</td>
+      <td>4.55</td>
+      <td>6.16</td>
+      <td>1.88</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>train</td>
+      <td>36</td>
+      <td>True</td>
+      <td>True</td>
+      <td>4.35</td>
+      <td>1.17</td>
+      <td>1.85</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>test</td>
+      <td>24</td>
+      <td>True</td>
+      <td>True</td>
+      <td>3.22</td>
+      <td>8.99</td>
+      <td>1.85</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>train</td>
+      <td>288</td>
+      <td>True</td>
+      <td>True</td>
+      <td>2.87</td>
+      <td>16.21</td>
+      <td>-0.58</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+Reading the results:
+
+- With encoders the model parked a mean of 18 of 25 over the four seeds (11 to 24), against 5.75 (0 to 12) with simulator wheel values. Every seed improved.
+- Seed 7 parks 24 of 25 with a median final error of 7.4 cm, and all 4 test runs park within 9 cm of the expert. The model given the true dot position (iteration 3) parked 23 of 25.
+- We do not know yet why encoders help this much. The encoder speed inputs are not smoother row to row than the simulator's (0.156 against 0.166 rad/s mean change). The tracker also switched to encoder speeds, so two things changed together. Testing each separately would show which one matters.
+- The seeds still differ (11 to 24 parked), so results should be reported over several seeds.
