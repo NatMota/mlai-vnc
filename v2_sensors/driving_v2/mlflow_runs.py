@@ -1,0 +1,151 @@
+"""Log every v2 iteration to MLflow with one fixed schema.
+
+Step 1, in the training environment (needs torch):   python mlflow_runs.py collect
+   Re-runs the notebook's training cells to get the loss curves, reads the saved test results, writes mlflow_runs.json.
+Step 2, in any environment with mlflow:              MLFLOW_TRACKING_URI=... python mlflow_runs.py log
+   Creates one run per iteration in the experiment 'v2-sensors'.
+"""
+import hashlib, json, subprocess, sys
+from pathlib import Path
+import numpy as np
+
+HERE = Path(__file__).resolve().parent
+OUT = HERE / 'mlflow_runs.json'
+EXPERIMENT = 'v2-sensors'
+WHEEL_INPUTS = ['wheel_angle_fr', 'wheel_angle_fl', 'wheel_angle_bl', 'wheel_angle_br', 'wheel_speed_fr', 'wheel_speed_fl',
+                'wheel_speed_bl', 'wheel_speed_br', 'mean_angle', 'right_minus_left_angle', 'mean_speed', 'right_minus_left_speed']
+ITERATIONS = [   # iteration, name, model file, dot input, PARK output, threshold (s), description
+    (1, 'wheels', 'rung1_wheels', 'none', 'park_yes_no', None, 'Wheel encoders only.'),
+    (2, 'wheels+start_dot', 'rung1_wheels_start_dot', 'true_direction_at_start', 'park_yes_no', None, 'Adds the true dot direction at the start (simulator truth).'),
+    (3, 'wheels+live_dot', 'rung1_wheels_live_dot', 'true_position_every_step', 'park_yes_no', None, 'Adds the true dot position every step (simulator truth). Ceiling for the camera models.'),
+    (4, 'wheels+live_dot+skid', 'rung1_wheels_live_dot_skid', 'true_position_every_step', 'park_yes_no', None, 'Iteration 3 with a skid-steer output: 2 learned speeds copied to 4 wheels.'),
+    (5, 'camera+flag', 'camera_flag', 'camera', 'park_yes_no', None, 'Dot from the corner fisheye camera and tracker, plus a visible flag.'),
+    (6, 'camera+flag+time_to_park', 'camera_flag_ttp', 'camera', 'time_to_park', 0.25, 'Iteration 5 with PARK replaced by time to park. Model to build from.'),
+    (7, 'camera+time_to_park', 'camera_ttp_noflag', 'camera', 'time_to_park', 0.35, 'Iteration 6 without the visible flag.'),
+]
+CAMERA_RESULTS = {'camera+flag': 'camera_flag', 'camera+flag+time_to_park': 'camera_flag_ttp', 'camera+time_to_park': 'camera_ttp_noflag_0.35s'}
+
+
+def digest(paths):
+    h = hashlib.sha256()
+    for p in sorted(paths):
+        h.update(p.name.encode()); h.update(p.read_bytes())
+    return h.hexdigest()[:16]
+
+
+def collect():
+    import nbformat, io, contextlib
+    nb = nbformat.read(HERE / 'driving_v2_sensors.ipynb', as_version=4)
+    g = {}
+    cells = [i for i, c in enumerate(nb.cells) if c.cell_type == 'code']
+    want = [cells[0], 3, 7, 27] + [i for i, c in enumerate(nb.cells) if c.source.startswith("CAM = Path('camera_features')")]
+    with contextlib.redirect_stdout(io.StringIO()):
+        for i in want:
+            exec(nb.cells[i].source, g)
+    hist, cam_hist = g['history'], g['camera_history']
+    import replay_v2
+    ref = json.loads((HERE / 'expert_reference.json').read_text())['bearings']
+    seen = {int(b): json.loads((HERE / f'camera_loop/camera_flag_ttp/run_{b}.json').read_text())['log'][0]['visible'] for b in ref}
+    data = HERE.parent / 'driving_30/data/expert_30hz'
+    datasets = {'expert_30hz': dict(digest=digest(list((data / 'sampled').glob('*.npz'))), source='v2_sensors/driving_30/data/expert_30hz',
+                                    rows_train=int(sum(len(e['x']) for e in g['train'])), runs_train=len(g['train']), runs_test=len(g['test'])),
+                'camera_inputs': dict(digest=digest(list((HERE / 'camera_features').glob('*.npy'))), source='v2_sensors/driving_v2/camera_features')}
+    runs = []
+    for it, name, file, dot, park, thr, desc in ITERATIONS:
+        w = np.load(HERE / f'models/{file}.npz')
+        n_in = int(w['shared.0.weight'].shape[1])
+        n_params = int(sum(w[k].size for k in w.files if not k.startswith('ttp_')))
+        if name.endswith('skid'):
+            n_params -= 2 * 17            # trained with 2 wheel outputs; the saved file folds them into 4
+        inputs = WHEEL_INPUTS + {'none': [], 'true_direction_at_start': ['dot_sin_start', 'dot_cos_start'],
+                                 'true_position_every_step': ['dot_distance', 'dot_sin', 'dot_cos'],
+                                 'camera': ['dot_distance', 'dot_sin', 'dot_cos'] + (['dot_visible'] if n_in == 16 else [])}[dot]
+        assert len(inputs) == n_in, (name, len(inputs), n_in)
+        curves = {}
+        if name.startswith('camera'):
+            h = cam_hist[cam_hist.model == name]
+            for k in ('train_wheel_mse', 'test_wheel_mse', 'train_park_loss', 'test_park_loss'):
+                curves[k.replace('park_loss', 'time_to_park_mse' if park == 'time_to_park' else 'park_bce')] = h[k].tolist()
+        else:
+            h = hist[hist.model == name]
+            curves = {'train_wheel_mse': h.train_wheel_mse.tolist(), 'test_wheel_mse': h.test_wheel_mse.tolist(), 'train_park_bce': h.train_park_bce.tolist()}
+        rows = []
+        if name.startswith('camera'):
+            for b, x in ref.items():
+                r = json.loads((HERE / f'camera_loop/{CAMERA_RESULTS[name]}/run_{b}.json').read_text()); L = r['log']
+                pt = next((l['t'] for l in L if l['park_prob'] >= 0.5), None)
+                rows.append(dict(bearing=int(b), split=x['split'], parked=bool(r['parked']),
+                                 final_error_cm=100 * float(np.hypot(*np.subtract(r['final_base'], x['final_base_xy']))),
+                                 heading_error_deg=float(np.rad2deg(abs((r['final_yaw'] - x['final_yaw'] + np.pi) % (2 * np.pi) - np.pi))),
+                                 park_time_delta_s=None if pt is None else pt - x['park_time_s'],
+                                 cam_dist_err_cm=[100 * abs(l['est_dist'] - l['true_dist']) for l in L if l['visible']],
+                                 cam_dir_err_deg=[abs((l['est_dir_deg'] - l['true_dir_deg'] + 180) % 360 - 180) for l in L if l['visible']]))
+        else:
+            _, m, _ = replay_v2.load(name)
+            for _, x in m.iterrows():
+                rows.append(dict(bearing=int(x.bearing_deg), split=x.split, parked=bool(x.parked), final_error_cm=100 * x.final_xy_error_m,
+                                 heading_error_deg=x.final_yaw_error_deg,
+                                 park_time_delta_s=None if not x.parked else x.model_park_s - x.expert_park_s))
+        P = lambda rs: int(sum(r['parked'] for r in rs))
+        metrics = {'parked': P(rows), 'parked_rate': P(rows) / len(rows),
+                   'parked_dot_in_view_at_start': P([r for r in rows if seen[r['bearing']]]),
+                   'parked_dot_out_of_view_at_start': P([r for r in rows if not seen[r['bearing']]]),
+                   'parked_test_split': P([r for r in rows if r['split'] == 'test']),
+                   'median_final_error_cm': float(np.median([r['final_error_cm'] for r in rows])),
+                   'mean_final_error_cm': float(np.mean([r['final_error_cm'] for r in rows])),
+                   'median_heading_error_deg': float(np.median([r['heading_error_deg'] for r in rows]))}
+        dt = [abs(r['park_time_delta_s']) for r in rows if r['park_time_delta_s'] is not None]
+        if dt:
+            metrics['median_abs_park_time_error_s'] = float(np.median(dt))
+        if name.startswith('camera'):
+            metrics['camera_distance_error_cm'] = float(np.mean([v for r in rows for v in r['cam_dist_err_cm']]))
+            metrics['camera_direction_error_deg'] = float(np.mean([v for r in rows for v in r['cam_dir_err_deg']]))
+            for r in rows:
+                r.pop('cam_dist_err_cm'); r.pop('cam_dir_err_deg')
+        for k, v in curves.items():
+            metrics[f'final_{k}'] = v[-1]
+        params = dict(version='v2', iteration=it, model=name, inputs=n_in, input_names=','.join(inputs), dot_input=dot,
+                      visible_flag=n_in == 16 and dot == 'camera', park_output=park, park_threshold_s=thr if thr is not None else 'n/a',
+                      wheel_output='skid_2_to_4' if name.endswith('skid') else '4_free', hidden='2x16_relu', parameters=n_params,
+                      optimizer='adam', learning_rate=0.01, epochs=300, batch='full', seed=7,
+                      park_loss='mse_time_to_park_clip3s_weight1' if park == 'time_to_park' else 'bce_pos_weight_x0.1',
+                      trajectory_weighting='equal', input_scaling='none', control_hz=30,
+                      camera='corner_fisheye_180_rgbd_mount_0.29_-0.13_0.36' if dot == 'camera' else 'none',
+                      renderer='pybullet_tiny_cpu' if dot == 'camera' else 'n/a', tracker='wheel_odometry' if dot == 'camera' else 'n/a',
+                      test_bearings=len(rows), test_engine='sensor_parking' if dot == 'camera' else 'policy_replay')
+        runs.append(dict(iteration=it, name=name, description=desc, params=params, metrics=metrics, curves=curves, per_bearing=rows,
+                         model_file=f'models/{file}.npz', datasets=['expert_30hz', 'camera_inputs'] if dot == 'camera' else ['expert_30hz']))
+    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=HERE, text=True).strip()
+    OUT.write_text(json.dumps(dict(commit=commit, datasets=datasets, runs=runs), indent=1, default=float))
+    print('wrote', OUT, len(runs), 'runs')
+
+
+def log():
+    import mlflow, pandas as pd
+    from mlflow.entities import Metric
+    payload = json.loads(OUT.read_text())
+    mlflow.set_experiment(EXPERIMENT)
+    client = mlflow.MlflowClient()
+    for r in payload['runs']:
+        tags = {'mlflow.user': 'nat', 'mlflow.source.type': 'LOCAL', 'mlflow.source.name': 'v2_sensors/driving_v2/driving_v2_sensors.ipynb',
+                'mlflow.source.git.repoURL': 'https://github.com/NatMota/mlai-vnc', 'mlflow.source.git.branch': 'v2-sensor',
+                'mlflow.source.git.commit': payload['commit'], 'mlflow.note.content': r['description'],
+                'version': 'v2', 'iteration': str(r['iteration']), 'model': r['name'], 'author': 'nat'}
+        with mlflow.start_run(run_name=f"v2-iter{r['iteration']:02d}-{r['name'].replace('+', '-')}", tags=tags) as run:
+            mlflow.log_params(r['params'])
+            for d in r['datasets']:
+                info = payload['datasets'][d]
+                ds = mlflow.data.from_pandas(pd.DataFrame([info]), source=info['source'], name=d, digest=info['digest'])
+                mlflow.log_input(ds, context='training' if d == 'expert_30hz' else 'inputs')
+            mlflow.log_metrics(r['metrics'])
+            t = int(run.info.start_time)
+            batch = [Metric(k, float(v), t, step) for k, vals in r['curves'].items() for step, v in enumerate(vals)]
+            for i in range(0, len(batch), 1000):
+                client.log_batch(run.info.run_id, metrics=batch[i:i + 1000])
+            mlflow.log_artifact(str(HERE / r['model_file']), 'model')
+            mlflow.log_table(pd.DataFrame(r['per_bearing']), 'tests/per_bearing.json')
+        print('logged', run.info.run_name, run.info.run_id)
+
+
+if __name__ == '__main__':
+    {'collect': collect, 'log': log}[sys.argv[1]]()
