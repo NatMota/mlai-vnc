@@ -4,6 +4,8 @@ Step 1, in the training environment (needs torch):   python mlflow_runs.py colle
    Re-runs the notebook's training cells to get the loss curves, reads the saved test results, writes mlflow_runs.json.
 Step 2, in any environment with mlflow:              MLFLOW_TRACKING_URI=... python mlflow_runs.py log
    Creates one run per iteration in the experiment 'v2-sensors'.
+Step 3:                                              MLFLOW_TRACKING_URI=... python mlflow_runs.py describe [NOTEBOOK.html]
+   Writes each run's description (linked to its notebook section) and attaches the notebook.
 """
 import hashlib, json, subprocess, sys
 from pathlib import Path
@@ -147,5 +149,81 @@ def log():
         print('logged', run.info.run_name, run.info.run_id)
 
 
+NOTEBOOK_MD = 'https://github.com/NatMota/mlai-vnc/blob/ef677675aa9a37623b1affacbf7bcb341785ec55/v2_sensors/driving_v2/driving_v2_sensors.md'
+INTRO, LOOP, SKID, SKID_TEST = '#driving-v2--rung-1-does-the-network-work-when-it-can-see-the-dot', '#closed-loop-the-network-drives-the-robot', '#change-1-skid-steer-output', '#closed-loop-skid-output-vs-four-free-outputs'
+CAMERA, CURVES, TESTS, PLOTS = '#camera-models-the-dot-comes-from-the-corner-camera', '#training-curves', '#testing', '#test-metrics-plotted'
+WHEELS = 'the angle each wheel has turned since the start, each wheel speed, and the average and right minus left of both'
+DESCRIPTIONS = {
+    'wheels': dict(change='Starting point. Wheel encoders only, nothing about the dot.',
+        inputs=f'12: {WHEELS}.',
+        lesson='At the start every bearing gives the same inputs but a different expert command, so the network cannot know which way to turn. This is the floor any dot input has to beat.',
+        links=[('What the iterations are', INTRO), ('Test results', LOOP)]),
+    'wheels+start_dot': dict(change='Adds the true direction of the dot at the start, taken from the simulator and fixed for the whole run.',
+        inputs=f'14: {WHEELS}, plus sin and cos of the starting dot direction.',
+        lesson='The starting direction helps most when the dot starts in front (9 of 11 parked) and little when it starts behind (2 of 14). The input never updates after the start, and the robot often stops in the wrong place.',
+        links=[('What the iterations are', INTRO), ('Test results', LOOP)]),
+    'wheels+live_dot': dict(change='Gives the true dot position relative to the robot at every step, taken from the simulator.',
+        inputs=f'15: {WHEELS}, plus the dot distance and sin and cos of its direction.',
+        lesson='This is a perfect sensor, so it is the ceiling for the camera models. It uses simulator truth and does not count as a v2 result.',
+        links=[('What the iterations are', INTRO), ('Test results', LOOP)]),
+    'wheels+live_dot+skid': dict(change='Iteration 3 with a skid-steer output. The network predicts one speed for the right side and one for the left, and they are copied to the front and back wheels, because the expert always gives front and back the same speed.',
+        inputs=f'15, as in iteration 3.',
+        lesson='Its final position error is lower than iteration 3, but PARK rarely fires (its PARK probability mostly stays near 0.01), so it parks less often. Not carried forward.',
+        links=[('Why skid steering', SKID), ('Test results', SKID_TEST)]),
+    'camera+flag': dict(change='First model with no simulator truth. The dot comes from the corner fisheye camera: red pixels give a ray and a depth, the fixed mount turns that into a position relative to the robot, and a tracker keeps it, moving it with the wheel encoders while the dot is hidden.',
+        inputs=f'16: {WHEELS}, plus the tracked dot distance, sin and cos of its direction (all 0 until the dot is first seen), and a visible flag (1 when the camera sees the dot in this frame).',
+        lesson='When the camera sees the dot it is accurate to about 1 cm, so the camera is not the weak point. Most failures are PARK not firing: the robot stops 3 to 36 cm from the expert parking spot, but the PARK probability stays below 0.35.',
+        links=[('How the camera inputs are made', CAMERA), ('Training curves', CURVES), ('Test results', TESTS), ('Plots', PLOTS)]),
+    'camera+flag+time_to_park': dict(change='Iteration 5 with the PARK output replaced by time to park. The network predicts how many seconds are left until the expert would park, and PARK fires when that drops to 0.25 s or less.',
+        inputs='16, as in iteration 5.',
+        lesson='When it parks, it parks close to the expert in time and place. When it fails, the robot stalls 20 to 40 cm short and the predicted time to park stays above 0.25 s. This is the model to build from.',
+        links=[('How the camera inputs are made', CAMERA), ('Training curves', CURVES), ('Test results', TESTS), ('Plots', PLOTS)]),
+    'camera+time_to_park': dict(change='Iteration 6 without the visible flag. PARK fires at 0.35 s or less.',
+        inputs=f'15: {WHEELS}, plus the tracked dot distance and sin and cos of its direction.',
+        lesson='Without the flag the robot stalls about 50 cm short in most runs, and it never parks when the dot starts out of view. The flag is needed.',
+        links=[('How the camera inputs are made', CAMERA), ('Training curves', CURVES), ('Test results', TESTS), ('Plots', PLOTS)]),
+}
+
+
+def description(r):
+    d, m, pr = DESCRIPTIONS[r['name']], r['metrics'], r['params']
+    park = (f"time to park in seconds (clipped at 3 s), PARK when it is {pr['park_threshold_s']} s or less" if pr['park_output'] == 'time_to_park'
+            else 'PARK probability, PARK when it is 0.5 or more')
+    loss = ('wheel MSE plus time to park MSE (weight 1)' if pr['park_output'] == 'time_to_park'
+            else 'wheel MSE plus 0.1 times class-weighted PARK cross entropy')
+    lines = [f"**Iteration {r['iteration']}: `{r['name']}`**", '',
+             f"**What changed.** {d['change']}", '',
+             f"**Inputs.** {d['inputs']}", '',
+             f"**Outputs.** Four wheel speed commands (rad/s, clipped to ±3) and {park}.", '',
+             f"**Training.** 2×16 ReLU network, {pr['parameters']} parameters. Loss: {loss}, each training run counted equally. Adam, lr 0.01, 300 full-batch epochs, seed 7, 21 training runs.", '',
+             f"**Test.** The model drives the robot in the simulator from 25 bearings (21 training, 4 test).", '',
+             f"- Parked {m['parked']} of 25: {m['parked_dot_in_view_at_start']} of 11 with the dot in view at the start, {m['parked_dot_out_of_view_at_start']} of 14 with it out of view, {m['parked_test_split']} of 4 test runs.",
+             f"- Final distance from the expert: median {m['median_final_error_cm']:.0f} cm. Heading: median {m['median_heading_error_deg']:.0f}° off."]
+    if 'median_abs_park_time_error_s' in m:
+        lines.append(f"- When it parks, it parks a median {m['median_abs_park_time_error_s']:.1f} s from the expert's park time.")
+    if 'camera_distance_error_cm' in m:
+        lines.append(f"- Camera, when it sees the dot: {m['camera_distance_error_cm']:.1f} cm and {m['camera_direction_error_deg']:.1f}° mean error.")
+    lines += ['', f"**What it tells us.** {d['lesson']}", '',
+              '**Notebook.** ' + ', '.join(f"[{t}]({NOTEBOOK_MD}{a})" for t, a in d['links']) +
+              '. The full notebook is attached under Artifacts (`notebook/`).']
+    return '\n'.join(lines)
+
+
+def describe():
+    import mlflow
+    payload = json.loads(OUT.read_text())
+    client = mlflow.MlflowClient()
+    exp = client.get_experiment_by_name(EXPERIMENT)
+    html = Path(sys.argv[2]) if len(sys.argv) > 2 else None
+    for r in payload['runs']:
+        name = f"v2-iter{r['iteration']:02d}-{r['name'].replace('+', '-')}"
+        run = client.search_runs([exp.experiment_id], filter_string=f"attributes.run_name = '{name}'")[0]
+        client.set_tag(run.info.run_id, 'mlflow.note.content', description(r))
+        client.log_artifact(run.info.run_id, str(HERE / 'driving_v2_sensors.ipynb'), 'notebook')
+        if html:
+            client.log_artifact(run.info.run_id, str(html), 'notebook')
+        print('described', name)
+
+
 if __name__ == '__main__':
-    {'collect': collect, 'log': log}[sys.argv[1]]()
+    {'collect': collect, 'log': log, 'describe': describe}[sys.argv[1]]()
