@@ -225,5 +225,91 @@ def describe():
         print('described', name)
 
 
+# Iterations trained with train_v2.py: loss curves come from models/NAME_history.json, tests from camera_loop/FOLDER.
+# iteration, name, model file and result folder, notebook anchors, what changed, lesson
+NEW_ITERATIONS = {
+    8: dict(name='camera+flag+time_to_park+scaled', file='camera_flag_ttp_scaled', seed=7, scale=True, tail=0, encoders=False,
+            anchors=[('Why scale', '#why-the-inputs-are-on-very-different-scales'), ('What changed', '#what-changed'),
+                     ('Test results', '#testing-25-bearings-compared-with-iteration-6')],
+            change='Iteration 6 with the six angle inputs (4 wheel angles, mean angle, right minus left angle) standardised with the training-set mean and standard deviation. The angles reach about 14 rad while the dot inputs stay between -1 and 1. The scaling is folded into the first layer, so the saved network takes raw inputs.',
+            lesson='Every bearing where the dot starts in view now parks (11 of 11, up from 7), but the search for a dot behind the robot got worse (3 of 14, down from 9). One seed cannot separate the change from chance; iteration 9 measures that.'),
+}
+
+
+def add(iteration):
+    """Collect, log and describe one train_v2.py iteration. Needs mlflow, numpy and pandas (no torch)."""
+    import mlflow, pandas as pd
+    from mlflow.entities import Metric
+    import v2_results
+    spec = NEW_ITERATIONS[iteration]; name = spec['name']
+    h = v2_results.history(spec['file'])
+    df = v2_results.tests(spec['file'])
+    seen = df.seen_at_start
+    m = {'parked': int(df.parked.sum()), 'parked_rate': float(df.parked.mean()),
+         'parked_dot_in_view_at_start': int(df[seen].parked.sum()), 'parked_dot_out_of_view_at_start': int(df[~seen].parked.sum()),
+         'parked_test_split': int(df[df.split == 'test'].parked.sum()),
+         'median_final_error_cm': float(df.final_error_cm.median()), 'mean_final_error_cm': float(df.final_error_cm.mean()),
+         'median_heading_error_deg': float(df.heading_error_deg.median()),
+         'camera_distance_error_cm': float(df.camera_distance_error_cm.mean())}
+    dt = df.park_time_vs_expert_s.dropna().abs()
+    if len(dt):
+        m['median_abs_park_time_error_s'] = float(dt.median())
+    for k in ('train_wheel_mse', 'test_wheel_mse', 'train_time_to_park_mse', 'test_time_to_park_mse'):
+        m['final_' + k] = float(h[k].iloc[-1])
+    inputs = WHEEL_INPUTS + ['dot_distance', 'dot_sin', 'dot_cos', 'dot_visible']
+    params = dict(version='v2', iteration=iteration, model=name, inputs=16, input_names=','.join(inputs), dot_input='camera',
+                  visible_flag=True, park_output='time_to_park', park_threshold_s=0.25, wheel_output='4_free', hidden='2x16_relu',
+                  parameters=629, optimizer='adam', learning_rate=0.01, epochs=300, batch='full', seed=spec['seed'],
+                  park_loss='mse_time_to_park_clip3s_weight1', trajectory_weighting='equal',
+                  input_scaling='angles_standardised' if spec['scale'] else 'none', park_tail_rows=spec['tail'],
+                  wheel_sensor='encoders_4096_counts_per_rev' if spec['encoders'] else 'simulator_joint_values', control_hz=30,
+                  camera='corner_fisheye_180_rgbd_mount_0.29_-0.13_0.36', renderer='pybullet_tiny_cpu', tracker='wheel_odometry',
+                  test_bearings=len(df), test_engine='sensor_parking')
+    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=HERE, text=True).strip()
+    link = NOTEBOOK_MD.replace(NOTEBOOK_MD.split('/blob/')[1].split('/')[0], commit)
+    mlflow.set_experiment(EXPERIMENT); client = mlflow.MlflowClient()
+    desc = '\n'.join([f"**Iteration {iteration}: `{name}`**", '', f"**What changed.** {spec['change']}", '',
+        f"**Inputs.** 16: {WHEELS}{' (read from simulated wheel encoders)' if spec['encoders'] else ''}, plus the tracked dot distance, sin and cos of its direction (0 until first seen) and a visible flag.", '',
+        '**Outputs.** Four wheel speed commands (rad/s, clipped to ±3) and time to park in seconds (clipped at 3 s), PARK when it is 0.25 s or less.', '',
+        f"**Training.** 2×16 ReLU network, 629 parameters. Loss: wheel MSE plus time to park MSE (weight 1), each training run counted equally. Adam, lr 0.01, 300 full-batch epochs, seed {spec['seed']}, 21 training runs"
+        + (f", plus {spec['tail']} rows after the expert parks in each run" if spec['tail'] else '') + '.', '',
+        '**Test.** The model drives the robot in the simulator from 25 bearings (21 training, 4 test).', '',
+        f"- Parked {m['parked']} of 25: {m['parked_dot_in_view_at_start']} of 11 with the dot in view at the start, {m['parked_dot_out_of_view_at_start']} of 14 with it out of view, {m['parked_test_split']} of 4 test runs.",
+        f"- Final distance from the expert: median {m['median_final_error_cm']:.0f} cm. Heading: median {m['median_heading_error_deg']:.0f}° off."]
+        + ([f"- When it parks, it parks a median {m['median_abs_park_time_error_s']:.1f} s from the expert's park time."] if 'median_abs_park_time_error_s' in m else [])
+        + [f"- Camera, when it sees the dot: {m['camera_distance_error_cm']:.1f} cm mean distance error.", '',
+           f"**What it tells us.** {spec['lesson']}", '',
+           '**Notebook.** ' + ', '.join(f"[{t}]({link}{a})" for t, a in spec['anchors']) + '. The full notebook is attached under Artifacts (`notebook/`).'])
+    tags = {'mlflow.user': 'nat', 'mlflow.source.type': 'LOCAL', 'mlflow.source.name': 'v2_sensors/driving_v2/driving_v2_sensors.ipynb',
+            'mlflow.source.git.repoURL': 'https://github.com/NatMota/mlai-vnc', 'mlflow.source.git.branch': 'v2-sensor',
+            'mlflow.source.git.commit': commit, 'mlflow.note.content': desc,
+            'version': 'v2', 'iteration': str(iteration), 'model': name, 'author': 'nat'}
+    with mlflow.start_run(run_name=f"v2-iter{iteration:02d}-{name.replace('+', '-')}", tags=tags) as run:
+        mlflow.log_params(params)
+        data = HERE.parent / 'driving_30/data/expert_30hz'
+        for dname, src, dig, ctx in (('expert_30hz', 'v2_sensors/driving_30/data/expert_30hz', digest(list((data / 'sampled').glob('*.npz'))), 'training'),
+                                     ('camera_inputs', 'v2_sensors/driving_v2/camera_features', digest(list((HERE / 'camera_features').glob('*.npy'))), 'inputs')):
+            mlflow.log_input(mlflow.data.from_pandas(pd.DataFrame([dict(source=src)]), source=src, name=dname, digest=dig), context=ctx)
+        if spec['tail']:
+            src = 'v2_sensors/driving_v2/park_tail'
+            mlflow.log_input(mlflow.data.from_pandas(pd.DataFrame([dict(source=src)]), source=src, name='park_tail',
+                                                     digest=digest(list((HERE / 'park_tail').glob('tail_*.npz')))), context='training')
+        mlflow.log_metrics(m)
+        t = int(run.info.start_time)
+        batch = [Metric(k, float(v), t, int(e)) for k in ('train_wheel_mse', 'test_wheel_mse', 'train_time_to_park_mse', 'test_time_to_park_mse')
+                 for e, v in zip(h.epoch, h[k])]
+        for i in range(0, len(batch), 1000):
+            client.log_batch(run.info.run_id, metrics=batch[i:i + 1000])
+        mlflow.log_artifact(str(HERE / f"models/{spec['file']}.npz"), 'model')
+        mlflow.log_table(df, 'tests/per_bearing.json')
+        mlflow.log_artifact(str(HERE / 'driving_v2_sensors.ipynb'), 'notebook')
+        if len(sys.argv) > 3:
+            mlflow.log_artifact(sys.argv[3], 'notebook')
+    print('logged', run.info.run_name, run.info.run_id, 'commit', commit[:7])
+
+
 if __name__ == '__main__':
-    {'collect': collect, 'log': log, 'describe': describe}[sys.argv[1]]()
+    if sys.argv[1] == 'add':
+        add(int(sys.argv[2]))          # python mlflow_runs.py add ITERATION [NOTEBOOK.html]
+    else:
+        {'collect': collect, 'log': log, 'describe': describe}[sys.argv[1]]()

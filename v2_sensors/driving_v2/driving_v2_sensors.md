@@ -3563,3 +3563,653 @@ ax[1].legend(fontsize=8); plt.show()
 ![png](driving_v2_sensors_files/driving_v2_sensors_79_0.png)
     
 
+
+## Iteration 8: scaled wheel angles
+
+### Why: the inputs are on very different scales
+
+The network takes its inputs as they come. The wheel angles keep adding up over a run, while the dot inputs stay between -1 and 1 and the wheel speeds between -3 and 3. The tables below show this on the training data and on two test runs.
+
+
+```python
+import v2_results
+INPUT_NAMES = ['angle FR', 'angle FL', 'angle BL', 'angle BR', 'speed FR', 'speed FL', 'speed BL', 'speed BR',
+               'mean angle', 'R-L angle', 'mean speed', 'R-L speed', 'dot distance', 'dot sin', 'dot cos', 'visible']
+Xtrain = np.concatenate([camera_inputs(e, [0, 1, 2, 3]) for e in train])
+pd.DataFrame({'min': Xtrain.min(0), 'max': Xtrain.max(0), 'standard deviation': Xtrain.std(0)}, index=INPUT_NAMES).round(2)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>min</th>
+      <th>max</th>
+      <th>standard deviation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>angle FR</th>
+      <td>-8.110000</td>
+      <td>13.36</td>
+      <td>4.90</td>
+    </tr>
+    <tr>
+      <th>angle FL</th>
+      <td>-7.640000</td>
+      <td>13.30</td>
+      <td>5.04</td>
+    </tr>
+    <tr>
+      <th>angle BL</th>
+      <td>-7.730000</td>
+      <td>13.37</td>
+      <td>5.08</td>
+    </tr>
+    <tr>
+      <th>angle BR</th>
+      <td>-8.190000</td>
+      <td>13.41</td>
+      <td>4.94</td>
+    </tr>
+    <tr>
+      <th>speed FR</th>
+      <td>-3.170000</td>
+      <td>3.18</td>
+      <td>2.02</td>
+    </tr>
+    <tr>
+      <th>speed FL</th>
+      <td>-3.140000</td>
+      <td>3.22</td>
+      <td>1.88</td>
+    </tr>
+    <tr>
+      <th>speed BL</th>
+      <td>-3.190000</td>
+      <td>3.21</td>
+      <td>1.90</td>
+    </tr>
+    <tr>
+      <th>speed BR</th>
+      <td>-3.190000</td>
+      <td>3.21</td>
+      <td>2.04</td>
+    </tr>
+    <tr>
+      <th>mean angle</th>
+      <td>-0.000000</td>
+      <td>4.76</td>
+      <td>1.73</td>
+    </tr>
+    <tr>
+      <th>R-L angle</th>
+      <td>-17.389999</td>
+      <td>17.27</td>
+      <td>9.35</td>
+    </tr>
+    <tr>
+      <th>mean speed</th>
+      <td>-0.280000</td>
+      <td>2.33</td>
+      <td>0.97</td>
+    </tr>
+    <tr>
+      <th>R-L speed</th>
+      <td>-6.090000</td>
+      <td>6.07</td>
+      <td>3.41</td>
+    </tr>
+    <tr>
+      <th>dot distance</th>
+      <td>0.000000</td>
+      <td>1.24</td>
+      <td>0.35</td>
+    </tr>
+    <tr>
+      <th>dot sin</th>
+      <td>-0.970000</td>
+      <td>0.97</td>
+      <td>0.30</td>
+    </tr>
+    <tr>
+      <th>dot cos</th>
+      <td>0.000000</td>
+      <td>1.00</td>
+      <td>0.33</td>
+    </tr>
+    <tr>
+      <th>visible</th>
+      <td>0.000000</td>
+      <td>1.00</td>
+      <td>0.40</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### First and last row of two test runs, with what the expert and `camera+flag+time_to_park` output
+
+
+```python
+w6 = np.load('models/camera_flag_ttp.npz')
+def net(w, x):
+    h = x
+    for layer in ('shared.0', 'shared.2'):
+        h = np.maximum(h @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
+    return h @ w['wheels.weight'].T + w['wheels.bias'], float((h @ w['park.weight'].T + w['park.bias'])[0]) * float(w['ttp_clip'])
+
+tables = {}
+for b in (24, 204):
+    e = next(e for e in test if e['bearing'] == b)
+    t = np.load(DATA / next(r for r in episodes if r['bearing_deg'] == b)['archive'])['time_s']
+    X = camera_inputs(e, [0, 1, 2, 3])
+    cols = {}
+    for i, label in ((0, 'start'), (len(X) - 1, 'end (expert parks)')):
+        wheels, ttp = net(w6, X[i])
+        cols[f'{label}, t = {t[i]:.2f} s'] = list(np.round(X[i], 2)) + [
+            ', '.join(f'{v:.2f}' for v in e['wheels'][i]), f'{t[-1] - t[i]:.2f}',
+            ', '.join(f'{v:.2f}' for v in wheels), f"{ttp:.2f} ({'PARK' if ttp <= THRESH else 'drive'})"]
+    tables[f'{b}° test run'] = pd.DataFrame(cols, index=INPUT_NAMES + ['expert wheels FR, FL, BL, BR', 'expert time left (s)',
+                                                                  'model wheels FR, FL, BL, BR', 'model time to park (s)'])
+pd.concat(tables, axis=1)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">24° test run</th>
+      <th colspan="2" halign="left">204° test run</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>start, t = 0.00 s</th>
+      <th>end (expert parks), t = 3.35 s</th>
+      <th>start, t = 0.00 s</th>
+      <th>end (expert parks), t = 6.11 s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>angle FR</th>
+      <td>0.0</td>
+      <td>4.77</td>
+      <td>0.0</td>
+      <td>-2.25</td>
+    </tr>
+    <tr>
+      <th>angle FL</th>
+      <td>0.0</td>
+      <td>2.29</td>
+      <td>0.0</td>
+      <td>11.69</td>
+    </tr>
+    <tr>
+      <th>angle BL</th>
+      <td>0.0</td>
+      <td>2.29</td>
+      <td>0.0</td>
+      <td>11.67</td>
+    </tr>
+    <tr>
+      <th>angle BR</th>
+      <td>0.0</td>
+      <td>4.73</td>
+      <td>0.0</td>
+      <td>-2.29</td>
+    </tr>
+    <tr>
+      <th>speed FR</th>
+      <td>0.0</td>
+      <td>-0.39</td>
+      <td>0.0</td>
+      <td>0.47</td>
+    </tr>
+    <tr>
+      <th>speed FL</th>
+      <td>0.0</td>
+      <td>0.4</td>
+      <td>0.0</td>
+      <td>-0.44</td>
+    </tr>
+    <tr>
+      <th>speed BL</th>
+      <td>0.0</td>
+      <td>0.41</td>
+      <td>0.0</td>
+      <td>-0.43</td>
+    </tr>
+    <tr>
+      <th>speed BR</th>
+      <td>0.0</td>
+      <td>-0.39</td>
+      <td>0.0</td>
+      <td>0.47</td>
+    </tr>
+    <tr>
+      <th>mean angle</th>
+      <td>0.0</td>
+      <td>3.52</td>
+      <td>0.0</td>
+      <td>4.71</td>
+    </tr>
+    <tr>
+      <th>R-L angle</th>
+      <td>0.0</td>
+      <td>2.46</td>
+      <td>0.0</td>
+      <td>-13.95</td>
+    </tr>
+    <tr>
+      <th>mean speed</th>
+      <td>0.0</td>
+      <td>0.01</td>
+      <td>0.0</td>
+      <td>0.02</td>
+    </tr>
+    <tr>
+      <th>R-L speed</th>
+      <td>0.0</td>
+      <td>-0.8</td>
+      <td>0.0</td>
+      <td>0.9</td>
+    </tr>
+    <tr>
+      <th>dot distance</th>
+      <td>1.11</td>
+      <td>0.73</td>
+      <td>0.0</td>
+      <td>0.69</td>
+    </tr>
+    <tr>
+      <th>dot sin</th>
+      <td>0.41</td>
+      <td>-0.03</td>
+      <td>0.0</td>
+      <td>-0.05</td>
+    </tr>
+    <tr>
+      <th>dot cos</th>
+      <td>0.91</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>visible</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>expert wheels FR, FL, BL, BR</th>
+      <td>3.00, -3.00, -3.00, 3.00</td>
+      <td>0.00, 0.00, 0.00, 0.00</td>
+      <td>-3.00, 3.00, 3.00, -3.00</td>
+      <td>0.00, 0.00, 0.00, 0.00</td>
+    </tr>
+    <tr>
+      <th>expert time left (s)</th>
+      <td>3.35</td>
+      <td>0.00</td>
+      <td>6.11</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>model wheels FR, FL, BL, BR</th>
+      <td>0.74, -0.44, -0.50, 0.81</td>
+      <td>-0.46, 0.38, 0.35, -0.43</td>
+      <td>-0.52, 0.63, 0.52, -0.44</td>
+      <td>0.22, -0.28, -0.32, 0.29</td>
+    </tr>
+    <tr>
+      <th>model time to park (s)</th>
+      <td>2.36 (drive)</td>
+      <td>0.02 (PARK)</td>
+      <td>2.44 (drive)</td>
+      <td>0.09 (PARK)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+Reading the tables:
+
+- The wheel angles reach about 14 at 204°, and their standard deviation over the training data is about 5. The dot inputs never leave -1 to 1 (distance up to about 1.2 m).
+- At the start the model turns the right way but gives about 0.6 rad/s where the expert gives 3.
+- At the end the model parks on the expert's states (time to park 0.02 s and 0.09 s).
+
+### What changed
+
+The six angle inputs (4 wheel angles, mean angle, right minus left angle) are standardised: the training-set mean is subtracted and the result divided by the training-set standard deviation. Nothing else changes: same inputs, outputs, loss, seed 7 and 300 epochs. The scaling is folded into the first layer when the model is saved, so the saved network takes raw inputs and runs in the same test loop. `train_v2.py` trains it; without `--scale-angles` it reproduces `camera+flag+time_to_park` exactly.
+
+
+```python
+h6 = camera_history[camera_history.model == 'camera+flag+time_to_park']
+h8 = v2_results.history('camera_flag_ttp_scaled')
+fig, ax = plt.subplots(1, 2, figsize=(13, 4))
+for label, h, park_col, c in (('6: camera+flag+time_to_park', h6, 'park_loss', 'tab:orange'), ('8: + scaled angles', h8, 'time_to_park_mse', 'tab:purple')):
+    ax[0].plot(h.epoch, h.train_wheel_mse, color=c, label=f'{label} train'); ax[0].plot(h.epoch, h.test_wheel_mse, '--', color=c, label=f'{label} test')
+    ax[1].plot(h.epoch, h['train_' + park_col], color=c, label=f'{label} train'); ax[1].plot(h.epoch, h['test_' + park_col], '--', color=c, label=f'{label} test')
+ax[0].set(title='Wheel commands', ylabel='MSE (rad/s)²'); ax[1].set(title='Time to park', ylabel='MSE of (seconds left / 3 s)')
+for a in ax: a.set(xlabel='epoch', yscale='log'); a.legend(fontsize=8)
+plt.show()
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_85_0.png)
+    
+
+
+### Testing: 25 bearings, compared with iteration 6
+
+
+```python
+iter8 = pd.concat([v2_results.tests('camera_flag_ttp', '6: camera+flag+time_to_park'), v2_results.tests('camera_flag_ttp_scaled', '8: + scaled angles')])
+v2_results.summary(iter8)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>parked (of 25)</th>
+      <th>dot in view at start (of 11)</th>
+      <th>dot out of view at start (of 14)</th>
+      <th>test runs (of 4)</th>
+      <th>median final error (cm)</th>
+      <th>median heading error (°)</th>
+    </tr>
+    <tr>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6: camera+flag+time_to_park</th>
+      <td>16</td>
+      <td>7</td>
+      <td>9</td>
+      <td>2</td>
+      <td>14.5</td>
+      <td>17.8</td>
+    </tr>
+    <tr>
+      <th>8: + scaled angles</th>
+      <td>14</td>
+      <td>11</td>
+      <td>3</td>
+      <td>1</td>
+      <td>19.9</td>
+      <td>26.7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+iter8.pivot(index=['split', 'bearing', 'seen_at_start'], columns='model', values='parked')
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>model</th>
+      <th>6: camera+flag+time_to_park</th>
+      <th>8: + scaled angles</th>
+    </tr>
+    <tr>
+      <th>split</th>
+      <th>bearing</th>
+      <th>seen_at_start</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="4" valign="top">test</th>
+      <th>24</th>
+      <th>True</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <th>False</th>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <th>False</th>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <th>False</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th rowspan="21" valign="top">train</th>
+      <th>12</th>
+      <th>True</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <th>True</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <th>True</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <th>True</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <th>False</th>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <th>False</th>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <th>False</th>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <th>False</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>180</th>
+      <th>False</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>192</th>
+      <th>False</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>216</th>
+      <th>False</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>228</th>
+      <th>False</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>240</th>
+      <th>False</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>252</th>
+      <th>False</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>264</th>
+      <th>False</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>288</th>
+      <th>True</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>300</th>
+      <th>True</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>312</th>
+      <th>True</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>336</th>
+      <th>True</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>348</th>
+      <th>True</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>360</th>
+      <th>True</th>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+Scaling fixed every bearing where the dot starts in view (11 of 11, up from 7) but made the search for a dot behind the robot worse (3 of 14, down from 9). The total fell from 16 to 14 of 25. One seed is not enough to tell how much of this is the change and how much is chance, which is what iteration 9 measures.
