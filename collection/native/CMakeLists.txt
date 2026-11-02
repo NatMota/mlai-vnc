@@ -34,3 +34,23 @@ foreach(SOURCE src/main.cpp src/physics.cpp src/controller.cpp src/expert.hpp sr
 endforeach()
 string(SHA256 COLLECTOR_SHA "${SOURCE_DIGESTS}")
 set_source_files_properties(src/main.cpp PROPERTIES COMPILE_DEFINITIONS "COLLECTOR_SHA=\"${COLLECTOR_SHA}\";ENGINE_SHA=\"${ENGINE_SHA}\";COMPILER_VERSION=\"${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}\"")
+
+# Separate frozen-policy evaluator; collection and its executable are unchanged.
+add_executable(policy_replay src/policy_replay.cpp src/physics.cpp src/controller.cpp)
+target_include_directories(policy_replay PRIVATE ${BULLET_SOURCE}/examples ${BULLET_SOURCE}/src)
+target_compile_definitions(policy_replay PRIVATE REFERENCE_ENGINE DEFAULT_LIBPYTHON="${PYTHON_LIBRARY}" DEFAULT_PYBULLET="${PYBULLET_BINARY}" ENGINE_SHA="${ENGINE_SHA}")
+target_link_libraries(policy_replay PRIVATE pinocchio::pinocchio nlohmann_json::nlohmann_json ${BLAS_LIBRARY} ${LAPACK_LIBRARY} ${CMAKE_DL_LIBS})
+target_compile_options(policy_replay PRIVATE -O3 -ffp-contract=off)
+
+add_executable(parking_ppo src/parking_ppo.cpp src/physics.cpp src/controller.cpp)
+target_include_directories(parking_ppo PRIVATE ${BULLET_SOURCE}/examples ${BULLET_SOURCE}/src)
+target_compile_definitions(parking_ppo PRIVATE REFERENCE_ENGINE DEFAULT_LIBPYTHON="${PYTHON_LIBRARY}" DEFAULT_PYBULLET="${PYBULLET_BINARY}" ENGINE_SHA="${ENGINE_SHA}")
+target_link_libraries(parking_ppo PRIVATE pinocchio::pinocchio nlohmann_json::nlohmann_json ${BLAS_LIBRARY} ${LAPACK_LIBRARY} ${CMAKE_DL_LIBS})
+target_compile_options(parking_ppo PRIVATE -O3 -ffp-contract=off)
+
+# Sensor-policy RPC uses the same physics and supplied arm holding controller.
+add_executable(sensor_parking src/sensor_parking.cpp src/physics.cpp src/controller.cpp)
+target_include_directories(sensor_parking PRIVATE ${BULLET_SOURCE}/examples ${BULLET_SOURCE}/src)
+target_compile_definitions(sensor_parking PRIVATE REFERENCE_ENGINE DEFAULT_LIBPYTHON="${PYTHON_LIBRARY}" DEFAULT_PYBULLET="${PYBULLET_BINARY}" ENGINE_SHA="${ENGINE_SHA}")
+target_link_libraries(sensor_parking PRIVATE pinocchio::pinocchio nlohmann_json::nlohmann_json ${BLAS_LIBRARY} ${LAPACK_LIBRARY} ${CMAKE_DL_LIBS})
+target_compile_options(sensor_parking PRIVATE -O3 -ffp-contract=off)

@@ -1,0 +1,13 @@
+{
+  "requested_runs": 1500,
+  "saved_budget_bytes": 750000000,
+  "temporary_budget_bytes": 500000000,
+  "all_runs": "30 Hz FP32 training and replay; timestamp metadata retained",
+  "full_rate_runs": "First 5 repetitions per bearing on each host (10 total), original float64 1 kHz driving fields",
+  "excluded": [
+    "mass matrices",
+    "Jacobians",
+    "dynamics diagnostics"
+  ],
+  "deduplication": "Identical retained trajectories stored once; every execution has its own audit record"
+}

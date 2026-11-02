@@ -32,13 +32,20 @@ Expert::Expert(const std::string& assets,const Physics& physics,const State& s,V
     goal=target.head<2>()-standoff*Eigen::Vector2d(std::cos(bearing),std::sin(bearing));
 }
 Expert::~Expert()=default;
-Action Expert::act(const State& s,double t){
+Action Expert::act(const State& s,double t,bool hold_only){
     Action a;auto& m=p->model;auto& d=*p->data;
     a.qpin=Eigen::VectorXd::Zero(m.nq);a.qpin.head<3>()=s.pos;a.qpin.segment<4>(3)=s.quat;
     for(int i=0;i<17;i++) a.qpin[p->idx[i]]=s.q[i];
     pinocchio::forwardKinematics(m,d,a.qpin);pinocchio::updateFramePlacements(m,d);
     a.ee=d.oMf[p->ee].translation();a.shoulder=d.oMf[p->shoulder].translation();a.rotation=d.oMf[p->ee].rotation();
     a.error=target-a.ee;a.distance=numpy_norm(a.error);
+    // Sensor-driving policies only apply this holding torque, never the IK output.
+    if(hold_only){
+        a.qdes=p->hold;
+        a.gravity=pinocchio::computeGeneralizedGravity(m,d,a.qpin).segment<7>(6);
+        a.tau=(100*(p->hold-s.q.segment<7>(4))-30*s.qd.segment<7>(4)+a.gravity).cwiseMax(-30).cwiseMin(30);
+        return a;
+    }
     Eigen::Quaterniond quat(s.quat.w(),s.quat.x(),s.quat.y(),s.quat.z());quat.normalize();
     a.yaw=pinocchio::rpy::matrixToRpy(quat.toRotationMatrix())[2];
     if(!p->done){

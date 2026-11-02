@@ -15,3 +15,7 @@ mlartifacts/
 data/
 outputs/
 .DS_Store
+
+# v2 sensors: the expert driving dataset is small and is versioned with the code.
+!v2_sensors/driving_30/data/
+v2_sensors/**/viewer_*.html
