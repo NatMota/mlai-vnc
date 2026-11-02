@@ -1,0 +1,61 @@
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [/Users/natanaelmota/github/comp0245-native-expert/assets/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [./checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [./data/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [../data/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [../../data/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [../../../data/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [../../../../data/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [/Users/natanaelmota/github/comp0245-native-expert/assets/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [./checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [./data/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [../data/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [../../data/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [../../../data/checker_blue.png]
+b3Warning[examples/Importers/ImportMeshUtility/b3ImportMeshUtility.cpp,182]:
+not found [../../../../data/checker_blue.png]
+b3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+No inertial data for link, using mass=1, localinertiadiagonal = 1,1,1, identity local inertial frameb3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+robot_base_footprintb3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+No inertial data for link, using mass=1, localinertiadiagonal = 1,1,1, identity local inertial frameb3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+robot_base_docking_contact_linkb3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+No inertial data for link, using mass=1, localinertiadiagonal = 1,1,1, identity local inertial frameb3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+robot_arm_base_linkb3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+No inertial data for link, using mass=1, localinertiadiagonal = 1,1,1, identity local inertial frameb3Warning[examples/Importers/ImportURDFDemo/BulletUrdfImporter.cpp,126]:
+robot_j2s7s300_end_effector"train" 12 model "no_park_within_grace_period"
+"test" 24 model "no_park_within_grace_period"
+"train" 36 model "no_park_within_grace_period"
+"train" 60 model "no_park_within_grace_period"
+"train" 72 model "no_park_within_grace_period"
+"train" 84 model "no_park_within_grace_period"
+"test" 108 model "parked"
+"train" 120 model "parked"
+"test" 132 model "parked"
+"train" 156 model "parked"
+"train" 168 model "parked"
+"train" 180 model "parked"
+"train" 192 model "parked"
+"test" 204 model "parked"
+"train" 216 model "parked"
+"train" 228 model "parked"
+"train" 240 model "parked"
+"train" 252 model "parked"
+"train" 264 model "no_park_within_grace_period"
+"train" 288 model "no_park_within_grace_period"
+"train" 300 model "no_park_within_grace_period"
+"train" 312 model "no_park_within_grace_period"
+"train" 336 model "no_park_within_grace_period"
+"train" 348 model "no_park_within_grace_period"
+"train" 360 model "no_park_within_grace_period"

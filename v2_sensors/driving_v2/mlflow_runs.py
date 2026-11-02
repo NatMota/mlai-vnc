@@ -245,6 +245,22 @@ NEW_ITERATIONS = {
             anchors=[('What the seed changes', '#what-the-seed-changes'), ('What the seeds show', '#what-the-seeds-show')],
             change='Iteration 8 trained with seed 3 instead of 7. Same data, inputs, outputs and training; only the starting weights differ.',
             lesson='Parked counts across seeds 7, 1, 2 and 3 are 14, 0, 4 and 21 of 25 with nothing else changed, so single-seed differences mean little. Test losses are almost identical. Seed 1 ends within 20 cm of the expert in 19 of 25 runs but never parks, because its predicted time to park never drops below 0.35 s. The fixed 0.25 s threshold decides most of the outcome.'),
+    12: dict(iteration=12, name='camera+flag+time_to_park+scaled+parked_rows', file='camera_flag_ttp_scaled_tail100', seed=7, scale=True, tail=100, encoders=False,
+            anchors=[('Why add parked rows', '#iteration-12-100-rows-after-the-expert-parks'), ('Results over four seeds', '#iteration-12-results-over-four-seeds')],
+            change='Iteration 8 (seed 7) plus 100 rows after the expert parks in every training run: wheels stopped, time to park 0. The expert was replayed for 3.4 s past PARK in the fast simulator; before PARK the replay matches the saved data to 3e-8.',
+            lesson='Averaged over seeds 7, 1, 2 and 3 it parked 5.75 of 25 against 9.75 for iterations 8 to 11, and the seeds still range from 0 to 12. Runs ending within 20 cm of the expert hardly changed (13.25 against 13). The parked rows did not make PARK reliable. The variation between seeds is the bigger problem.'),
+    '12-seed1': dict(iteration=12, name='camera+flag+time_to_park+scaled+parked_rows+seed1', file='camera_flag_ttp_scaled_tail100_seed1', seed=1, scale=True, tail=100, encoders=False,
+            anchors=[('Why add parked rows', '#iteration-12-100-rows-after-the-expert-parks'), ('Results over four seeds', '#iteration-12-results-over-four-seeds')],
+            change='Iteration 8 (seed 1) plus 100 rows after the expert parks in every training run: wheels stopped, time to park 0. The expert was replayed for 3.4 s past PARK in the fast simulator; before PARK the replay matches the saved data to 3e-8.',
+            lesson='Averaged over seeds 7, 1, 2 and 3 it parked 5.75 of 25 against 9.75 for iterations 8 to 11, and the seeds still range from 0 to 12. Runs ending within 20 cm of the expert hardly changed (13.25 against 13). The parked rows did not make PARK reliable. The variation between seeds is the bigger problem.'),
+    '12-seed2': dict(iteration=12, name='camera+flag+time_to_park+scaled+parked_rows+seed2', file='camera_flag_ttp_scaled_tail100_seed2', seed=2, scale=True, tail=100, encoders=False,
+            anchors=[('Why add parked rows', '#iteration-12-100-rows-after-the-expert-parks'), ('Results over four seeds', '#iteration-12-results-over-four-seeds')],
+            change='Iteration 8 (seed 2) plus 100 rows after the expert parks in every training run: wheels stopped, time to park 0. The expert was replayed for 3.4 s past PARK in the fast simulator; before PARK the replay matches the saved data to 3e-8.',
+            lesson='Averaged over seeds 7, 1, 2 and 3 it parked 5.75 of 25 against 9.75 for iterations 8 to 11, and the seeds still range from 0 to 12. Runs ending within 20 cm of the expert hardly changed (13.25 against 13). The parked rows did not make PARK reliable. The variation between seeds is the bigger problem.'),
+    '12-seed3': dict(iteration=12, name='camera+flag+time_to_park+scaled+parked_rows+seed3', file='camera_flag_ttp_scaled_tail100_seed3', seed=3, scale=True, tail=100, encoders=False,
+            anchors=[('Why add parked rows', '#iteration-12-100-rows-after-the-expert-parks'), ('Results over four seeds', '#iteration-12-results-over-four-seeds')],
+            change='Iteration 8 (seed 3) plus 100 rows after the expert parks in every training run: wheels stopped, time to park 0. The expert was replayed for 3.4 s past PARK in the fast simulator; before PARK the replay matches the saved data to 3e-8.',
+            lesson='Averaged over seeds 7, 1, 2 and 3 it parked 5.75 of 25 against 9.75 for iterations 8 to 11, and the seeds still range from 0 to 12. Runs ending within 20 cm of the expert hardly changed (13.25 against 13). The parked rows did not make PARK reliable. The variation between seeds is the bigger problem.'),
 }
 
 
@@ -253,7 +269,7 @@ def add(iteration):
     import mlflow, pandas as pd
     from mlflow.entities import Metric
     import v2_results
-    spec = NEW_ITERATIONS[iteration]; name = spec['name']
+    spec = NEW_ITERATIONS[iteration]; name = spec['name']; iteration = spec.get('iteration', iteration)
     h = v2_results.history(spec['file'])
     df = v2_results.tests(spec['file'])
     seen = df.seen_at_start
@@ -322,6 +338,7 @@ def add(iteration):
 
 if __name__ == '__main__':
     if sys.argv[1] == 'add':
-        add(int(sys.argv[2]))          # python mlflow_runs.py add ITERATION [NOTEBOOK.html]
+        key = sys.argv[2]                 # python mlflow_runs.py add ITERATION [NOTEBOOK.html]
+        add(int(key) if key.isdigit() else key)
     else:
         {'collect': collect, 'log': log, 'describe': describe}[sys.argv[1]]()

@@ -4401,3 +4401,293 @@ pd.DataFrame({'ended within 20 cm of the expert (of 25)': seed_tests.groupby('mo
 - The losses on the test runs are almost the same for all four seeds. Training looks equally good offline.
 - The driving is better than the parked count suggests. Seed 1 ends within 20 cm of the expert in 19 of 25 runs and parks in none: its predicted time to park never drops below 0.35 s, so PARK never fires.
 - So the fixed 0.25 s threshold decides most of the outcome. The model has never seen what being parked looks like, because every expert run stops at the PARK row. Iteration 12 adds that.
+
+## Iteration 12: 100 rows after the expert parks
+
+Every expert run stops at its PARK row, so the network never sees what being parked looks like. Iteration 12 adds 100 rows (3.3 s) after PARK to every training run. In those rows the wheel command is 0 and the time to park is 0.
+
+The rows come from replaying the expert in the fast simulator past its PARK command (`policy_replay` with `"expert_tail_steps": 3400`), with the wheels stopped and the arm held. Before PARK the replay matches the saved expert data to 3e-8. The camera inputs for the new rows come from the same camera, detector and tracker (`expert_tail.py`). Everything else is iteration 8. Because the seeds vary so much, it is trained and tested with all four seeds (7, 1, 2, 3).
+
+
+```python
+tail = np.load('park_tail/tail_24.npz')
+print(f"rows per run: {len(tail['x'])}, from {tail['time_since_park_s'][0]:.2f} s to {tail['time_since_park_s'][-1]:.2f} s after PARK")
+pd.DataFrame({'largest wheel speed (rad/s)': [float(np.abs(np.load(f)['x'][:, 4:8]).max()) for f in sorted(Path('park_tail').glob('tail_*.npz'))],
+              'dot visible (fraction of rows)': [float(np.load(f)['camera'][:, 3].mean()) for f in sorted(Path('park_tail').glob('tail_*.npz'))]},
+             index=[f.stem for f in sorted(Path('park_tail').glob('tail_*.npz'))]).describe().loc[['mean', 'min', 'max']].round(2)
+```
+
+    rows per run: 100, from 0.01 s to 3.31 s after PARK
+
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>largest wheel speed (rad/s)</th>
+      <th>dot visible (fraction of rows)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean</th>
+      <td>0.20</td>
+      <td>0.56</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.06</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>0.39</td>
+      <td>1.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### Iteration 12: results over four seeds
+
+
+```python
+pairs = {s: (f'camera_flag_ttp_scaled{"" if s == 7 else f"_seed{s}"}', f'camera_flag_ttp_scaled_tail100{"" if s == 7 else f"_seed{s}"}') for s in (7, 1, 2, 3)}
+rows = []
+for s, (before, after) in pairs.items():
+    for label, f in (('8 to 11: scaled', before), ('12: + parked rows', after)):
+        d = v2_results.tests(f)
+        mins = [min(l['ttp_s'] for l in json.loads(Path(f'camera_loop/{f}/run_{b}.json').read_text())['log']) for b in ref]
+        rows.append({'seed': s, 'model': label, 'parked (of 25)': int(d.parked.sum()),
+                     'dot in view at start (of 11)': int(d[d.seen_at_start].parked.sum()), 'dot out of view at start (of 14)': int(d[~d.seen_at_start].parked.sum()),
+                     'ended within 20 cm (of 25)': int((d.final_error_cm < 20).sum()), 'median final error (cm)': round(d.final_error_cm.median(), 1),
+                     'median lowest time to park (s)': round(float(np.median(mins)), 2)})
+iter12 = pd.DataFrame(rows).set_index(['seed', 'model'])
+iter12
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>parked (of 25)</th>
+      <th>dot in view at start (of 11)</th>
+      <th>dot out of view at start (of 14)</th>
+      <th>ended within 20 cm (of 25)</th>
+      <th>median final error (cm)</th>
+      <th>median lowest time to park (s)</th>
+    </tr>
+    <tr>
+      <th>seed</th>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="2" valign="top">7</th>
+      <th>8 to 11: scaled</th>
+      <td>14</td>
+      <td>11</td>
+      <td>3</td>
+      <td>13</td>
+      <td>19.9</td>
+      <td>0.15</td>
+    </tr>
+    <tr>
+      <th>12: + parked rows</th>
+      <td>9</td>
+      <td>2</td>
+      <td>7</td>
+      <td>22</td>
+      <td>11.2</td>
+      <td>0.47</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">1</th>
+      <th>8 to 11: scaled</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>19</td>
+      <td>12.5</td>
+      <td>0.68</td>
+    </tr>
+    <tr>
+      <th>12: + parked rows</th>
+      <td>12</td>
+      <td>2</td>
+      <td>10</td>
+      <td>19</td>
+      <td>13.0</td>
+      <td>0.28</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">2</th>
+      <th>8 to 11: scaled</th>
+      <td>4</td>
+      <td>4</td>
+      <td>0</td>
+      <td>8</td>
+      <td>44.3</td>
+      <td>2.31</td>
+    </tr>
+    <tr>
+      <th>12: + parked rows</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>9</td>
+      <td>28.9</td>
+      <td>1.43</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">3</th>
+      <th>8 to 11: scaled</th>
+      <td>21</td>
+      <td>8</td>
+      <td>13</td>
+      <td>12</td>
+      <td>20.6</td>
+      <td>-0.10</td>
+    </tr>
+    <tr>
+      <th>12: + parked rows</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>39.1</td>
+      <td>2.40</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+iter12.groupby('model').agg(['mean', 'min', 'max'])[['parked (of 25)', 'ended within 20 cm (of 25)']].round(2)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3" halign="left">parked (of 25)</th>
+      <th colspan="3" halign="left">ended within 20 cm (of 25)</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>mean</th>
+      <th>min</th>
+      <th>max</th>
+      <th>mean</th>
+      <th>min</th>
+      <th>max</th>
+    </tr>
+    <tr>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>12: + parked rows</th>
+      <td>5.75</td>
+      <td>0</td>
+      <td>12</td>
+      <td>13.25</td>
+      <td>3</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>8 to 11: scaled</th>
+      <td>9.75</td>
+      <td>0</td>
+      <td>21</td>
+      <td>13.00</td>
+      <td>8</td>
+      <td>19</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+Reading the results:
+
+- Averaged over the four seeds, iteration 12 parked 5.75 of 25 against 9.75 before. The seeds still range from 0 to 12.
+- Runs ending within 20 cm of the expert hardly changed (13.25 against 13 on average).
+- The training losses are not comparable with iteration 8, because a third of the rows are now easy parked rows.
+- The parked rows did not make PARK reliable. The bigger problem is that each seed learns a different time-to-park scale, and one fixed threshold cannot suit them all.

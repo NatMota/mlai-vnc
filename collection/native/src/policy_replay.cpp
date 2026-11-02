@@ -38,6 +38,8 @@ struct Policy {
         return {wheel.cast<double>(),1./(1.+std::exp(-double(logit)))};
     }
 };
+// Steps the expert keeps running after its PARK command (500 = 0.5 s). Set per request with "expert_tail_steps".
+int expert_tail_steps=500;
 json rollout(Physics& physics,const std::string& assets,V3 target,double angle,Policy* policy,int comparison_end_step=-1,bool record=true){
     State s=physics.state();Expert expert(assets,physics,s,target);
     Eigen::Vector4d initial=s.q.head<4>(),wheel=Eigen::Vector4d::Zero();V7 hold=s.q.segment<7>(4);
@@ -74,7 +76,7 @@ json rollout(Physics& physics,const std::string& assets,V3 target,double angle,P
             {"park_probability",probability},{"parked",park_step>=0},{"yaw",a.yaw},
             {"speed_m_s",s.lin.head<2>().norm()},{"ee",values(a.ee)}};};
         if(step==park_step)park=state_json();
-        bool end=park_step>=0 ? step>=park_step+500 : policy&&step>=comparison_end_step;
+        bool end=park_step>=0 ? step>=park_step+(policy?500:expert_tail_steps) : policy&&step>=comparison_end_step;
         if(record&&step==std::lround(frame*1000./30)){rows.push_back(state_json());frame++;}
         else if((record&&step==park_step)||end)rows.push_back(state_json());
         if(end)break;
@@ -131,7 +133,7 @@ int main(int argc,char**argv){try{
     if(argc==3&&std::string(argv[2])=="--serve"){serve(argv[1]);return 0;}
     if(argc!=4)throw std::runtime_error("Usage: policy_replay ASSETS REQUEST.json NEW_OUTPUT.json");
     if(fs::exists(argv[3]))throw std::runtime_error("Refusing to overwrite replay output");
-    json request;std::ifstream(argv[2])>>request;Policy policy{request.at("weights"),request.value("inputs",std::string("start_dot"))};
+    json request;std::ifstream(argv[2])>>request;Policy policy{request.at("weights"),request.value("inputs",std::string("start_dot"))};expert_tail_steps=request.value("expert_tail_steps",500);
     Physics physics(argv[1]);json runs=json::array();bool first=true;
     for(auto& c:request.at("cases")){
         V3 target(c["target"][0],c["target"][1],c["target"][2]);double angle=c["bearing_deg"].get<double>()*std::acos(-1.)/180;
