@@ -149,7 +149,7 @@ def log():
         print('logged', run.info.run_name, run.info.run_id)
 
 
-NOTEBOOK_MD = 'https://github.com/NatMota/mlai-vnc/blob/ef677675aa9a37623b1affacbf7bcb341785ec55/v2_sensors/driving_v2/driving_v2_sensors.md'
+NOTEBOOK_MD = 'https://github.com/NatMota/mlai-vnc/blob/4fc0b8339931be17dcc6b7e5b4939af2ac7fdf1d/v2_sensors/driving_v2/driving_v2_sensors.md'
 INTRO, LOOP, SKID, SKID_TEST = '#driving-v2--rung-1-does-the-network-work-when-it-can-see-the-dot', '#closed-loop-the-network-drives-the-robot', '#change-1-skid-steer-output', '#closed-loop-skid-output-vs-four-free-outputs'
 CAMERA, CURVES, TESTS, PLOTS = '#camera-models-the-dot-comes-from-the-corner-camera', '#training-curves', '#testing', '#test-metrics-plotted'
 WHEELS = 'the angle each wheel has turned since the start, each wheel speed, and the average and right minus left of both'
