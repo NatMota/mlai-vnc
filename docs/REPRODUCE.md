@@ -183,8 +183,8 @@ to `outputs/ablation/all_world/policy.pt`. Use the robot environment's Python
 from the repository root.
 
 ```text
-python -B v2_eval.py A B C D E1 E2 E3 --workers 12 --fresh
+python -B v2_eval.py A B C D E1 E2 E3 F G --workers 12 --fresh
 ```
 
-The 175 episodes took about 28 minutes with 12 workers. See the
+The original 175 A–E3 episodes took about 28 minutes with 12 workers. See the
 [V2 results](v2_sensor_results.md) for the scores by group and bearing split.

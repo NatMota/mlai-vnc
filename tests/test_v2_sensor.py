@@ -95,6 +95,35 @@ class RobotFrameTests(unittest.TestCase):
             np.testing.assert_allclose(robot[keep], world[keep], atol=1e-9)
 
 
+class ArmEncoderTests(unittest.TestCase):
+    def test_coarse_tick_floor_and_speed(self):
+        tick, dt = 2 * np.pi / 4096, 0.001
+        enc = v2.ArmEncodersAt(4096, dt)
+        self.assertEqual(enc.tick, tick)
+        enc.reset(np.full(7, 0.25 * tick))
+        for offset, angle, delta in [(1.75, 1, 1), (-0.25, -1, -2), (-0.5, -1, 0)]:
+            reading = enc.read(np.full(7, offset * tick))
+            np.testing.assert_array_equal(reading["arm_angle"], np.full(7, angle * tick))
+            np.testing.assert_array_equal(reading["arm_speed"], np.full(7, delta * tick / dt))
+
+    def test_kinova_counts_match_nat(self):
+        native = v2.sensors.ArmEncoders(dt=0.001)
+        custom = v2.ArmEncodersAt(v2.sensors.ARM_COUNTS_PER_REV, 0.001)
+        q = np.linspace(-0.5, 0.5, 7)
+        native.reset(q)
+        custom.reset(q)
+        for shift in (1e-6, 2e-5, -3e-4):
+            expected, actual = native.read(q + shift), custom.read(q + shift)
+            for key in expected:
+                np.testing.assert_array_equal(actual[key], expected[key])
+
+    def test_build_modes(self):
+        with self.assertRaises(ValueError):
+            v2.V2Policy.build(ARM_CHECKPOINT, "expert", arm_inputs="unknown")
+        policy = v2.V2Policy.build(ARM_CHECKPOINT, "expert", arm_inputs="encoder", arm_counts=4096)
+        self.assertEqual((policy.arm_inputs, policy.arm_counts), ("encoder", 4096))
+
+
 class ResumeTests(unittest.TestCase):
     def test_finished_rows_keeps_same_code_rows_once_and_skips_torn_lines(self):
         import json

@@ -4,14 +4,14 @@ Every 1 ms physics step:
   at each 30 Hz decision (step round(k * 1000 / 30), as Nat's sensor_parking):
     render Nat's corner fisheye from the true pose -> red pixels -> dot in the robot frame -> tracker
     wheel encoders -> Nat's driving network -> 4 wheel commands and the PARK latch
-  arm encoders (Kinova Jaco 2 resolution, speed from the change over 1 ms)
+  arm encoders (Kinova Jaco 2 resolution by default, speed from the change over 1 ms)
   before PARK: the hold controller of Nat's simulator and the expert (kp 100, kd 30, gravity, +-30 Nm)
-  after PARK: the two-rate arm (vel_net about 30 Hz, torque_net 1 kHz), from sensor or true inputs
+  after PARK: the two-rate arm (vel_net about 30 Hz, torque_net 1 kHz)
 
 With sensor inputs the arm sees a robot-frame state: base at the origin with bearing 0, encoder joint angles and
 speeds, the tracked dot as the goal, and the end-effector from forward kinematics of the encoder angles. The arm
 checkpoint ignores the world-frame inputs (all_world ablation), so only robot-frame quantities reach it. The
-simulator's true state is used only to render the camera image and to score the run, as in Nat's camera_loop.py.
+encoder mode supplies the true goal in the same robot frame to isolate joint encoder effects.
 """
 import os
 from pathlib import Path
@@ -130,16 +130,33 @@ class NatDriver:
         return cmd, prob >= 0.5
 
 
+class ArmEncodersAt(sensors.ArmEncoders):
+    """Nat's arm encoder with configurable counts per revolution."""
+
+    def __init__(self, counts, dt):
+        super().__init__(dt)
+        self.tick = 2 * np.pi / np.asarray(counts)
+
+    def reset(self, q0):
+        self.last = np.floor(np.asarray(q0) / self.tick) * self.tick
+
+    def read(self, q):
+        previous = self.last
+        self.reset(q)
+        return dict(arm_angle=self.last, arm_speed=(self.last - previous) / self.dt)
+
+
 class V2Policy(MemoryPolicy):
     """Nat's driving (or the expert's) until PARK, then the two-rate arm. See the module docstring."""
 
     @classmethod
-    def build(cls, arm_checkpoint, driver, arm_inputs="sensor", use_arm=True):
-        """driver: a NatDriver, or "expert". arm_inputs: "sensor" or "true". use_arm=False holds the arm all run."""
-        if arm_inputs not in ("sensor", "true"):
-            raise ValueError("arm_inputs must be 'sensor' or 'true'")
+    def build(cls, arm_checkpoint, driver, arm_inputs="sensor", use_arm=True, arm_counts=None):
+        """Use sensor inputs, true state, or encoders with a true goal. A disabled arm stays held."""
+        if arm_inputs not in ("sensor", "encoder", "true"):
+            raise ValueError("arm_inputs must be 'sensor', 'encoder' or 'true'")
         policy = cls.load(arm_checkpoint, vel_every=HIGH_LEVEL_STEPS)
         policy.driver, policy.arm_inputs, policy.use_arm = driver, arm_inputs, use_arm
+        policy.arm_counts = arm_counts
         policy.scene = None
         return policy
 
@@ -156,7 +173,8 @@ class V2Policy(MemoryPolicy):
         joints = np.array(robot.sim.GetMotorAngles(0))
         self.wheel_enc = sensors.WheelEncoders()
         self.wheel_enc.reset(joints[:4])
-        self.arm_enc = sensors.ArmEncoders(dt=robot.dt)
+        self.arm_enc = (sensors.ArmEncoders(dt=robot.dt) if self.arm_counts is None
+                        else ArmEncodersAt(self.arm_counts, robot.dt))
         self.arm_enc.reset(obs0["q"])
         self.tracker = HeightTracker()
         self.hold = obs0["q"].copy()
@@ -179,7 +197,7 @@ class V2Policy(MemoryPolicy):
             if done:
                 self._park(obs, t)
         reading = self.arm_enc.read(obs["q"])
-        if self.parked and self.use_arm and (self.arm_inputs == "true" or self.dot is not None):
+        if self.parked and self.use_arm and (self.arm_inputs != "sensor" or self.dot is not None):
             torque = self._reach(obs, reading)
         else:
             gravity = pin.computeGeneralizedGravity(self.robot.dyn.pin_model, self.pin_data, obs["q_pin"])[6:13]
@@ -225,11 +243,14 @@ class V2Policy(MemoryPolicy):
             xy, height = self._camera_error()
             self.report.update(camera_xy_error_at_park_cm=xy, camera_height_error_at_park_cm=height)
 
-    def _camera_error(self):
-        """Tracked dot against the true dot in the robot frame, in cm (horizontal, height). For the log only."""
+    def _true_goal_robot_frame(self):
         sim = self.robot.sim
         B = np.array(p.getMatrixFromQuaternion(sim.GetBaseOrientation())).reshape(3, 3)
-        true_dot = B.T @ (self.target - np.array(sim.GetBasePosition()))
+        return B.T @ (self.target - np.array(sim.GetBasePosition()))
+
+    def _camera_error(self):
+        """Tracked dot against the true dot in the robot frame, in cm (horizontal, height). For the log only."""
+        true_dot = self._true_goal_robot_frame()
         return (float(np.linalg.norm(self.dot[:2] - true_dot[:2]) * 100),
                 float(abs(self.dot[2] - true_dot[2]) * 100))
 
@@ -238,7 +259,8 @@ class V2Policy(MemoryPolicy):
             state = np.concatenate((obs["base_pos"], [obs["bearing"]], obs["q"], obs["qd"], self.target))
             return self._arm(features(state, obs["ee"]), obs["q"], obs["qd"])
         q, qd = reading["arm_angle"], reading["arm_speed"]
-        state = np.concatenate((np.zeros(4), q, qd, self.dot))      # base at the origin, bearing 0
+        goal = self.dot if self.arm_inputs == "sensor" else self._true_goal_robot_frame()
+        state = np.concatenate((np.zeros(4), q, qd, goal))      # base at the origin, bearing 0
         return self._arm(features(state, self.ee_robot_frame(q)), q, qd)
 
     def ee_robot_frame(self, q_arm):

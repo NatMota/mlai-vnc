@@ -1,6 +1,6 @@
 """Evaluate the v2 runs on Nat's 25 bearings (21 train, 4 test; the 5 holdout bearings are never used).
 
-    python v2_eval.py A B C D E1 E2 E3 --workers 12
+    python v2_eval.py A B C D E1 E2 E3 F G --workers 12
 
 Runs (driving, arm, arm inputs):
     A   Nat iteration 13 (seed 7), arm held all run, -        parity of Nat's driving in this simulator
@@ -8,6 +8,7 @@ Runs (driving, arm, arm inputs):
     C   Nat iteration 13 (seed 7), two-rate arm, sensors      full v2
     D   Nat iteration 13 (seed 7), two-rate arm, true state   C without arm sensor errors
     E1-E3  as C with Nat's driving seeds 1, 2, 3
+    F/G    seed 7, two-rate arm with true goal and encoder feedback (Kinova / 4096 counts per turn)
 One subprocess per episode (see pool). Results: outputs/v2/RUN.jsonl and RUN.summary.json.
 """
 import argparse
@@ -28,13 +29,15 @@ NAT_DIR = ROOT / "nat_v2"
 ARM_CHECKPOINT = ROOT / "outputs/ablation/all_world/policy.pt"
 GOAL_RADIUS_M, GOAL_HEIGHT_M = 1.1, 0.5            # Nat's targets: [1.1 cos b, 1.1 sin b, 0.5]
 RUNS = {
-    "A": ("iter13", "true", False),
-    "B": ("expert", "sensor", True),
-    "C": ("iter13", "sensor", True),
-    "D": ("iter13", "true", True),
-    "E1": ("iter13_seed1", "sensor", True),
-    "E2": ("iter13_seed2", "sensor", True),
-    "E3": ("iter13_seed3", "sensor", True),
+    "A": ("iter13", "true", False, None),
+    "B": ("expert", "sensor", True, None),
+    "C": ("iter13", "sensor", True, None),
+    "D": ("iter13", "true", True, None),
+    "E1": ("iter13_seed1", "sensor", True, None),
+    "E2": ("iter13_seed2", "sensor", True, None),
+    "E3": ("iter13_seed3", "sensor", True, None),
+    "F": ("iter13", "encoder", True, None),
+    "G": ("iter13", "encoder", True, 4096),
 }
 
 
@@ -53,14 +56,14 @@ def run_one(run, bearing):
     digest = code_digest(file_hashes())             # the files as this episode imports them
     from sim import run_episode
     from v2_sensor import NatDriver, V2Policy
-    driver_name, arm_inputs, use_arm = RUNS[run]
+    driver_name, arm_inputs, use_arm, arm_counts = RUNS[run]
     driver = "expert" if driver_name == "expert" else NatDriver(NAT_DIR / "models" / f"{driver_name}.npz")
-    policy = V2Policy.build(ARM_CHECKPOINT, driver, arm_inputs=arm_inputs, use_arm=use_arm)
+    policy = V2Policy.build(ARM_CHECKPOINT, driver, arm_inputs=arm_inputs, use_arm=use_arm, arm_counts=arm_counts)
     result = run_episode(goal_of(bearing), policy)
     expert = json.loads((NAT_DIR / "expert_reference.json").read_text())["bearings"][str(bearing)]
     yaw_error = (result["final_bearing"] - expert["final_yaw"] + np.pi) % (2 * np.pi) - np.pi
     result.update(policy.report, run=run, bearing=bearing, split=bearings()[bearing], driver=driver_name,
-                  arm_inputs=arm_inputs, use_arm=use_arm,
+                  arm_inputs=arm_inputs, use_arm=use_arm, arm_encoder_counts=arm_counts,
                   base_error_vs_expert_cm=float(np.linalg.norm(np.subtract(result["final_base"],
                                                                            expert["final_base_xy"])) * 100),
                   yaw_error_vs_expert_deg=float(abs(np.rad2deg(yaw_error))),
@@ -193,6 +196,7 @@ def main():
     def on_result(key, text, error):
         run, bearing = key
         row = json.loads(text) if text else {"run": run, "bearing": bearing, "split": bearings()[bearing],
+                                             "arm_encoder_counts": RUNS[run][3],
                                              "error": error, "reached": False, "parked": False}
         rows[run].append(stamp(row, digest))
         files[run].write(json.dumps(row) + "\n")
@@ -208,7 +212,7 @@ def main():
             fh.close()
     for run in args.runs:
         summary = {"run": run, "driving": RUNS[run][0], "arm_inputs": RUNS[run][1], "arm": RUNS[run][2],
-                   **summarize(rows[run]), "batch_wall_s": time.perf_counter() - started,
+                   "arm_encoder_counts": RUNS[run][3], **summarize(rows[run]), "batch_wall_s": time.perf_counter() - started,
                    "unverified_rows": sum(r.get("provenance") == "unverified" for r in rows[run]),
                    "mismatched_rows": sum(r.get("provenance") == "mismatch" for r in rows[run]),
                    "provenance_sha256": digest, **info}

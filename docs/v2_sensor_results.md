@@ -16,7 +16,7 @@ because each torque is held for 33 ms.
 | End-effector | forward kinematics of the encoder angles, base at the origin |
 | Arm before PARK | the expert's hold controller, as in Nat's simulator |
 
-The simulator's true state is used only to render the camera image and to score the run. Nat's code is copied
+In the sensor-only condition, the simulator's true state is used only to render the camera image and to score the run. Nat's code is copied
 unchanged into `nat_v2/` (see `nat_v2/SOURCE.md`). The test uses his 25 bearings: 21 train and 4 test, each
 with the goal 1.1 m away at 0.5 m height. His 5 holdout bearings were not used. Success means the end-effector
 is within 1 cm of the goal after at least 8 s.
@@ -32,11 +32,30 @@ is within 1 cm of the goal after at least 8 s.
 | E1 | Nat seed 1 | sensors | 25/25 | 0/21, 0/4, **0/25** | 4/25 | 4.09 cm |
 | E2 | Nat seed 2 | sensors | 25/25 | 11/21, 1/4, **12/25** | 16/25 | 1.46 cm |
 | E3 | Nat seed 3 | sensors | 19/25 | 5/21, 0/4, **5/25** | 10/25 | 2.80 cm |
+| F | Nat seed 7 | Kinova encoders, true goal | 25/25 | 20/21, 3/4, 23/25 | 23/25 | 0.57 cm |
+| G | Nat seed 7 | 4096 counts per turn, true goal | 25/25 | 13/21, 2/4, 15/25 | 17/25 | 1.00 cm |
 
 Full v2 (C) reaches 10 of 25 bearings. Over the four driving seeds (C, E1-E3) it reaches 27 of 100.
 
-All 175 episodes ran without a process error. Two full runs gave identical results, episode for episode (the first
+All 175 original A–E3 episodes ran without a process error. Two full runs gave identical results, episode for episode (the first
 batch is kept in `outputs/v2_first`).
+
+## Arm encoders
+
+All four conditions use the same seed 7 driver, arm checkpoint and 25 bearings.
+Encoder velocities are calculated from successive joint readings 1 ms apart.
+
+| Run | Joint angles and velocities | Goal | Within 1 cm (train / test / all) | Within 2 cm | Median final error |
+| --- | --- | --- | --- | ---: | ---: |
+| D | True state | True | 20/21, 3/4, 23/25 | 23/25 | 0.5711 cm |
+| F | Kinova encoders | True | 20/21, 3/4, 23/25 | 23/25 | 0.5716 cm |
+| G | 4096 counts per turn | True | 13/21, 2/4, 15/25 | 17/25 | 0.9999 cm |
+| C | Kinova encoders | Camera | 8/21, 2/4, 10/25 | 11/25 | 2.1903 cm |
+
+With the true goal, Kinova encoders preserved the 23/25 success count. Reducing the
+resolution to 4096 counts per turn dropped it to 15/25. With Kinova encoders,
+switching to the camera goal dropped it to 10/25. For these bearings and this
+driver, the camera goal was the larger limitation at native encoder resolution.
 
 ## Findings
 
@@ -82,15 +101,15 @@ batch is kept in `outputs/v2_first`).
 - One seed of the arm; four seeds of the driving.
 - The camera is simulated: PyBullet's CPU renderer, no lens noise, and the same red-pixel detector as Nat's.
 - Encoders are ideal apart from counting in whole ticks: no noise, no offset, no delay.
-- The rows in `outputs/v2` were made before the last change to the provenance code in `v2_eval.py`.
+- The A–E3 rows in `outputs/v2` were made before the last change to the provenance code in `v2_eval.py`.
   The sensor, policy and simulator code was the same. The rerun of run A afterwards gave identical results.
 
 ## Reproduce
 
 ```
 python -B -m unittest tests.test_v2_sensor
-python -B v2_eval.py A B C D E1 E2 E3 --workers 12 --fresh
+python -B v2_eval.py A B C D E1 E2 E3 F G --workers 12 --fresh
 ```
 
-Each episode renders the camera 30 times a second, so one episode takes about 1-7 minutes. The 175 episodes
+Each episode renders the camera 30 times a second, so one episode takes about 1-7 minutes. The original 175 A–E3 episodes
 took about 28 minutes with 12 workers. Results go to `outputs/v2/RUN.jsonl` and `outputs/v2/RUN.summary.json`.
