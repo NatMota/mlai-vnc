@@ -82,19 +82,6 @@ def build_viewer(model, out_name=None):
         ('Park: model ${fmt(m.model_park_s,2)} s / expert ${fmt(m.expert_park_s,2)} s<br>At park: XY difference ${fmt(m.park_xy_error_m===null?null:m.park_xy_error_m*100,1)} cm<br>Heading difference ${fmt(m.park_yaw_error_deg,1)}°<br>Final XY difference ${fmt(m.final_xy_error_m*100,1)} cm',
          'PARK at ${fmt(m.expert_park_s,2)} s (expert driving)<br>Closest gripper to dot: ${fmt(m.closest_mm,1)} mm (expert at its stop ${fmt(m.expert_mm,1)} mm)<br>Stop: model ${fmt(m.stop_s,2)} s / expert ${fmt(m.expert_stop_s,2)} s<br>At the expert stop: ${fmt(m.at_expert_stop_mm,1)} mm${m.cut?"<br>Cut: gripper passed 1.5 m":""}'),
         ('<h2>Recorded robot motion · model + ghost expert</h2>', f'<h2>Arm network {model} · model + ghost expert</h2>'),
-        # The expert's distance: from its end-effector frame (robot_j2s7s300_end_effector) to the dot centre. Draw it as a
-        # line from each robot's end effector to the dot, labelled in mm, updated every frame.
-        ("name:'Expert path'}]",
-         "name:'Expert path'},"
-         "{type:'scatter3d',x:[],y:[],z:[],mode:'lines+markers+text',line:{color:'#c0561b',width:5},marker:{size:[4,0],color:'#c0561b'},"
-         "text:[],textposition:'top center',textfont:{color:'#c0561b',size:13},name:'Model gripper to dot'},"
-         "{type:'scatter3d',x:[],y:[],z:[],mode:'lines+markers+text',line:{color:'#00849c',width:4,dash:'dot'},marker:{size:[4,0],color:'#00849c'},"
-         "text:[],textposition:'bottom center',textfont:{color:'#00849c',size:13},name:'Expert gripper to dot'}]"),
-        ("await Plotly.restyle(scene,{x:[a.x,b.x],y:[a.y,b.y],z:[a.z,b.z]},[0,1]);",
-         "await Plotly.restyle(scene,{x:[a.x,b.x],y:[a.y,b.y],z:[a.z,b.z]},[0,1]);"
-         "{const T=run().target,seg=f=>[[f.ee[0],T[0]],[f.ee[1],T[1]],[f.ee[2],T[2]]],sm=seg(m),se=seg(e);"
-         "await Plotly.restyle(scene,{x:[sm[0],se[0]],y:[sm[1],se[1]],z:[sm[2],se[2]],"
-         "text:[[`${m.ee_mm.toFixed(1)} mm`,''],[`${e.ee_mm.toFixed(1)} mm`,'']]},[5,6]);}"),
     ]
     page = (OLD / 'replay_template.html').read_text()
     for a, b in replace:
