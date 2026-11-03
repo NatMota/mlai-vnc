@@ -5580,18 +5580,28 @@ pd.DataFrame(rows).set_index('rate (Hz)')
 
 Test 3b is the main finding. The expert's arm controller has stiff gains (100 on the angle error, 30 on the speed) on light joints. Its torque is right for one millisecond. Held for 2 ms the arm overshoots, and held for 33 ms it swings away from the dot.
 
-### Arm: 30 Hz torque networks
+### Arm: 30 Hz torque networks (iterations 14 to 16)
 
-To see what happens, three networks were trained to output the 7 torques once per 30 Hz decision (`v2_sensors/arm/train_arm.py`):
+#### Iterations 14 to 16: plan and expected results
+
+This entry was added after the runs. The expectation below is the one stated before training.
+
+Three networks output the 7 arm torques once per 30 Hz decision (`v2_sensors/arm/train_arm.py`), to see what happens when torques are held for 33 ms:
+
+| Iteration | Model | Trained on | Torque target |
+|---|---|---|---|
+| 14 | `arm30_sample_b12` | bearing 12 only | the expert's torque at the decision step |
+| 15 | `arm30_sample` | the 21 training bearings | the expert's torque at the decision step |
+| 16 | `arm30_mean` | the 21 training bearings | the expert's torque averaged over the 33 ms until the next decision |
 
 - 19 inputs: arm encoder angles (7) and speeds (7), the dot in the robot frame (3, from the simulator for this test, not the camera), time since PARK and time since the start.
-- Outputs: the 7 torques and the time to stop. 2×64 ReLU, inputs and torques standardised, 300 epochs, seed 7.
+- Outputs: the 7 torques and the time to stop. 2×64 ReLU, 5,960 parameters, inputs and torques standardised, Adam with learning rate 0.01, 300 full-batch epochs, seed 7.
 - Rows: every 30 Hz decision from the expert's PARK to its stop, about 110 per run.
-- Torque targets: the expert's torque at the decision step (`sample`), or its average over the 33 ms until the next decision (`mean`).
+- Loss: torque mean squared error (in standardised units) plus time-to-stop mean squared error, each training run counted equally.
+- Test: in the simulator with `expert_drive`. The expert drives and parks, then only the arm network moves the arm (`v2_sensors/arm/test_arm.py`), on the 25 bearings.
+- Iteration 14 checks whether a network that fits one reach almost exactly can repeat it in the simulator.
 
-`arm30_sample_b12` is trained on bearing 12 only and tested on bearing 12. It checks whether a network that fits its data almost perfectly can do the reach.
-
-They were tested in the simulator with `expert_drive`, so the expert parks and only the arm network is tested (`v2_sensors/arm/test_arm.py`).
+Expected: all three fail, because test 3b showed the expert's own torques fail when held for 33 ms. A network that copies the expert's torque at each state should fail the same way.
 
 
 ```python
@@ -5689,6 +5699,35 @@ arm30.groupby('model', sort=False).agg(**{
 
 
 
+#### Iterations 14 to 16: loss curves
+
+Torque loss is in standardised units. Iteration 14 is trained on one bearing, so it has no test curve.
+
+
+```python
+def arm_loss_plot(names, title):
+    """Per-epoch training (solid) and test (dashed) losses of arm networks, from models/NAME_history.json."""
+    fig, ax = plt.subplots(1, 2, figsize=(14, 3.8))
+    for name in names:
+        h = pd.DataFrame(json.loads((ARM / f'models/{name}_history.json').read_text()))
+        line, = ax[0].plot(h.epoch, h.train_torque_mse, label=f'{name} train')
+        ax[1].plot(h.epoch, h.train_time_to_stop_mse, color=line.get_color(), label=f'{name} train')
+        if not name.endswith('_b12'):               # trained on one bearing: no test curve
+            ax[0].plot(h.epoch, h.test_torque_mse, '--', color=line.get_color(), label=f'{name} test')
+            ax[1].plot(h.epoch, h.test_time_to_stop_mse, '--', color=line.get_color(), label=f'{name} test')
+    for a, t in zip(ax, ('torque loss (standardised units)', 'time-to-stop loss')):
+        a.set(yscale='log', xlabel='epoch', title=t); a.legend(fontsize=8)
+    fig.suptitle(title); plt.show()
+
+arm_loss_plot(['arm30_sample_b12', 'arm30_sample', 'arm30_mean'], 'Iterations 14 to 16: 30 Hz torque networks')
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_119_0.png)
+    
+
+
 
 ```python
 fig, ax = plt.subplots(figsize=(10, 4))
@@ -5702,7 +5741,7 @@ ax.legend(); plt.show()
 
 
     
-![png](driving_v2_sensors_files/driving_v2_sensors_118_0.png)
+![png](driving_v2_sensors_files/driving_v2_sensors_120_0.png)
     
 
 
@@ -5711,23 +5750,50 @@ Reading the results:
 - No network gets the gripper within 1 cm. The gripper starts about 22.5 cm from the dot at PARK. Each network moves it a few centimetres closer, then the arm swings away and passes 1 m from the dot about 0.5 s after PARK.
 - The network trained on bearing 12 alone fits its training rows almost exactly (torque loss 0.0001) and still swings away after 0.53 s. So the failure comes from holding the torques for 33 ms, not from the network learning badly.
 - The averaged torques are much easier to learn (test loss 0.06 against 1.46), but they fail in the same way.
+- Iteration 15 overfits: its test loss is lowest at epoch 70 (0.87) and rises to 1.46 by epoch 300. Iteration 16 does not: its test loss stays near 0.06.
 - This matches test 3b: the expert's own controller fails when its torque is held for 33 ms.
 
 What this means for the arm: to output torques, as the expert does, the arm network has to run at the expert's rate, 1 kHz. The next test is the same network at 1 kHz.
 
-#### 3D replay: 30 Hz torque network (`arm30_sample`)
+#### Iteration 14: 3D replay (`arm30_sample_b12`)
 
-Solid robot: the arm network's run. Cyan ghost: the expert's own run for the same bearing. The expert drives and parks in both runs, so the two robots overlap until PARK. After PARK the solid arm gets only the network's torques. The side table shows the 7 torques of both, and a run is cut once the gripper is more than 1.5 m from the dot after PARK.
+Solid robot: the arm network's run. Cyan ghost: the expert's own run for the same bearing. The expert drives and parks in both runs, so the two robots overlap until PARK. After PARK the solid arm gets only the network's torques. The side table shows the 7 torques of both. A run is cut once the gripper is more than 1.5 m from the dot after PARK.
 
 The orange line runs from the network's end effector to the dot, and the dotted cyan line from the expert's, each labelled with the distance in mm. This is the distance the expert itself uses: from its end-effector frame (`robot_j2s7s300_end_effector`) to the dot centre. After PARK the dot is never more than 0.53 m from the shoulder, inside the expert's 0.85 m reach limit, so the expert always aims at the dot centre itself.
 
-<a href="/files/arm/results/viewer_arm30_sample.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+<a href="/files/arm/results/viewer_arm30_sample_b12.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
 
 
 ```python
 import sys
 sys.path.insert(0, str(ARM.resolve()))
 import replay_arm
+path = replay_arm.build_viewer('arm30_sample_b12')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm30_sample_b12.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+#### Iteration 15: 3D replay (`arm30_sample`)
+
+<a href="/files/arm/results/viewer_arm30_sample.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
 path = replay_arm.build_viewer('arm30_sample')
 IFrame('/files/arm/results/' + path.name, width='100%', height=810)
 ```
@@ -5748,13 +5814,45 @@ IFrame('/files/arm/results/' + path.name, width='100%', height=810)
 
 
 
-### Arm: 1 kHz torque network
+#### Iteration 16: 3D replay (`arm30_mean`)
 
-The same network as `arm30_sample`, with one change: it runs every 1 ms, the rate at which the expert outputs its torques (`train_arm.py --hz 1000`).
+<a href="/files/arm/results/viewer_arm30_mean.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm30_mean')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm30_mean.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+### Arm: 1 kHz torque network (iteration 17)
+
+#### Iteration 17: plan and expected results
+
+This entry was added after the run. The expectation below is the one stated before training.
+
+The same network as iteration 15 (`arm30_sample`), with one change: it runs every 1 ms, the rate at which the expert outputs its torques (`train_arm.py --hz 1000`).
 
 - Rows: every 1 ms from the expert's PARK to its stop, 75,949 rows over the 21 training runs.
 - The encoder speed is the change in angle over 1 ms. The dot position and the times are read every 1 ms too.
-- Test: the network's torques are sent every 1 ms through the arm input (`test_arm.py`).
+- Test: the network's torques are sent every 1 ms through the arm input (`test_arm.py`), on the 25 bearings, with the expert driving.
+
+Expected: the arm should stay stable, because test 3b showed the expert's own torques work at 1 kHz. The risk is drift: the expert's torque depends on a target angle it updates internally every 1 ms (`controller.cpp:81-85`), which the network cannot see, so it has to approximate it from the angles, speeds and times.
 
 
 ```python
@@ -5840,6 +5938,21 @@ arm1k.groupby('model', sort=False).agg(**{
 
 
 
+#### Iteration 17: loss curves
+
+The 1 kHz network against iteration 15 at 30 Hz, in standardised units.
+
+
+```python
+arm_loss_plot(['arm30_sample', 'arm1k'], 'Iteration 17 (1 kHz) against iteration 15 (30 Hz)')
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_131_0.png)
+    
+
+
 
 ```python
 fig, ax = plt.subplots(figsize=(10, 4))
@@ -5854,9 +5967,11 @@ ax.legend(ncol=2, fontsize=8); plt.show()
 
 
     
-![png](driving_v2_sensors_files/driving_v2_sensors_124_0.png)
+![png](driving_v2_sensors_files/driving_v2_sensors_132_0.png)
     
 
+
+#### Iteration 17: 3D replay (`arm1k`)
 
 <a href="/files/arm/results/viewer_arm1k.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
 
@@ -5887,5 +6002,5 @@ Reading the results:
 - At 1 kHz the arm stays stable. The gripper gets to a median of 18 mm from the dot, against 189 mm at 30 Hz, and within 1 cm on 2 bearings (192° and 336°, both training bearings).
 - It does not stay there. After its closest point the gripper drifts away, and at the expert's stop it is a median 124 mm from the dot.
 - The network says stop on 22 of 25 bearings, usually early: a median 1.0 s before the expert.
-- Test torque loss is 0.57 against 0.08 on training, so the network fits the training reaches much better than the test reaches.
+- Test torque loss is 0.57 against 0.08 on training. The test loss is lowest at epoch 120 (0.35) and rises after that, so the network overfits the 21 training reaches. Stopping training earlier is worth testing.
 - The likely cause of the drift: the expert's torque depends on a target angle it updates internally every 1 ms (`controller.cpp:81-85`), which the network cannot see. Small torque errors also add up with nothing to correct them.
