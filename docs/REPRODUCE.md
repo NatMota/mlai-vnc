@@ -175,16 +175,20 @@ document for the current fused release.
 
 ## V2: arm on Nat's sensor driving
 
-On Windows, use `git clone --config core.autocrlf=false` when cloning this
-branch to preserve the byte-level checksums in `nat_v2/SOURCE.md`.
-Copy the course robot's `models/` folder into the repository root. From team
-MLflow run `540bdcf942a5448baefdc2802271bbf3`, download `model/policy.pt`
-to `outputs/ablation/all_world/policy.pt`. Use the robot environment's Python
-from the repository root.
+On Windows, clone with `core.autocrlf=false` to preserve the checksums in
+`nat_v2/SOURCE.md`. Copy the course robot's `models/` folder to the repository
+root. Download `model/policy.pt` from team MLflow run
+`540bdcf942a5448baefdc2802271bbf3` to `outputs/ablation/all_world/policy.pt`.
+
+From the repository root, run the following with the robot environment's Python.
+The evaluator automatically exports `outputs/v2_arm/arm_no_world_inputs.pt`
+from the downloaded checkpoint. The velocity and torque networks take 23 and
+38 inputs respectively after removing the 11 world-frame inputs.
 
 ```text
 python -B v2_eval.py A B C D E1 E2 E3 F G --workers 12 --fresh
 ```
 
-The original 175 A–E3 episodes took about 28 minutes with 12 workers. See the
-[V2 results](v2_sensor_results.md) for the scores by group and bearing split.
+The nine groups take about 30 minutes with 12 workers. Use C and E1–E3 for
+the sensor-only V2 scores. A checks driving parity. B, D, F and G are
+upper-bound or diagnostic runs. See the [results by group](v2_sensor_results.md).

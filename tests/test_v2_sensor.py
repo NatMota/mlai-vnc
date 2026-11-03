@@ -2,6 +2,7 @@
 import ast
 import hashlib
 from pathlib import Path
+import tempfile
 import unittest
 
 import numpy as np
@@ -11,7 +12,15 @@ from ablation import GROUPS
 from memory_policy import features
 
 ROOT = Path(__file__).resolve().parents[1]
-ARM_CHECKPOINT = ROOT / "outputs/ablation/all_world/policy.pt"
+ARM_SOURCE = ROOT / "outputs/ablation/all_world/policy.pt"
+EXPORT_DIR = tempfile.TemporaryDirectory()
+ARM_CHECKPOINT = Path(EXPORT_DIR.name) / "arm_no_world_inputs.pt"
+if ARM_SOURCE.exists():
+    v2.export_arm(ARM_SOURCE, ARM_CHECKPOINT)
+
+
+def tearDownModule():
+    EXPORT_DIR.cleanup()
 COPIED = ("camera_to_robot", "see_dot", "Tracker", "policy", "MOUNT", "WHEEL_RADIUS", "DT")
 NAT_FILES = ("sensors.py", "wrist_camera.py", "camera_loop.py", "expert_reference.json", "split_plan.json",
              "models/iter13.npz", "models/iter13_seed1.npz", "models/iter13_seed2.npz", "models/iter13_seed3.npz")
@@ -95,6 +104,37 @@ class RobotFrameTests(unittest.TestCase):
             np.testing.assert_allclose(robot[keep], world[keep], atol=1e-9)
 
 
+@unittest.skipUnless(ARM_SOURCE.exists(), "needs the final arm checkpoint")
+class ExportTests(unittest.TestCase):
+    """The exported arm has no world-frame inputs and gives the same outputs as the masked original."""
+
+    def test_exported_networks_drop_the_world_inputs_and_keep_the_outputs(self):
+        import torch
+        from memory_policy import NumpyMLP
+        source = torch.load(ARM_SOURCE, map_location="cpu", weights_only=False)
+        saved = torch.load(ARM_CHECKPOINT, map_location="cpu", weights_only=False)
+        removed = sorted(GROUPS["all_world"])
+        self.assertEqual(saved["removed_feature_columns"], removed)
+        self.assertNotIn("base", saved)
+        self.assertNotIn("phase", saved)
+        rng = np.random.default_rng(1)
+        for name, size in (("vel", 34), ("torque", 49)):
+            keep = [i for i in range(size) if i not in removed]
+            self.assertEqual(saved[name]["keep"], keep)
+            first = min((k for k in saved[name]["weights"] if k.endswith(".weight")), key=lambda k: int(k.split(".")[0]))
+            self.assertEqual(saved[name]["weights"][first].shape[1], size - len(removed))
+            x = rng.normal(size=(50, size)) * 3
+            masked = NumpyMLP.from_saved(source[name])(x)
+            exported = v2.KeptInputs(NumpyMLP.from_saved(saved[name]), keep)(x)
+            np.testing.assert_allclose(exported, masked, rtol=1e-9, atol=1e-9)
+            x[:, removed] = rng.normal(size=(50, len(removed))) * 100        # removed inputs change nothing
+            np.testing.assert_array_equal(exported, v2.KeptInputs(NumpyMLP.from_saved(saved[name]), keep)(x))
+
+    def test_build_refuses_a_checkpoint_with_world_inputs(self):
+        with self.assertRaises(ValueError):
+            v2.V2Policy.build(ARM_SOURCE, "expert")
+
+
 class ArmEncoderTests(unittest.TestCase):
     def test_coarse_tick_floor_and_speed(self):
         tick, dt = 2 * np.pi / 4096, 0.001
@@ -117,6 +157,7 @@ class ArmEncoderTests(unittest.TestCase):
             for key in expected:
                 np.testing.assert_array_equal(actual[key], expected[key])
 
+    @unittest.skipUnless(ARM_SOURCE.exists(), "needs the final arm checkpoint")
     def test_build_modes(self):
         with self.assertRaises(ValueError):
             v2.V2Policy.build(ARM_CHECKPOINT, "expert", arm_inputs="unknown")

@@ -6,9 +6,10 @@ Runs (driving, arm, arm inputs):
     A   Nat iteration 13 (seed 7), arm held all run, -        parity of Nat's driving in this simulator
     B   expert,                    two-rate arm, sensors      arm on sensors without driving errors
     C   Nat iteration 13 (seed 7), two-rate arm, sensors      full v2
-    D   Nat iteration 13 (seed 7), two-rate arm, true state   C without arm sensor errors
+    D   Nat iteration 13 (seed 7), two-rate arm, true state   upper bound (simulator truth), not a v2 result
     E1-E3  as C with Nat's driving seeds 1, 2, 3
-    F/G    seed 7, two-rate arm with true goal and encoder feedback (Kinova / 4096 counts per turn)
+    F/G    seed 7, arm encoders (Kinova / 4096 counts per turn) with the true goal: upper bounds, not v2 results
+The arm is ARM_CHECKPOINT, exported from ARM_SOURCE by v2_sensor.export_arm (no world-frame inputs).
 One subprocess per episode (see pool). Results: outputs/v2/RUN.jsonl and RUN.summary.json.
 """
 import argparse
@@ -26,7 +27,8 @@ from pool import run_pool
 
 ROOT = Path(__file__).resolve().parent
 NAT_DIR = ROOT / "nat_v2"
-ARM_CHECKPOINT = ROOT / "outputs/ablation/all_world/policy.pt"
+ARM_SOURCE = ROOT / "outputs/ablation/all_world/policy.pt"          # final arm, MLflow run 540bdcf9
+ARM_CHECKPOINT = ROOT / "outputs/v2_arm/arm_no_world_inputs.pt"     # the same arm without world-frame inputs
 GOAL_RADIUS_M, GOAL_HEIGHT_M = 1.1, 0.5            # Nat's targets: [1.1 cos b, 1.1 sin b, 0.5]
 RUNS = {
     "A": ("iter13", "true", False, None),
@@ -97,9 +99,24 @@ SOURCES = ("v2_sensor.py", "v2_eval.py", "sim.py", "memory_policy.py",
            "configs/robotnik_arm.json")
 
 
+def ensure_arm():
+    """Export ARM_CHECKPOINT from ARM_SOURCE unless an export of this exact source already exists."""
+    import torch
+    from v2_sensor import EXPORT_VERSION, export_arm
+    source_sha = hashlib.sha256(ARM_SOURCE.read_bytes()).hexdigest()
+    if ARM_CHECKPOINT.exists():
+        saved = torch.load(ARM_CHECKPOINT, map_location="cpu", weights_only=False)
+        if saved.get("source_sha256") == source_sha and saved.get("export_version") == EXPORT_VERSION:
+            return
+    ARM_CHECKPOINT.parent.mkdir(parents=True, exist_ok=True)
+    export_arm(ARM_SOURCE, ARM_CHECKPOINT)
+    print(f"exported {ARM_CHECKPOINT.relative_to(ROOT).as_posix()} from {ARM_SOURCE.relative_to(ROOT).as_posix()}",
+          flush=True)
+
+
 def file_hashes():
     """sha256 of every file that decides a result."""
-    files = [*(ROOT / name for name in SOURCES), ARM_CHECKPOINT, *sorted(NAT_DIR.glob("*.py")),
+    files = [*(ROOT / name for name in SOURCES), ARM_SOURCE, ARM_CHECKPOINT, *sorted(NAT_DIR.glob("*.py")),
              *sorted(NAT_DIR.glob("*.json")), *sorted((NAT_DIR / "models").glob("*.npz"))]
     return {f.relative_to(ROOT).as_posix(): hashlib.sha256(f.read_bytes()).hexdigest() for f in files}
 
@@ -175,6 +192,7 @@ def main():
         raise SystemExit("Name one or more runs from: " + " ".join(RUNS))
     args.runs = list(dict.fromkeys(args.runs))
     args.out_dir.mkdir(parents=True, exist_ok=True)
+    ensure_arm()
     info = provenance()
     digest = code_digest(info["sha256"])
     rows, files, dropped = {}, {}, 0

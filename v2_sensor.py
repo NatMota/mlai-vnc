@@ -10,9 +10,11 @@ Every 1 ms physics step:
 
 With sensor inputs the arm sees a robot-frame state: base at the origin with bearing 0, encoder joint angles and
 speeds, the tracked dot as the goal, and the end-effector from forward kinematics of the encoder angles. The arm
-checkpoint ignores the world-frame inputs (all_world ablation), so only robot-frame quantities reach it. The
-encoder mode supplies the true goal in the same robot frame to isolate joint encoder effects.
+is exported with export_arm(): vel_net and torque_net only, with the 11 world-frame inputs (all_world ablation)
+deleted from their first layers, so the networks have no world-frame inputs at all. The encoder and true modes
+use simulator truth for the goal (and, in true mode, the joints); they are upper bounds, not v2 results.
 """
+import hashlib
 import os
 from pathlib import Path
 import time
@@ -26,7 +28,7 @@ ROOT = Path(__file__).resolve().parent
 os.environ["CAMERA_URDF"] = str(ROOT / "models/summit_xl_arm_description/summit_xl_complete.urdf")
 
 from fused_policy import HIGH_LEVEL_STEPS
-from memory_policy import MemoryPolicy, features
+from memory_policy import MemoryPolicy, NumpyMLP, features
 from sim import ARM_REACH_LIMIT, FIXED_FINGER_ANGLES, Expert
 from nat_v2 import sensors
 from nat_v2.wrist_camera import DOT_RADIUS, INSIDE, Scene, pixel_to_ray
@@ -146,15 +148,72 @@ class ArmEncodersAt(sensors.ArmEncoders):
         return dict(arm_angle=self.last, arm_speed=(self.last - previous) / self.dt)
 
 
+EXPORT_VERSION = 1      # change when export_arm changes, so v2_eval exports the arm again
+
+
+def export_arm(source, destination):
+    """Save vel_net and torque_net from an all_world checkpoint with the masked inputs deleted.
+
+    In training and use those inputs were set to zero after scaling, so deleting their first-layer weights leaves
+    every output unchanged. The saved file has no base or switch network and no world-frame input."""
+    import torch
+    saved = torch.load(source, map_location="cpu", weights_only=False)
+    removed = sorted(saved["ablation"]["removed"])
+    out = {"export_version": EXPORT_VERSION, "wheel_limits": saved["wheel_limits"], "torque_limits": saved["torque_limits"],
+           "vel_scaled": saved.get("vel_scaled", False), "removed_feature_columns": removed,
+           "source": Path(source).as_posix(), "source_sha256": hashlib.sha256(Path(source).read_bytes()).hexdigest()}
+    for name in ("vel", "torque"):
+        net = dict(saved[name])
+        keep = np.flatnonzero(np.asarray(net.pop("x_mask")) != 0)
+        if sorted(set(range(len(net["x_mean"]))) - set(keep.tolist())) != removed:
+            raise ValueError(f"{name}: the mask does not match the removed columns {removed}")
+        weights = dict(net["weights"])
+        first = min((k for k in weights if k.endswith(".weight")), key=lambda k: int(k.split(".")[0]))
+        weights[first] = weights[first][:, torch.as_tensor(keep)].clone()
+        net.update(weights=weights, x_mean=np.asarray(net["x_mean"])[keep], x_std=np.asarray(net["x_std"])[keep],
+                   keep=keep.tolist(), inputs=len(keep))
+        out[name] = net
+    tmp = Path(destination).with_suffix(f".{os.getpid()}.tmp")       # one temp file per process
+    torch.save(out, tmp)
+    tmp.replace(destination)
+    return out
+
+
+class KeptInputs:
+    """A network that has only the kept inputs: it takes the kept columns of a feature row and nothing else."""
+
+    def __init__(self, net, keep):
+        self.net, self.keep = net, np.asarray(keep)
+
+    def __call__(self, x):
+        return self.net(np.atleast_2d(x)[:, self.keep])
+
+
 class V2Policy(MemoryPolicy):
     """Nat's driving (or the expert's) until PARK, then the two-rate arm. See the module docstring."""
+
+    @classmethod
+    def load_arm(cls, path, vel_every):
+        """An arm saved by export_arm (vel_net and torque_net without world-frame inputs)."""
+        import torch
+        saved = torch.load(path, map_location="cpu", weights_only=False)
+        if "base" in saved or any("keep" not in saved[name] for name in ("vel", "torque")):
+            raise ValueError(f"{path}: expected an arm exported by export_arm()")
+        nets = {}
+        for name in ("vel", "torque"):
+            net = NumpyMLP.from_saved(saved[name])
+            if net.layers[0][0].shape[1] != len(saved[name]["keep"]):
+                raise ValueError(f"{path}: {name} first layer does not match its kept inputs")
+            nets[name] = [KeptInputs(net, saved[name]["keep"])]
+        return cls(nets, saved["wheel_limits"], saved["torque_limits"], scaled_vel=bool(saved["vel_scaled"]),
+                   vel_every=vel_every)
 
     @classmethod
     def build(cls, arm_checkpoint, driver, arm_inputs="sensor", use_arm=True, arm_counts=None):
         """Use sensor inputs, true state, or encoders with a true goal. A disabled arm stays held."""
         if arm_inputs not in ("sensor", "encoder", "true"):
             raise ValueError("arm_inputs must be 'sensor', 'encoder' or 'true'")
-        policy = cls.load(arm_checkpoint, vel_every=HIGH_LEVEL_STEPS)
+        policy = cls.load_arm(arm_checkpoint, vel_every=HIGH_LEVEL_STEPS)
         policy.driver, policy.arm_inputs, policy.use_arm = driver, arm_inputs, use_arm
         policy.arm_counts = arm_counts
         policy.scene = None
