@@ -843,9 +843,9 @@ player('wheels+live_dot')
 
 
 
-<div><button onclick="var f=document.getElementById('player1252f675');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playera62b2bdf');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player1252f675" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playera62b2bdf" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -861,9 +861,9 @@ player('wheels+start_dot')
 
 
 
-<div><button onclick="var f=document.getElementById('player6bf168df');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_start_dot.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerfefc1a65');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_start_dot.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player6bf168df" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerfefc1a65" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -879,9 +879,9 @@ player('wheels')
 
 
 
-<div><button onclick="var f=document.getElementById('player7f76c74a');f.src='/files/driving_v2/closed_loop_native/viewer_wheels.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player6b4adb89');f.src='/files/driving_v2/closed_loop_native/viewer_wheels.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player7f76c74a" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player6b4adb89" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -1331,9 +1331,9 @@ player('wheels+live_dot+skid')
 
 
 
-<div><button onclick="var f=document.getElementById('playerf2367755');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot_skid.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerb84b9991');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot_skid.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerf2367755" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerb84b9991" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5256,9 +5256,9 @@ lazy_player('/files/driving_v2/closed_loop_native/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player23489c26');f.src='/files/driving_v2/closed_loop_native/viewer_iter13_seed7.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playered5f83d4');f.src='/files/driving_v2/closed_loop_native/viewer_iter13_seed7.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player23489c26" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playered5f83d4" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5686,11 +5686,12 @@ def arm_loss_plot(names, title):
     for name in names:
         h = pd.DataFrame(json.loads((ARM / f'models/{name}_history.json').read_text()))
         line, = ax[0].plot(h.epoch, h.train_torque_mse, label=f'{name} train')
-        ax[1].plot(h.epoch, h.train_time_to_stop_mse, color=line.get_color(), label=f'{name} train')
+        stop = 'time_to_stop' if 'train_time_to_stop_mse' in h else 'distance'      # what the stop head learns
+        ax[1].plot(h.epoch, h[f'train_{stop}_mse'], color=line.get_color(), label=f'{name} train ({stop})')
         if not name.endswith('_b12'):               # trained on one bearing: no test curve
             ax[0].plot(h.epoch, h.test_torque_mse, '--', color=line.get_color(), label=f'{name} test')
-            ax[1].plot(h.epoch, h.test_time_to_stop_mse, '--', color=line.get_color(), label=f'{name} test')
-    for a, t in zip(ax, ('torque loss (standardised units)', 'time-to-stop loss')):
+            ax[1].plot(h.epoch, h[f'test_{stop}_mse'], '--', color=line.get_color(), label=f'{name} test ({stop})')
+    for a, t in zip(ax, ('torque loss (standardised units)', 'stop loss (scaled 0..1)')):
         a.set(yscale='log', xlabel='epoch', title=t); a.legend(fontsize=8)
     fig.suptitle(title); plt.show()
 
@@ -5750,9 +5751,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player9f7149d7');f.src='/files/arm/results/viewer_arm30_sample_b12.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerdc43f938');f.src='/files/arm/results/viewer_arm30_sample_b12.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player9f7149d7" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerdc43f938" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5769,9 +5770,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player77a3dfd7');f.src='/files/arm/results/viewer_arm30_sample.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerbb11cfac');f.src='/files/arm/results/viewer_arm30_sample.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player77a3dfd7" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerbb11cfac" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5788,9 +5789,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerc8327ecf');f.src='/files/arm/results/viewer_arm30_mean.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player3fd33a1a');f.src='/files/arm/results/viewer_arm30_mean.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerc8327ecf" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player3fd33a1a" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5938,9 +5939,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player54e472d3');f.src='/files/arm/results/viewer_arm1k.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerd761597c');f.src='/files/arm/results/viewer_arm1k.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player54e472d3" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerd761597c" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6336,9 +6337,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player873e56f7');f.src='/files/arm/results/viewer_arm1k_e77.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player770d152e');f.src='/files/arm/results/viewer_arm1k_e77.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player873e56f7" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player770d152e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6355,9 +6356,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerbd487a2e');f.src='/files/arm/results/viewer_arm1k_e77_seed1.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player63a6c18a');f.src='/files/arm/results/viewer_arm1k_e77_seed1.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerbd487a2e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player63a6c18a" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6374,9 +6375,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player81894948');f.src='/files/arm/results/viewer_arm1k_e77_seed2.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player98b27810');f.src='/files/arm/results/viewer_arm1k_e77_seed2.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player81894948" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player98b27810" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6393,9 +6394,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player3ab8ec81');f.src='/files/arm/results/viewer_arm1k_e77_seed3.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player9646dba2');f.src='/files/arm/results/viewer_arm1k_e77_seed3.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player3ab8ec81" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player9646dba2" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6412,9 +6413,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerf0523e70');f.src='/files/arm/results/viewer_arm1k_seed1.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player20464f79');f.src='/files/arm/results/viewer_arm1k_seed1.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerf0523e70" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player20464f79" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6431,9 +6432,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerd97f3e5e');f.src='/files/arm/results/viewer_arm1k_seed2.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player50abe715');f.src='/files/arm/results/viewer_arm1k_seed2.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerd97f3e5e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player50abe715" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6450,9 +6451,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player38841566');f.src='/files/arm/results/viewer_arm1k_seed3.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player928d13e4');f.src='/files/arm/results/viewer_arm1k_seed3.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player38841566" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player928d13e4" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6467,3 +6468,203 @@ Against the expectation:
 - The seed still matters more than the number of epochs. With 300 epochs, the median distance at the expert's stop ranges from 75 mm (seed 2) to 488 mm (seed 3).
 
 What it tells us: as the plan said, a lower test loss without a better reach in the simulator means overfitting is not the main reason the arm drifts. The more likely reason is the expert's internal target angle, which the network cannot see. Inputs that let the network infer it, such as its previous torques or a short history of joint angles, are the next thing to test. Fewer epochs is not kept, because it costs the stop.
+
+### Arm: stop on distance (iteration 19)
+
+#### Iteration 19: plan and expected results
+
+In iterations 17 and 18 the arm follows the expert's reach closely, but the network does not know when it has reached the dot. The expert gets within 15 mm of the dot about 2 s after PARK and then holds the arm almost still until its stop rule allows it to stop: within 1 cm and more than 8 s since the start. That hold lasts a median 1.6 s. The network drifts during it, and when it does say stop the gripper is already far away: a median 257 mm for iteration 18, seed 7.
+
+Iteration 19 is iteration 18, seed 7, with one change: the stop head learns the distance from the gripper to the dot instead of the time to stop.
+
+- Stop target: the distance from the expert's end effector to the dot centre at each row, from the expert's recordings, clipped at 0.25 m and scaled to 0..1. The network says stop when its predicted distance is 1 cm or less, latched.
+- Everything else is as in iteration 18: the same 19 inputs (arm encoder angles and speeds, the dot position from the simulator, time since PARK and since the start), 2×64 ReLU, 1 kHz, 77 epochs, seed 7, rows from the expert's PARK to its stop.
+- The loss is the torque loss plus the distance loss, each training run counted equally.
+- Test: the 25 bearings in the simulator with the expert driving, as before.
+- New result: the distance from the gripper to the dot when the network says stop. A run ends 0.5 s after stop, so the distance 0.5 s later is also reported.
+
+The network has every input it needs for the distance: the 7 joint angles fix where the gripper is, and the dot position is given. It has to learn that mapping from 21 reaches.
+
+Expected:
+
+- The network says stop on at least 20 of the 25 bearings, against 15 for iteration 18, seed 7.
+- When it says stop, the gripper is a median 20 mm or less from the dot, against 257 mm.
+- It stops earlier than the expert, about 1.5 s before, because it no longer waits for the expert's 8 s rule.
+- The reach itself is unchanged: the median closest distance stays near 33 mm.
+
+The expectation is wrong if the network stops on fewer than 15 bearings or the median distance at stop is above 30 mm. That would mean 21 reaches are not enough to learn the distance from the joint angles.
+
+#### Iteration 19: results
+
+Iteration 18, seed 7 (stop on time) against iteration 19 (stop on distance), on the 25 bearings with the expert driving. A run ends 0.5 s after the network says stop.
+
+
+```python
+rows = []
+for it, name, stop in ((18, 'arm1k_e77', 'time'), (19, 'arm1k_e77_dist', 'distance')):
+    h = json.loads((ARM / f'models/{name}_history.json').read_text())[-1]
+    r = pd.DataFrame(json.loads((ARM / f'results/{name}.json').read_text()))
+    if 'at_network_stop_mm' not in r:          # older result files: read it from the log
+        r['at_network_stop_mm'] = [next((l['ee_mm'] for l in x['log'] if l['t'] >= x['stop_s']), np.nan) if x['stop_s'] else np.nan
+                                   for x in json.loads((ARM / f'results/{name}.json').read_text())]
+    rows.append({'iteration': it, 'model': name, 'stop learns': stop, 'test torque loss': h['test_torque_mse'],
+                 'stopped (of 25)': int(r.stop_s.notna().sum()), 'median distance at stop (mm)': r.at_network_stop_mm.median(),
+                 'median distance at the end of the run (mm)': r.end_mm.median(), 'median closest (mm)': r.min_mm.median(),
+                 'median stop vs expert (s)': (r.stop_s - r.expert_stop_s).median()})
+pd.DataFrame(rows).set_index('iteration').round(3)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>stop learns</th>
+      <th>test torque loss</th>
+      <th>stopped (of 25)</th>
+      <th>median distance at stop (mm)</th>
+      <th>median distance at the end of the run (mm)</th>
+      <th>median closest (mm)</th>
+      <th>median stop vs expert (s)</th>
+    </tr>
+    <tr>
+      <th>iteration</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>18</th>
+      <td>arm1k_e77</td>
+      <td>time</td>
+      <td>0.377</td>
+      <td>15</td>
+      <td>257.271</td>
+      <td>445.634</td>
+      <td>32.971</td>
+      <td>-0.191</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>arm1k_e77_dist</td>
+      <td>distance</td>
+      <td>0.368</td>
+      <td>25</td>
+      <td>35.219</td>
+      <td>62.868</td>
+      <td>29.332</td>
+      <td>-1.881</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Iteration 19: predicted against actual distance
+
+The stop head's predicted distance against the real distance from the gripper to the dot, on four bearings. The network says stop when its prediction first reaches 1 cm (dotted line).
+
+
+```python
+r19 = {r['bearing']: r for r in json.loads((ARM / 'results/arm1k_e77_dist.json').read_text())}
+fig, axes = plt.subplots(1, 4, figsize=(16, 3.6), sharey=True)
+for ax, b in zip(axes, (24, 132, 204, 360)):
+    L = r19[b]['log']; t0 = L[0]['t']
+    ax.plot([l['t'] - t0 for l in L], [l['ee_mm'] for l in L], label='actual')
+    ax.plot([l['t'] - t0 for l in L], [1000 * l['ttp_s'] for l in L], label='predicted')
+    ax.axhline(10, color='k', ls=':', lw=0.8)
+    if r19[b]['stop_s']:
+        ax.axvline(r19[b]['stop_s'] - t0, color='r', lw=0.8, label='network says stop')
+    ax.set(title=f"{b}° ({r19[b]['split']})", xlabel='time since PARK (s)', yscale='log', ylim=(1, 400))
+axes[0].set_ylabel('gripper to dot (mm)'); axes[0].legend(fontsize=8); plt.show()
+near = np.array([1000 * l['ttp_s'] - l['ee_mm'] for r in r19.values() for l in r['log'] if l['ee_mm'] < 100])
+print(f'Within 100 mm of the dot: predicted minus actual distance, median {np.median(near):.1f} mm, mean absolute {np.abs(near).mean():.1f} mm')
+print('Network stops within 10 mm of the closest point it reaches:', sum(r['at_network_stop_mm'] - r['min_mm'] <= 10 for r in r19.values()), 'of 25')
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_163_0.png)
+    
+
+
+    Within 100 mm of the dot: predicted minus actual distance, median -14.2 mm, mean absolute 28.8 mm
+    Network stops within 10 mm of the closest point it reaches: 18 of 25
+
+
+#### Iteration 19: loss curves
+
+Training (solid) and test (dashed) losses. The right panel is the stop loss: time to stop for iteration 18 and distance for iteration 19, each scaled to 0..1, so the two are not on the same scale.
+
+
+```python
+arm_loss_plot(['arm1k_e77', 'arm1k_e77_dist'], 'Iteration 19 (stop on distance) against iteration 18, seed 7 (stop on time)')
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_165_0.png)
+    
+
+
+#### Iteration 19: 3D replay (`arm1k_e77_dist`)
+
+<a href="/files/arm/results/viewer_arm1k_e77_dist.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_e77_dist')
+lazy_player('/files/arm/results/' + path.name)
+```
+
+
+
+
+<div><button onclick="var f=document.getElementById('player49157710');f.src='/files/arm/results/viewer_arm1k_e77_dist.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player49157710" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+
+
+
+#### Iteration 19: reading the results
+
+Against the expectation:
+
+- **Stops: as expected.** The network says stop on all 25 bearings, against 15 for iteration 18, seed 7.
+- **Distance at stop: better, but not as expected.** The gripper is a median 35 mm from the dot when the network says stop, against 257 mm for iteration 18. The expectation was 20 mm or less, and above 30 mm counts as wrong.
+- **When it stops: as expected.** A median 1.9 s before the expert, because it no longer waits for the expert's 8 s rule.
+- **Reach: as expected.** The median closest distance is 29 mm, against 33 mm.
+
+Why the distance at stop is 35 mm and not 1 cm:
+
+- On 18 of 25 bearings the network says stop within 10 mm of the closest point the gripper reaches. The stop now comes at the right moment; the gripper simply never gets within 1 cm.
+- Near the dot the stop head underestimates the distance: when the gripper is within 100 mm, the prediction is a median 14 mm too low. It seems to have learned "this stage of the reach means close" from the 21 expert reaches, where the gripper always ends within about 1 cm, rather than the real distance.
+- After stop the distance grows from a median 35 mm to 63 mm over the last 0.5 s, because nothing holds the arm.
+- The distance loss is still falling at epoch 77 (training 0.0003, test 0.0003), so the stop head has not finished learning. On 204°, a test bearing where the expert itself stalls 11.5 mm away, the gripper stays about 60 mm away and the prediction falls below 1 cm anyway.
+
+What it tells us: the stop works on distance far better than on time, so it is kept. The limit is now the reach itself. The gripper gets a median 29 mm from the dot, never within 1 cm, and drifts once it stops moving towards it. Getting closer and holding still are the next problems.

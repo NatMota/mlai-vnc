@@ -18,6 +18,9 @@ Outputs:
 
 --val-fold F: hold out the training bearings of fold F (split_plan.json) as validation; their losses are saved per epoch.
 --epochs N: number of full-batch epochs (default 300).
+--stop time:     the stop head learns the time to the expert's stop (s, clipped at 3 s); stop when it is 0.25 s or less.
+--stop distance: the stop head learns the distance from the expert's end effector to the dot centre (m, clipped at
+                 0.25 m); stop when it is 1 cm or less. The saved ttp_clip and ttp_thresh hold these values.
 
 usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N] [--bearings B ...] [--epochs N] [--val-fold F]
 """
@@ -35,6 +38,7 @@ PLAN = json.loads((HERE.parent / 'driving_30/data/expert_30hz/split_plan.json').
 SPLIT = {q['bearing_deg']: q['split'] for q in PLAN}
 FOLD = {q['bearing_deg']: q['fold'] for q in PLAN}
 EPOCHS, LR, CLIP, THRESH, HIDDEN = 300, 0.01, 3.0, 0.25, 64
+DIST_CLIP, DIST_THRESH = 0.25, 0.01     # --stop distance: target clipped at 0.25 m; stop when the prediction is 1 cm or less
 
 
 def table(run, name):
@@ -53,7 +57,7 @@ def dot_in_robot(target, base_xyz, yaw):
     return np.stack([c * dx + s * dy, -s * dx + c * dy, dz], -1)
 
 
-def load_run(bearing, target_mode='sample', hz=30):
+def load_run(bearing, target_mode='sample', hz=30, stop_target='time'):
     run = DATA / f'run_{bearing // 12 - 1}'
     m = json.loads((run / 'manifest.json').read_text())
     arm, base = table(run, 'arm_controller'), table(run, 'base_state')
@@ -70,7 +74,11 @@ def load_run(bearing, target_mode='sample', hz=30):
     y = tau[d] if target_mode == 'sample' else np.array([tau[a:b].mean(0) for a, b in zip(d, ends)])
     t = d / 1000
     X = np.c_[angle[rows], speed[rows], dot_in_robot(m['target_position_world_m'], pos[d], yaw[d]), t - park / 1000, t]
-    ttp = np.clip((stop - d) / 1000, 0, CLIP) / CLIP
+    if stop_target == 'distance':
+        dist = table(run, 'kinematics')['ee_distance_error_m'][d]
+        ttp = np.clip(dist, 0, DIST_CLIP) / DIST_CLIP
+    else:
+        ttp = np.clip((stop - d) / 1000, 0, CLIP) / CLIP
     return dict(bearing=bearing, split=SPLIT[bearing], X=X.astype(np.float32), tau=y.astype(np.float32), ttp=ttp.astype(np.float32))
 
 
@@ -95,8 +103,10 @@ if __name__ == '__main__':
     ap.add_argument('--seed', type=int, default=7); ap.add_argument('--bearings', type=int, nargs='*')
     ap.add_argument('--hz', type=int, choices=[30, 1000], default=30)
     ap.add_argument('--epochs', type=int, default=EPOCHS); ap.add_argument('--val-fold', type=int)
+    ap.add_argument('--stop', choices=['time', 'distance'], default='time')
     args = ap.parse_args()
-    runs = [load_run(b, args.target, args.hz) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
+    SN = 'time_to_stop' if args.stop == 'time' else 'distance'
+    runs = [load_run(b, args.target, args.hz, args.stop) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
     val = [r for r in runs if r['split'] == 'train' and args.val_fold is not None and FOLD[r['bearing']] == args.val_fold]
     train = [r for r in runs if r['split'] == 'train' and (not args.bearings or r['bearing'] in args.bearings) and r not in val]
     test = [r for r in runs if r['split'] == 'test']
@@ -125,11 +135,11 @@ if __name__ == '__main__':
         with torch.no_grad():
             tam, tpm = losses(model, *te)
         history.append(dict(epoch=epoch, train_torque_mse=am.item(), test_torque_mse=tam.item(),
-                            train_time_to_stop_mse=pm.item(), test_time_to_stop_mse=tpm.item()))
+                            **{f'train_{SN}_mse': pm.item(), f'test_{SN}_mse': tpm.item()}))
         if va is not None:
             with torch.no_grad():
                 vam, vpm = losses(model, *va)
-            history[-1].update(val_torque_mse=vam.item(), val_time_to_stop_mse=vpm.item())
+            history[-1].update(val_torque_mse=vam.item(), **{f'val_{SN}_mse': vpm.item()})
         if epoch < args.epochs:
             opt.zero_grad(); (am + pm).backward(); opt.step()
 
@@ -142,12 +152,12 @@ if __name__ == '__main__':
     with torch.no_grad():
         py, pt = model(tr[0][:50])
     x_raw = tr[0][:50].numpy() * xs + xm
-    sd.update(ttp_clip=np.float32(CLIP), ttp_thresh=np.float32(THRESH))
+    sd.update(ttp_clip=np.float32(CLIP if args.stop == 'time' else DIST_CLIP), ttp_thresh=np.float32(THRESH if args.stop == 'time' else DIST_THRESH))
     diff = max(float(np.abs(policy(sd, x_raw[i])[0] - (py[i].numpy() * ys + ym)).max()) for i in range(50))
-    sd.update(info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_train_bearings=np.array([r['bearing'] for r in train]))
+    sd.update(info_stop_target=args.stop, info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_train_bearings=np.array([r['bearing'] for r in train]))
     out = HERE / 'models'; out.mkdir(exist_ok=True)
     np.savez(out / f'{args.name}.npz', **sd)
     (out / f'{args.name}_history.json').write_text(json.dumps(history))
     h = history[-1]
     print(f"{args.name}: {len(train)} train runs, {len(tr[0])} rows | train torque {h['train_torque_mse']:.4f} test {h['test_torque_mse']:.4f}"
-          f" | stop train {h['train_time_to_stop_mse']:.4f} test {h['test_time_to_stop_mse']:.4f} | fold check {diff:.1e} N m")
+          f" | stop ({SN}) train {h[f'train_{SN}_mse']:.4f} test {h[f'test_{SN}_mse']:.4f} | fold check {diff:.1e} N m")

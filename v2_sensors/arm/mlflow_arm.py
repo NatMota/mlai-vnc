@@ -57,6 +57,15 @@ for s_ in (7, 1, 2, 3):
         lesson='Test torque loss falls (0.38 against 0.64 over four seeds) but the reach in the simulator does not improve (median closest 24 against 23 mm, 190 against 197 mm at the expert stop), and the network says stop far less often (7 against 18 of 25). Overfitting is not the main reason the arm drifts.')
 
 
+ARM_ITERATIONS[19] = dict(iteration=19, name='arm-1khz-stop-on-distance', file='arm1k_e77_dist', hz=1000, target='sample', seed=7, epochs=77,
+    bearings='21 training bearings',
+    anchors=[('Plan and expected results', '#iteration-19-plan-and-expected-results'), ('results', '#iteration-19-results'),
+             ('predicted against actual distance', '#iteration-19-predicted-against-actual-distance'), ('loss curves', '#iteration-19-loss-curves'),
+             ('3D replay', '#iteration-19-3d-replay-arm1k_e77_dist'), ('reading the results', '#iteration-19-reading-the-results')],
+    change='Iteration 18, seed 7, with the stop head trained on the distance from the gripper to the dot (from the expert recordings) instead of the time to stop. Stop when the predicted distance is 1 cm or less.',
+    lesson='Stopping on distance works far better than on time: the network stops on all 25 bearings, a median 35 mm from the dot against 257 mm, and on 18 of 25 within 10 mm of the closest point the gripper reaches. The reach itself is now the limit: the gripper never gets within 1 cm (median closest 29 mm) and drifts after stop. Near the dot the predicted distance is a median 14 mm too low.')
+
+
 def add(iteration):
     import mlflow, pandas as pd
     from mlflow.entities import Metric
@@ -67,22 +76,25 @@ def add(iteration):
     df['stop_vs_expert_s'] = df.stop_s - df.expert_stop_s
     blown = [any(f['parked'] and f['ee_mm'] > 1500 for f in r['frames']) for r in rows]
     one = spec['file'].endswith('_b12')
+    stop = 'time_to_stop' if 'train_time_to_stop_mse' in h else 'distance'      # what the stop head learns
     m = {'bearings_tested': len(df), 'median_closest_mm': float(df.min_mm.median()), 'best_closest_mm': float(df.min_mm.min()),
          'closest_within_1cm': int((df.min_mm <= 10).sum()), 'median_at_expert_stop_mm': float(df.at_expert_stop_mm.median()),
          'within_1cm_at_expert_stop': int((df.at_expert_stop_mm <= 10).sum()), 'stopped': int(df.stop_s.notna().sum()),
          'gripper_past_1_5m': int(sum(blown)), 'final_train_torque_mse': float(h.train_torque_mse.iloc[-1]),
-         'final_train_time_to_stop_mse': float(h.train_time_to_stop_mse.iloc[-1])}
+         f'final_train_{stop}_mse': float(h[f'train_{stop}_mse'].iloc[-1])}
+    if 'at_network_stop_mm' in df and df.at_network_stop_mm.notna().any():
+        m['median_at_network_stop_mm'] = float(df.at_network_stop_mm.median())
     if df.stop_vs_expert_s.notna().any():
         m['median_stop_vs_expert_s'] = float(df.stop_vs_expert_s.median())
     if not one:
-        m.update(final_test_torque_mse=float(h.test_torque_mse.iloc[-1]), final_test_time_to_stop_mse=float(h.test_time_to_stop_mse.iloc[-1]),
+        m.update(final_test_torque_mse=float(h.test_torque_mse.iloc[-1]), **{f'final_test_{stop}_mse': float(h[f'test_{stop}_mse'].iloc[-1])},
                  best_test_torque_mse=float(h.test_torque_mse.min()), best_test_torque_epoch=int(h.epoch[h.test_torque_mse.idxmin()]))
     w = np.load(HERE / f"models/{spec['file']}.npz")
     n_params = int(sum(w[k].size for k in w.files if k.endswith(('.weight', '.bias'))))
     params = dict(version='v2', iteration=iteration, model=spec['name'], part='arm', inputs=len(INPUTS), input_names=','.join(INPUTS),
-                  outputs='7_arm_torques_Nm+time_to_stop', stop_threshold_s=0.25, control_hz=spec['hz'], torque_target=spec['target'],
+                  outputs=f'7_arm_torques_Nm+{stop}', stop_target=stop, stop_threshold=float(w['ttp_thresh']), control_hz=spec['hz'], torque_target=spec['target'],
                   hidden='2x64_relu', parameters=n_params, optimizer='adam', learning_rate=0.01, epochs=epochs, batch='full', seed=seed,
-                  loss='torque_mse_standardised+time_to_stop_mse_clip3s_weight1', trajectory_weighting='equal',
+                  loss=f'torque_mse_standardised+{stop}_mse_scaled_weight1', trajectory_weighting='equal',
                   input_scaling='all_standardised', output_scaling='torques_standardised', train_bearings=spec['bearings'],
                   arm_sensor='encoders_kinova_ka75_3686400_ka58_2534400_counts_per_turn', dot_input='simulator_robot_frame',
                   driving='expert_drive', torque_clip_Nm=30, test_bearings=len(df), test_engine='sensor_parking_arm_mode')
@@ -92,11 +104,12 @@ def add(iteration):
     desc = '\n'.join([
         f"**Iteration {iteration}: `{spec['file']}` (arm)**", '', f"**What changed.** {spec['change']}", '',
         '**Inputs.** 19: arm encoder angles and speeds (7 each, Kinova Jaco 2 actuator resolutions), the dot in the robot frame (x, y, z, from the simulator for this test), time since PARK and time since the start.', '',
-        f"**Outputs.** The 7 arm torques (N m, clipped to ±30) at {rate}, and time to stop in seconds (clipped at 3 s); stop when it is 0.25 s or less.", '',
-        f"**Training.** 2×64 ReLU network, {n_params:,} parameters. Loss: torque MSE in standardised units plus time-to-stop MSE (weight 1), each training run counted equally. Adam, lr 0.01, {epochs} full-batch epochs, seed {seed}, trained on {spec['bearings']}. Data: the expert's full runs recorded every 1 ms, from PARK to its stop.", '',
+        f"**Outputs.** The 7 arm torques (N m, clipped to ±30) at {rate}, and " + ("time to stop in seconds (clipped at 3 s); stop when it is 0.25 s or less." if stop == 'time_to_stop' else "the distance from the gripper to the dot (clipped at 0.25 m); stop when it is 1 cm or less."), '',
+        f"**Training.** 2×64 ReLU network, {n_params:,} parameters. Loss: torque MSE in standardised units plus {stop.replace('_', '-')} MSE (weight 1), each training run counted equally. Adam, lr 0.01, {epochs} full-batch epochs, seed {seed}, trained on {spec['bearings']}. Data: the expert's full runs recorded every 1 ms, from PARK to its stop.", '',
         '**Test.** In the simulator on 25 bearings. The expert drives and parks, then only the arm network moves the arm.', '',
         f"- Closest the gripper gets to the dot: median {m['median_closest_mm']:.0f} mm, best {m['best_closest_mm']:.0f} mm; within 1 cm on {m['closest_within_1cm']} of {len(df)}.",
         f"- At the expert's stop time: median {m['median_at_expert_stop_mm']:.0f} mm from the dot. The gripper went more than 1.5 m from the dot on {m['gripper_past_1_5m']} of {len(df)}.",
+        (f"- When the network said stop, the gripper was a median {m['median_at_network_stop_mm']:.0f} mm from the dot." if 'median_at_network_stop_mm' in m else ''),
         f"- The network said stop on {m['stopped']} of {len(df)}" + (f", a median {abs(m['median_stop_vs_expert_s']):.1f} s {'before' if m['median_stop_vs_expert_s'] < 0 else 'after'} the expert." if 'median_stop_vs_expert_s' in m else '.'), '',
         f"**What it tells us.** {spec['lesson']}", '',
         '**Notebook.** ' + ', '.join(f"[{t}]({link}{a})" for t, a in spec['anchors']) + '. The full notebook and the 3D player are attached under Artifacts.'])
@@ -113,7 +126,7 @@ def add(iteration):
         mlflow.log_input(mlflow.data.from_pandas(pd.DataFrame([dict(source=src)]), source=src, name='expert_full_1khz', digest=digest(files)), context='training')
         mlflow.log_metrics(m)
         t = int(run.info.start_time)
-        keys = ['train_torque_mse', 'train_time_to_stop_mse'] + ([] if one else ['test_torque_mse', 'test_time_to_stop_mse'])
+        keys = ['train_torque_mse', f'train_{stop}_mse'] + ([] if one else ['test_torque_mse', f'test_{stop}_mse'])
         batch = [Metric(k, float(v), t, int(e)) for k in keys for e, v in zip(h.epoch, h[k])]
         for i in range(0, len(batch), 1000):
             client.log_batch(run.info.run_id, metrics=batch[i:i + 1000])

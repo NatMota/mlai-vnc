@@ -69,7 +69,8 @@ def one(w, bearing):
         at_expert_stop = next((l['ee_mm'] for l in log if l['t'] >= expert_stop / 1000), 1000 * state['ee_distance_m'])
         return dict(bearing=bearing, split=SPLIT[bearing], expert_termination=m['termination'],
                     expert_stop_mm=1000 * m['final_pre_step_ee_error_m'], expert_stop_s=expert_stop / 1000,
-                    stop_s=stop_t, min_mm=float(closest) if d else None, at_expert_stop_mm=at_expert_stop,
+                    stop_s=stop_t, at_network_stop_mm=next((l['ee_mm'] for l in log if stop_t is not None and l['t'] >= stop_t), None),
+                    min_mm=float(closest) if d else None, at_expert_stop_mm=at_expert_stop,
                     end_mm=1000 * state['ee_distance_m'], log=log, frames=frames)
     finally:
         sim.kill()
