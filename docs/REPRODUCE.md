@@ -172,3 +172,19 @@ This release removes the personal prefix from executable source and test
 filenames; imports and commands above use the new names. The existing
 `docs/chester_memory_policy.md` is an unchanged historical v5 guide. Use this
 document for the current fused release.
+
+## V2: arm on Nat's sensor driving
+
+On Windows, use `git clone --config core.autocrlf=false` when cloning this
+branch to preserve the byte-level checksums in `nat_v2/SOURCE.md`.
+Copy the course robot's `models/` folder into the repository root. From team
+MLflow run `540bdcf942a5448baefdc2802271bbf3`, download `model/policy.pt`
+to `outputs/ablation/all_world/policy.pt`. Use the robot environment's Python
+from the repository root.
+
+```text
+python -B v2_eval.py A B C D E1 E2 E3 --workers 12 --fresh
+```
+
+The 175 episodes took about 28 minutes with 12 workers. See the
+[V2 results](v2_sensor_results.md) for the scores by group and bearing split.
