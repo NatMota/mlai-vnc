@@ -6028,3 +6028,544 @@ Expected:
 - In the simulator the gripper drifts less after its closest point: the median distance at the expert's stop is below iteration 17's (124 mm with seed 7), and the closest distance is no worse (18 mm).
 
 If the test loss falls but the simulator results do not improve, overfitting is not the main reason for the drift. The more likely reason is then the expert's internal target angle, which the network cannot see.
+
+#### Iteration 18: choosing the number of epochs
+
+For each of the 5 folds of training bearings, a network was trained on the other 4 folds for 300 epochs, and its torque loss on the held-out fold was recorded every epoch. The averaged held-out loss is lowest at epoch 77, so iteration 18 is trained for 77 epochs.
+
+
+```python
+cv = [pd.DataFrame(json.loads((ARM / f'models/arm1k_cv_fold{f}_history.json').read_text())) for f in range(5)]
+mean_val = np.mean([h.val_torque_mse for h in cv], 0)
+chosen = json.loads((ARM / 'results/cv_epochs_arm1k.json').read_text())['epochs']
+fig, ax = plt.subplots(figsize=(10, 4))
+for f, h in enumerate(cv):
+    ax.plot(h.epoch, h.val_torque_mse, lw=0.8, label=f'held-out fold {f}')
+ax.plot(cv[0].epoch, mean_val, 'k', lw=2, label='mean of the 5 folds')
+ax.axvline(chosen, color='r', ls=':', label=f'lowest mean: epoch {chosen}')
+ax.set(yscale='log', xlabel='epoch', ylabel='held-out torque loss (standardised)', title='Iteration 18: choosing the number of epochs')
+ax.legend(fontsize=8); plt.show()
+pd.DataFrame([dict(fold=f, best_epoch=int(h.epoch[h.val_torque_mse.idxmin()]),
+                   best_loss=h.val_torque_mse.min(), loss_at_300=h.val_torque_mse.iloc[-1]) for f, h in enumerate(cv)]).set_index('fold').round(3)
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_138_0.png)
+    
+
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>best_epoch</th>
+      <th>best_loss</th>
+      <th>loss_at_300</th>
+    </tr>
+    <tr>
+      <th>fold</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>91</td>
+      <td>0.040</td>
+      <td>0.217</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>299</td>
+      <td>0.026</td>
+      <td>0.026</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>77</td>
+      <td>0.464</td>
+      <td>0.513</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>167</td>
+      <td>0.028</td>
+      <td>0.031</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>74</td>
+      <td>0.571</td>
+      <td>13.757</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Iteration 18: results over four seeds
+
+Iteration 17 (300 epochs) against iteration 18 (77 epochs), each with seeds 7, 1, 2 and 3, tested in the simulator on the 25 bearings with the expert driving.
+
+
+```python
+NETS = {17: ['arm1k', 'arm1k_seed1', 'arm1k_seed2', 'arm1k_seed3'], 18: ['arm1k_e77', 'arm1k_e77_seed1', 'arm1k_e77_seed2', 'arm1k_e77_seed3']}
+rows = []
+for it, names in NETS.items():
+    for name, seed in zip(names, (7, 1, 2, 3)):
+        h = json.loads((ARM / f'models/{name}_history.json').read_text())[-1]
+        r = pd.DataFrame(json.loads((ARM / f'results/{name}.json').read_text()))
+        rows.append({'iteration': it, 'seed': seed, 'model': name, 'epochs': h['epoch'], 'test torque loss': h['test_torque_mse'],
+                     'train time-to-stop loss': h['train_time_to_stop_mse'], 'median closest (mm)': r.min_mm.median(),
+                     'closest within 1 cm (of 25)': int((r.min_mm <= 10).sum()), 'median at the expert stop (mm)': r.at_expert_stop_mm.median(),
+                     'stopped (of 25)': int(r.stop_s.notna().sum())})
+iter18 = pd.DataFrame(rows)
+display(iter18.set_index(['iteration', 'seed']).round(3))
+iter18.drop(columns=['seed', 'model']).groupby('iteration').mean().round(3)
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>model</th>
+      <th>epochs</th>
+      <th>test torque loss</th>
+      <th>train time-to-stop loss</th>
+      <th>median closest (mm)</th>
+      <th>closest within 1 cm (of 25)</th>
+      <th>median at the expert stop (mm)</th>
+      <th>stopped (of 25)</th>
+    </tr>
+    <tr>
+      <th>iteration</th>
+      <th>seed</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="4" valign="top">17</th>
+      <th>7</th>
+      <td>arm1k</td>
+      <td>300</td>
+      <td>0.572</td>
+      <td>0.001</td>
+      <td>18.325</td>
+      <td>2</td>
+      <td>124.103</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>arm1k_seed1</td>
+      <td>300</td>
+      <td>0.482</td>
+      <td>0.002</td>
+      <td>16.456</td>
+      <td>6</td>
+      <td>100.728</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>arm1k_seed2</td>
+      <td>300</td>
+      <td>0.811</td>
+      <td>0.001</td>
+      <td>19.862</td>
+      <td>4</td>
+      <td>74.951</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>arm1k_seed3</td>
+      <td>300</td>
+      <td>0.694</td>
+      <td>0.001</td>
+      <td>37.845</td>
+      <td>0</td>
+      <td>488.239</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th rowspan="4" valign="top">18</th>
+      <th>7</th>
+      <td>arm1k_e77</td>
+      <td>77</td>
+      <td>0.377</td>
+      <td>0.004</td>
+      <td>32.971</td>
+      <td>4</td>
+      <td>278.746</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>arm1k_e77_seed1</td>
+      <td>77</td>
+      <td>0.367</td>
+      <td>0.004</td>
+      <td>18.923</td>
+      <td>3</td>
+      <td>209.033</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>arm1k_e77_seed2</td>
+      <td>77</td>
+      <td>0.377</td>
+      <td>0.004</td>
+      <td>26.687</td>
+      <td>0</td>
+      <td>152.882</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>arm1k_e77_seed3</td>
+      <td>77</td>
+      <td>0.385</td>
+      <td>0.003</td>
+      <td>17.870</td>
+      <td>2</td>
+      <td>118.563</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>epochs</th>
+      <th>test torque loss</th>
+      <th>train time-to-stop loss</th>
+      <th>median closest (mm)</th>
+      <th>closest within 1 cm (of 25)</th>
+      <th>median at the expert stop (mm)</th>
+      <th>stopped (of 25)</th>
+    </tr>
+    <tr>
+      <th>iteration</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>17</th>
+      <td>300.0</td>
+      <td>0.640</td>
+      <td>0.001</td>
+      <td>23.122</td>
+      <td>3.00</td>
+      <td>197.005</td>
+      <td>18.25</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>77.0</td>
+      <td>0.376</td>
+      <td>0.004</td>
+      <td>24.113</td>
+      <td>2.25</td>
+      <td>189.806</td>
+      <td>7.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Iteration 18: loss curves
+
+Training (solid) and test (dashed) losses for the four seeds of each iteration, in standardised units.
+
+
+```python
+arm_loss_plot(NETS[17], 'Iteration 17: 300 epochs, four seeds')
+arm_loss_plot(NETS[18], 'Iteration 18: 77 epochs, four seeds')
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_142_0.png)
+    
+
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_142_1.png)
+    
+
+
+#### Iteration 18: 3D replays
+
+One player per network: the four seeds of iteration 18, then the three new seeds of iteration 17 (seed 7 is in the iteration 17 section). The line under each player gives the distance from each gripper to the dot in mm.
+
+##### Iteration 18, seed 7 (`arm1k_e77`)
+
+<a href="/files/arm/results/viewer_arm1k_e77.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_e77')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm1k_e77.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+##### Iteration 18, seed 1 (`arm1k_e77_seed1`)
+
+<a href="/files/arm/results/viewer_arm1k_e77_seed1.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_e77_seed1')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm1k_e77_seed1.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+##### Iteration 18, seed 2 (`arm1k_e77_seed2`)
+
+<a href="/files/arm/results/viewer_arm1k_e77_seed2.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_e77_seed2')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm1k_e77_seed2.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+##### Iteration 18, seed 3 (`arm1k_e77_seed3`)
+
+<a href="/files/arm/results/viewer_arm1k_e77_seed3.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_e77_seed3')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm1k_e77_seed3.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+##### Iteration 17, seed 1 (`arm1k_seed1`)
+
+<a href="/files/arm/results/viewer_arm1k_seed1.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_seed1')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm1k_seed1.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+##### Iteration 17, seed 2 (`arm1k_seed2`)
+
+<a href="/files/arm/results/viewer_arm1k_seed2.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_seed2')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm1k_seed2.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+##### Iteration 17, seed 3 (`arm1k_seed3`)
+
+<a href="/files/arm/results/viewer_arm1k_seed3.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_seed3')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm1k_seed3.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+#### Iteration 18: reading the results
+
+Against the expectation:
+
+- **Number of epochs:** 77, just below the expected 80 to 200. The mean is pulled down mostly by fold 4, whose held-out loss rises from 0.57 at epoch 74 to 13.8 at epoch 300. Folds 1 and 3 keep improving until epochs 299 and 167, so the choice depends heavily on one fold.
+- **Test torque loss: as expected.** It falls from a mean of 0.64 to 0.38 over the four seeds, and it is much steadier across seeds (0.37 to 0.39, against 0.48 to 0.81).
+- **Simulator: not as expected.** The reach does not improve. Over the four seeds the median closest distance is 24.1 mm against 23.1 mm, the gripper gets within 1 cm on 2.25 bearings against 3, and the median distance at the expert's stop is 190 mm against 197 mm.
+- **Stop: worse.** The network says stop on 7 of 25 bearings against 18.25. With fewer epochs the time-to-stop output is fitted less closely (training loss 0.004 against 0.001), so it rarely drops below the 0.25 s threshold.
+- The seed still matters more than the number of epochs. With 300 epochs, the median distance at the expert's stop ranges from 75 mm (seed 2) to 488 mm (seed 3).
+
+What it tells us: as the plan said, a lower test loss without a better reach in the simulator means overfitting is not the main reason the arm drifts. The more likely reason is the expert's internal target angle, which the network cannot see. Inputs that let the network infer it, such as its previous torques or a short history of joint angles, are the next thing to test. Fewer epochs is not kept, because it costs the stop.
