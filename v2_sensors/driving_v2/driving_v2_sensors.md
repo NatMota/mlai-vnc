@@ -5717,7 +5717,7 @@ What this means for the arm: to output torques, as the expert does, the arm netw
 
 #### 3D replay: 30 Hz torque network (`arm30_sample`)
 
-Solid robot: the arm network's run. Cyan ghost: the expert's own run for the same bearing. The expert drives and parks in both runs, so the two robots overlap until PARK. After PARK the solid arm gets only the network's torques. The side table shows the 7 torques of both, and a run is cut once the gripper is 1.5 m from the dot.
+Solid robot: the arm network's run. Cyan ghost: the expert's own run for the same bearing. The expert drives and parks in both runs, so the two robots overlap until PARK. After PARK the solid arm gets only the network's torques. The side table shows the 7 torques of both, and a run is cut once the gripper is more than 1.5 m from the dot after PARK.
 
 The orange line runs from the network's end effector to the dot, and the dotted cyan line from the expert's, each labelled with the distance in mm. This is the distance the expert itself uses: from its end-effector frame (`robot_j2s7s300_end_effector`) to the dot centre. After PARK the dot is never more than 0.53 m from the shoulder, inside the expert's 0.85 m reach limit, so the expert always aims at the dot centre itself.
 

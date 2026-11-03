@@ -2,7 +2,7 @@
 
 Solid robot: the arm network's run. Cyan ghost: the expert's own run for the same bearing. Both are drawn every 1/30 s.
 The side table shows the 7 arm torques of the model and the expert. A model run is cut once the gripper is more
-than 1.5 m from the dot, because the simulation has blown up by then and would make the view unreadable.
+than 1.5 m from the dot after PARK, because the simulation has blown up by then and would make the view unreadable.
 
 The expert frames are read once from data/expert_full (recorded every 1 ms) and saved in results/expert_frames.json,
 so the player can be rebuilt without the raw recordings.
@@ -57,9 +57,9 @@ def build_viewer(model, out_name=None):
         frames = []
         for f in r['frames']:
             frames.append(_frame(f))
-            if f['ee_mm'] > CUT_MM:
+            if f['parked'] and f['ee_mm'] > CUT_MM:    # only after PARK: before it the dot can be more than 1.5 m away
                 break
-        cut = frames[-1]['ee_mm'] > CUT_MM
+        cut = frames[-1]['parked'] and frames[-1]['ee_mm'] > CUT_MM
         metrics = dict(model_park_s=e['park_s'], expert_park_s=e['park_s'], closest_mm=r['min_mm'], expert_mm=e['stop_mm'],
                        stop_s=r['stop_s'], expert_stop_s=e['stop_s'], at_expert_stop_mm=r['at_expert_stop_mm'], cut=cut)
         runs.append(dict(bearing_deg=r['bearing'], split=r['split'], target=e['target'], metrics=metrics,
