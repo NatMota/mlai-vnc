@@ -99,6 +99,16 @@ ARM_ITERATIONS[22] = dict(iteration=22, name='arm-1khz-no-scaling-camera-dot', f
     lesson='Without scaling the network fits the torques poorly (2.17 N m² on the training runs against 0.37 for iteration 21 and 3.68 for the mean torque). With the camera it says stop on all 25 bearings but a median 0.64 s after PARK and 239 mm from the dot; the median fall of 195 mm (386 mm in iteration 21) is lower only because the run ends sooner. The gripper drops from PARK and never holds.')
 
 
+ARM_ITERATIONS[23] = dict(iteration=23, name='arm-1khz-physical-input-scaling-camera-dot', file='arm1k_e77_dist_notime_phys', results='arm1k_e77_dist_notime_phys_camera',
+    hz=1000, target='sample', seed=7, epochs=77, bearings='21 training bearings', n_inputs=17, dot_input='camera_tracker',
+    anchors=[('Plan and expected results', '#iteration-23-plan-and-expected-results'), ('results', '#iteration-23-results'),
+             ('gripper height after PARK', '#iteration-23-gripper-height-after-park'), ('torque error per joint', '#iteration-23-torque-error-per-joint'),
+             ('loss curves', '#iteration-23-loss-curves'), ('3D replay', '#iteration-23-3d-replay-arm1k_e77_dist_notime_phys-dot-from-the-camera'),
+             ('reading the results', '#iteration-23-reading-the-results')],
+    change='Iteration 21 (17 inputs, no time) with each input divided by a fixed physical size instead of standardised: angles by π, speeds by the speed limits (0.63 rad/s joints 1 to 4, 0.84 rad/s joints 5 to 7), the dot by 1 m. Torques standardised as before. Tested with the dot from the corner camera and tracker.',
+    lesson='The input scaling was the main reason the camera runs failed. With inputs divided by physical sizes the gripper gets a median 57 mm from the dot (189 mm in iteration 21), within 50 mm on 9 of 25, with no fall and 0.2% of torques at the limit. The stop is now the limit: the network says stop on all 25 bearings but a median 0.81 s after PARK and 104 mm from the dot, while the arm is still moving towards it. Training is not finished at 77 epochs (losses still falling).')
+
+
 def add(iteration):
     import mlflow, pandas as pd
     from mlflow.entities import Metric
@@ -126,12 +136,12 @@ def add(iteration):
     w = np.load(HERE / f"models/{spec['file']}.npz")
     n_params = int(sum(w[k].size for k in w.files if k.endswith(('.weight', '.bias'))))
     names = INPUTS[:spec.get('n_inputs', len(INPUTS))]
-    raw = str(w['info_scaling']) == 'none' if 'info_scaling' in w.files else False
+    scaling = str(w['info_scaling']) if 'info_scaling' in w.files else 'standardised'; raw = scaling == 'none'
     params = dict(version='v2', iteration=iteration, model=spec['name'], part='arm', inputs=len(names), input_names=','.join(names),
                   outputs=f'7_arm_torques_Nm+{stop}', stop_target=stop, stop_threshold=float(w['ttp_thresh']), control_hz=spec['hz'], torque_target=spec['target'],
                   hidden='2x64_relu', parameters=n_params, optimizer='adam', learning_rate=0.01, epochs=epochs, batch='full', seed=seed,
                   loss=f"torque_mse_{'Nm2' if raw else 'standardised'}+{stop}_mse_scaled_weight1", trajectory_weighting='equal',
-                  input_scaling='none' if raw else 'all_standardised', output_scaling='none' if raw else 'torques_standardised', train_bearings=spec['bearings'],
+                  input_scaling={'none': 'none', 'physical_inputs': 'physical_angles_pi_speeds_limit_dot_1m'}.get(scaling, 'all_standardised'), output_scaling='none' if raw else 'torques_standardised', train_bearings=spec['bearings'],
                   arm_sensor='encoders_kinova_ka75_3686400_ka58_2534400_counts_per_turn', dot_input=spec.get('dot_input', 'simulator_robot_frame'),
                   driving='expert_drive', torque_clip_Nm=30, test_bearings=len(df), test_engine='sensor_parking_arm_mode')
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=HERE, text=True).strip()
@@ -141,7 +151,7 @@ def add(iteration):
         f"**Iteration {iteration}: `{spec['file']}` (arm)**", '', f"**What changed.** {spec['change']}", '',
         f"**Inputs.** {len(names)}: arm encoder angles and speeds (7 each, Kinova Jaco 2 actuator resolutions), the dot in the robot frame (x, y, z, " + ('from the corner camera and tracker, image every 1/30 s' if spec.get('dot_input') == 'camera_tracker' else 'from the simulator for this test') + (')' if len(names) == 17 else '), time since PARK and time since the start') + '.', '',
         f"**Outputs.** The 7 arm torques (N m, clipped to ±30) at {rate}, and " + ("time to stop in seconds (clipped at 3 s); stop when it is 0.25 s or less." if stop == 'time_to_stop' else "the distance from the gripper to the dot (clipped at 0.25 m); stop when it is 1 cm or less."), '',
-        f"**Training.** 2×64 ReLU network, {n_params:,} parameters. Loss: torque MSE in {'N m² (no scaling of inputs or torques)' if raw else 'standardised units'} plus {stop.replace('_', '-')} MSE (weight 1), each training run counted equally. Adam, lr 0.01, {epochs} full-batch epochs, seed {seed}, trained on {spec['bearings']}. Data: the expert's full runs recorded every 1 ms, from PARK to its stop.", '',
+        f"**Training.** 2×64 ReLU network, {n_params:,} parameters. Loss: torque MSE in {'N m² (no scaling of inputs or torques)' if raw else 'standardised units'}{' (inputs divided by physical sizes: angles by π, speeds by the speed limits, the dot by 1 m)' if scaling == 'physical_inputs' else ''} plus {stop.replace('_', '-')} MSE (weight 1), each training run counted equally. Adam, lr 0.01, {epochs} full-batch epochs, seed {seed}, trained on {spec['bearings']}. Data: the expert's full runs recorded every 1 ms, from PARK to its stop.", '',
         '**Test.** In the simulator on 25 bearings. The expert drives and parks, then only the arm network moves the arm.', '',
         f"- Closest the gripper gets to the dot: median {m['median_closest_mm']:.0f} mm, best {m['best_closest_mm']:.0f} mm; within 1 cm on {m['closest_within_1cm']} of {len(df)}.",
         f"- At the expert's stop time: median {m['median_at_expert_stop_mm']:.0f} mm from the dot. The gripper went more than 1.5 m from the dot on {m['gripper_past_1_5m']} of {len(df)}.",
