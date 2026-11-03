@@ -75,6 +75,20 @@ ARM_ITERATIONS[20] = dict(iteration=20, name='arm-1khz-camera-dot', file='arm1k_
     lesson='The camera is not good enough for the arm as it is used now: the gripper gets a median 105 mm from the dot (29 mm with the simulator dot) and the network stops a median 214 mm away. The estimate error itself is moderate (27 mm at PARK, 11 mm during the reach), but the dot input jumps when a hidden dot comes into view after PARK, which the network never saw in training, and the arm swings away 0.5 s after PARK. Next: one fixed dot position after a fresh view.')
 
 
+_A21 = [('Plan and expected results', '#iteration-21-plan-and-expected-results'), ('results', '#iteration-21-results'),
+        ('gripper height after PARK', '#iteration-21-gripper-height-after-park'), ('loss curves', '#iteration-21-loss-curves'),
+        ('the dot input at PARK', '#iteration-21-the-dot-input-at-park-training-against-the-camera'), ('reading the results', '#iteration-21-reading-the-results')]
+ARM_ITERATIONS[21] = dict(iteration=21, name='arm-1khz-no-time-inputs', file='arm1k_e77_dist_notime', hz=1000, target='sample', seed=7, epochs=77,
+    bearings='21 training bearings', n_inputs=17, anchors=_A21 + [('3D replay', '#iteration-21-3d-replay-with-the-simulators-dot-arm1k_e77_dist_notime')],
+    change='Iteration 19 retrained without the two time inputs (time since PARK, time since the start): 17 inputs. Tested with the simulator dot.',
+    lesson='The clock was not why the arm falls: without it the arm falls more (median 111 mm after its closest point, against 5 mm). The time inputs were what told the network to hold late in the run. Iteration 19 stays the best arm network with the simulator dot.')
+ARM_ITERATIONS['21-camera'] = dict(iteration=21, name='arm-1khz-no-time-inputs-camera-dot', file='arm1k_e77_dist_notime', results='arm1k_e77_dist_notime_camera',
+    hz=1000, target='sample', seed=7, epochs=77, bearings='21 training bearings', n_inputs=17, dot_input='camera_tracker',
+    anchors=_A21 + [('3D replay', '#iteration-21-3d-replay-with-the-camera-arm1k_e77_dist_notime-dot-from-the-camera')],
+    change='The iteration 21 network (no time inputs) tested with the dot from the corner camera and tracker.',
+    lesson='The arm still falls (median 386 mm). The cause is the dot height input: over the 21 training runs it spreads by only 0.2 mm, so the camera height error of 11 mm at PARK is about 60 standard deviations, far outside training. Next: leave the height out, or train with the camera error or other dot heights.')
+
+
 def add(iteration):
     import mlflow, pandas as pd
     from mlflow.entities import Metric
@@ -101,7 +115,8 @@ def add(iteration):
                  best_test_torque_mse=float(h.test_torque_mse.min()), best_test_torque_epoch=int(h.epoch[h.test_torque_mse.idxmin()]))
     w = np.load(HERE / f"models/{spec['file']}.npz")
     n_params = int(sum(w[k].size for k in w.files if k.endswith(('.weight', '.bias'))))
-    params = dict(version='v2', iteration=iteration, model=spec['name'], part='arm', inputs=len(INPUTS), input_names=','.join(INPUTS),
+    names = INPUTS[:spec.get('n_inputs', len(INPUTS))]
+    params = dict(version='v2', iteration=iteration, model=spec['name'], part='arm', inputs=len(names), input_names=','.join(names),
                   outputs=f'7_arm_torques_Nm+{stop}', stop_target=stop, stop_threshold=float(w['ttp_thresh']), control_hz=spec['hz'], torque_target=spec['target'],
                   hidden='2x64_relu', parameters=n_params, optimizer='adam', learning_rate=0.01, epochs=epochs, batch='full', seed=seed,
                   loss=f'torque_mse_standardised+{stop}_mse_scaled_weight1', trajectory_weighting='equal',
@@ -113,7 +128,7 @@ def add(iteration):
     rate = '30 Hz (each torque held 33 ms)' if spec['hz'] == 30 else '1 kHz (a new torque every 1 ms)'
     desc = '\n'.join([
         f"**Iteration {iteration}: `{spec['file']}` (arm)**", '', f"**What changed.** {spec['change']}", '',
-        '**Inputs.** 19: arm encoder angles and speeds (7 each, Kinova Jaco 2 actuator resolutions), the dot in the robot frame (x, y, z, ' + ('from the corner camera and tracker, image every 1/30 s' if spec.get('dot_input') == 'camera_tracker' else 'from the simulator for this test') + '), time since PARK and time since the start.', '',
+        f"**Inputs.** {len(names)}: arm encoder angles and speeds (7 each, Kinova Jaco 2 actuator resolutions), the dot in the robot frame (x, y, z, " + ('from the corner camera and tracker, image every 1/30 s' if spec.get('dot_input') == 'camera_tracker' else 'from the simulator for this test') + (')' if len(names) == 17 else '), time since PARK and time since the start') + '.', '',
         f"**Outputs.** The 7 arm torques (N m, clipped to ±30) at {rate}, and " + ("time to stop in seconds (clipped at 3 s); stop when it is 0.25 s or less." if stop == 'time_to_stop' else "the distance from the gripper to the dot (clipped at 0.25 m); stop when it is 1 cm or less."), '',
         f"**Training.** 2×64 ReLU network, {n_params:,} parameters. Loss: torque MSE in standardised units plus {stop.replace('_', '-')} MSE (weight 1), each training run counted equally. Adam, lr 0.01, {epochs} full-batch epochs, seed {seed}, trained on {spec['bearings']}. Data: the expert's full runs recorded every 1 ms, from PARK to its stop.", '',
         '**Test.** In the simulator on 25 bearings. The expert drives and parks, then only the arm network moves the arm.', '',

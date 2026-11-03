@@ -74,6 +74,7 @@ def one(w, bearing, camera=False):
                 else:
                     dot = true_dot
                 x = np.r_[r['arm_angle'], r['arm_speed'], dot, t - state['park_step'] / 1000, t].astype(np.float32)
+                x = x[:w['shared.0.weight'].shape[1]]       # 17-input models (no time inputs) skip the last two
                 tau, ttp = policy(w, x)
                 if stop_t is None and ttp <= float(w['ttp_thresh']):
                     stop_t = t

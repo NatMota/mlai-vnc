@@ -843,9 +843,9 @@ player('wheels+live_dot')
 
 
 
-<div><button onclick="var f=document.getElementById('player10ea48ac');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player2ab05585');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player10ea48ac" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player2ab05585" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -861,9 +861,9 @@ player('wheels+start_dot')
 
 
 
-<div><button onclick="var f=document.getElementById('playere45af35f');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_start_dot.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerae458e3e');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_start_dot.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playere45af35f" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerae458e3e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -879,9 +879,9 @@ player('wheels')
 
 
 
-<div><button onclick="var f=document.getElementById('playerb262a71c');f.src='/files/driving_v2/closed_loop_native/viewer_wheels.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player890f0ca6');f.src='/files/driving_v2/closed_loop_native/viewer_wheels.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerb262a71c" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player890f0ca6" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -1331,9 +1331,9 @@ player('wheels+live_dot+skid')
 
 
 
-<div><button onclick="var f=document.getElementById('player96ee826b');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot_skid.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player29adbd2e');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot_skid.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player96ee826b" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player29adbd2e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5256,9 +5256,9 @@ lazy_player('/files/driving_v2/closed_loop_native/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playera6332885');f.src='/files/driving_v2/closed_loop_native/viewer_iter13_seed7.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerf01f1e03');f.src='/files/driving_v2/closed_loop_native/viewer_iter13_seed7.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playera6332885" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerf01f1e03" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5751,9 +5751,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player384da6a1');f.src='/files/arm/results/viewer_arm30_sample_b12.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player99dad307');f.src='/files/arm/results/viewer_arm30_sample_b12.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player384da6a1" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player99dad307" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5770,9 +5770,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player1da2bf5e');f.src='/files/arm/results/viewer_arm30_sample.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player2efb13ff');f.src='/files/arm/results/viewer_arm30_sample.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player1da2bf5e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player2efb13ff" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5789,9 +5789,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerd9c919fa');f.src='/files/arm/results/viewer_arm30_mean.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerc52f36d5');f.src='/files/arm/results/viewer_arm30_mean.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerd9c919fa" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerc52f36d5" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5939,9 +5939,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player388dd9c0');f.src='/files/arm/results/viewer_arm1k.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player01af1acd');f.src='/files/arm/results/viewer_arm1k.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player388dd9c0" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player01af1acd" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6337,9 +6337,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerfaed3dcf');f.src='/files/arm/results/viewer_arm1k_e77.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player66c0a34d');f.src='/files/arm/results/viewer_arm1k_e77.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerfaed3dcf" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player66c0a34d" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6356,9 +6356,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player94e4d88a');f.src='/files/arm/results/viewer_arm1k_e77_seed1.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player94fcf46f');f.src='/files/arm/results/viewer_arm1k_e77_seed1.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player94e4d88a" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player94fcf46f" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6375,9 +6375,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playere572ad8b');f.src='/files/arm/results/viewer_arm1k_e77_seed2.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerf7642cae');f.src='/files/arm/results/viewer_arm1k_e77_seed2.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playere572ad8b" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerf7642cae" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6394,9 +6394,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player575a63ca');f.src='/files/arm/results/viewer_arm1k_e77_seed3.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playeraf087b0b');f.src='/files/arm/results/viewer_arm1k_e77_seed3.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player575a63ca" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playeraf087b0b" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6413,9 +6413,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player9ce51a6c');f.src='/files/arm/results/viewer_arm1k_seed1.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player607efe0e');f.src='/files/arm/results/viewer_arm1k_seed1.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player9ce51a6c" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player607efe0e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6432,9 +6432,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player4f5d3a59');f.src='/files/arm/results/viewer_arm1k_seed2.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playera1655bf5');f.src='/files/arm/results/viewer_arm1k_seed2.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player4f5d3a59" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playera1655bf5" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6451,9 +6451,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player92e564f1');f.src='/files/arm/results/viewer_arm1k_seed3.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player53435719');f.src='/files/arm/results/viewer_arm1k_seed3.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player92e564f1" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player53435719" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6645,9 +6645,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player53cbb974');f.src='/files/arm/results/viewer_arm1k_e77_dist.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerfca3586d');f.src='/files/arm/results/viewer_arm1k_e77_dist.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player53cbb974" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerfca3586d" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6833,9 +6833,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerfbd1d952');f.src='/files/arm/results/viewer_arm1k_e77_dist_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playercdb01152');f.src='/files/arm/results/viewer_arm1k_e77_dist_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerfbd1d952" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playercdb01152" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6855,3 +6855,308 @@ Why it is worse than the estimate error suggests:
 - Once the arm swings, it pushes the robot base: the true dot moves by up to 40 mm relative to the robot. The estimate follows it, staying about 11 mm off, which is why the estimate moves by up to 72 mm in total. This is a result of the swing, not its cause.
 
 What it tells us: the next test is to give the arm network one fixed dot position, taken once the camera has a fresh view of the dot after PARK, and to keep it fixed during the reach. If that works, the camera's error alone, about 1 cm when the dot is in view, sets how close the gripper can get. Training on dot positions with the camera's error added is the other option.
+
+### Arm: no time inputs (iteration 21)
+
+#### Iteration 21: plan and expected results
+
+With the camera (iteration 20), the arm reaches the dot about 0.6 s after PARK instead of 1.6 s, says stop, and then drops: the gripper falls a median 447 mm in the next 0.5 s. With the simulator's dot (iteration 19) it falls a median 5 mm after its closest point, up to about 50 mm on some bearings.
+
+The likely reason is the two time inputs, time since PARK and time since the start. In every training row the arm is at the point of the expert's reach that the clock predicts: about halfway 0.6 s after PARK, at the dot about 1.6 s after. The network can use the clock as a shortcut instead of the joint angles. When the arm arrives early, the clock and the joints disagree, which never happens in training, and the torques it gives there do not hold the arm against gravity.
+
+The time inputs were needed for the old stop, which followed the expert's 8 s rule. Since iteration 19 the stop learns the distance to the dot, so the clock is no longer needed.
+
+Iteration 21 is iteration 19 retrained without the two time inputs:
+
+- 17 inputs: arm encoder angles and speeds (7 each) and the dot position (x, y, height).
+- Everything else as in iteration 19: the torques and the distance to the dot as outputs, stop at 1 cm, 2×64 ReLU, 1 kHz, 77 epochs, seed 7, rows from the expert's PARK to its stop.
+- Tested twice on the 25 bearings with the expert driving: with the simulator's dot, to compare with iteration 19, and with the camera and tracker, to compare with iteration 20.
+- New result: how far the gripper height falls after the gripper's closest point to the dot.
+
+Expected:
+
+- With the simulator's dot: the reach stays as in iteration 19 (median closest near 30 mm) and the fall after the closest point stays small, near 5 mm, and no longer reaches 50 mm.
+- With the camera: the fall of a median 447 mm mostly goes away, to below 50 mm. The early, fast reach stays, because it comes from the dot input jumping when a hidden dot comes into view, not from the clock.
+
+The expectation is wrong if the arm still falls by more than 200 mm with the camera. Then the clock is not the cause, and the next suspect is gravity itself: the torque that holds the arm up depends on the joint angles in a way the network has not learned from 21 reaches.
+
+#### Iteration 21: results
+
+Iterations 19 and 21 with the simulator's dot, and iterations 20 and 21 with the camera, on the 25 bearings with the expert driving. The fall is how far the gripper height drops after the gripper's closest point to the dot.
+
+
+```python
+def gripper_fall_mm(run):
+    """How far the gripper height drops after its closest point to the dot (from the frames logged every 1/30 s)."""
+    F = [f for f in run['frames'] if f['parked']]
+    i = int(np.argmin([f['ee_mm'] for f in F]))
+    return 1000 * (F[i]['ee'][2] - min(f['ee'][2] for f in F[i:]))
+
+rows = []
+for it, results, inputs, source in ((19, 'arm1k_e77_dist', 19, 'simulator'), (21, 'arm1k_e77_dist_notime', 17, 'simulator'),
+                                    (20, 'arm1k_e77_dist_camera', 19, 'camera'), (21, 'arm1k_e77_dist_notime_camera', 17, 'camera')):
+    runs = json.loads((ARM / f'results/{results}.json').read_text()); r = pd.DataFrame(runs)
+    rows.append({'iteration': it, 'inputs': inputs, 'dot from': source, 'stopped (of 25)': int(r.stop_s.notna().sum()),
+                 'median distance at stop (mm)': r.at_network_stop_mm.median(), 'median closest (mm)': r.min_mm.median(),
+                 'median fall after closest (mm)': np.median([gripper_fall_mm(x) for x in runs]),
+                 'largest fall (mm)': max(gripper_fall_mm(x) for x in runs)})
+pd.DataFrame(rows).set_index(['iteration', 'dot from']).round(1)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>inputs</th>
+      <th>stopped (of 25)</th>
+      <th>median distance at stop (mm)</th>
+      <th>median closest (mm)</th>
+      <th>median fall after closest (mm)</th>
+      <th>largest fall (mm)</th>
+    </tr>
+    <tr>
+      <th>iteration</th>
+      <th>dot from</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>19</th>
+      <th>simulator</th>
+      <td>19</td>
+      <td>25</td>
+      <td>35.2</td>
+      <td>29.3</td>
+      <td>5.3</td>
+      <td>81.7</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <th>simulator</th>
+      <td>17</td>
+      <td>24</td>
+      <td>79.0</td>
+      <td>23.7</td>
+      <td>111.4</td>
+      <td>345.5</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <th>camera</th>
+      <td>19</td>
+      <td>25</td>
+      <td>214.1</td>
+      <td>105.3</td>
+      <td>446.9</td>
+      <td>578.9</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <th>camera</th>
+      <td>17</td>
+      <td>3</td>
+      <td>493.4</td>
+      <td>188.7</td>
+      <td>385.8</td>
+      <td>682.5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Iteration 21: gripper height after PARK
+
+The gripper height on four bearings, with and without the time inputs. The dot is at 0.5 m.
+
+
+```python
+fig, axes = plt.subplots(1, 4, figsize=(16, 3.6), sharey=True)
+styles = (('arm1k_e77_dist', 'iteration 19, simulator dot', '-'), ('arm1k_e77_dist_notime', 'iteration 21, simulator dot', '--'),
+          ('arm1k_e77_dist_camera', 'iteration 20, camera', '-'), ('arm1k_e77_dist_notime_camera', 'iteration 21, camera', '--'))
+runs = {name: {r['bearing']: r for r in json.loads((ARM / f'results/{name}.json').read_text())} for name, _, _ in styles}
+for ax, b in zip(axes, (24, 60, 180, 300)):
+    for name, label, ls in styles:
+        F = [f for f in runs[name][b]['frames'] if f['parked']]
+        ax.plot([f['time_s'] - F[0]['time_s'] for f in F], [1000 * f['ee'][2] for f in F], ls, label=label)
+    ax.axhline(500, color='r', lw=0.8, ls=':'); ax.set(title=f'{b}°', xlabel='time since PARK (s)')
+axes[0].set_ylabel('gripper height (mm)'); axes[0].legend(fontsize=7); plt.show()
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_183_0.png)
+    
+
+
+#### Iteration 21: loss curves
+
+Iteration 21 (17 inputs, no time) against iteration 19 (19 inputs).
+
+
+```python
+arm_loss_plot(['arm1k_e77_dist', 'arm1k_e77_dist_notime'], 'Iteration 21 (no time inputs) against iteration 19')
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_185_0.png)
+    
+
+
+#### Iteration 21: 3D replay with the simulator's dot (`arm1k_e77_dist_notime`)
+
+<a href="/files/arm/results/viewer_arm1k_e77_dist_notime.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_e77_dist_notime')
+lazy_player('/files/arm/results/' + path.name)
+```
+
+
+
+
+<div><button onclick="var f=document.getElementById('player1a64c433');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player1a64c433" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+
+
+
+#### Iteration 21: 3D replay with the camera (`arm1k_e77_dist_notime`, dot from the camera)
+
+<a href="/files/arm/results/viewer_arm1k_e77_dist_notime_camera.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_e77_dist_notime_camera')
+lazy_player('/files/arm/results/' + path.name)
+```
+
+
+
+
+<div><button onclick="var f=document.getElementById('playerb4e3de9f');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_camera.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="playerb4e3de9f" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+
+
+
+#### Iteration 21: the dot input at PARK, training against the camera
+
+The spread of the dot position relative to the robot at PARK over the 21 training runs, against the camera's error at PARK.
+
+
+```python
+import train_arm
+train_dot = np.array([train_arm.load_run(b, 'sample', 1000)['X'][0, 14:17] for b in sorted(train_arm.SPLIT) if train_arm.SPLIT[b] == 'train'])
+cam = json.loads((ARM / 'results/arm1k_e77_dist_camera.json').read_text())
+err = np.array([np.subtract(r['log'][0]['est'], r['log'][0]['true']) for r in cam])
+spread = 1000 * train_dot.std(0)
+pd.DataFrame({'training range (mm)': [f'{1000 * lo:.0f} to {1000 * hi:.0f}' for lo, hi in zip(train_dot.min(0), train_dot.max(0))],
+              'training spread, std (mm)': spread.round(1),
+              'camera error at PARK, median size (mm)': (1000 * np.median(np.abs(err), 0)).round(1),
+              'camera error in training stds': (1000 * np.median(np.abs(err), 0) / spread).round(1)},
+             index=['x (forward)', 'y (left)', 'height'])
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>training range (mm)</th>
+      <th>training spread, std (mm)</th>
+      <th>camera error at PARK, median size (mm)</th>
+      <th>camera error in training stds</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>x (forward)</th>
+      <td>676 to 730</td>
+      <td>13.500000</td>
+      <td>17.2</td>
+      <td>1.3</td>
+    </tr>
+    <tr>
+      <th>y (left)</th>
+      <td>-31 to 26</td>
+      <td>16.200001</td>
+      <td>18.4</td>
+      <td>1.1</td>
+    </tr>
+    <tr>
+      <th>height</th>
+      <td>502 to 503</td>
+      <td>0.200000</td>
+      <td>10.9</td>
+      <td>61.6</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Iteration 21: reading the results
+
+Against the expectation:
+
+- **With the simulator's dot: not as expected.** The gripper gets a little closer (median 24 mm against 29 mm), but then it falls a median 111 mm after its closest point, against 5 mm with the time inputs. When it says stop it is a median 79 mm from the dot, against 35 mm.
+- **With the camera: not as expected.** The fall stays large, a median 386 mm against 447 mm, so it is above the 200 mm that the plan set as the test. The reach is worse (median closest 189 mm against 105 mm), and the network says stop on only 3 of 25 bearings.
+
+What it tells us:
+
+- The clock was not the cause of the fall. It was the opposite: with the simulator's dot, the time inputs were what kept the arm up after the reach. In the expert's runs the arm holds still near the dot for the last part of every run, and the network had learned "late in the run, hold" from the clock.
+- Without the clock, the network has to work out the holding torque from the joint angles alone, and it cannot from 21 reaches. Holding the arm still means cancelling gravity, and the torque for that changes with every joint angle.
+- Iteration 19, with the time inputs, stays the best arm network with the simulator's dot.
+
+Why the camera makes the arm fall (iterations 20 and 21). The height plot shows that with the camera the gripper does not reach and then drop. It falls from the start, straight through the dot's height. The cause is the dot height input:
+
+- Over the 21 training runs the dot height relative to the robot is 502 to 503 mm, a spread of 0.2 mm, because every dot is 0.5 m high and the robot always parks on flat ground. The x and y positions spread by 13 to 16 mm.
+- The inputs are standardised, so the network sees a 1 mm change in height as 5 standard deviations.
+- At PARK the camera's estimate is a median 11 mm off in height, about 60 standard deviations, while its x and y errors (17 and 18 mm) are about 1 standard deviation. The height input is far outside anything the network has seen, and its torques there make the arm fall.
+
+What to test next: train on dot heights with the camera's error added (or with different dot heights), or leave the height out until the expert data has dots at other heights. Leaving it out is the quickest test that the height input is the cause.
