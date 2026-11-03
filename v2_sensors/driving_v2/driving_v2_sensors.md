@@ -6004,3 +6004,27 @@ Reading the results:
 - The network says stop on 22 of 25 bearings, usually early: a median 1.0 s before the expert.
 - Test torque loss is 0.57 against 0.08 on training. The test loss is lowest at epoch 120 (0.35) and rises after that, so the network overfits the 21 training reaches. Stopping training earlier is worth testing.
 - The likely cause of the drift: the expert's torque depends on a target angle it updates internally every 1 ms (`controller.cpp:81-85`), which the network cannot see. Small torque errors also add up with nothing to correct them.
+
+### Arm: fewer epochs (iteration 18)
+
+#### Iteration 18: plan and expected results
+
+Iteration 17 overfits: its test torque loss is lowest at epoch 120 (0.35) and rises to 0.57 by epoch 300, while the training loss keeps falling. Iteration 18 is the same 1 kHz network trained for fewer epochs.
+
+How the number of epochs is chosen, without using the test bearings:
+
+- The 21 training bearings are already split into 5 folds (`split_plan.json`). For each fold, a network is trained on the other 4 folds for 300 epochs, and its torque loss on the held-out fold is recorded every epoch.
+- The number of epochs is the one where the held-out loss, averaged over the 5 folds, is lowest.
+- Iteration 18 is then trained on all 21 training bearings for that many epochs. Everything else is as in iteration 17.
+
+Seeds: iteration 18 is trained with seeds 7, 1, 2 and 3. Iteration 17 so far has only seed 7, so it is also trained with seeds 1, 2 and 3 (300 epochs), to compare the two over the same four seeds.
+
+Test: as iteration 17, in the simulator on the 25 bearings with the expert driving.
+
+Expected:
+
+- The chosen number of epochs is between 80 and 200, close to where the iteration 17 test loss is lowest.
+- The test torque loss is lower than iteration 17's over the four seeds, about 0.35 against 0.57.
+- In the simulator the gripper drifts less after its closest point: the median distance at the expert's stop is below iteration 17's (124 mm with seed 7), and the closest distance is no worse (18 mm).
+
+If the test loss falls but the simulator results do not improve, overfitting is not the main reason for the drift. The more likely reason is then the expert's internal target angle, which the network cannot see.

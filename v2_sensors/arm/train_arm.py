@@ -16,7 +16,10 @@ Outputs:
 --target sample: the expert's torque at the decision step.
 --target mean:   the expert's torque averaged over the 33 ms until the next decision (the same as sample at 1 kHz).
 
-usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N] [--bearings B ...]
+--val-fold F: hold out the training bearings of fold F (split_plan.json) as validation; their losses are saved per epoch.
+--epochs N: number of full-batch epochs (default 300).
+
+usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N] [--bearings B ...] [--epochs N] [--val-fold F]
 """
 import argparse, json, sys
 from pathlib import Path
@@ -28,7 +31,9 @@ sys.path.insert(0, str(HERE.parent / 'driving_v2'))
 import sensors
 
 DATA = HERE / 'data/expert_full'
-SPLIT = {q['bearing_deg']: q['split'] for q in json.loads((HERE.parent / 'driving_30/data/expert_30hz/split_plan.json').read_text())}
+PLAN = json.loads((HERE.parent / 'driving_30/data/expert_30hz/split_plan.json').read_text())
+SPLIT = {q['bearing_deg']: q['split'] for q in PLAN}
+FOLD = {q['bearing_deg']: q['fold'] for q in PLAN}
 EPOCHS, LR, CLIP, THRESH, HIDDEN = 300, 0.01, 3.0, 0.25, 64
 
 
@@ -89,9 +94,11 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('name'); ap.add_argument('--target', choices=['sample', 'mean'], default='sample')
     ap.add_argument('--seed', type=int, default=7); ap.add_argument('--bearings', type=int, nargs='*')
     ap.add_argument('--hz', type=int, choices=[30, 1000], default=30)
+    ap.add_argument('--epochs', type=int, default=EPOCHS); ap.add_argument('--val-fold', type=int)
     args = ap.parse_args()
     runs = [load_run(b, args.target, args.hz) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
-    train = [r for r in runs if r['split'] == 'train' and (not args.bearings or r['bearing'] in args.bearings)]
+    val = [r for r in runs if r['split'] == 'train' and args.val_fold is not None and FOLD[r['bearing']] == args.val_fold]
+    train = [r for r in runs if r['split'] == 'train' and (not args.bearings or r['bearing'] in args.bearings) and r not in val]
     test = [r for r in runs if r['split'] == 'test']
     Xall, Yall = np.concatenate([r['X'] for r in train]), np.concatenate([r['tau'] for r in train])
     xm, xs = Xall.mean(0), Xall.std(0) + 1e-6
@@ -110,15 +117,20 @@ if __name__ == '__main__':
 
     torch.manual_seed(args.seed)
     tr, te = stack(train), stack(test)
+    va = stack(val) if val else None
     model = ArmPolicy(tr[0].shape[1]); opt = torch.optim.Adam(model.parameters(), lr=LR)
     history = []
-    for epoch in range(EPOCHS + 1):
+    for epoch in range(args.epochs + 1):
         am, pm = losses(model, *tr)
         with torch.no_grad():
             tam, tpm = losses(model, *te)
         history.append(dict(epoch=epoch, train_torque_mse=am.item(), test_torque_mse=tam.item(),
                             train_time_to_stop_mse=pm.item(), test_time_to_stop_mse=tpm.item()))
-        if epoch < EPOCHS:
+        if va is not None:
+            with torch.no_grad():
+                vam, vpm = losses(model, *va)
+            history[-1].update(val_torque_mse=vam.item(), val_time_to_stop_mse=vpm.item())
+        if epoch < args.epochs:
             opt.zero_grad(); (am + pm).backward(); opt.step()
 
     sd = {k: v.detach().numpy().astype(np.float64) for k, v in model.state_dict().items()}
@@ -132,7 +144,7 @@ if __name__ == '__main__':
     x_raw = tr[0][:50].numpy() * xs + xm
     sd.update(ttp_clip=np.float32(CLIP), ttp_thresh=np.float32(THRESH))
     diff = max(float(np.abs(policy(sd, x_raw[i])[0] - (py[i].numpy() * ys + ym)).max()) for i in range(50))
-    sd.update(info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_train_bearings=np.array([r['bearing'] for r in train]))
+    sd.update(info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_train_bearings=np.array([r['bearing'] for r in train]))
     out = HERE / 'models'; out.mkdir(exist_ok=True)
     np.savez(out / f'{args.name}.npz', **sd)
     (out / f'{args.name}_history.json').write_text(json.dumps(history))
