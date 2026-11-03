@@ -1,7 +1,8 @@
 """Test an arm network (train_arm.py) in the fast simulator.
 
 The expert drives and parks itself (expert_drive), so only the arm network is tested. From PARK the network gets
-its inputs at every 30 Hz decision and its 7 torques are held until the next decision. It says stop when the
+its inputs at its own rate (info_hz: every 30 Hz decision, or every 1 ms) and each set of 7 torques is held until
+the next one. The full robot state is logged every 1/30 s for the 3D player. It says stop when the
 predicted time to stop is 0.25 s or less (latched); the run ends 0.5 s after stop, or 1 s after the expert's stop.
 
 usage: python test_arm.py MODEL [--bearings B ...]  ->  results/MODEL.json
@@ -39,12 +40,15 @@ def one(w, bearing):
                     return out
     try:
         state = call(dict(op='reset', target=target, max_duration_s=expert_stop / 1000 + 1.0, arm=True, expert_drive=True))
-        enc = sensors.ArmEncoders(); enc.reset(np.array(state['frame']['joints'][sensors.ARM]))
-        stop_t = None; log = []
+        hz = int(w.get('info_hz', 30))
+        enc = sensors.ArmEncoders(1 / hz); enc.reset(np.array(state['frame']['joints'][sensors.ARM]))
+        stop_t = None; log = []; frames = []; closest = np.inf; next_frame = 0; tau = np.zeros(7); ttp = None
         while not state['done']:
             f = state['frame']; t = f['time_s']
             r = enc.read(np.array(f['joints'][sensors.ARM]))
             req = dict(op='step', wheel=[0] * 4)
+            if hz == 1000:
+                req['ms'] = 1
             if state['parked']:
                 x = np.r_[r['arm_angle'], r['arm_speed'],
                           dot_in_robot(target, np.array(f['base']), f['yaw']), t - state['park_step'] / 1000, t].astype(np.float32)
@@ -52,14 +56,21 @@ def one(w, bearing):
                 if stop_t is None and ttp <= float(w['ttp_thresh']):
                     stop_t = t
                 req.update(arm=np.clip(tau, -30, 30).tolist(), stop=stop_t is not None)
-                log.append(dict(t=t, ee_mm=1000 * state['ee_distance_m'], ttp_s=ttp, tau=np.round(tau, 3).tolist()))
+                closest = min(closest, 1000 * state['ee_distance_m'])
+                if hz == 30 or f['step'] >= next_frame:
+                    log.append(dict(t=t, ee_mm=1000 * state['ee_distance_m'], ttp_s=ttp, tau=np.round(tau, 3).tolist()))
+            if f['step'] >= next_frame:            # every 1/30 s: full state for the 3D player
+                frames.append(dict(time_s=t, base=f['base'], quaternion=f['quaternion'], joints=f['joints'], ee=f['ee'],
+                                   parked=state['parked'], stopped=stop_t is not None, ttp_s=ttp, tau=np.round(tau, 3).tolist(),
+                                   ee_mm=1000 * state['ee_distance_m']))
+                next_frame = round(len(frames) * 1000 / 30)
             state = call(req)
         d = [l['ee_mm'] for l in log]
         at_expert_stop = next((l['ee_mm'] for l in log if l['t'] >= expert_stop / 1000), 1000 * state['ee_distance_m'])
         return dict(bearing=bearing, split=SPLIT[bearing], expert_termination=m['termination'],
                     expert_stop_mm=1000 * m['final_pre_step_ee_error_m'], expert_stop_s=expert_stop / 1000,
-                    stop_s=stop_t, min_mm=min(d) if d else None, at_expert_stop_mm=at_expert_stop,
-                    end_mm=1000 * state['ee_distance_m'], log=log)
+                    stop_s=stop_t, min_mm=float(closest) if d else None, at_expert_stop_mm=at_expert_stop,
+                    end_mm=1000 * state['ee_distance_m'], log=log, frames=frames)
     finally:
         sim.kill()
 

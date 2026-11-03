@@ -5714,3 +5714,176 @@ Reading the results:
 - This matches test 3b: the expert's own controller fails when its torque is held for 33 ms.
 
 What this means for the arm: to output torques, as the expert does, the arm network has to run at the expert's rate, 1 kHz. The next test is the same network at 1 kHz.
+
+#### 3D replay: 30 Hz torque network (`arm30_sample`)
+
+Solid robot: the arm network's run. Cyan ghost: the expert's own run for the same bearing. The expert drives and parks in both runs, so the two robots overlap until PARK. After PARK the solid arm gets only the network's torques. The side table shows the 7 torques of both, and a run is cut once the gripper is 1.5 m from the dot.
+
+<a href="/files/arm/results/viewer_arm30_sample.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+import sys
+sys.path.insert(0, str(ARM.resolve()))
+import replay_arm
+path = replay_arm.build_viewer('arm30_sample')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm30_sample.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+### Arm: 1 kHz torque network
+
+The same network as `arm30_sample`, with one change: it runs every 1 ms, the rate at which the expert outputs its torques (`train_arm.py --hz 1000`).
+
+- Rows: every 1 ms from the expert's PARK to its stop, 75,949 rows over the 21 training runs.
+- The encoder speed is the change in angle over 1 ms. The dot position and the times are read every 1 ms too.
+- Test: the network's torques are sent every 1 ms through the arm input (`test_arm.py`).
+
+
+```python
+rows = []
+for name in ('arm30_sample', 'arm1k'):
+    h = json.loads((ARM / f'models/{name}_history.json').read_text())[-1]
+    for r in json.loads((ARM / f'results/{name}.json').read_text()):
+        rows.append(dict(model=name, split=r['split'], bearing=r['bearing'], train=h['train_torque_mse'], test=h['test_torque_mse'],
+                         closest_mm=r['min_mm'], at_expert_stop_mm=r['at_expert_stop_mm'], stopped=r['stop_s'] is not None,
+                         stop_vs_expert_s=np.nan if r['stop_s'] is None else r['stop_s'] - r['expert_stop_s']))
+arm1k = pd.DataFrame(rows)
+arm1k.groupby('model', sort=False).agg(**{
+    'train torque loss': ('train', 'first'), 'test torque loss': ('test', 'first'),
+    'median closest (mm)': ('closest_mm', 'median'), 'closest within 1 cm (of 25)': ('closest_mm', lambda s: int((s <= 10).sum())),
+    'median at the expert stop (mm)': ('at_expert_stop_mm', 'median'), 'stopped (of 25)': ('stopped', 'sum'),
+    'median stop vs expert (s)': ('stop_vs_expert_s', 'median')}).round(3)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>train torque loss</th>
+      <th>test torque loss</th>
+      <th>median closest (mm)</th>
+      <th>closest within 1 cm (of 25)</th>
+      <th>median at the expert stop (mm)</th>
+      <th>stopped (of 25)</th>
+      <th>median stop vs expert (s)</th>
+    </tr>
+    <tr>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>arm30_sample</th>
+      <td>0.091</td>
+      <td>1.456</td>
+      <td>188.806</td>
+      <td>0</td>
+      <td>7082.420</td>
+      <td>6</td>
+      <td>-2.648</td>
+    </tr>
+    <tr>
+      <th>arm1k</th>
+      <td>0.078</td>
+      <td>0.572</td>
+      <td>18.325</td>
+      <td>2</td>
+      <td>124.103</td>
+      <td>22</td>
+      <td>-0.969</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+fig, ax = plt.subplots(figsize=(10, 4))
+for name, style in (('arm30_sample', ':'), ('arm1k', '-')):
+    for r in json.loads((ARM / f'results/{name}.json').read_text()):
+        if r['bearing'] in (12, 24, 180, 336):
+            ax.plot([l['t'] - r['log'][0]['t'] for l in r['log']], [l['ee_mm'] for l in r['log']], style, label=f"{name} {r['bearing']}°")
+ax.axhline(10, color='k', lw=0.8, label='1 cm')
+ax.set(yscale='log', ylim=(3, 3000), xlabel='time since PARK (s)', ylabel='gripper to dot (mm)', title='30 Hz (dotted) and 1 kHz (solid) torque networks')
+ax.legend(ncol=2, fontsize=8); plt.show()
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_124_0.png)
+    
+
+
+<a href="/files/arm/results/viewer_arm1k.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k')
+IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+```
+
+
+
+
+
+<iframe
+    width="100%"
+    height="810"
+    src="/files/arm/results/viewer_arm1k.html"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+
+
+
+
+Reading the results:
+
+- At 1 kHz the arm stays stable. The gripper gets to a median of 18 mm from the dot, against 189 mm at 30 Hz, and within 1 cm on 2 bearings (192° and 336°, both training bearings).
+- It does not stay there. After its closest point the gripper drifts away, and at the expert's stop it is a median 124 mm from the dot.
+- The network says stop on 22 of 25 bearings, usually early: a median 1.0 s before the expert.
+- Test torque loss is 0.57 against 0.08 on training, so the network fits the training reaches much better than the test reaches.
+- The likely cause of the drift: the expert's torque depends on a target angle it updates internally every 1 ms (`controller.cpp:81-85`), which the network cannot see. Small torque errors also add up with nothing to correct them.

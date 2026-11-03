@@ -1,10 +1,12 @@
-"""Train an arm network that outputs the 7 arm torques directly, once per 30 Hz decision, from PARK to the expert's stop.
+"""Train an arm network that outputs the 7 arm torques directly, at 30 Hz or 1 kHz, from PARK to the expert's stop.
 
 Data: the expert's full runs (data/expert_full, recorded every 1 ms by the fast simulator's expert collector).
-Rows are taken at the 30 Hz decision steps round(k * 1000 / 30), the same steps the stepping server uses.
+--hz 30:   rows at the 30 Hz decision steps round(k * 1000 / 30), the same steps the stepping server uses.
+--hz 1000: a row for every 1 ms step, the rate at which the expert itself outputs its torques.
 
 Inputs (19):
   - arm encoder angles (7) and speeds (7): sensors.ArmEncoders read at every decision from the start of the run
+    (speed over 1/30 s at 30 Hz, over 1 ms at 1 kHz)
   - dot position in the robot frame x, y, z (3): from the simulator for now, not the camera, so the arm is tested alone
   - time since PARK and time since the start, in seconds (2): the expert stops only after 8 s from the start
 Outputs:
@@ -12,9 +14,9 @@ Outputs:
   - time to stop: seconds to the expert's stop, clipped at 3 s and scaled to 0..1; stop when it is 0.25 s or less
 
 --target sample: the expert's torque at the decision step.
---target mean:   the expert's torque averaged over the 33 ms until the next decision.
+--target mean:   the expert's torque averaged over the 33 ms until the next decision (the same as sample at 1 kHz).
 
-usage: python train_arm.py NAME [--target sample|mean] [--seed N] [--bearings B ...]
+usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N] [--bearings B ...]
 """
 import argparse, json, sys
 from pathlib import Path
@@ -46,7 +48,7 @@ def dot_in_robot(target, base_xyz, yaw):
     return np.stack([c * dx + s * dy, -s * dx + c * dy, dz], -1)
 
 
-def load_run(bearing, target_mode='sample'):
+def load_run(bearing, target_mode='sample', hz=30):
     run = DATA / f'run_{bearing // 12 - 1}'
     m = json.loads((run / 'manifest.json').read_text())
     arm, base = table(run, 'arm_controller'), table(run, 'base_state')
@@ -55,8 +57,8 @@ def load_run(bearing, target_mode='sample'):
     pos = np.c_[base['position_m_x'], base['position_m_y'], base['position_m_z']]
     yaw = yaw_of(base['quaternion_x'], base['quaternion_y'], base['quaternion_z'], base['quaternion_w'])
     park, stop = m['parking_step'], m['steps'] - 1
-    steps = [round(k * 1000 / 30) for k in range(10 ** 5) if round(k * 1000 / 30) < m['steps']]
-    angle, speed = sensors.ArmEncoders.readings_for_run(q[steps])
+    steps = list(range(m['steps'])) if hz == 1000 else [round(k * 1000 / 30) for k in range(10 ** 5) if round(k * 1000 / 30) < m['steps']]
+    angle, speed = sensors.ArmEncoders.readings_for_run(q[steps], 1 / hz)
     rows = [i for i, d in enumerate(steps) if park <= d <= stop]
     d = np.array(steps)[rows]
     ends = [steps[i + 1] if i + 1 < len(steps) else m['steps'] for i in rows]
@@ -86,8 +88,9 @@ def policy(w, x):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('name'); ap.add_argument('--target', choices=['sample', 'mean'], default='sample')
     ap.add_argument('--seed', type=int, default=7); ap.add_argument('--bearings', type=int, nargs='*')
+    ap.add_argument('--hz', type=int, choices=[30, 1000], default=30)
     args = ap.parse_args()
-    runs = [load_run(b, args.target) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
+    runs = [load_run(b, args.target, args.hz) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
     train = [r for r in runs if r['split'] == 'train' and (not args.bearings or r['bearing'] in args.bearings)]
     test = [r for r in runs if r['split'] == 'test']
     Xall, Yall = np.concatenate([r['X'] for r in train]), np.concatenate([r['tau'] for r in train])
@@ -129,7 +132,7 @@ if __name__ == '__main__':
     x_raw = tr[0][:50].numpy() * xs + xm
     sd.update(ttp_clip=np.float32(CLIP), ttp_thresh=np.float32(THRESH))
     diff = max(float(np.abs(policy(sd, x_raw[i])[0] - (py[i].numpy() * ys + ym)).max()) for i in range(50))
-    sd.update(info_seed=np.int64(args.seed), info_target=args.target, info_train_bearings=np.array([r['bearing'] for r in train]))
+    sd.update(info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_train_bearings=np.array([r['bearing'] for r in train]))
     out = HERE / 'models'; out.mkdir(exist_ok=True)
     np.savez(out / f'{args.name}.npz', **sd)
     (out / f'{args.name}_history.json').write_text(json.dumps(history))

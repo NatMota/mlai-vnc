@@ -12,7 +12,8 @@ ArmEncoders: the position sensor in each of the 7 arm actuators (Kinova Jaco 2, 
 KA-58 on joints 5-7; resolutions from Kinova's actuator datasheet, AS-ACT-KA58-KA75-SP-INT-EN 201804-1.2).
   - The sensor is absolute, so the angle is the joint angle itself, counted in whole ticks. We assume the joints
     have already indexed, so the +-1.5 deg start-up error does not apply.
-  - The speed is the change in counted angle over 1/30 s, as for the wheels.
+  - The speed is the change in counted angle since the last reading: over 1/30 s, as for the wheels, or over 1 ms
+    when the arm network runs at 1 kHz.
 
 To add a sensor (for example an IMU): give it a reset() and a read(frame) that returns a dict of readings,
 then add it to Sensors.
@@ -62,19 +63,22 @@ ARM = slice(4, 11)              # arm joints in the simulator's joint list (afte
 
 
 class ArmEncoders:
+    def __init__(self, dt=DT):
+        self.dt = dt                # time between readings: 1/30 s, or 1 ms for an arm network running at 1 kHz
+
     def reset(self, q0):
         self.last = np.floor(np.asarray(q0) / ARM_TICK) * ARM_TICK
 
     def read(self, q):
         now = np.floor(np.asarray(q) / ARM_TICK) * ARM_TICK
-        speed = (now - self.last) / DT
+        speed = (now - self.last) / self.dt
         self.last = now
         return dict(arm_angle=now, arm_speed=speed)
 
     @staticmethod
-    def readings_for_run(q):
-        """Encoder angles and speeds for a recorded run: q is the true arm angle at each 30 Hz decision, shape (T, 7)."""
-        enc = ArmEncoders(); enc.reset(q[0]); out = [enc.read(row) for row in q]
+    def readings_for_run(q, dt=DT):
+        """Encoder angles and speeds for a recorded run: q is the true arm angle at each reading, shape (T, 7)."""
+        enc = ArmEncoders(dt); enc.reset(q[0]); out = [enc.read(row) for row in q]
         return np.array([r['arm_angle'] for r in out]), np.array([r['arm_speed'] for r in out])
 
 
