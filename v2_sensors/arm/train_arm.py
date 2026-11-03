@@ -23,13 +23,16 @@ Outputs:
 --physical-inputs: divide each input by a fixed physical size instead of standardising it: angles by pi, speeds by
               the speed limits in the robot model (0.63 rad/s joints 1 to 4, 0.84 rad/s joints 5 to 7), the dot by 1 m,
               times by 12 s. No mean is subtracted. The torques are still standardised.
+--stop-hidden N: give the stop head its own ReLU layer of N units after the second shared layer (default 0: the stop
+              head is one linear unit on the shared layer).
+--stop-weight W: weight of the stop loss in the total loss (default 1). The saved histories hold the unweighted losses.
 --val-fold F: hold out the training bearings of fold F (split_plan.json) as validation; their losses are saved per epoch.
 --epochs N: number of full-batch epochs (default 300).
 --stop time:     the stop head learns the time to the expert's stop (s, clipped at 3 s); stop when it is 0.25 s or less.
 --stop distance: the stop head learns the distance from the expert's end effector to the dot centre (m, clipped at
                  0.25 m); stop when it is 1 cm or less. The saved ttp_clip and ttp_thresh hold these values.
 
-usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N] [--bearings B ...] [--epochs N] [--val-fold F] [--no-time] [--no-scaling] [--physical-inputs] [--stop time|distance]
+usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N] [--bearings B ...] [--epochs N] [--val-fold F] [--no-time] [--no-scaling] [--physical-inputs] [--stop-hidden N] [--stop-weight W] [--stop time|distance]
 """
 import argparse, json, sys
 from pathlib import Path
@@ -97,10 +100,11 @@ def load_run(bearing, target_mode='sample', hz=30, stop_target='time'):
 
 if nn is not None:
     class ArmPolicy(nn.Module):
-        def __init__(self, n_in):
+        def __init__(self, n_in, stop_hidden=0):
             super().__init__()
             self.shared = nn.Sequential(nn.Linear(n_in, HIDDEN), nn.ReLU(), nn.Linear(HIDDEN, HIDDEN), nn.ReLU())
-            self.arm = nn.Linear(HIDDEN, 7); self.stop = nn.Linear(HIDDEN, 1)
+            self.arm = nn.Linear(HIDDEN, 7)
+            self.stop = nn.Sequential(nn.Linear(HIDDEN, stop_hidden), nn.ReLU(), nn.Linear(stop_hidden, 1)) if stop_hidden else nn.Linear(HIDDEN, 1)
         def forward(self, x):
             h = self.shared(x); return self.arm(h), self.stop(h).squeeze(1)
 
@@ -109,7 +113,9 @@ def policy(w, x):
     """NumPy forward pass of saved weights: raw inputs -> (torques in N m, time to stop in s)."""
     for layer in ('shared.0', 'shared.2'):
         x = np.maximum(x @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
-    return x @ w['arm.weight'].T + w['arm.bias'], float((x @ w['stop.weight'].T + w['stop.bias'])[0]) * float(w['ttp_clip'])
+    s = np.maximum(x @ w['stop.0.weight'].T + w['stop.0.bias'], 0) @ w['stop.2.weight'].T + w['stop.2.bias'] if 'stop.0.weight' in w \
+        else x @ w['stop.weight'].T + w['stop.bias']
+    return x @ w['arm.weight'].T + w['arm.bias'], float(s[0]) * float(w['ttp_clip'])
 
 
 if __name__ == '__main__':
@@ -119,6 +125,7 @@ if __name__ == '__main__':
     ap.add_argument('--epochs', type=int, default=EPOCHS); ap.add_argument('--val-fold', type=int)
     ap.add_argument('--stop', choices=['time', 'distance'], default='time'); ap.add_argument('--no-time', action='store_true')
     ap.add_argument('--no-scaling', action='store_true'); ap.add_argument('--physical-inputs', action='store_true')
+    ap.add_argument('--stop-hidden', type=int, default=0); ap.add_argument('--stop-weight', type=float, default=1.0)
     args = ap.parse_args()
     SN = 'time_to_stop' if args.stop == 'time' else 'distance'
     runs = [load_run(b, args.target, args.hz, args.stop) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
@@ -151,7 +158,7 @@ if __name__ == '__main__':
     torch.manual_seed(args.seed)
     tr, te = stack(train), stack(test)
     va = stack(val) if val else None
-    model = ArmPolicy(tr[0].shape[1]); opt = torch.optim.Adam(model.parameters(), lr=LR)
+    model = ArmPolicy(tr[0].shape[1], args.stop_hidden); opt = torch.optim.Adam(model.parameters(), lr=LR)
     history = []
     for epoch in range(args.epochs + 1):
         am, pm = losses(model, *tr)
@@ -164,7 +171,7 @@ if __name__ == '__main__':
                 vam, vpm = losses(model, *va)
             history[-1].update(val_torque_mse=vam.item(), **{f'val_{SN}_mse': vpm.item()})
         if epoch < args.epochs:
-            opt.zero_grad(); (am + pm).backward(); opt.step()
+            opt.zero_grad(); (am + args.stop_weight * pm).backward(); opt.step()
 
     sd = {k: v.detach().numpy().astype(np.float64) for k, v in model.state_dict().items()}
     # Fold the scaling into the weights: inputs into the first layer, torques into the torque head.
@@ -177,10 +184,11 @@ if __name__ == '__main__':
     x_raw = tr[0][:50].numpy() * xs + xm
     sd.update(ttp_clip=np.float32(CLIP if args.stop == 'time' else DIST_CLIP), ttp_thresh=np.float32(THRESH if args.stop == 'time' else DIST_THRESH))
     diff = max(float(np.abs(policy(sd, x_raw[i])[0] - (py[i].numpy() * ys + ym)).max()) for i in range(50))
-    sd.update(info_inputs=np.int64(len(xm)), info_stop_target=args.stop, info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_scaling='none' if args.no_scaling else 'physical_inputs' if args.physical_inputs else 'standardised', info_train_bearings=np.array([r['bearing'] for r in train]))
+    stop_diff = max(abs(policy(sd, x_raw[i])[1] / float(sd['ttp_clip']) - float(pt[i])) for i in range(50))
+    sd.update(info_inputs=np.int64(len(xm)), info_stop_target=args.stop, info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_stop_hidden=np.int64(args.stop_hidden), info_stop_weight=np.float64(args.stop_weight), info_scaling='none' if args.no_scaling else 'physical_inputs' if args.physical_inputs else 'standardised', info_train_bearings=np.array([r['bearing'] for r in train]))
     out = HERE / 'models'; out.mkdir(exist_ok=True)
     np.savez(out / f'{args.name}.npz', **sd)
     (out / f'{args.name}_history.json').write_text(json.dumps(history))
     h = history[-1]
     print(f"{args.name}: {len(train)} train runs, {len(tr[0])} rows | train torque {h['train_torque_mse']:.4f} test {h['test_torque_mse']:.4f}"
-          f" | stop ({SN}) train {h[f'train_{SN}_mse']:.4f} test {h[f'test_{SN}_mse']:.4f} | fold check {diff:.1e} N m")
+          f" | stop ({SN}) train {h[f'train_{SN}_mse']:.4f} test {h[f'test_{SN}_mse']:.4f} | fold check {diff:.1e} N m, stop {stop_diff:.1e}")
