@@ -1,0 +1,39 @@
+{
+ "weights": {
+  "1": {
+   "val_torque": 0.37055460214614866,
+   "val_stop": 0.0022714843973517416,
+   "early_stops": 10,
+   "runs": 21
+  },
+  "3": {
+   "val_torque": 0.41048452258110046,
+   "val_stop": 0.0017025704262778163,
+   "early_stops": 9,
+   "runs": 21
+  },
+  "10": {
+   "val_torque": 0.4822595089673996,
+   "val_stop": 0.0016993299825116992,
+   "early_stops": 5,
+   "runs": 21
+  },
+  "30": {
+   "val_torque": 0.5914763450622559,
+   "val_stop": 0.0016404406866058706,
+   "early_stops": 4,
+   "runs": 21
+  },
+  "100": {
+   "val_torque": 0.7734338819980622,
+   "val_stop": 0.0015613834373652935,
+   "early_stops": 4,
+   "runs": 21
+  }
+ },
+ "allowed": [
+  1
+ ],
+ "chosen": 1,
+ "rule": "lowest mean validation stop loss with mean validation torque loss within 10% of weight 1"
+}

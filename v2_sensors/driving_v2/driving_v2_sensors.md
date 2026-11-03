@@ -843,9 +843,9 @@ player('wheels+live_dot')
 
 
 
-<div><button onclick="var f=document.getElementById('playerd3c9bd3c');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerd6f4d2b8');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerd3c9bd3c" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerd6f4d2b8" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -861,9 +861,9 @@ player('wheels+start_dot')
 
 
 
-<div><button onclick="var f=document.getElementById('player40c57940');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_start_dot.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerd12adf93');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_start_dot.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player40c57940" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerd12adf93" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -879,9 +879,9 @@ player('wheels')
 
 
 
-<div><button onclick="var f=document.getElementById('player6159c442');f.src='/files/driving_v2/closed_loop_native/viewer_wheels.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player48c7aaf0');f.src='/files/driving_v2/closed_loop_native/viewer_wheels.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player6159c442" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player48c7aaf0" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -1331,9 +1331,9 @@ player('wheels+live_dot+skid')
 
 
 
-<div><button onclick="var f=document.getElementById('playerfc37556f');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot_skid.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player83d0af33');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot_skid.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerfc37556f" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player83d0af33" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5256,9 +5256,9 @@ lazy_player('/files/driving_v2/closed_loop_native/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerc185951d');f.src='/files/driving_v2/closed_loop_native/viewer_iter13_seed7.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player95d56d9f');f.src='/files/driving_v2/closed_loop_native/viewer_iter13_seed7.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerc185951d" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player95d56d9f" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5751,9 +5751,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player2ae81bf4');f.src='/files/arm/results/viewer_arm30_sample_b12.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerb3e88e00');f.src='/files/arm/results/viewer_arm30_sample_b12.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player2ae81bf4" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerb3e88e00" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5770,9 +5770,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player4e372639');f.src='/files/arm/results/viewer_arm30_sample.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player48598696');f.src='/files/arm/results/viewer_arm30_sample.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player4e372639" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player48598696" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5789,9 +5789,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player321ad8a7');f.src='/files/arm/results/viewer_arm30_mean.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerdde542c7');f.src='/files/arm/results/viewer_arm30_mean.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player321ad8a7" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerdde542c7" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5939,9 +5939,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player0cb6f615');f.src='/files/arm/results/viewer_arm1k.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerf8908224');f.src='/files/arm/results/viewer_arm1k.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player0cb6f615" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerf8908224" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6337,9 +6337,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player91d16482');f.src='/files/arm/results/viewer_arm1k_e77.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player6e811572');f.src='/files/arm/results/viewer_arm1k_e77.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player91d16482" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player6e811572" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6356,9 +6356,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player2658b803');f.src='/files/arm/results/viewer_arm1k_e77_seed1.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerf65efee6');f.src='/files/arm/results/viewer_arm1k_e77_seed1.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player2658b803" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerf65efee6" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6375,9 +6375,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player77103b85');f.src='/files/arm/results/viewer_arm1k_e77_seed2.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player042a5393');f.src='/files/arm/results/viewer_arm1k_e77_seed2.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player77103b85" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player042a5393" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6394,9 +6394,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player4323badc');f.src='/files/arm/results/viewer_arm1k_e77_seed3.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player342e2582');f.src='/files/arm/results/viewer_arm1k_e77_seed3.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player4323badc" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player342e2582" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6413,9 +6413,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player8c266b99');f.src='/files/arm/results/viewer_arm1k_seed1.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playera0b600f6');f.src='/files/arm/results/viewer_arm1k_seed1.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player8c266b99" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playera0b600f6" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6432,9 +6432,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player453bb958');f.src='/files/arm/results/viewer_arm1k_seed2.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerf98f4b5f');f.src='/files/arm/results/viewer_arm1k_seed2.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player453bb958" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerf98f4b5f" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6451,9 +6451,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player63ca8fc3');f.src='/files/arm/results/viewer_arm1k_seed3.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerd2ae263d');f.src='/files/arm/results/viewer_arm1k_seed3.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player63ca8fc3" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerd2ae263d" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6645,9 +6645,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player50acc3e8');f.src='/files/arm/results/viewer_arm1k_e77_dist.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerbbb6bd70');f.src='/files/arm/results/viewer_arm1k_e77_dist.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player50acc3e8" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerbbb6bd70" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6833,9 +6833,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playere6c8f4b2');f.src='/files/arm/results/viewer_arm1k_e77_dist_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player4798c1d9');f.src='/files/arm/results/viewer_arm1k_e77_dist_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playere6c8f4b2" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player4798c1d9" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7042,9 +7042,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playercc3bf98c');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player9ce8125e');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playercc3bf98c" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player9ce8125e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7061,9 +7061,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player24768b99');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playereaa2a466');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player24768b99" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playereaa2a466" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7397,9 +7397,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player2857158e');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_raw_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerf3a8a264');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_raw_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player2857158e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerf3a8a264" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7695,9 +7695,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player4017eed8');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_phys_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player59e1bff9');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_phys_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player4017eed8" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player59e1bff9" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7894,9 +7894,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player52a9d826');f.src='/files/arm/results/viewer_arm1k_e77_phys_stop16_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerdb757b63');f.src='/files/arm/results/viewer_arm1k_e77_phys_stop16_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player52a9d826" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerdb757b63" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7912,3 +7912,155 @@ What it tells us:
 
 - A layer of its own does not fix the stop at 77 epochs. The problem is the PARK state, which the head still confuses with the hold at the dot, and the stop latches on a single millisecond.
 - Iteration 25 keeps the layer and tunes the weight of the stop loss on the validation folds; iteration 26 trains for 300 epochs.
+
+#### Iteration 25: plan and expected results
+
+Iteration 25 is iteration 24 (with the stop head's own 16-unit layer) with the weight of the stop loss tuned. So far the total loss has been the torque loss plus the stop loss, each with weight 1. The torque loss is about 0.3 at the end of training and the stop loss about 0.0015, so the stop head gets a small share of the training signal through the shared layers. A larger weight gives it more.
+
+How the weight is chosen, without the test bearings:
+
+- Candidate weights 1, 3, 10, 30 and 100.
+- For each weight, the network is trained 5 times, each time holding out one of the 5 folds of training bearings (`split_plan.json`) as validation, with the iteration 24 settings (77 epochs, seed 7).
+- The chosen weight has the lowest validation stop loss, averaged over the 5 folds, among the weights whose average validation torque loss is no more than 10% above weight 1's. The losses compared are unweighted.
+- Also reported, but not used to choose: on the held-out runs, how often the stop head would say stop in the first 0.5 s after PARK along the expert's own path.
+
+Then the network is trained on all 21 training bearings with the chosen weight and tested on the 25 bearings with the expert driving and the dot from the camera and tracker.
+
+Expected:
+
+- The validation stop loss falls as the weight rises, and the torque loss rises a little. A weight between 10 and 30 is chosen.
+- In the camera test, fewer stops at PARK: from 12 of 25 to fewer than 6, and a median stop later than 1.0 s after PARK.
+
+The expectation is wrong if 10 or more bearings still stop in the first 0.5 s. Then the weight is not the limit at 77 epochs, and iteration 26 (300 epochs) is the next test.
+
+#### Iteration 25: results
+
+The 5-fold validation for each stop loss weight (iteration 24 settings, 77 epochs, seed 7). Losses are unweighted and averaged over the 5 held-out folds. The last column counts the held-out runs (21 in all) where the stop head would say stop in the first 0.5 s after PARK, replayed along the expert's own path.
+
+
+```python
+choice = json.loads((ARM / 'results/stop_weight_choice_25.json').read_text())
+t = pd.DataFrame(choice['weights']).T
+t.index.name = 'stop loss weight'
+t['torque loss vs weight 1'] = t.val_torque / t.val_torque.loc['1']
+display(t.rename(columns={'val_torque': 'validation torque loss', 'val_stop': 'validation stop loss',
+                          'early_stops': 'held-out runs stopping in the first 0.5 s', 'runs': 'held-out runs'}).round(4))
+print('rule:', choice['rule'], '| allowed:', choice['allowed'], '| chosen:', choice['chosen'])
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>validation torque loss</th>
+      <th>validation stop loss</th>
+      <th>held-out runs stopping in the first 0.5 s</th>
+      <th>held-out runs</th>
+      <th>torque loss vs weight 1</th>
+    </tr>
+    <tr>
+      <th>stop loss weight</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.3706</td>
+      <td>0.0023</td>
+      <td>10.0</td>
+      <td>21.0</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.4105</td>
+      <td>0.0017</td>
+      <td>9.0</td>
+      <td>21.0</td>
+      <td>1.1078</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>0.4823</td>
+      <td>0.0017</td>
+      <td>5.0</td>
+      <td>21.0</td>
+      <td>1.3015</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>0.5915</td>
+      <td>0.0016</td>
+      <td>4.0</td>
+      <td>21.0</td>
+      <td>1.5962</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>0.7734</td>
+      <td>0.0016</td>
+      <td>4.0</td>
+      <td>21.0</td>
+      <td>2.0872</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    rule: lowest mean validation stop loss with mean validation torque loss within 10% of weight 1 | allowed: [1] | chosen: 1
+
+
+#### Iteration 25: validation loss curves
+
+Validation losses averaged over the 5 folds, for every epoch, for each stop loss weight.
+
+
+```python
+fig, ax = plt.subplots(1, 2, figsize=(14, 3.8))
+for w in (1, 3, 10, 30, 100):
+    H = [pd.DataFrame(json.loads((ARM / f'models/arm25_w{w}_fold{f}_history.json').read_text())) for f in range(5)]
+    for a, k in zip(ax, ('val_torque_mse', 'val_distance_mse')):
+        a.plot(H[0].epoch, np.mean([h[k] for h in H], 0), label=f'weight {w}')
+for a, t in zip(ax, ('validation torque loss (standardised units)', 'validation stop loss (scaled 0..1, unweighted)')):
+    a.set(yscale='log', xlabel='epoch', title=t); a.legend(fontsize=8)
+plt.show()
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_229_0.png)
+    
+
+
+#### Iteration 25: reading the results
+
+Against the expectation:
+
+- **Not as expected: the rule keeps weight 1.** A larger weight lowers the validation stop loss (0.0023 at weight 1, 0.0017 at weight 3, 0.0016 at 30 and 100), but every larger weight raises the validation torque loss by more than 10%: 11% at weight 3, 30% at 10, 60% at 30 and 109% at 100. Weight 3 misses the limit only just.
+- So the network for iteration 25 is the same as iteration 24's (same settings, same seed, same weight), and it is not tested again. Its camera result is iteration 24's.
+
+What it tells us:
+
+- With 77 epochs the stop and the torques compete for the same two shared layers. A larger stop weight makes the head say stop at PARK on fewer held-out runs along the expert's path, from 10 of 21 at weight 1 to 4 of 21 at weights 30 and 100, but it costs torque accuracy that the reach needs.
+- The validation stop losses all flatten after about 40 epochs while the torque losses are still falling at 77. Both have room to improve with longer training, which is what iteration 26 tests at weight 1.

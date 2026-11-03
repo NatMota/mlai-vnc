@@ -232,6 +232,49 @@ def cv18():
     print('logged', run.info.run_name, run.info.run_id, 'commit', commit[:7])
 
 
+def cv25():
+    """Iteration 25: the stop loss weight chosen by 5-fold validation on the training bearings (no new simulator test)."""
+    import mlflow, pandas as pd
+    from mlflow.entities import Metric
+    choice = json.loads((HERE / 'results/stop_weight_choice_25.json').read_text()); W = [1, 3, 10, 30, 100]
+    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=HERE, text=True).strip(); link = NOTEBOOK_MD.format(commit=commit)
+    anchors = [('Plan and expected results', '#iteration-25-plan-and-expected-results'), ('results', '#iteration-25-results'),
+               ('validation loss curves', '#iteration-25-validation-loss-curves'), ('reading the results', '#iteration-25-reading-the-results')]
+    rows = [f"- weight {w}: validation torque loss {choice['weights'][str(w)]['val_torque']:.3f} ({choice['weights'][str(w)]['val_torque'] / choice['weights']['1']['val_torque']:.2f} of weight 1), "
+            f"validation stop loss {choice['weights'][str(w)]['val_stop']:.4f}, held-out runs stopping in the first 0.5 s {choice['weights'][str(w)]['early_stops']} of 21" for w in W]
+    desc = '\n'.join(['**Iteration 25: choosing the stop loss weight (5-fold validation)**', '',
+        'Iteration 24 (stop head with its own 16-unit ReLU layer, inputs divided by physical sizes, 77 epochs, seed 7) trained with stop loss weights 1, 3, 10, 30 and 100, '
+        'each 5 times with one fold of the training bearings held out. The test bearings were not used.', '',
+        f"Rule, set before training: {choice['rule']}.", ''] + rows + ['',
+        f"Chosen: weight {choice['chosen']}. Every larger weight raises the torque loss by more than 10%, so the network is the same as iteration 24's and is not tested again. "
+        'Larger weights make the head stop at PARK on fewer held-out runs (10 of 21 at weight 1, 4 of 21 at 30), at a large cost in torque accuracy.', '',
+        '**Notebook.** ' + ', '.join(f'[{t}]({link}{a})' for t, a in anchors) + '.'])
+    tags = {'mlflow.user': 'nat', 'mlflow.source.type': 'LOCAL', 'mlflow.source.name': 'v2_sensors/driving_v2/driving_v2_sensors.ipynb',
+            'mlflow.source.git.repoURL': 'https://github.com/NatMota/mlai-vnc', 'mlflow.source.git.branch': 'v2-sensor',
+            'mlflow.source.git.commit': commit, 'mlflow.note.content': desc, 'version': 'v2', 'iteration': '25', 'model': 'arm-1khz-stop-weight-choice', 'part': 'arm', 'author': 'nat'}
+    mlflow.set_experiment(EXPERIMENT); client = mlflow.MlflowClient()
+    with mlflow.start_run(run_name='v2-iter25-arm-1khz-stop-weight-choice', tags=tags) as run:
+        mlflow.log_params(dict(version='v2', iteration=25, model='arm-1khz-stop-weight-choice', part='arm', method='5_fold_validation_on_training_bearings',
+                               folds=5, epochs=77, control_hz=1000, seed=7, stop_hidden=16, input_scaling='physical_angles_pi_speeds_limit_dot_1m',
+                               candidate_weights='1,3,10,30,100', rule=choice['rule'], chosen_stop_loss_weight=choice['chosen']))
+        mlflow.log_metrics({f'w{w}_{k}': float(choice['weights'][str(w)][k]) for w in W for k in ('val_torque', 'val_stop', 'early_stops')})
+        t = int(run.info.start_time); batch = []
+        for w in W:
+            H = [pd.DataFrame(json.loads((HERE / f'models/arm25_w{w}_fold{f}_history.json').read_text())) for f in range(5)]
+            for k in ('val_torque_mse', 'val_distance_mse'):
+                batch += [Metric(f'w{w}_mean_{k}', float(v), t, e) for e, v in enumerate(np.mean([h[k] for h in H], 0))]
+        for i in range(0, len(batch), 1000):
+            client.log_batch(run.info.run_id, metrics=batch[i:i + 1000])
+        for w in W:
+            for f in range(5):
+                mlflow.log_artifact(str(HERE / f'models/arm25_w{w}_fold{f}_history.json'), 'folds')
+        mlflow.log_artifact(str(HERE / 'results/stop_weight_choice_25.json'), 'folds')
+        mlflow.log_artifact(str(NOTEBOOK), 'notebook')
+        if len(sys.argv) > 2:
+            mlflow.log_artifact(sys.argv[2], 'notebook')
+    print('logged', run.info.run_name, run.info.run_id, 'commit', commit[:7])
+
+
 if __name__ == '__main__':
     key = sys.argv[1]
-    cv18() if key == 'cv18' else add(int(key) if key.isdigit() else key)
+    cv18() if key == 'cv18' else cv25() if key == 'cv25' else add(int(key) if key.isdigit() else key)
