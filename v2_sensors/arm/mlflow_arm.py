@@ -125,6 +125,22 @@ ARM_ITERATIONS[26] = dict(iteration=26, name='arm-1khz-stop-layer-16-300-epochs-
     change='Iteration 25 (the same network as iteration 24: stop head with its own 16-unit ReLU layer, stop loss weight 1) trained for 300 epochs instead of 77. Tested with the dot from the corner camera and tracker.',
     lesson='Training longer fixes the stop at PARK (the head predicts a median 218 mm there, against 40 mm in iteration 24) and lowers the losses (test torque 0.40, stop 0.0004), but makes the arm worse in the camera test: the gripper comes to about 125 mm from the dot by 0.8 s, then rises and drops hard, with 17% of torques at the limit; no bearing gets within 50 mm. 10 of 25 still stop at about 0.4 s. A better fit to the expert data does not carry over once the network drives the arm off the expert paths. Iteration 23 stays the best reach with the camera.')
 
+ARM_ITERATIONS[27] = dict(iteration=27, name='arm-1khz-separate-stop-network-camera-dot', file='arm1k_e77_phys_stopnet', results='arm1k_e77_phys_stopnet_camera',
+    hz=1000, target='sample', seed=7, epochs=77, bearings='21 training bearings', n_inputs=17, dot_input='camera_tracker',
+    anchors=_stop_anchors(27, 'arm1k_e77_phys_stopnet')[:2] + [("the stop network's epochs", "#iteration-27-the-stop-networks-epochs")] + _stop_anchors(27, 'arm1k_e77_phys_stopnet')[2:],
+    change="Iteration 23's torque network unchanged, with the stop from a separate feedforward network (17 -> 32 ReLU -> 16 ReLU -> 1, same inputs and target), trained on its own with its epochs chosen by 5-fold validation. Tested with the dot from the corner camera and tracker.",
+    lesson="Separating the stop from the torques works: no bearing stops at PARK (11 in iteration 23), the median stop moves from 0.81 s to 1.19 s after PARK, and the arm moves exactly as in iteration 23 (median closest 54 mm, 57 mm at the expert stop time). The stop still comes a median 88 mm from the dot: the stop network reads the poses where iteration 23's arm stalls short of the dot as close to it. The limit is now the reach.")
+ARM_ITERATIONS[28] = dict(iteration=28, name='arm-1khz-imu-and-encoders-camera-dot', file='arm1k_e77_phys_imu', results='arm1k_e77_phys_imu_camera',
+    hz=1000, target='sample', seed=7, epochs=77, bearings='21 training bearings', n_inputs=23, dot_input='camera_tracker',
+    anchors=_stop_anchors(28, 'arm1k_e77_phys_imu')[:2] + [('torque error per joint', '#iteration-28-torque-error-per-joint')] + _stop_anchors(28, 'arm1k_e77_phys_imu')[2:],
+    change='Iteration 23 with an IMU on the end effector added to the arm encoders: 3 accelerations and 3 rotation rates in the hand frame every 1 ms, Bosch BMI088 noise, accelerations divided by 9.81 m/s^2 and rotation rates by 1 rad/s. 23 inputs. Tested with the dot from the corner camera and tracker.',
+    lesson='The IMU improves the fit to the expert data (test torque loss 0.455 against 0.59) but not the arm in testing: 13 of 25 stop at PARK with the shared stop head, the median closest is 116 mm and 4.6% of torques are at the limit. The accelerometer reads the effect of the torque just before, so on expert data the network can read its target from it, while in testing its own errors come back as inputs.')
+ARM_ITERATIONS[29] = dict(iteration=29, name='arm-1khz-imu-no-encoders-camera-dot', file='arm1k_e77_phys_imu_noenc', results='arm1k_e77_phys_imu_noenc_camera',
+    hz=1000, target='sample', seed=7, epochs=77, bearings='21 training bearings', n_inputs=9, dot_input='camera_tracker',
+    anchors=_stop_anchors(29, 'arm1k_e77_phys_imu_noenc')[:2] + [('torque error per joint', '#iteration-29-torque-error-per-joint')] + _stop_anchors(29, 'arm1k_e77_phys_imu_noenc')[2:],
+    change='Iteration 23 with an IMU on the end effector instead of the arm encoders: the dot position and the 6 IMU readings, 9 inputs. Tested with the dot from the corner camera and tracker.',
+    lesson='Without the arm encoders the fit to the expert data is still good (test torque loss 0.517), for the same reason as iteration 28, but in testing the arm is out of control: it falls a median 350 mm after its closest point, 23% of torques are at the limit and the gripper passes 1.5 m from the dot on 2 bearings. The median closest of 61 mm comes from falling through the dot. The IMU alone cannot replace the encoders.')
+
 
 def add(iteration):
     import mlflow, pandas as pd
@@ -141,23 +157,29 @@ def add(iteration):
     m = {'bearings_tested': len(df), 'median_closest_mm': float(df.min_mm.median()), 'best_closest_mm': float(df.min_mm.min()),
          'closest_within_1cm': int((df.min_mm <= 10).sum()), 'median_at_expert_stop_mm': float(df.at_expert_stop_mm.median()),
          'within_1cm_at_expert_stop': int((df.at_expert_stop_mm <= 10).sum()), 'stopped': int(df.stop_s.notna().sum()),
-         'gripper_past_1_5m': int(sum(blown)), 'final_train_torque_mse': float(h.train_torque_mse.iloc[-1]),
-         f'final_train_{stop}_mse': float(h[f'train_{stop}_mse'].iloc[-1])}
+         'gripper_past_1_5m': int(sum(blown)), 'final_train_torque_mse': float(h.train_torque_mse.dropna().iloc[-1]),
+         f'final_train_{stop}_mse': float(h[f'train_{stop}_mse'].dropna().iloc[-1])}
     if 'at_network_stop_mm' in df and df.at_network_stop_mm.notna().any():
         m['median_at_network_stop_mm'] = float(df.at_network_stop_mm.median())
     if df.stop_vs_expert_s.notna().any():
         m['median_stop_vs_expert_s'] = float(df.stop_vs_expert_s.median())
     if not one:
-        m.update(final_test_torque_mse=float(h.test_torque_mse.iloc[-1]), **{f'final_test_{stop}_mse': float(h[f'test_{stop}_mse'].iloc[-1])},
+        m.update(final_test_torque_mse=float(h.test_torque_mse.dropna().iloc[-1]), **{f'final_test_{stop}_mse': float(h[f'test_{stop}_mse'].dropna().iloc[-1])},
                  best_test_torque_mse=float(h.test_torque_mse.min()), best_test_torque_epoch=int(h.epoch[h.test_torque_mse.idxmin()]))
     w = np.load(HERE / f"models/{spec['file']}.npz")
     n_params = int(sum(w[k].size for k in w.files if k.endswith(('.weight', '.bias'))))
-    names = INPUTS[:spec.get('n_inputs', len(INPUTS))]
+    time_on = bool(w['info_time']) if 'info_time' in w.files else w['shared.0.weight'].shape[1] == 19
+    imu_on = bool(w['info_imu']) if 'info_imu' in w.files else False; enc_on = bool(w['info_encoders']) if 'info_encoders' in w.files else True
+    full = INPUTS[:14] + INPUTS[14:17] + (['imu_acc_x', 'imu_acc_y', 'imu_acc_z', 'imu_gyro_x', 'imu_gyro_y', 'imu_gyro_z'] if imu_on else []) + INPUTS[17:]
+    names = [n for n in full if (enc_on or not n.startswith('arm_')) and (time_on or not n.startswith('time_'))]
+    stopnet = 'stopnet.0.weight' in w.files
+    stopnet_desc = (f", with the stop from a separate network ({w['info_stopnet']}, {int(w['info_stopnet_epochs'])} epochs chosen by 5-fold validation)"
+                    if stopnet else '')
     scaling = str(w['info_scaling']) if 'info_scaling' in w.files else 'standardised'; raw = scaling == 'none'
     sh = int(w['info_stop_hidden']) if 'info_stop_hidden' in w.files else 0; sw = float(w['info_stop_weight']) if 'info_stop_weight' in w.files else 1.0
     params = dict(version='v2', iteration=iteration, model=spec['name'], part='arm', inputs=len(names), input_names=','.join(names),
                   outputs=f'7_arm_torques_Nm+{stop}', stop_target=stop, stop_threshold=float(w['ttp_thresh']), control_hz=spec['hz'], torque_target=spec['target'],
-                  hidden='2x64_relu' + (f'+stop_branch_{sh}_relu' if sh else ''), stop_hidden=sh, stop_loss_weight=sw, parameters=n_params, optimizer='adam', learning_rate=0.01, epochs=epochs, batch='full', seed=seed,
+                  hidden='2x64_relu' + (f'+stop_branch_{sh}_relu' if sh else '') + ('+separate_stop_net_32_16_relu' if stopnet else ''), imu=int(imu_on), arm_encoders=int(enc_on), stop_hidden=sh, stop_loss_weight=sw, parameters=n_params, optimizer='adam', learning_rate=0.01, epochs=epochs, batch='full', seed=seed,
                   loss=f"torque_mse_{'Nm2' if raw else 'standardised'}+{stop}_mse_scaled_weight{sw:g}", trajectory_weighting='equal',
                   input_scaling={'none': 'none', 'physical_inputs': 'physical_angles_pi_speeds_limit_dot_1m'}.get(scaling, 'all_standardised'), output_scaling='none' if raw else 'torques_standardised', train_bearings=spec['bearings'],
                   arm_sensor='encoders_kinova_ka75_3686400_ka58_2534400_counts_per_turn', dot_input=spec.get('dot_input', 'simulator_robot_frame'),
@@ -167,9 +189,9 @@ def add(iteration):
     rate = '30 Hz (each torque held 33 ms)' if spec['hz'] == 30 else '1 kHz (a new torque every 1 ms)'
     desc = '\n'.join([
         f"**Iteration {iteration}: `{spec['file']}` (arm)**", '', f"**What changed.** {spec['change']}", '',
-        f"**Inputs.** {len(names)}: arm encoder angles and speeds (7 each, Kinova Jaco 2 actuator resolutions), the dot in the robot frame (x, y, z, " + ('from the corner camera and tracker, image every 1/30 s' if spec.get('dot_input') == 'camera_tracker' else 'from the simulator for this test') + (')' if len(names) == 17 else '), time since PARK and time since the start') + '.', '',
+        f"**Inputs.** {len(names)}: " + ('arm encoder angles and speeds (7 each, Kinova Jaco 2 actuator resolutions), ' if enc_on else 'no arm encoders, ') + "the dot in the robot frame (x, y, z, " + ('from the corner camera and tracker, image every 1/30 s' if spec.get('dot_input') == 'camera_tracker' else 'from the simulator for this test') + ')' + (', an IMU on the end effector (3 accelerations and 3 rotation rates in the hand frame, every 1 ms, Bosch BMI088 noise)' if imu_on else '') + (', time since PARK and time since the start' if any(n.startswith('time_') for n in names) else '') + '.', '',
         f"**Outputs.** The 7 arm torques (N m, clipped to ±30) at {rate}, and " + ("time to stop in seconds (clipped at 3 s); stop when it is 0.25 s or less." if stop == 'time_to_stop' else "the distance from the gripper to the dot (clipped at 0.25 m); stop when it is 1 cm or less."), '',
-        f"**Training.** 2×64 ReLU network{f', with a {sh}-unit ReLU layer of its own for the stop head' if sh else ''}, {n_params:,} parameters. Loss: torque MSE in {'N m² (no scaling of inputs or torques)' if raw else 'standardised units'}{' (inputs divided by physical sizes: angles by π, speeds by the speed limits, the dot by 1 m)' if scaling == 'physical_inputs' else ''} plus {stop.replace('_', '-')} MSE (weight {sw:g}), each training run counted equally. Adam, lr 0.01, {epochs} full-batch epochs, seed {seed}, trained on {spec['bearings']}. Data: the expert's full runs recorded every 1 ms, from PARK to its stop.", '',
+        f"**Training.** 2×64 ReLU network{f', with a {sh}-unit ReLU layer of its own for the stop head' if sh else ''}{stopnet_desc}, {n_params:,} parameters. Loss: torque MSE in {'N m² (no scaling of inputs or torques)' if raw else 'standardised units'}{' (inputs divided by physical sizes: angles by π, speeds by the speed limits, the dot by 1 m)' if scaling == 'physical_inputs' else ''} plus {stop.replace('_', '-')} MSE (weight {sw:g}), each training run counted equally. Adam, lr 0.01, {epochs} full-batch epochs, seed {seed}, trained on {spec['bearings']}. Data: the expert's full runs recorded every 1 ms, from PARK to its stop.", '',
         '**Test.** In the simulator on 25 bearings. The expert drives and parks, then only the arm network moves the arm.', '',
         f"- Closest the gripper gets to the dot: median {m['median_closest_mm']:.0f} mm, best {m['best_closest_mm']:.0f} mm; within 1 cm on {m['closest_within_1cm']} of {len(df)}.",
         f"- At the expert's stop time: median {m['median_at_expert_stop_mm']:.0f} mm from the dot. The gripper went more than 1.5 m from the dot on {m['gripper_past_1_5m']} of {len(df)}.",
@@ -191,7 +213,7 @@ def add(iteration):
         mlflow.log_metrics(m)
         t = int(run.info.start_time)
         keys = ['train_torque_mse', f'train_{stop}_mse'] + ([] if one else ['test_torque_mse', f'test_{stop}_mse'])
-        batch = [Metric(k, float(v), t, int(e)) for k in keys for e, v in zip(h.epoch, h[k])]
+        batch = [Metric(k, float(v), t, int(e)) for k in keys for e, v in zip(h.epoch, h[k]) if v == v]     # skip epochs a part was not trained (NaN)
         for i in range(0, len(batch), 1000):
             client.log_batch(run.info.run_id, metrics=batch[i:i + 1000])
         mlflow.log_artifact(str(HERE / f"models/{spec['file']}.npz"), 'model')

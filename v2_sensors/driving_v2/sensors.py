@@ -18,6 +18,7 @@ KA-58 on joints 5-7; resolutions from Kinova's actuator datasheet, AS-ACT-KA58-K
 To add a sensor (for example an IMU): give it a reset() and a read(frame) that returns a dict of readings,
 then add it to Sensors.
 """
+from pathlib import Path
 import numpy as np
 
 DT = 1 / 30                     # one network decision
@@ -95,3 +96,62 @@ class Sensors:
     def read(self, frame):
         q = np.array(frame['joints'])
         return {**self.encoders.read(q[:4]), **self.arm.read(q[ARM])}
+
+
+# End-effector IMU, modelled on the Bosch BMI088 (accelerometer and gyroscope, 3 axes each), read every 1 ms.
+# Typical noise densities from the datasheet: 175 ug/sqrt(Hz) and 0.014 deg/s/sqrt(Hz); at 1 kHz (bandwidth 500 Hz)
+# that is about 0.038 m/s^2 and 0.0055 rad/s of white noise per reading. Ranges clipped to +-24 g and +-2000 deg/s.
+G = 9.81
+IMU_ACC_NOISE = 175e-6 * G * np.sqrt(500)
+IMU_GYRO_NOISE = np.radians(0.014) * np.sqrt(500)
+IMU_ACC_RANGE, IMU_GYRO_RANGE = 24 * G, np.radians(2000)
+
+
+class HandPose:
+    """Position and rotation of the end effector from the joint angles and the base pose, with the robot model
+    (URDF) in PyBullet. The IMU is computed from these, the same way in training and in testing."""
+    def __init__(self):
+        import json, pybullet as p
+        from wrist_camera import URDF
+        self.p = p; self.cid = p.connect(p.DIRECT)
+        self.robot = p.loadURDF(str(URDF), useFixedBase=True, physicsClientId=self.cid)
+        info = [p.getJointInfo(self.robot, j, physicsClientId=self.cid) for j in range(p.getNumJoints(self.robot, physicsClientId=self.cid))]
+        joint = {i[1].decode(): i[0] for i in info}
+        self.hand = next(i[0] for i in info if i[12].decode() == 'robot_j2s7s300_end_effector')
+        names = json.loads((Path(__file__).resolve().parent / 'closed_loop_native/result_wheels_live_dot.json').read_text())['joint_names']
+        self.ids = [joint[n] for n in names]          # the simulator's 17 joints, in its order
+
+    def __call__(self, base_xyz, base_quat, q):
+        p = self.p
+        p.resetBasePositionAndOrientation(self.robot, list(base_xyz), list(base_quat), physicsClientId=self.cid)
+        for j, v in zip(self.ids, q):
+            p.resetJointState(self.robot, j, float(v), physicsClientId=self.cid)
+        s = p.getLinkState(self.robot, self.hand, computeForwardKinematics=True, physicsClientId=self.cid)
+        return np.array(s[4]), np.array(p.getMatrixFromQuaternion(s[5])).reshape(3, 3)
+
+
+class EndEffectorIMU:
+    """Accelerometer (hand acceleration minus gravity, in the hand's frame, m/s^2) and gyroscope (hand rotation rate,
+    in the hand's frame, rad/s), from the hand's position and rotation every dt."""
+    def __init__(self, dt=1e-3, seed=0, noise=True):
+        self.dt, self.noise, self.rng = dt, noise, np.random.default_rng(seed)
+
+    def reset(self, pos, R):
+        self.p1 = self.p2 = np.asarray(pos); self.R1 = np.asarray(R)
+
+    @staticmethod
+    def rotvec(D):
+        """Rotation vector (axis times angle) of a rotation matrix; NumPy only (SciPy clashes with PyTorch's OpenMP)."""
+        angle = np.arccos(np.clip((np.trace(D) - 1) / 2, -1, 1))
+        v = 0.5 * np.array([D[2, 1] - D[1, 2], D[0, 2] - D[2, 0], D[1, 0] - D[0, 1]])
+        return v if angle < 1e-8 else v * angle / np.sin(angle)
+
+    def read(self, pos, R):
+        pos, R = np.asarray(pos), np.asarray(R)
+        acc_world = (pos - 2 * self.p1 + self.p2) / self.dt ** 2
+        acc = R.T @ (acc_world + np.array([0, 0, G]))
+        gyro = self.rotvec(self.R1.T @ R) / self.dt
+        self.p2, self.p1, self.R1 = self.p1, pos, R
+        if self.noise:
+            acc = acc + self.rng.normal(0, IMU_ACC_NOISE, 3); gyro = gyro + self.rng.normal(0, IMU_GYRO_NOISE, 3)
+        return dict(imu_acc=np.clip(acc, -IMU_ACC_RANGE, IMU_ACC_RANGE), imu_gyro=np.clip(gyro, -IMU_GYRO_RANGE, IMU_GYRO_RANGE))

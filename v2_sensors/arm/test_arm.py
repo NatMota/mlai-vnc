@@ -18,7 +18,7 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'driving_v2'))
 import sensors
-from train_arm import DATA, SPLIT, dot_in_robot, policy
+from train_arm import DATA, SPLIT, dot_in_robot, policy, select_inputs
 
 NATIVE = Path(os.environ.get('NATIVE_ROOT', Path.home() / 'github/comp0245-native-expert'))
 PIXI = next(x for x in [Path.home() / '.local/bin/pixi', Path.home() / '.pixi/bin/pixi'] if x.exists())
@@ -53,6 +53,13 @@ def one(w, bearing, camera=False):
             wheels = sensors.WheelEncoders(); wheels.reset(np.array(state['frame']['joints'][:4]))
             seen = None; est = None; never_seen = 0
         enc = sensors.ArmEncoders(1 / hz); enc.reset(np.array(state['frame']['joints'][sensors.ARM]))
+        n_in = w['shared.0.weight'].shape[1]
+        use_imu = bool(w['info_imu']) if 'info_imu' in w else False
+        use_enc = bool(w['info_encoders']) if 'info_encoders' in w else True
+        use_time = bool(w['info_time']) if 'info_time' in w else n_in == 19
+        if use_imu:
+            hand, imu = sensors.HandPose(), sensors.EndEffectorIMU(seed=1000 + bearing)   # noise seeded differently from training
+        imu_on = False
         stop_t = None; log = []; frames = []; closest = np.inf; next_frame = 0; tau = np.zeros(7); ttp = None
         while not state['done']:
             f = state['frame']; t = f['time_s']
@@ -73,8 +80,15 @@ def one(w, bearing, camera=False):
                     never_seen += est is None
                 else:
                     dot = true_dot
-                x = np.r_[r['arm_angle'], r['arm_speed'], dot, t - state['park_step'] / 1000, t].astype(np.float32)
-                x = x[:w['shared.0.weight'].shape[1]]       # 17-input models (no time inputs) skip the last two
+                extra = []
+                if use_imu:
+                    pose = hand(f['base'], f['quaternion'], f['joints'])
+                    if not imu_on:
+                        imu.reset(*pose); imu_on = True
+                    m_ = imu.read(*pose); extra = [m_['imu_acc'], m_['imu_gyro']]
+                x = np.r_[(r['arm_angle'], r['arm_speed'], dot, *extra, t - state['park_step'] / 1000, t)].astype(np.float32)
+                x = select_inputs(x, use_imu, use_enc, use_time)
+                assert len(x) == n_in
                 tau, ttp = policy(w, x)
                 if stop_t is None and ttp <= float(w['ttp_thresh']):
                     stop_t = t

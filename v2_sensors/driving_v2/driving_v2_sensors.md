@@ -843,9 +843,9 @@ player('wheels+live_dot')
 
 
 
-<div><button onclick="var f=document.getElementById('player8f4d43e1');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player3f37c9eb');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player8f4d43e1" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player3f37c9eb" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -861,9 +861,9 @@ player('wheels+start_dot')
 
 
 
-<div><button onclick="var f=document.getElementById('player5837fbc7');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_start_dot.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playercb7861cf');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_start_dot.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player5837fbc7" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playercb7861cf" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -879,9 +879,9 @@ player('wheels')
 
 
 
-<div><button onclick="var f=document.getElementById('player3c4caf8d');f.src='/files/driving_v2/closed_loop_native/viewer_wheels.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player1fd0d74b');f.src='/files/driving_v2/closed_loop_native/viewer_wheels.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player3c4caf8d" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player1fd0d74b" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -1331,9 +1331,9 @@ player('wheels+live_dot+skid')
 
 
 
-<div><button onclick="var f=document.getElementById('player0a0d6c2e');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot_skid.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playercbbf5058');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot_skid.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player0a0d6c2e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playercbbf5058" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5256,9 +5256,9 @@ lazy_player('/files/driving_v2/closed_loop_native/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player3e29cff4');f.src='/files/driving_v2/closed_loop_native/viewer_iter13_seed7.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player788cd16d');f.src='/files/driving_v2/closed_loop_native/viewer_iter13_seed7.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player3e29cff4" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player788cd16d" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5751,9 +5751,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player4dfd8a52');f.src='/files/arm/results/viewer_arm30_sample_b12.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player7297eba8');f.src='/files/arm/results/viewer_arm30_sample_b12.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player4dfd8a52" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player7297eba8" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5770,9 +5770,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player6e8314ba');f.src='/files/arm/results/viewer_arm30_sample.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player0d883a3a');f.src='/files/arm/results/viewer_arm30_sample.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player6e8314ba" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player0d883a3a" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5789,9 +5789,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playere8b98092');f.src='/files/arm/results/viewer_arm30_mean.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player14b0545c');f.src='/files/arm/results/viewer_arm30_mean.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playere8b98092" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player14b0545c" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5939,9 +5939,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player39dd8b53');f.src='/files/arm/results/viewer_arm1k.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player66f72833');f.src='/files/arm/results/viewer_arm1k.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player39dd8b53" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player66f72833" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6337,9 +6337,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player0b24e576');f.src='/files/arm/results/viewer_arm1k_e77.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player45bc5849');f.src='/files/arm/results/viewer_arm1k_e77.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player0b24e576" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player45bc5849" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6356,9 +6356,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerf1dc38eb');f.src='/files/arm/results/viewer_arm1k_e77_seed1.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player25fa89cd');f.src='/files/arm/results/viewer_arm1k_e77_seed1.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerf1dc38eb" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player25fa89cd" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6375,9 +6375,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerdf5d59c3');f.src='/files/arm/results/viewer_arm1k_e77_seed2.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player6983dd92');f.src='/files/arm/results/viewer_arm1k_e77_seed2.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerdf5d59c3" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player6983dd92" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6394,9 +6394,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player572156b0');f.src='/files/arm/results/viewer_arm1k_e77_seed3.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playera788129a');f.src='/files/arm/results/viewer_arm1k_e77_seed3.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player572156b0" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playera788129a" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6413,9 +6413,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playera37b47d8');f.src='/files/arm/results/viewer_arm1k_seed1.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player05413342');f.src='/files/arm/results/viewer_arm1k_seed1.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playera37b47d8" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player05413342" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6432,9 +6432,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player56439b0e');f.src='/files/arm/results/viewer_arm1k_seed2.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player95e5ec19');f.src='/files/arm/results/viewer_arm1k_seed2.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player56439b0e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player95e5ec19" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6451,9 +6451,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playera993f353');f.src='/files/arm/results/viewer_arm1k_seed3.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerabb63635');f.src='/files/arm/results/viewer_arm1k_seed3.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playera993f353" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerabb63635" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6645,9 +6645,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player36d83def');f.src='/files/arm/results/viewer_arm1k_e77_dist.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player8f8eb201');f.src='/files/arm/results/viewer_arm1k_e77_dist.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player36d83def" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player8f8eb201" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6833,9 +6833,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player741f8862');f.src='/files/arm/results/viewer_arm1k_e77_dist_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player42fec8b8');f.src='/files/arm/results/viewer_arm1k_e77_dist_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player741f8862" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player42fec8b8" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7042,9 +7042,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerffdce03b');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player55120dab');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerffdce03b" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player55120dab" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7061,9 +7061,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player6515bcba');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player672cfabd');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player6515bcba" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player672cfabd" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7397,9 +7397,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('playerc9af313b');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_raw_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player69263bf2');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_raw_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerc9af313b" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player69263bf2" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7695,9 +7695,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player17376d4f');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_phys_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player54e1c6ad');f.src='/files/arm/results/viewer_arm1k_e77_dist_notime_phys_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player17376d4f" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player54e1c6ad" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7894,9 +7894,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player21e30dd6');f.src='/files/arm/results/viewer_arm1k_e77_phys_stop16_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player6518167a');f.src='/files/arm/results/viewer_arm1k_e77_phys_stop16_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player21e30dd6" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player6518167a" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -8218,9 +8218,9 @@ lazy_player('/files/arm/results/' + path.name)
 
 
 
-<div><button onclick="var f=document.getElementById('player58d2f105');f.src='/files/arm/results/viewer_arm1k_e300_phys_stop16_camera.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player0935c7b3');f.src='/files/arm/results/viewer_arm1k_e300_phys_stop16_camera.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player58d2f105" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player0935c7b3" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -8237,3 +8237,687 @@ What it tells us:
 - Training longer makes the network fit the expert's data better and makes it worse at driving the arm. Along the expert's own paths it is more accurate, but once it drives the arm itself the arm leaves those paths after about 0.8 s, and from there the network has nothing to go on. This is the compounding error from training only on the expert's states.
 - The stop head, trained longer, does learn PARK. Its remaining dips at about 0.4 s happen during the reach, where the arm is already off the expert's path.
 - Next: give the network data from the states it reaches itself, labelled with the expert's torques (DAgger), or keep fewer epochs and fix the stop separately. Iteration 23 (77 epochs, no stop layer) stays the best reach with the camera.
+
+### Arm: three branches from iteration 23 (iterations 27 to 29)
+
+Iteration 23 is the best arm network with the camera so far (median 57 mm from the dot, 9 of 25 within 50 mm). Iterations 27 to 29 each change one thing from iteration 23 and are independent of each other. Everything not named stays as in iteration 23: 1 kHz, torques standardised, inputs divided by physical sizes, 2×64 ReLU, Adam lr 0.01, 77 full-batch epochs, seed 7, rows from the expert's PARK to its stop, 21 training bearings. Each is tested on the 25 bearings with the expert driving and the dot from the camera and tracker.
+
+#### Iteration 27: plan and expected results
+
+The stop as a network of its own. Iterations 24 to 26 showed that the stop and the torques compete for the same shared layers: a larger stop weight helps the stop but costs torque accuracy (iteration 25), and longer training fixes the stop at PARK but makes the torques worse once the arm leaves the expert's paths (iteration 26).
+
+- The torques come from iteration 23's network, unchanged (the same weights).
+- The stop comes from a separate feedforward network, 17 → 32 ReLU → 16 ReLU → 1, with the same 17 inputs divided by the same physical sizes, and the same target: the expert's gripper-to-dot distance, clipped at 0.25 m and divided by 0.25 m. Stop at 1 cm, as before. No torque loss reaches it.
+- Its number of epochs is chosen by 5-fold validation on the training bearings (up to 600 epochs, lowest validation stop loss averaged over the folds). The test bearings are not used.
+- The two networks are saved together in one file and run together, so the test sees one network with 7 torques and a stop.
+
+Expected:
+
+- Until the network says stop, the arm moves exactly as in iteration 23, so any change comes from the stop alone.
+- Few stops at PARK: from 11 of 25 to 2 or fewer. The median stop moves to between 1 and 2 s after PARK, and the median closest drops below 57 mm, because the bearings that stopped at PARK now get to reach.
+
+The expectation is wrong if 5 or more bearings still stop in the first 0.5 s.
+
+#### Iteration 28: plan and expected results
+
+An IMU on the end effector, added to the arm encoders.
+
+- The IMU is modelled on the Bosch BMI088, a common robot IMU: an accelerometer and a gyroscope, each with 3 axes, read every 1 ms. Typical noise from the datasheet: 175 µg/√Hz on the accelerometer and 0.014 °/s/√Hz on the gyroscope, which at 1 kHz is about 0.038 m/s² and 0.0055 rad/s of random noise per reading. Readings are clipped to the sensor's widest ranges, ±24 g and ±2000 °/s.
+- The accelerometer reads the hand's acceleration minus gravity, in the hand's own frame, so at rest it reads 9.81 m/s² pointing up. The gyroscope reads the hand's rotation rate in the hand's frame.
+- The readings are computed from the hand's position and rotation every 1 ms, from the robot model (the URDF) in PyBullet, the same code in training and in testing: acceleration from the change in velocity over 1 ms, rotation rate from the change in rotation over 1 ms.
+- 23 inputs: the 17 of iteration 23 and the 6 IMU readings. The accelerations are divided by 9.81 m/s² and the rotation rates by 1 rad/s.
+
+Expected:
+
+- Little change. The IMU mostly repeats what the encoders already say: the direction of gravity in the hand's frame follows from the joint angles, and the hand's rotation rate from the joint speeds. The test torque loss stays within 10% of iteration 23's 0.59, and the camera result stays near iteration 23 (median closest between 40 and 80 mm).
+
+The expectation is wrong if the test torque loss improves by more than 20%. Then the IMU adds information the encoders do not give, most likely the hand's acceleration.
+
+#### Iteration 29: plan and expected results
+
+An IMU on the end effector instead of the arm encoders.
+
+- The same IMU as iteration 28. The 14 encoder inputs (joint angles and speeds) are removed.
+- 9 inputs: the dot position (x, y, height) and the 6 IMU readings.
+
+Expected:
+
+- The network cannot work out the arm's pose. The IMU gives the hand's tilt against gravity (2 angles) and its rotation rate, but not the 7 joint angles, and the torque that holds the arm up depends on all of them. The test torque loss stays close to predicting each joint's average torque (about 1 in standardised units), and the arm falls: median closest above 150 mm, with a large fall after the closest point.
+
+The expectation is wrong if the median closest is below 100 mm. Then the hand's tilt and motion carry more of the pose than expected.
+
+#### Iteration 27: results
+
+The camera test on the 25 bearings with the expert driving, against the iterations before it. A stop in the first 0.5 s means the network said stop almost as soon as the arm started.
+
+
+```python
+camera_table([('arm1k_e77_dist_notime_phys', 23), ('arm1k_e77_phys_stopnet', 27)])
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stopped (of 25)</th>
+      <th>median stop after PARK (s)</th>
+      <th>stops in the first 0.5 s</th>
+      <th>median distance at stop (mm)</th>
+      <th>median closest (mm)</th>
+      <th>closest within 50 mm (of 25)</th>
+      <th>median at expert stop (mm)</th>
+      <th>median fall after closest (mm)</th>
+      <th>torques at the 30 N m limit (%)</th>
+    </tr>
+    <tr>
+      <th>iteration</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>23</th>
+      <td>25</td>
+      <td>0.81</td>
+      <td>11</td>
+      <td>104.44</td>
+      <td>56.75</td>
+      <td>9</td>
+      <td>81.03</td>
+      <td>0.0</td>
+      <td>0.20</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>25</td>
+      <td>1.19</td>
+      <td>0</td>
+      <td>87.51</td>
+      <td>54.49</td>
+      <td>9</td>
+      <td>57.46</td>
+      <td>0.0</td>
+      <td>0.19</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Iteration 27: the stop network's epochs
+
+The held-out stop loss for every epoch, for each of the 5 folds of the training bearings (thin) and averaged over them (thick). The chosen number of epochs is where the average is lowest.
+
+
+```python
+ch = json.loads((ARM / 'results/arm1k_e77_phys_stopnet_epoch_choice.json').read_text())
+fig, ax = plt.subplots(figsize=(8, 3.6))
+for f, v in enumerate(ch['fold_val']):
+    ax.plot(v, lw=0.7, alpha=0.6, label=f'fold {f}')
+ax.plot(ch['mean_val'], 'k', lw=2, label='mean of the 5 folds')
+ax.axvline(ch['chosen'], color='r', ls=':', label=f"chosen: {ch['chosen']} epochs")
+ax.set(yscale='log', xlabel='epoch', ylabel='held-out stop loss (scaled 0..1)', title='Separate stop network: 5-fold validation')
+ax.legend(fontsize=7); plt.show()
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_247_0.png)
+    
+
+
+#### Iteration 27: gripper height and the stop prediction
+
+Top: the gripper height after PARK (the dot is at 0.5 m). Bottom: the gripper-to-dot distance the stop head predicts (dashed) against the actual distance (solid); the network says stop when the prediction first reaches 10 mm (red line). Four bearings, camera test.
+
+
+```python
+camera_plots([('arm1k_e77_dist_notime_phys', 23), ('arm1k_e77_phys_stopnet', 27)])
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_249_0.png)
+    
+
+
+#### Iteration 27: loss curves
+
+The stop loss is shown unweighted for every network, so the curves compare directly.
+
+
+```python
+arm_loss_plot(['arm1k_e77_dist_notime_phys', 'arm1k_e77_phys_stopnet'], 'Iteration 27 against iteration 23')
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_251_0.png)
+    
+
+
+#### Iteration 27: 3D replay (`arm1k_e77_phys_stopnet`, dot from the camera)
+
+<a href="/files/arm/results/viewer_arm1k_e77_phys_stopnet_camera.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_e77_phys_stopnet_camera')
+lazy_player('/files/arm/results/' + path.name)
+```
+
+
+
+
+<div><button onclick="var f=document.getElementById('playerd5d72e49');f.src='/files/arm/results/viewer_arm1k_e77_phys_stopnet_camera.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="playerd5d72e49" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+
+
+
+#### Iteration 27: reading the results
+
+Against the expectation:
+
+- **As expected, the stop at PARK is gone.** No bearing says stop in the first 0.5 s, against 11 in iteration 23. At PARK the stop network predicts a median 185 mm (140 to 274 mm), where the real distance is about 225 mm. The median stop moves from 0.81 s to 1.19 s after PARK, inside the 1 to 2 s the plan expected.
+- **As expected, the arm moves exactly as in iteration 23 until the stop.** The height curves lie on top of each other. The median closest is 54 mm against 57 mm, and the gripper is a median 57 mm from the dot at the expert's stop time, against 81 mm.
+- **The stop still comes too early,** a median 88 mm from the dot. The validation chose 582 epochs and the stop network learned the expert's data well (test stop loss 0.00014, about 3 mm on average), but in testing its prediction dips below 10 mm when the gripper is 70 to 110 mm away, as on bearings 24 and 60 at about 1.2 s.
+
+What it tells us:
+
+- Separating the stop from the torques works: the stop no longer fires at PARK, and the torques are untouched.
+- The remaining early stops happen where iteration 23's arm stalls short of the dot: on bearings 24 and 60 the gripper levels off about 75 mm above the dot's height and drifts back up. The expert's arm never stalls there, so the stop network has not seen these poses and reads them as close to the dot. The limit is now the reach, not the stop.
+
+#### Iteration 28: results
+
+The camera test on the 25 bearings with the expert driving, against the iterations before it. A stop in the first 0.5 s means the network said stop almost as soon as the arm started.
+
+
+```python
+camera_table([('arm1k_e77_dist_notime_phys', 23), ('arm1k_e77_phys_imu', 28)])
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stopped (of 25)</th>
+      <th>median stop after PARK (s)</th>
+      <th>stops in the first 0.5 s</th>
+      <th>median distance at stop (mm)</th>
+      <th>median closest (mm)</th>
+      <th>closest within 50 mm (of 25)</th>
+      <th>median at expert stop (mm)</th>
+      <th>median fall after closest (mm)</th>
+      <th>torques at the 30 N m limit (%)</th>
+    </tr>
+    <tr>
+      <th>iteration</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>23</th>
+      <td>25</td>
+      <td>0.81</td>
+      <td>11</td>
+      <td>104.44</td>
+      <td>56.75</td>
+      <td>9</td>
+      <td>81.03</td>
+      <td>0.00</td>
+      <td>0.20</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>25</td>
+      <td>-0.00</td>
+      <td>13</td>
+      <td>227.13</td>
+      <td>116.16</td>
+      <td>7</td>
+      <td>160.06</td>
+      <td>2.72</td>
+      <td>4.56</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Iteration 28: torque error per joint
+
+The torque error per joint on the 4 test runs (root mean square, N m), on the expert's own data, against iteration 23 and the spread of the expert's torques.
+
+
+```python
+def torques_of(model, imu):
+    w = dict(np.load(ARM / f'models/{model}.npz'))
+    flags = dict(imu=bool(w.get('info_imu', 0)), encoders=bool(w.get('info_encoders', 1)), time=bool(w.get('info_time', w['shared.0.weight'].shape[1] == 19)))
+    runs = [train_arm.load_run(b, 'sample', 1000, 'distance', imu=imu) for b in sorted(train_arm.SPLIT) if train_arm.SPLIT[b] == 'test']
+    X = train_arm.select_inputs(np.concatenate([r['X'] for r in runs]), **flags); T = np.concatenate([r['tau'] for r in runs])
+    for l in ('shared.0', 'shared.2'):
+        X = np.maximum(X @ w[l + '.weight'].T + w[l + '.bias'], 0)
+    return X @ w['arm.weight'].T + w['arm.bias'], T
+
+err = {}
+for label, model, imu in (('iteration 23', 'arm1k_e77_dist_notime_phys', False), ('iteration 28', 'arm1k_e77_phys_imu', True)):
+    P, T = torques_of(model, imu); err[label] = np.sqrt(((P - T) ** 2).mean(0))
+err = {"expert's torque spread (std)": T.std(0), **err}
+pd.DataFrame(err, index=[f'joint {j}' for j in range(1, 8)]).T.round(2)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>joint 1</th>
+      <th>joint 2</th>
+      <th>joint 3</th>
+      <th>joint 4</th>
+      <th>joint 5</th>
+      <th>joint 6</th>
+      <th>joint 7</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>expert's torque spread (std)</th>
+      <td>1.50</td>
+      <td>1.62</td>
+      <td>1.66</td>
+      <td>2.55</td>
+      <td>2.84</td>
+      <td>2.92</td>
+      <td>0.90</td>
+    </tr>
+    <tr>
+      <th>iteration 23</th>
+      <td>1.04</td>
+      <td>0.89</td>
+      <td>0.88</td>
+      <td>1.16</td>
+      <td>2.61</td>
+      <td>1.44</td>
+      <td>0.24</td>
+    </tr>
+    <tr>
+      <th>iteration 28</th>
+      <td>0.84</td>
+      <td>0.62</td>
+      <td>0.84</td>
+      <td>0.62</td>
+      <td>2.57</td>
+      <td>0.73</td>
+      <td>0.19</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Iteration 28: gripper height and the stop prediction
+
+Top: the gripper height after PARK (the dot is at 0.5 m). Bottom: the gripper-to-dot distance the stop head predicts (dashed) against the actual distance (solid); the network says stop when the prediction first reaches 10 mm (red line). Four bearings, camera test.
+
+
+```python
+camera_plots([('arm1k_e77_dist_notime_phys', 23), ('arm1k_e77_phys_imu', 28)])
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_260_0.png)
+    
+
+
+#### Iteration 28: loss curves
+
+The stop loss is shown unweighted for every network, so the curves compare directly.
+
+
+```python
+arm_loss_plot(['arm1k_e77_dist_notime_phys', 'arm1k_e77_phys_imu'], 'Iteration 28 against iteration 23')
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_262_0.png)
+    
+
+
+#### Iteration 28: 3D replay (`arm1k_e77_phys_imu`, dot from the camera)
+
+<a href="/files/arm/results/viewer_arm1k_e77_phys_imu_camera.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_e77_phys_imu_camera')
+lazy_player('/files/arm/results/' + path.name)
+```
+
+
+
+
+<div><button onclick="var f=document.getElementById('player96d1ab39');f.src='/files/arm/results/viewer_arm1k_e77_phys_imu_camera.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player96d1ab39" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+
+
+
+#### Iteration 28: reading the results
+
+Against the expectation:
+
+- **Not as expected: the IMU improves the fit to the expert's data.** The test torque loss is 0.455 against 0.59, 23% lower, past the 20% the plan set as the test. Joints 2, 4 and 6 improve most: 0.62, 0.62 and 0.73 N m of error against 0.89, 1.16 and 1.44.
+- **In testing the arm does worse.** 13 of 25 bearings stop in the first 0.5 s (iteration 23: 11), the median closest is 116 mm against 57 mm, and 4.6% of torques are at the 30 N m limit against 0.2%. On the bearings that run longer the gripper comes down a little faster than in iteration 23 and then rises again after about 1.1 s. 7 of 25 still get within 50 mm.
+- The stop head is the shared one from iteration 23, so the stops at PARK are the same problem iteration 27 fixed.
+
+What it tells us:
+
+- The accelerometer reads the hand's acceleration, which the torque of the millisecond before has just caused. The expert's torque changes slowly, so the network can read its target torque partly from the IMU: the torque that produced the last acceleration. On the expert's data this is a good guess. In testing, the acceleration comes from the network's own torques, so its errors come back to it as inputs, and the torques grow.
+
+#### Iteration 29: results
+
+The camera test on the 25 bearings with the expert driving, against the iterations before it. A stop in the first 0.5 s means the network said stop almost as soon as the arm started.
+
+
+```python
+camera_table([('arm1k_e77_dist_notime_phys', 23), ('arm1k_e77_phys_imu_noenc', 29)])
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>stopped (of 25)</th>
+      <th>median stop after PARK (s)</th>
+      <th>stops in the first 0.5 s</th>
+      <th>median distance at stop (mm)</th>
+      <th>median closest (mm)</th>
+      <th>closest within 50 mm (of 25)</th>
+      <th>median at expert stop (mm)</th>
+      <th>median fall after closest (mm)</th>
+      <th>torques at the 30 N m limit (%)</th>
+    </tr>
+    <tr>
+      <th>iteration</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>23</th>
+      <td>25</td>
+      <td>0.81</td>
+      <td>11</td>
+      <td>104.44</td>
+      <td>56.75</td>
+      <td>9</td>
+      <td>81.03</td>
+      <td>0.00</td>
+      <td>0.20</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>25</td>
+      <td>0.32</td>
+      <td>18</td>
+      <td>220.80</td>
+      <td>60.65</td>
+      <td>5</td>
+      <td>747.64</td>
+      <td>349.53</td>
+      <td>23.17</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Iteration 29: torque error per joint
+
+The torque error per joint on the 4 test runs (root mean square, N m), on the expert's own data, against iteration 23 and the spread of the expert's torques.
+
+
+```python
+def torques_of(model, imu):
+    w = dict(np.load(ARM / f'models/{model}.npz'))
+    flags = dict(imu=bool(w.get('info_imu', 0)), encoders=bool(w.get('info_encoders', 1)), time=bool(w.get('info_time', w['shared.0.weight'].shape[1] == 19)))
+    runs = [train_arm.load_run(b, 'sample', 1000, 'distance', imu=imu) for b in sorted(train_arm.SPLIT) if train_arm.SPLIT[b] == 'test']
+    X = train_arm.select_inputs(np.concatenate([r['X'] for r in runs]), **flags); T = np.concatenate([r['tau'] for r in runs])
+    for l in ('shared.0', 'shared.2'):
+        X = np.maximum(X @ w[l + '.weight'].T + w[l + '.bias'], 0)
+    return X @ w['arm.weight'].T + w['arm.bias'], T
+
+err = {}
+for label, model, imu in (('iteration 23', 'arm1k_e77_dist_notime_phys', False), ('iteration 29', 'arm1k_e77_phys_imu_noenc', True)):
+    P, T = torques_of(model, imu); err[label] = np.sqrt(((P - T) ** 2).mean(0))
+err = {"expert's torque spread (std)": T.std(0), **err}
+pd.DataFrame(err, index=[f'joint {j}' for j in range(1, 8)]).T.round(2)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>joint 1</th>
+      <th>joint 2</th>
+      <th>joint 3</th>
+      <th>joint 4</th>
+      <th>joint 5</th>
+      <th>joint 6</th>
+      <th>joint 7</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>expert's torque spread (std)</th>
+      <td>1.50</td>
+      <td>1.62</td>
+      <td>1.66</td>
+      <td>2.55</td>
+      <td>2.84</td>
+      <td>2.92</td>
+      <td>0.90</td>
+    </tr>
+    <tr>
+      <th>iteration 23</th>
+      <td>1.04</td>
+      <td>0.89</td>
+      <td>0.88</td>
+      <td>1.16</td>
+      <td>2.61</td>
+      <td>1.44</td>
+      <td>0.24</td>
+    </tr>
+    <tr>
+      <th>iteration 29</th>
+      <td>0.87</td>
+      <td>0.90</td>
+      <td>0.87</td>
+      <td>0.88</td>
+      <td>2.58</td>
+      <td>1.03</td>
+      <td>0.21</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+#### Iteration 29: gripper height and the stop prediction
+
+Top: the gripper height after PARK (the dot is at 0.5 m). Bottom: the gripper-to-dot distance the stop head predicts (dashed) against the actual distance (solid); the network says stop when the prediction first reaches 10 mm (red line). Four bearings, camera test.
+
+
+```python
+camera_plots([('arm1k_e77_dist_notime_phys', 23), ('arm1k_e77_phys_imu_noenc', 29)])
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_271_0.png)
+    
+
+
+#### Iteration 29: loss curves
+
+The stop loss is shown unweighted for every network, so the curves compare directly.
+
+
+```python
+arm_loss_plot(['arm1k_e77_dist_notime_phys', 'arm1k_e77_phys_imu_noenc'], 'Iteration 29 against iteration 23')
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_273_0.png)
+    
+
+
+#### Iteration 29: 3D replay (`arm1k_e77_phys_imu_noenc`, dot from the camera)
+
+<a href="/files/arm/results/viewer_arm1k_e77_phys_imu_noenc_camera.html" target="_blank" rel="noopener">Open this player in a separate tab</a>
+
+
+```python
+path = replay_arm.build_viewer('arm1k_e77_phys_imu_noenc_camera')
+lazy_player('/files/arm/results/' + path.name)
+```
+
+
+
+
+<div><button onclick="var f=document.getElementById('player68a00188');f.src='/files/arm/results/viewer_arm1k_e77_phys_imu_noenc_camera.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player68a00188" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+
+
+
+#### Iteration 29: reading the results
+
+Against the expectation:
+
+- **The torque fit is better than expected:** a test torque loss of 0.517 without any arm encoders, better than iteration 23's 0.59, and about the same per-joint error.
+- **The median closest, 61 mm, is below the 100 mm the plan set as the test, but the arm is out of control.** The gripper falls a median 350 mm after its closest point, 23% of torques are at the 30 N m limit, and the gripper passes 1.5 m from the dot on 2 bearings. It gets close to the dot only by falling through it, as the height plots show. 18 of 25 bearings say stop in the first 0.5 s.
+
+What it tells us:
+
+- The good fit on the expert's data comes from the same source as in iteration 28: the IMU reads the effect of the torque just before, and the expert's torque changes slowly. Without the encoders the network has nothing else to go on, and in testing its own errors come straight back as inputs.
+- The IMU alone cannot replace the arm encoders. The test against the plan's 100 mm is met only by an arm falling past the dot, so the expectation holds in substance.

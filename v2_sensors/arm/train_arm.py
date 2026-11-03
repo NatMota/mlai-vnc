@@ -23,6 +23,9 @@ Outputs:
 --physical-inputs: divide each input by a fixed physical size instead of standardising it: angles by pi, speeds by
               the speed limits in the robot model (0.63 rad/s joints 1 to 4, 0.84 rad/s joints 5 to 7), the dot by 1 m,
               times by 12 s. No mean is subtracted. The torques are still standardised.
+--imu: add the end-effector IMU (sensors.EndEffectorIMU, Bosch BMI088 noise): 3 accelerations (m/s^2, divided by
+       9.81 with --physical-inputs) and 3 rotation rates (rad/s, divided by 1), after the dot. 1 kHz only.
+--no-encoders: leave out the 14 arm encoder inputs (joint angles and speeds).
 --stop-hidden N: give the stop head its own ReLU layer of N units after the second shared layer (default 0: the stop
               head is one linear unit on the shared layer).
 --stop-weight W: weight of the stop loss in the total loss (default 1). The saved histories hold the unweighted losses.
@@ -32,7 +35,7 @@ Outputs:
 --stop distance: the stop head learns the distance from the expert's end effector to the dot centre (m, clipped at
                  0.25 m); stop when it is 1 cm or less. The saved ttp_clip and ttp_thresh hold these values.
 
-usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N] [--bearings B ...] [--epochs N] [--val-fold F] [--no-time] [--no-scaling] [--physical-inputs] [--stop-hidden N] [--stop-weight W] [--stop time|distance]
+usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N] [--bearings B ...] [--epochs N] [--val-fold F] [--no-time] [--no-scaling] [--physical-inputs] [--stop-hidden N] [--stop-weight W] [--imu] [--no-encoders] [--stop time|distance]
 """
 import argparse, json, sys
 from pathlib import Path
@@ -53,7 +56,7 @@ SPLIT = {q['bearing_deg']: q['split'] for q in PLAN}
 FOLD = {q['bearing_deg']: q['fold'] for q in PLAN}
 EPOCHS, LR, CLIP, THRESH, HIDDEN = 300, 0.01, 3.0, 0.25, 64
 SPEED_LIMIT = np.r_[[0.6283] * 4, [0.8378] * 3]   # rad/s, joint velocity limits in the robot model (URDF)
-PHYSICAL = np.r_[[np.pi] * 7, SPEED_LIMIT, [1.0] * 3, [12.0] * 2]   # --physical-inputs: angles, speeds, dot (m), times (s)
+G = sensors.G
 DIST_CLIP, DIST_THRESH = 0.25, 0.01     # --stop distance: target clipped at 0.25 m; stop when the prediction is 1 cm or less
 
 
@@ -73,7 +76,40 @@ def dot_in_robot(target, base_xyz, yaw):
     return np.stack([c * dx + s * dy, -s * dx + c * dy, dz], -1)
 
 
-def load_run(bearing, target_mode='sample', hz=30, stop_target='time'):
+IMU_CACHE = HERE / 'data/imu_cache'
+
+
+def imu_readings(run, park, stop):
+    """End-effector IMU readings for every 1 ms step from PARK to the expert's stop, as in testing: the IMU is reset
+    at PARK with the hand's pose and read every step after (noise seeded by the run)."""
+    f = IMU_CACHE / f'{run.name}.npy'
+    if f.exists():
+        return np.load(f)
+    js, base = np.load(run / 'joint_state.npy'), table(run, 'base_state')
+    hand = sensors.HandPose(); imu = sensors.EndEffectorIMU(seed=int(run.name.split('_')[1]))
+    pose = lambda k: hand([base[f'position_m_{a}'][k] for a in 'xyz'], [base[f'quaternion_{a}'][k] for a in 'xyzw'], js[k, 2:19])
+    imu.reset(*pose(park)); out = []
+    for k in range(park, stop + 1):
+        r = imu.read(*pose(k)); out.append(np.r_[r['imu_acc'], r['imu_gyro']])
+    IMU_CACHE.mkdir(parents=True, exist_ok=True); np.save(f, np.array(out)); return np.array(out)
+
+
+def select_inputs(X, imu=False, encoders=True, time=True):
+    """X holds [angles 7, speeds 7, dot 3, (IMU 6 if imu), time since PARK, time since start]; keep the chosen ones."""
+    keep = np.ones(X.shape[-1], bool)
+    if not encoders:
+        keep[:14] = False
+    if not time:
+        keep[-2:] = False
+    return X[..., keep]
+
+
+def physical_scale(imu=False, encoders=True, time=True):
+    s = np.r_[[np.pi] * 7, SPEED_LIMIT, [1.0] * 3, [G] * 3 * imu, [1.0] * 3 * imu, [12.0] * 2]
+    return select_inputs(s, imu, encoders, time)
+
+
+def load_run(bearing, target_mode='sample', hz=30, stop_target='time', imu=False):
     run = DATA / f'run_{bearing // 12 - 1}'
     m = json.loads((run / 'manifest.json').read_text())
     arm, base = table(run, 'arm_controller'), table(run, 'base_state')
@@ -89,7 +125,10 @@ def load_run(bearing, target_mode='sample', hz=30, stop_target='time'):
     ends = [steps[i + 1] if i + 1 < len(steps) else m['steps'] for i in rows]
     y = tau[d] if target_mode == 'sample' else np.array([tau[a:b].mean(0) for a, b in zip(d, ends)])
     t = d / 1000
-    X = np.c_[angle[rows], speed[rows], dot_in_robot(m['target_position_world_m'], pos[d], yaw[d]), t - park / 1000, t]
+    extra = [imu_readings(run, park, stop)] if imu else []
+    if imu:
+        assert hz == 1000 and len(extra[0]) == len(d)
+    X = np.c_[(angle[rows], speed[rows], dot_in_robot(m['target_position_world_m'], pos[d], yaw[d]), *extra, t - park / 1000, t)]
     if stop_target == 'distance':
         dist = table(run, 'kinematics')['ee_distance_error_m'][d]
         ttp = np.clip(dist, 0, DIST_CLIP) / DIST_CLIP
@@ -110,11 +149,18 @@ if nn is not None:
 
 
 def policy(w, x):
-    """NumPy forward pass of saved weights: raw inputs -> (torques in N m, time to stop in s)."""
+    """NumPy forward pass of saved weights: raw inputs -> (torques in N m, time to stop in s).
+    A model with a separate stop network (stopnet.*, train_stop.py) takes the stop from it, on the same raw inputs."""
+    x0 = x
     for layer in ('shared.0', 'shared.2'):
         x = np.maximum(x @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
     s = np.maximum(x @ w['stop.0.weight'].T + w['stop.0.bias'], 0) @ w['stop.2.weight'].T + w['stop.2.bias'] if 'stop.0.weight' in w \
         else x @ w['stop.weight'].T + w['stop.bias']
+    if 'stopnet.0.weight' in w:
+        s = x0
+        for layer in ('stopnet.0', 'stopnet.2'):
+            s = np.maximum(s @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
+        s = s @ w['stopnet.4.weight'].T + w['stopnet.4.bias']
     return x @ w['arm.weight'].T + w['arm.bias'], float(s[0]) * float(w['ttp_clip'])
 
 
@@ -126,12 +172,12 @@ if __name__ == '__main__':
     ap.add_argument('--stop', choices=['time', 'distance'], default='time'); ap.add_argument('--no-time', action='store_true')
     ap.add_argument('--no-scaling', action='store_true'); ap.add_argument('--physical-inputs', action='store_true')
     ap.add_argument('--stop-hidden', type=int, default=0); ap.add_argument('--stop-weight', type=float, default=1.0)
+    ap.add_argument('--imu', action='store_true'); ap.add_argument('--no-encoders', action='store_true')
     args = ap.parse_args()
     SN = 'time_to_stop' if args.stop == 'time' else 'distance'
-    runs = [load_run(b, args.target, args.hz, args.stop) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
-    if args.no_time:
-        for r in runs:
-            r['X'] = r['X'][:, :-2]          # drop time since PARK and time since the start
+    runs = [load_run(b, args.target, args.hz, args.stop, imu=args.imu) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
+    for r in runs:
+        r['X'] = select_inputs(r['X'], args.imu, not args.no_encoders, not args.no_time)
     val = [r for r in runs if r['split'] == 'train' and args.val_fold is not None and FOLD[r['bearing']] == args.val_fold]
     train = [r for r in runs if r['split'] == 'train' and (not args.bearings or r['bearing'] in args.bearings) and r not in val]
     test = [r for r in runs if r['split'] == 'test']
@@ -139,7 +185,7 @@ if __name__ == '__main__':
     xm, xs = Xall.mean(0), Xall.std(0) + 1e-6
     ym, ys = Yall.mean(0), Yall.std(0) + 1e-6
     if args.physical_inputs:
-        xm, xs = np.zeros_like(xm), PHYSICAL[:len(xm)].astype(xm.dtype)
+        xm, xs = np.zeros_like(xm), physical_scale(args.imu, not args.no_encoders, not args.no_time).astype(xm.dtype)
     if args.no_scaling:
         xm, xs = np.zeros_like(xm), np.ones_like(xs)
         ym, ys = np.zeros_like(ym), np.ones_like(ys)
@@ -185,7 +231,7 @@ if __name__ == '__main__':
     sd.update(ttp_clip=np.float32(CLIP if args.stop == 'time' else DIST_CLIP), ttp_thresh=np.float32(THRESH if args.stop == 'time' else DIST_THRESH))
     diff = max(float(np.abs(policy(sd, x_raw[i])[0] - (py[i].numpy() * ys + ym)).max()) for i in range(50))
     stop_diff = max(abs(policy(sd, x_raw[i])[1] / float(sd['ttp_clip']) - float(pt[i])) for i in range(50))
-    sd.update(info_inputs=np.int64(len(xm)), info_stop_target=args.stop, info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_stop_hidden=np.int64(args.stop_hidden), info_stop_weight=np.float64(args.stop_weight), info_scaling='none' if args.no_scaling else 'physical_inputs' if args.physical_inputs else 'standardised', info_train_bearings=np.array([r['bearing'] for r in train]))
+    sd.update(info_inputs=np.int64(len(xm)), info_stop_target=args.stop, info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_imu=np.int64(args.imu), info_encoders=np.int64(not args.no_encoders), info_time=np.int64(not args.no_time), info_stop_hidden=np.int64(args.stop_hidden), info_stop_weight=np.float64(args.stop_weight), info_scaling='none' if args.no_scaling else 'physical_inputs' if args.physical_inputs else 'standardised', info_train_bearings=np.array([r['bearing'] for r in train]))
     out = HERE / 'models'; out.mkdir(exist_ok=True)
     np.savez(out / f'{args.name}.npz', **sd)
     (out / f'{args.name}_history.json').write_text(json.dumps(history))
