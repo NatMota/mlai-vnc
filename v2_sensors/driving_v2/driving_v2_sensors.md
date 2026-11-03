@@ -823,26 +823,29 @@ Solid robot: the model. Cyan ghost: the expert. Use **Previous / Next** or the d
 
 
 ```python
-from IPython.display import IFrame
+from IPython.display import IFrame, HTML
+import uuid
+
+def lazy_player(url, height=810):
+    """A 3D player that loads only when its button is pressed. Browsers keep only about 16 3D views (WebGL
+    contexts) at once, so loading every player in the notebook together leaves some of them blank."""
+    k = uuid.uuid4().hex[:8]
+    return HTML(f"""<div><button onclick="var f=document.getElementById('player{k}');f.src='{url}';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player{k}" style="display:none;width:100%;height:{height}px;border:0"></iframe></div>""")
+
 def player(name):
     path = replay_v2.build_viewer(name)
-    return IFrame('/files/driving_v2/closed_loop_native/' + path.name, width='100%', height=810)
+    return lazy_player('/files/driving_v2/closed_loop_native/' + path.name)
 player('wheels+live_dot')
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/driving_v2/closed_loop_native/viewer_wheels_live_dot.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player1252f675');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player1252f675" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -858,16 +861,9 @@ player('wheels+start_dot')
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/driving_v2/closed_loop_native/viewer_wheels_start_dot.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player6bf168df');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_start_dot.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player6bf168df" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -883,16 +879,9 @@ player('wheels')
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/driving_v2/closed_loop_native/viewer_wheels.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player7f76c74a');f.src='/files/driving_v2/closed_loop_native/viewer_wheels.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player7f76c74a" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -1342,16 +1331,9 @@ player('wheels+live_dot+skid')
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/driving_v2/closed_loop_native/viewer_wheels_live_dot_skid.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('playerf2367755');f.src='/files/driving_v2/closed_loop_native/viewer_wheels_live_dot_skid.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="playerf2367755" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5268,22 +5250,15 @@ These runs were repeated with the full robot state logged (`FULL_FRAMES=1`, resu
 
 ```python
 path = replay_v2.build_camera_viewer('camera_flag_ttp_scaled_tail100_encoders', 'iter13_seed7')
-IFrame('/files/driving_v2/closed_loop_native/' + path.name, width='100%', height=810)
+lazy_player('/files/driving_v2/closed_loop_native/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/driving_v2/closed_loop_native/viewer_iter13_seed7.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player23489c26');f.src='/files/driving_v2/closed_loop_native/viewer_iter13_seed7.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player23489c26" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5769,22 +5744,15 @@ import sys
 sys.path.insert(0, str(ARM.resolve()))
 import replay_arm
 path = replay_arm.build_viewer('arm30_sample_b12')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm30_sample_b12.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player9f7149d7');f.src='/files/arm/results/viewer_arm30_sample_b12.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player9f7149d7" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5795,22 +5763,15 @@ IFrame('/files/arm/results/' + path.name, width='100%', height=810)
 
 ```python
 path = replay_arm.build_viewer('arm30_sample')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm30_sample.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player77a3dfd7');f.src='/files/arm/results/viewer_arm30_sample.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player77a3dfd7" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5821,22 +5782,15 @@ IFrame('/files/arm/results/' + path.name, width='100%', height=810)
 
 ```python
 path = replay_arm.build_viewer('arm30_mean')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm30_mean.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('playerc8327ecf');f.src='/files/arm/results/viewer_arm30_mean.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="playerc8327ecf" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5978,22 +5932,15 @@ ax.legend(ncol=2, fontsize=8); plt.show()
 
 ```python
 path = replay_arm.build_viewer('arm1k')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm1k.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player54e472d3');f.src='/files/arm/results/viewer_arm1k.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player54e472d3" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6383,22 +6330,15 @@ One player per network: the four seeds of iteration 18, then the three new seeds
 
 ```python
 path = replay_arm.build_viewer('arm1k_e77')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm1k_e77.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player873e56f7');f.src='/files/arm/results/viewer_arm1k_e77.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player873e56f7" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6409,22 +6349,15 @@ IFrame('/files/arm/results/' + path.name, width='100%', height=810)
 
 ```python
 path = replay_arm.build_viewer('arm1k_e77_seed1')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm1k_e77_seed1.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('playerbd487a2e');f.src='/files/arm/results/viewer_arm1k_e77_seed1.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="playerbd487a2e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6435,22 +6368,15 @@ IFrame('/files/arm/results/' + path.name, width='100%', height=810)
 
 ```python
 path = replay_arm.build_viewer('arm1k_e77_seed2')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm1k_e77_seed2.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player81894948');f.src='/files/arm/results/viewer_arm1k_e77_seed2.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player81894948" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6461,22 +6387,15 @@ IFrame('/files/arm/results/' + path.name, width='100%', height=810)
 
 ```python
 path = replay_arm.build_viewer('arm1k_e77_seed3')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm1k_e77_seed3.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player3ab8ec81');f.src='/files/arm/results/viewer_arm1k_e77_seed3.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player3ab8ec81" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6487,22 +6406,15 @@ IFrame('/files/arm/results/' + path.name, width='100%', height=810)
 
 ```python
 path = replay_arm.build_viewer('arm1k_seed1')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm1k_seed1.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('playerf0523e70');f.src='/files/arm/results/viewer_arm1k_seed1.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="playerf0523e70" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6513,22 +6425,15 @@ IFrame('/files/arm/results/' + path.name, width='100%', height=810)
 
 ```python
 path = replay_arm.build_viewer('arm1k_seed2')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm1k_seed2.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('playerd97f3e5e');f.src='/files/arm/results/viewer_arm1k_seed2.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="playerd97f3e5e" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -6539,22 +6444,15 @@ IFrame('/files/arm/results/' + path.name, width='100%', height=810)
 
 ```python
 path = replay_arm.build_viewer('arm1k_seed3')
-IFrame('/files/arm/results/' + path.name, width='100%', height=810)
+lazy_player('/files/arm/results/' + path.name)
 ```
 
 
 
 
-
-<iframe
-    width="100%"
-    height="810"
-    src="/files/arm/results/viewer_arm1k_seed3.html"
-    frameborder="0"
-    allowfullscreen
-
-></iframe>
-
+<div><button onclick="var f=document.getElementById('player38841566');f.src='/files/arm/results/viewer_arm1k_seed3.html';f.style.display='block';this.style.display='none'"
+ style="padding:8px 14px;font-size:14px">Load the 3D player</button>
+<iframe id="player38841566" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
