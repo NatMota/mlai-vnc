@@ -66,12 +66,22 @@ ARM_ITERATIONS[19] = dict(iteration=19, name='arm-1khz-stop-on-distance', file='
     lesson='Stopping on distance works far better than on time: the network stops on all 25 bearings, a median 35 mm from the dot against 257 mm, and on 18 of 25 within 10 mm of the closest point the gripper reaches. The reach itself is now the limit: the gripper never gets within 1 cm (median closest 29 mm) and drifts after stop. Near the dot the predicted distance is a median 14 mm too low.')
 
 
+ARM_ITERATIONS[20] = dict(iteration=20, name='arm-1khz-camera-dot', file='arm1k_e77_dist', results='arm1k_e77_dist_camera', hz=1000, target='sample',
+    seed=7, epochs=77, bearings='21 training bearings', dot_input='camera_tracker',
+    anchors=[('Plan and expected results', '#iteration-20-plan-and-expected-results'), ('results', '#iteration-20-results'),
+             ("the camera's estimate during the reach", '#iteration-20-the-cameras-estimate-during-the-reach'), ('loss curves', '#iteration-20-loss-curves'),
+             ('3D replay', '#iteration-20-3d-replay-arm1k_e77_dist-dot-from-the-camera'), ('reading the results', '#iteration-20-reading-the-results')],
+    change="Iteration 19's network, not retrained, with the dot from the corner camera and tracker (keeping the height) instead of the simulator. The expert still drives.",
+    lesson='The camera is not good enough for the arm as it is used now: the gripper gets a median 105 mm from the dot (29 mm with the simulator dot) and the network stops a median 214 mm away. The estimate error itself is moderate (27 mm at PARK, 11 mm during the reach), but the dot input jumps when a hidden dot comes into view after PARK, which the network never saw in training, and the arm swings away 0.5 s after PARK. Next: one fixed dot position after a fresh view.')
+
+
 def add(iteration):
     import mlflow, pandas as pd
     from mlflow.entities import Metric
     spec = ARM_ITERATIONS[iteration]; iteration = spec.get('iteration', iteration); seed = spec.get('seed', 7); epochs = spec.get('epochs', 300)
     h = pd.DataFrame(json.loads((HERE / f"models/{spec['file']}_history.json").read_text()))
-    rows = json.loads((HERE / f"results/{spec['file']}.json").read_text())
+    res = spec.get('results', spec['file'])
+    rows = json.loads((HERE / f"results/{res}.json").read_text())
     df = pd.DataFrame([{k: v for k, v in r.items() if k not in ('log', 'frames')} for r in rows])
     df['stop_vs_expert_s'] = df.stop_s - df.expert_stop_s
     blown = [any(f['parked'] and f['ee_mm'] > 1500 for f in r['frames']) for r in rows]
@@ -96,14 +106,14 @@ def add(iteration):
                   hidden='2x64_relu', parameters=n_params, optimizer='adam', learning_rate=0.01, epochs=epochs, batch='full', seed=seed,
                   loss=f'torque_mse_standardised+{stop}_mse_scaled_weight1', trajectory_weighting='equal',
                   input_scaling='all_standardised', output_scaling='torques_standardised', train_bearings=spec['bearings'],
-                  arm_sensor='encoders_kinova_ka75_3686400_ka58_2534400_counts_per_turn', dot_input='simulator_robot_frame',
+                  arm_sensor='encoders_kinova_ka75_3686400_ka58_2534400_counts_per_turn', dot_input=spec.get('dot_input', 'simulator_robot_frame'),
                   driving='expert_drive', torque_clip_Nm=30, test_bearings=len(df), test_engine='sensor_parking_arm_mode')
     commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=HERE, text=True).strip()
     link = NOTEBOOK_MD.format(commit=commit)
     rate = '30 Hz (each torque held 33 ms)' if spec['hz'] == 30 else '1 kHz (a new torque every 1 ms)'
     desc = '\n'.join([
         f"**Iteration {iteration}: `{spec['file']}` (arm)**", '', f"**What changed.** {spec['change']}", '',
-        '**Inputs.** 19: arm encoder angles and speeds (7 each, Kinova Jaco 2 actuator resolutions), the dot in the robot frame (x, y, z, from the simulator for this test), time since PARK and time since the start.', '',
+        '**Inputs.** 19: arm encoder angles and speeds (7 each, Kinova Jaco 2 actuator resolutions), the dot in the robot frame (x, y, z, ' + ('from the corner camera and tracker, image every 1/30 s' if spec.get('dot_input') == 'camera_tracker' else 'from the simulator for this test') + '), time since PARK and time since the start.', '',
         f"**Outputs.** The 7 arm torques (N m, clipped to ±30) at {rate}, and " + ("time to stop in seconds (clipped at 3 s); stop when it is 0.25 s or less." if stop == 'time_to_stop' else "the distance from the gripper to the dot (clipped at 0.25 m); stop when it is 1 cm or less."), '',
         f"**Training.** 2×64 ReLU network, {n_params:,} parameters. Loss: torque MSE in standardised units plus {stop.replace('_', '-')} MSE (weight 1), each training run counted equally. Adam, lr 0.01, {epochs} full-batch epochs, seed {seed}, trained on {spec['bearings']}. Data: the expert's full runs recorded every 1 ms, from PARK to its stop.", '',
         '**Test.** In the simulator on 25 bearings. The expert drives and parks, then only the arm network moves the arm.', '',
@@ -133,7 +143,7 @@ def add(iteration):
         mlflow.log_artifact(str(HERE / f"models/{spec['file']}.npz"), 'model')
         mlflow.log_artifact(str(HERE / f"models/{spec['file']}_history.json"), 'model')
         mlflow.log_table(df, 'tests/per_bearing.json')
-        mlflow.log_artifact(str(HERE / f"results/viewer_{spec['file']}.html"), 'player')
+        mlflow.log_artifact(str(HERE / f"results/viewer_{res}.html"), 'player')
         mlflow.log_artifact(str(NOTEBOOK), 'notebook')
         if len(sys.argv) > 2:
             mlflow.log_artifact(sys.argv[2], 'notebook')

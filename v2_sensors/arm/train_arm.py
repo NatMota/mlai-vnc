@@ -26,8 +26,12 @@ usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N]
 """
 import argparse, json, sys
 from pathlib import Path
-import numpy as np, torch
-from torch import nn
+import numpy as np
+try:
+    import torch
+    from torch import nn
+except ImportError:             # testing (test_arm.py) only needs NumPy
+    torch = nn = None
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'driving_v2'))
@@ -82,13 +86,14 @@ def load_run(bearing, target_mode='sample', hz=30, stop_target='time'):
     return dict(bearing=bearing, split=SPLIT[bearing], X=X.astype(np.float32), tau=y.astype(np.float32), ttp=ttp.astype(np.float32))
 
 
-class ArmPolicy(nn.Module):
-    def __init__(self, n_in):
-        super().__init__()
-        self.shared = nn.Sequential(nn.Linear(n_in, HIDDEN), nn.ReLU(), nn.Linear(HIDDEN, HIDDEN), nn.ReLU())
-        self.arm = nn.Linear(HIDDEN, 7); self.stop = nn.Linear(HIDDEN, 1)
-    def forward(self, x):
-        h = self.shared(x); return self.arm(h), self.stop(h).squeeze(1)
+if nn is not None:
+    class ArmPolicy(nn.Module):
+        def __init__(self, n_in):
+            super().__init__()
+            self.shared = nn.Sequential(nn.Linear(n_in, HIDDEN), nn.ReLU(), nn.Linear(HIDDEN, HIDDEN), nn.ReLU())
+            self.arm = nn.Linear(HIDDEN, 7); self.stop = nn.Linear(HIDDEN, 1)
+        def forward(self, x):
+            h = self.shared(x); return self.arm(h), self.stop(h).squeeze(1)
 
 
 def policy(w, x):

@@ -5,7 +5,11 @@ its inputs at its own rate (info_hz: every 30 Hz decision, or every 1 ms) and ea
 the next one. The full robot state is logged every 1/30 s for the 3D player. It says stop when the
 predicted time to stop is 0.25 s or less (latched); the run ends 0.5 s after stop, or 1 s after the expert's stop.
 
-usage: python test_arm.py MODEL [--bearings B ...]  ->  results/MODEL.json
+--camera: the dot comes from the corner camera and tracker (as in driving, keeping the height) instead of the
+simulator. The image is taken every 1/30 s; the tracker moves the dot with the wheel encoder speeds while the robot
+drives; the network uses the latest estimate. Results go to results/MODEL_camera.json, with the estimate error logged.
+
+usage: python test_arm.py MODEL [--bearings B ...] [--camera] [--jobs N]  ->  results/MODEL[_camera].json
 """
 import argparse, json, os, subprocess, sys
 from pathlib import Path
@@ -20,7 +24,7 @@ NATIVE = Path(os.environ.get('NATIVE_ROOT', Path.home() / 'github/comp0245-nativ
 PIXI = next(x for x in [Path.home() / '.local/bin/pixi', Path.home() / '.pixi/bin/pixi'] if x.exists())
 
 
-def one(w, bearing):
+def one(w, bearing, camera=False):
     m = json.loads((DATA / f'run_{bearing // 12 - 1}/manifest.json').read_text())
     target, expert_stop = m['target_position_world_m'], m['steps'] - 1
     sim = subprocess.Popen([str(PIXI), 'run', 'build-clang19/sensor_parking', str(NATIVE / 'assets')], cwd=NATIVE,
@@ -41,6 +45,13 @@ def one(w, bearing):
     try:
         state = call(dict(op='reset', target=target, max_duration_s=expert_stop / 1000 + 1.0, arm=True, expert_drive=True))
         hz = int(w.get('info_hz', 30))
+        if camera:                                 # the driving test's camera, dot finder and tracker
+            import pybullet as p
+            from camera_loop import Scene, Tracker, see_dot, camera_to_robot, MOUNT
+            names = json.loads((HERE.parent / 'driving_v2/closed_loop_native/result_wheels_live_dot.json').read_text())['joint_names']
+            scene, tracker = Scene(), Tracker(keep_height=True)
+            wheels = sensors.WheelEncoders(); wheels.reset(np.array(state['frame']['joints'][:4]))
+            seen = None; est = None; never_seen = 0
         enc = sensors.ArmEncoders(1 / hz); enc.reset(np.array(state['frame']['joints'][sensors.ARM]))
         stop_t = None; log = []; frames = []; closest = np.inf; next_frame = 0; tau = np.zeros(7); ttp = None
         while not state['done']:
@@ -49,9 +60,20 @@ def one(w, bearing):
             req = dict(op='step', wheel=[0] * 4)
             if hz == 1000:
                 req['ms'] = 1
+            true_dot = dot_in_robot(target, np.array(f['base']), f['yaw'])
+            if camera and f['step'] >= next_frame:     # every 1/30 s: new camera image, tracker update
+                B = np.array(p.getMatrixFromQuaternion(f['quaternion'])).reshape(3, 3)
+                scene.pose(np.r_[f['base'], f['quaternion']], names, f['joints'], target)
+                rgb, depth, _ = scene.fisheye(np.array(f['base']) + B @ MOUNT, np.c_[-B[:, 1], -B[:, 2], B[:, 0]])
+                seen = see_dot(rgb, depth)
+                est = tracker.update(camera_to_robot(seen) if seen is not None else None, wheels.read(np.array(f['joints'][:4]))['wheel_speed'])
             if state['parked']:
-                x = np.r_[r['arm_angle'], r['arm_speed'],
-                          dot_in_robot(target, np.array(f['base']), f['yaw']), t - state['park_step'] / 1000, t].astype(np.float32)
+                if camera:
+                    dot = est if est is not None else np.zeros(3)
+                    never_seen += est is None
+                else:
+                    dot = true_dot
+                x = np.r_[r['arm_angle'], r['arm_speed'], dot, t - state['park_step'] / 1000, t].astype(np.float32)
                 tau, ttp = policy(w, x)
                 if stop_t is None and ttp <= float(w['ttp_thresh']):
                     stop_t = t
@@ -59,6 +81,10 @@ def one(w, bearing):
                 closest = min(closest, 1000 * state['ee_distance_m'])
                 if hz == 30 or f['step'] >= next_frame:
                     log.append(dict(t=t, ee_mm=1000 * state['ee_distance_m'], ttp_s=ttp, tau=np.round(tau, 3).tolist()))
+                    if camera:
+                        log[-1].update(visible=seen is not None, est=None if est is None else np.round(est, 4).tolist(),
+                                       true=np.round(true_dot, 4).tolist(),
+                                       est_err_mm=None if est is None else float(1000 * np.linalg.norm(est - true_dot)))
             if f['step'] >= next_frame:            # every 1/30 s: full state for the 3D player
                 frames.append(dict(time_s=t, base=f['base'], quaternion=f['quaternion'], joints=f['joints'], ee=f['ee'],
                                    parked=state['parked'], stopped=stop_t is not None, ttp_s=ttp, tau=np.round(tau, 3).tolist(),
@@ -71,21 +97,27 @@ def one(w, bearing):
                     expert_stop_mm=1000 * m['final_pre_step_ee_error_m'], expert_stop_s=expert_stop / 1000,
                     stop_s=stop_t, at_network_stop_mm=next((l['ee_mm'] for l in log if stop_t is not None and l['t'] >= stop_t), None),
                     min_mm=float(closest) if d else None, at_expert_stop_mm=at_expert_stop,
-                    end_mm=1000 * state['ee_distance_m'], log=log, frames=frames)
+                    end_mm=1000 * state['ee_distance_m'], log=log, frames=frames,
+                    **(dict(camera=True, visible_at_park=log[0]['visible'] if log else None,
+                            est_err_at_park_mm=log[0]['est_err_mm'] if log else None,
+                            height_err_at_park_mm=(1000 * (log[0]['est'][2] - log[0]['true'][2]) if log and log[0]['est'] else None),
+                            steps_without_estimate=never_seen) if camera else {}))
     finally:
         sim.kill()
 
 
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('model'); ap.add_argument('--bearings', type=int, nargs='*')
+    ap.add_argument('--camera', action='store_true'); ap.add_argument('--jobs', type=int, default=6)
     a = ap.parse_args()
     w = dict(np.load(HERE / f'models/{a.model}.npz'))
     bearings = a.bearings or [b for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
-    from concurrent.futures import ThreadPoolExecutor
-    with ThreadPoolExecutor(6) as pool:
-        rows = list(pool.map(lambda b: one(w, b), bearings))
+    from concurrent.futures import ProcessPoolExecutor      # processes: the camera renders in Python
+    from functools import partial
+    with ProcessPoolExecutor(a.jobs) as pool:
+        rows = list(pool.map(partial(one, w, camera=a.camera), bearings))
     out = HERE / 'results'; out.mkdir(exist_ok=True)
-    (out / f'{a.model}.json').write_text(json.dumps(rows))
+    (out / f"{a.model}{'_camera' if a.camera else ''}.json").write_text(json.dumps(rows))
     for r in rows:
         print(r['bearing'], r['split'], 'expert', round(r['expert_stop_mm'], 1), 'mm | stop', r['stop_s'], 'expert stop', r['expert_stop_s'],
               '| min', round(r['min_mm'], 1), 'at expert stop', round(r['at_expert_stop_mm'], 1), 'end', round(r['end_mm'], 1))

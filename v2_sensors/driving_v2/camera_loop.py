@@ -40,19 +40,21 @@ def see_dot(rgb, depth):
 
 
 class Tracker:
-    """Keeps the dot in the robot frame. Seen: replace. Hidden: move it opposite to the robot's own motion."""
-    def __init__(self):
-        self.dot = None
+    """Keeps the dot in the robot frame. Seen: replace. Hidden: move it opposite to the robot's own motion.
+    keep_height=False (driving): the dot is (x, y). keep_height=True (arm): (x, y, height); while hidden the height stays
+    as last seen, because the robot drives on flat ground."""
+    def __init__(self, keep_height=False):
+        self.dot = None; self.keep_height = keep_height
     def update(self, seen, wheel_speed):
         if seen is not None:
-            self.dot = seen[:2].copy()
+            self.dot = seen[:3 if self.keep_height else 2].copy()
         elif self.dot is not None:
             right, left = wheel_speed[[0, 3]].mean(), wheel_speed[[1, 2]].mean()
             v = WHEEL_RADIUS * (right + left) / 2
             w = WHEEL_RADIUS * (right - left) / TRACK
             x, y = self.dot[0] - v * DT, self.dot[1]
             c, s = np.cos(-w * DT), np.sin(-w * DT)
-            self.dot = np.array([c * x - s * y, s * x + c * y])
+            self.dot = np.r_[c * x - s * y, s * x + c * y, self.dot[2:]]
         return self.dot
 
 
