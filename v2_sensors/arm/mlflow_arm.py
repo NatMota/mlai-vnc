@@ -119,6 +119,12 @@ ARM_ITERATIONS[24] = dict(iteration=24, name='arm-1khz-stop-layer-16-camera-dot'
     change='Iteration 23 with a 16-unit ReLU layer of its own for the stop head, after the second shared layer. Tested with the dot from the corner camera and tracker.',
     lesson='A layer of its own does not fix the stop at 77 epochs: the median stop is 0.78 s after PARK (0.81 s in iteration 23), and on 12 of 25 bearings the network says stop within 2 ms of PARK, where the head predicts a median 40 mm against about 225 mm. The reach is unchanged; the median closest is 115 mm because the runs stop sooner.')
 
+ARM_ITERATIONS[26] = dict(iteration=26, name='arm-1khz-stop-layer-16-300-epochs-camera-dot', file='arm1k_e300_phys_stop16', results='arm1k_e300_phys_stop16_camera',
+    hz=1000, target='sample', seed=7, epochs=300, bearings='21 training bearings', n_inputs=17, dot_input='camera_tracker',
+    anchors=_stop_anchors(26, 'arm1k_e300_phys_stop16'),
+    change='Iteration 25 (the same network as iteration 24: stop head with its own 16-unit ReLU layer, stop loss weight 1) trained for 300 epochs instead of 77. Tested with the dot from the corner camera and tracker.',
+    lesson='Training longer fixes the stop at PARK (the head predicts a median 218 mm there, against 40 mm in iteration 24) and lowers the losses (test torque 0.40, stop 0.0004), but makes the arm worse in the camera test: the gripper comes to about 125 mm from the dot by 0.8 s, then rises and drops hard, with 17% of torques at the limit; no bearing gets within 50 mm. 10 of 25 still stop at about 0.4 s. A better fit to the expert data does not carry over once the network drives the arm off the expert paths. Iteration 23 stays the best reach with the camera.')
+
 
 def add(iteration):
     import mlflow, pandas as pd
