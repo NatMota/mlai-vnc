@@ -8,6 +8,12 @@ WheelEncoders: one incremental encoder per wheel.
   - The 12 network inputs are built from these readings exactly as before: angle since the start, speed, and
     the average and right minus left of both.
 
+ArmEncoders: the position sensor in each of the 7 arm actuators (Kinova Jaco 2, KA-75+ on joints 1-4,
+KA-58 on joints 5-7; resolutions from Kinova's actuator datasheet, AS-ACT-KA58-KA75-SP-INT-EN 201804-1.2).
+  - The sensor is absolute, so the angle is the joint angle itself, counted in whole ticks. We assume the joints
+    have already indexed, so the +-1.5 deg start-up error does not apply.
+  - The speed is the change in counted angle over 1/30 s, as for the wheels.
+
 To add a sensor (for example an IMU): give it a reset() and a read(frame) that returns a dict of readings,
 then add it to Sensors.
 """
@@ -50,13 +56,38 @@ class WheelEncoders:
         return np.array(out, np.float32)
 
 
+ARM_COUNTS_PER_REV = np.array([3_686_400] * 4 + [2_534_400] * 3)    # KA-75+ x4, KA-58 x3
+ARM_TICK = 2 * np.pi / ARM_COUNTS_PER_REV
+ARM = slice(4, 11)              # arm joints in the simulator's joint list (after the 4 wheels)
+
+
+class ArmEncoders:
+    def reset(self, q0):
+        self.last = np.floor(np.asarray(q0) / ARM_TICK) * ARM_TICK
+
+    def read(self, q):
+        now = np.floor(np.asarray(q) / ARM_TICK) * ARM_TICK
+        speed = (now - self.last) / DT
+        self.last = now
+        return dict(arm_angle=now, arm_speed=speed)
+
+    @staticmethod
+    def readings_for_run(q):
+        """Encoder angles and speeds for a recorded run: q is the true arm angle at each 30 Hz decision, shape (T, 7)."""
+        enc = ArmEncoders(); enc.reset(q[0]); out = [enc.read(row) for row in q]
+        return np.array([r['arm_angle'] for r in out]), np.array([r['arm_speed'] for r in out])
+
+
 class Sensors:
     """All sensors together. The network only ever sees what these return."""
     def __init__(self):
         self.encoders = WheelEncoders()
+        self.arm = ArmEncoders()
 
     def reset(self, frame):
-        self.encoders.reset(np.array(frame['joints'][:4]))
+        q = np.array(frame['joints'])
+        self.encoders.reset(q[:4]); self.arm.reset(q[ARM])
 
     def read(self, frame):
-        return self.encoders.read(np.array(frame['joints'][:4]))
+        q = np.array(frame['joints'])
+        return {**self.encoders.read(q[:4]), **self.arm.read(q[ARM])}
