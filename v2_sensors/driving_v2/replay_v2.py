@@ -98,3 +98,41 @@ def run_native(model, cases):
         subprocess.run([str(pixi), 'run', 'build-clang19/policy_replay', str(native / 'assets'), str(request), str(out)],
                        cwd=native, env=env, stdout=log, stderr=subprocess.STDOUT, check=True)
     return out
+
+
+def build_camera_viewer(name, out_name):
+    """3D player for a camera-loop model (camera_loop_frames/NAME, logged with FULL_FRAMES=1) against the expert.
+    The expert frames are the expert half of closed_loop_native/result_wheels_live_dot.json."""
+    from v2_results import REF
+    expert = json.loads((RUNS / 'result_wheels_live_dot.json').read_text())
+    runs = []
+    for e in sorted(expert['runs'], key=lambda r: r['bearing_deg']):
+        b = int(e['bearing_deg']); ref = REF[str(b)]
+        r = json.loads((HERE / f'camera_loop_frames/{name}/run_{b}.json').read_text())
+        frames, prev = [], None
+        for l in r['log']:
+            base = l['base3']
+            speed = 0.0 if prev is None else float(np.hypot(base[0] - prev[0], base[1] - prev[1]) * 30)
+            frames.append(dict(time_s=l['t'], base=base, quaternion=l['quaternion'], joints=l['joints'], ee=base,
+                               command=[0.0] * 4 if l['parked'] else l['command'], parked=l['parked'],
+                               park_probability=l['park_prob'], ttp_s=l['ttp_s'], speed_m_s=speed))
+            prev = base
+        park = next((f for f in frames if f['parked']), None)
+        metrics = dict(model_park_s=park['time_s'] if park else None, expert_park_s=ref['park_time_s'],
+                       park_xy_error_m=float(np.hypot(*np.subtract(park['base'][:2], ref['park_base_xy']))) if park else None,
+                       park_yaw_error_deg=_angle_err(next(l['yaw'] for l in r['log'] if l['parked']), ref['park_yaw']) if park else None,
+                       final_xy_error_m=float(np.hypot(*np.subtract(r['final_base'], ref['final_base_xy']))))
+        runs.append(dict(bearing_deg=b, split=ref['split'], target=e['target'], metrics=metrics,
+                         model=dict(frames=frames, final=dict(time_s=frames[-1]['time_s'])), expert=e['expert']))
+    payload = dict(joint_names=expert['joint_names'], runs=runs,
+                   recording_description='Model: camera + wheel encoders, tested in the simulator. Expert: recorded run for the same bearing.')
+    payload['geometry'] = old_replay.geometry(old_replay.native_root(), payload['joint_names'])
+    page = ((OLD / 'replay_template.html').read_text()
+            .replace('Park probability ≥ 0.5 latches zero wheel commands',
+                     'PARK when the predicted time to park is 0.25 s or less; it latches zero wheel commands')
+            .replace('Park probability ${m.park_probability.toFixed(3)}', 'Predicted time to park ${m.ttp_s.toFixed(2)} s')
+            .replace('__PLOTLY__', (OLD / 'replay_assets/plotly.min.js').read_text())
+            .replace('__DATA__', json.dumps(payload, separators=(',', ':')).replace('</', '<\\/')))
+    out = RUNS / f'viewer_{out_name}.html'
+    out.write_text(page)
+    return out

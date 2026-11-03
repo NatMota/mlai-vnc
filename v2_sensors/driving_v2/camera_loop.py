@@ -21,6 +21,7 @@ PIXI = next(x for x in [Path.home() / '.local/bin/pixi', Path.home() / '.pixi/bi
 MOUNT = np.array([0.29, -0.13, 0.36])        # corner camera, base frame (x forward, y left, z up)
 WHEEL_RADIUS, TRACK = 0.11, 0.66            # skid-steer effective track width (expert's calibrated value)
 DT = 1 / 30
+FULL_FRAMES = os.environ.get("FULL_FRAMES") == "1"      # also log the full robot state (for the 3D player)
 
 
 def camera_to_robot(p_cam):
@@ -133,6 +134,9 @@ def run(weights_path, bearing, max_s, use_visible_flag=False):
                             est_dist=dot_in[0], est_dir_deg=float(np.rad2deg(np.arctan2(dot_in[1], dot_in[2]))) if dot is not None else None,
                             true_dist=float(np.hypot(dx, dy)), true_dir_deg=float(np.rad2deg(np.arctan2(np.sin(ta), np.cos(ta)))),
                             park_prob=prob, ttp_s=getattr(policy, 'ttp', None), base=f['base'][:2], yaw=f['yaw']))
+            if FULL_FRAMES:      # full robot state for the 3D player
+                log[-1].update(base3=f['base'], quaternion=f['quaternion'], joints=f['joints'],
+                               wheel_velocity=f['wheel_velocity'], command=cmd.tolist(), parked=bool(park))
             t2 = time.perf_counter(); timing['other_s'] += t2 - t1
             state = call(dict(op='step', wheel=cmd.tolist(), park=bool(park)))
             timing['physics_s'] += time.perf_counter() - t2
