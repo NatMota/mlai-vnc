@@ -18,13 +18,15 @@ Outputs:
 
 --no-time: leave out the two time inputs (17 inputs). The times are the last two inputs, so a 17-input model
            simply ignores them.
+--no-scaling: train on raw inputs (rad, rad/s, m) and raw torques (N m) instead of standardising them with the
+              training-set mean and standard deviation. The loss is then the torque MSE in N m².
 --val-fold F: hold out the training bearings of fold F (split_plan.json) as validation; their losses are saved per epoch.
 --epochs N: number of full-batch epochs (default 300).
 --stop time:     the stop head learns the time to the expert's stop (s, clipped at 3 s); stop when it is 0.25 s or less.
 --stop distance: the stop head learns the distance from the expert's end effector to the dot centre (m, clipped at
                  0.25 m); stop when it is 1 cm or less. The saved ttp_clip and ttp_thresh hold these values.
 
-usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N] [--bearings B ...] [--epochs N] [--val-fold F]
+usage: python train_arm.py NAME [--hz 30|1000] [--target sample|mean] [--seed N] [--bearings B ...] [--epochs N] [--val-fold F] [--no-time] [--no-scaling] [--stop time|distance]
 """
 import argparse, json, sys
 from pathlib import Path
@@ -111,6 +113,7 @@ if __name__ == '__main__':
     ap.add_argument('--hz', type=int, choices=[30, 1000], default=30)
     ap.add_argument('--epochs', type=int, default=EPOCHS); ap.add_argument('--val-fold', type=int)
     ap.add_argument('--stop', choices=['time', 'distance'], default='time'); ap.add_argument('--no-time', action='store_true')
+    ap.add_argument('--no-scaling', action='store_true')
     args = ap.parse_args()
     SN = 'time_to_stop' if args.stop == 'time' else 'distance'
     runs = [load_run(b, args.target, args.hz, args.stop) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
@@ -123,6 +126,9 @@ if __name__ == '__main__':
     Xall, Yall = np.concatenate([r['X'] for r in train]), np.concatenate([r['tau'] for r in train])
     xm, xs = Xall.mean(0), Xall.std(0) + 1e-6
     ym, ys = Yall.mean(0), Yall.std(0) + 1e-6
+    if args.no_scaling:
+        xm, xs = np.zeros_like(xm), np.ones_like(xs)
+        ym, ys = np.zeros_like(ym), np.ones_like(ys)
 
     def stack(rs):
         X = torch.from_numpy((np.concatenate([r['X'] for r in rs]) - xm) / xs)
@@ -164,7 +170,7 @@ if __name__ == '__main__':
     x_raw = tr[0][:50].numpy() * xs + xm
     sd.update(ttp_clip=np.float32(CLIP if args.stop == 'time' else DIST_CLIP), ttp_thresh=np.float32(THRESH if args.stop == 'time' else DIST_THRESH))
     diff = max(float(np.abs(policy(sd, x_raw[i])[0] - (py[i].numpy() * ys + ym)).max()) for i in range(50))
-    sd.update(info_inputs=np.int64(len(xm)), info_stop_target=args.stop, info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_train_bearings=np.array([r['bearing'] for r in train]))
+    sd.update(info_inputs=np.int64(len(xm)), info_stop_target=args.stop, info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_scaling='none' if args.no_scaling else 'standardised', info_train_bearings=np.array([r['bearing'] for r in train]))
     out = HERE / 'models'; out.mkdir(exist_ok=True)
     np.savez(out / f'{args.name}.npz', **sd)
     (out / f'{args.name}_history.json').write_text(json.dumps(history))
