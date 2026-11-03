@@ -7,7 +7,7 @@ int main(int argc,char**argv){try{
     std::string assets=argv[1];Physics physics(assets);std::map<std::string,Reference> refs;
     std::unique_ptr<Expert> expert;State s;V3 target;V7 hold;Reference* ref=nullptr;
     Eigen::Vector4d applied=Eigen::Vector4d::Zero();
-    int step=0,decisions=0,park_step=-1,stable_steps=0,stop_step=-1;double limit=60;bool done=false,arm_mode=false,expert_drive=false;int expert_arm_hz=0,arm_updates=0;
+    int step=0,decisions=0,park_step=-1,stable_steps=0,stop_step=-1;double limit=60;bool done=false,arm_mode=false,expert_drive=false;int expert_arm_hz=0,arm_updates=0;bool arm_live=false;
     V7 arm_tau=V7::Zero();
     std::cout<<json({{"type","ready"},{"engine_sha256",ENGINE_SHA},{"joint_names",physics.names}}).dump()<<std::endl;
     auto packet=[&](){
@@ -19,7 +19,7 @@ int main(int argc,char**argv){try{
           {"parked",park_step>=0},{"physically_stopped",stopped},
           {"suitable",stopped&&m.range_error<=.05&&m.heading<=20},{"done",done},
           {"expert_prow_distance_m",ref->distance},{"expert_park_time_s",ref->park_step*dt},
-          {"ee_distance_m",(target-a.ee).norm()},{"arm_stopped",stop_step>=0}};
+          {"ee_distance_m",(target-a.ee).norm()},{"arm_stopped",stop_step>=0},{"park_step",park_step}};
     };
     std::string line;while(std::getline(std::cin,line)){try{
         auto r=json::parse(line);std::string op=r.at("op");
@@ -34,12 +34,15 @@ int main(int argc,char**argv){try{
             arm_mode=r.value("arm",false);expert_drive=r.value("expert_drive",false);arm_tau.setZero();
             // expert_arm_hz (smoke test): after PARK the expert's own arm controller runs closed loop, but its torque is
             // only sampled at this rate and held in between, like a network deciding at that rate.
-            expert_arm_hz=r.value("expert_arm_hz",0);arm_updates=0;
+            expert_arm_hz=r.value("expert_arm_hz",0);arm_updates=0;arm_live=false;
         }else if(op=="step"){
             if(!expert||done)throw std::runtime_error("Reset before stepping a finished episode");
             Eigen::Vector4d wheels;for(int i=0;i<4;i++)wheels[i]=std::clamp(r.at("wheel")[i].get<double>(),-3.,3.);
             if(r.value("park",false)&&park_step<0&&!expert_drive)park_step=step;
             if(arm_mode&&r.contains("arm"))for(int j=0;j<7;j++)arm_tau[j]=std::clamp(r.at("arm")[j].get<double>(),-30.,30.);
+            // Client torques take over from the first request sent after PARK (or at once in 1 ms replay); until then
+            // the hold controller keeps the arm, so the gap between PARK and the next decision is not left unpowered.
+            if(arm_mode&&r.contains("arm")&&(park_step>=0||r.contains("ms")))arm_live=true;
             if(arm_mode&&park_step>=0&&r.value("stop",false)&&stop_step<0)stop_step=step;
             // Default: run to the next 30 Hz decision. "ms" runs that many 1 ms physics steps instead (smoke tests).
             int next=r.contains("ms")?step+r.at("ms").get<int>():std::lround((++decisions)*1000./30);
@@ -53,7 +56,7 @@ int main(int argc,char**argv){try{
                 else a.wheel=park_step>=0?Eigen::Vector4d::Zero().eval():wheels;
                 if(park_step>=0)a.wheel.setZero();
                 applied=a.wheel;
-                if(arm_mode&&park_step>=0)a.tau=arm_tau;
+                if(arm_mode&&park_step>=0&&(arm_live||expert_arm_hz>0))a.tau=arm_tau;
                 else a.tau=(100*(hold-s.q.segment<7>(4))-30*s.qd.segment<7>(4)+a.gravity).cwiseMax(-30).cwiseMin(30);
                 physics.step(s,a);step++;s=physics.state();
                 stable_steps=(s.lin.head<2>().norm()<=.02&&std::abs(s.ang.z())<=2*M_PI/180)?stable_steps+1:0;

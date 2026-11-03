@@ -5421,3 +5421,296 @@ pd.DataFrame(check).sort_values('bearing').set_index('bearing').T.round(3)
 </div>
 
 
+
+## Arm: plan and expected results
+
+### What the arm network will do
+
+The expert works in two phases. While it drives, it holds the arm still. Once it has parked, it reaches for the dot with the arm and stops when the gripper is within 1 cm of it. The arm network copies the second phase. It takes over at PARK, from the iteration 13 driving model.
+
+| | Count | Details |
+|---|---|---|
+| Input: arm joint angles | 7 | arm encoders (`sensors.ArmEncoders`): absolute angle in whole ticks, 3,686,400 per turn on joints 1 to 4 and 2,534,400 on joints 5 to 7 (Kinova datasheet for the Jaco 2 actuators) |
+| Input: arm joint speeds | 7 | change in encoder angle over 1/30 s |
+| Input: dot x, y and height | 3 | camera and tracker, which now keeps the height |
+| Input: dot visible flag | 1 | camera |
+| Input: time since PARK | 1 | clock |
+| Output: arm joint torques | 7 | clipped at ±30 Nm, like the expert's |
+| Output: time to stop | 1 | stop when it is 0.25 s or less, latched |
+
+- The network is a 2×64 ReLU MLP. Inputs and each torque are standardised, and the scaling is folded into the weights, as in iteration 8.
+- It runs at 30 Hz, like the driving network. Each torque command is held for 33 ms while the physics runs at 1 kHz.
+- The fingers do not move, so they are not inputs.
+- Until PARK the arm is held by the same hold controller as the expert. After PARK there is no hold controller: the network's torques move the arm and also keep it up after stop. A run ends 0.5 s after stop, or 1 s after the expert's stop time.
+- Training rows run from the expert's PARK to 0.5 s after the expert's stop, with time to stop 0 after the stop. There are 21 training runs, one per training bearing.
+- The loss is the one used for driving: mean squared error on the outputs with equal weight per run, plus the weighted time-to-stop term. Results are also reported as the number of bearings where the gripper ends within 1 cm of the dot.
+- Every version is trained with four seeds (7, 1, 2 and 3).
+
+### Smoke tests before training
+
+| Test | What it checks | Expected result |
+|---|---|---|
+| 1. Iteration 13, seed 7, through the changed simulator | the change does not affect driving | the same final positions, to the millimetre |
+| 2. The expert's own 1 kHz arm torques sent through the new arm input | the arm input is wired correctly | the same reach as the expert, gripper within 1 cm |
+| 3. The expert's torques averaged over each 33 ms and held | 30 Hz is fast enough for the arm | gripper within 1 cm on most bearings; if not, the arm network moves to 100 Hz |
+| 5. Dot in the camera view after PARK | where the dot inputs come from during the reach | probably out of view, so the tracker's estimate is used; this is fine because the robot does not move |
+| 6. Train on one bearing and test it in the simulator | the inputs carry enough information for one reach | the gripper ends within 1 cm on that bearing |
+
+Test 4, the expert's torques against the real actuator limits, is not run: we take the expert's torques as correct.
+
+### Expected results and what we do if they fail
+
+- The reach should be easier than driving to learn. The dot does not move once the robot has parked, and the arm starts from almost the same pose every time.
+- The risk is drift: a small torque error at the shoulder moves the gripper a long way. If the reach drifts, the next steps are the joint torque sensors as 7 more inputs (±0.4 Nm), then extra training runs around the expert's path (DART).
+- If the network does not stop, we add more rows after the expert's stop, as iteration 12 did for PARK.
+- Later, the arm network will run for the whole run with a parked flag as an input, so the hold controller before PARK is replaced as well.
+
+### Arm: what the expert does
+
+The expert's full runs were recorded for all 30 bearings with the fast simulator's expert collector, every 1 ms, from the start to the expert's stop (`v2_sensors/arm/data/expert_full`, 18 s to collect). Their PARK times match the driving data to the millisecond.
+
+- The expert stops when the gripper is within 1 cm of the dot and more than 8 s have passed since the start (`controller.cpp:91`). So 23 of the 30 runs stop at exactly 8.0 s, however early the gripper got there. The arm network therefore gets the time since the start as an input, as well as the time since PARK.
+- On 204° and 228° the expert does not get within 1 cm. It stalls about 11.5 mm from the dot and stops 3 s later. 204° is a test bearing.
+- The brief (slide 4) names the outputs `torque_arm` and `wheel_cmds`. The arm network therefore outputs the 7 torques directly. A network that outputs target angles for a fixed PD loop would change the command type.
+- The wheels are different. A wheel command is a speed, and the simulator turns it into torque every 1 ms with 30 × (commanded speed − actual speed) (`physics.cpp:106`). This is the simulator's motor model, and it keeps correcting while a 30 Hz command is held. The arm torques go to the joints as they are, with nothing in between.
+
+### Arm: smoke tests
+
+The stepping server (`sensor_parking`) has new options, and without them it behaves as before:
+
+- `arm`: after PARK the client's 7 torques drive the arm and `stop` ends the run 0.5 s later. Until the first arm command after PARK the hold controller keeps the arm.
+- `expert_drive`: the expert drives and parks itself, so the arm can be tested on its own.
+- `expert_arm_hz`: the expert's own arm controller runs after PARK, but its torque is only taken at this rate and held in between.
+
+| Test | Result |
+|---|---|
+| 1. Iteration 13, seed 7, through the changed server | the same 24 of 25 parked, final positions identical to the millimetre |
+| 2. The expert's own 1 kHz torques sent through the arm input | the expert's reach reproduced exactly on all 30 bearings |
+| 3. The expert's torques averaged over each 33 ms and held, without feedback | the gripper ends 0.2 to 1.2 m from the dot |
+| 3b. The expert's own controller, its torque taken at a lower rate and held | works only at 1 kHz (table below) |
+| 5. Dot in view after PARK | in view on 9 of the 24 parked runs; otherwise the tracker's estimate is within about 1 to 4 cm |
+
+Test 4, the expert's torques against the real actuator limits, is not run, because we take the expert's torques as correct.
+
+
+```python
+ARM = Path('../arm')
+t2 = pd.DataFrame(json.loads((ARM / 'smoke/test2_1khz.json').read_text()))
+rows = []
+for hz in (1000, 500, 250, 100, 30):
+    d = pd.DataFrame(json.loads((ARM / f'smoke/test3b_expert_{hz}hz.json').read_text()))
+    rows.append({'rate (Hz)': hz, 'matches the expert (of 30)': int((d.at_stop_mm <= np.maximum(10, t2.expert_stop_mm + 1)).sum()),
+                 'median distance at the expert stop (mm)': round(d.at_stop_mm.median(), 1),
+                 'largest distance (mm)': round(d.at_stop_mm.max(), 1)})
+print('Test 2: largest difference from the expert at its stop (mm):', float((t2.at_stop_mm - t2.expert_stop_mm).abs().max()))
+pd.DataFrame(rows).set_index('rate (Hz)')
+```
+
+    Test 2: largest difference from the expert at its stop (mm): 1.7763568394002505e-15
+
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>matches the expert (of 30)</th>
+      <th>median distance at the expert stop (mm)</th>
+      <th>largest distance (mm)</th>
+    </tr>
+    <tr>
+      <th>rate (Hz)</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1000</th>
+      <td>30</td>
+      <td>4.2</td>
+      <td>11.7</td>
+    </tr>
+    <tr>
+      <th>500</th>
+      <td>0</td>
+      <td>65.1</td>
+      <td>95.9</td>
+    </tr>
+    <tr>
+      <th>250</th>
+      <td>0</td>
+      <td>452.1</td>
+      <td>629.6</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>0</td>
+      <td>595.8</td>
+      <td>814.4</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>0</td>
+      <td>637.8</td>
+      <td>55856.2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+Test 3b is the main finding. The expert's arm controller has stiff gains (100 on the angle error, 30 on the speed) on light joints. Its torque is right for one millisecond. Held for 2 ms the arm overshoots, and held for 33 ms it swings away from the dot.
+
+### Arm: 30 Hz torque networks
+
+To see what happens, three networks were trained to output the 7 torques once per 30 Hz decision (`v2_sensors/arm/train_arm.py`):
+
+- 19 inputs: arm encoder angles (7) and speeds (7), the dot in the robot frame (3, from the simulator for this test, not the camera), time since PARK and time since the start.
+- Outputs: the 7 torques and the time to stop. 2×64 ReLU, inputs and torques standardised, 300 epochs, seed 7.
+- Rows: every 30 Hz decision from the expert's PARK to its stop, about 110 per run.
+- Torque targets: the expert's torque at the decision step (`sample`), or its average over the 33 ms until the next decision (`mean`).
+
+`arm30_sample_b12` is trained on bearing 12 only and tested on bearing 12. It checks whether a network that fits its data almost perfectly can do the reach.
+
+They were tested in the simulator with `expert_drive`, so the expert parks and only the arm network is tested (`v2_sensors/arm/test_arm.py`).
+
+
+```python
+rows = []
+for name in ('arm30_sample_b12', 'arm30_sample', 'arm30_mean'):
+    h = json.loads((ARM / f'models/{name}_history.json').read_text())[-1]
+    for r in json.loads((ARM / f'results/{name}.json').read_text()):
+        t0 = r['log'][0]['t']
+        rows.append(dict(model=name, split=r['split'], bearing=r['bearing'], train_torque_loss=h['train_torque_mse'],
+                         test_torque_loss=np.nan if name.endswith('_b12') else h['test_torque_mse'],
+                         at_park_mm=r['log'][0]['ee_mm'], closest_mm=r['min_mm'], at_expert_stop_mm=r['at_expert_stop_mm'],
+                         s_until_1m=next((l['t'] - t0 for l in r['log'] if l['ee_mm'] > 1000), np.nan)))
+arm30 = pd.DataFrame(rows)
+arm30.groupby('model', sort=False).agg(**{
+    'runs': ('bearing', 'size'), 'train torque loss': ('train_torque_loss', 'first'), 'test torque loss': ('test_torque_loss', 'first'),
+    'within 1 cm at the expert stop': ('at_expert_stop_mm', lambda s: int((s <= 10).sum())),
+    'median distance at PARK (mm)': ('at_park_mm', 'median'), 'median closest (mm)': ('closest_mm', 'median'),
+    'median time until 1 m away (s)': ('s_until_1m', 'median')}).round(3)
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>runs</th>
+      <th>train torque loss</th>
+      <th>test torque loss</th>
+      <th>within 1 cm at the expert stop</th>
+      <th>median distance at PARK (mm)</th>
+      <th>median closest (mm)</th>
+      <th>median time until 1 m away (s)</th>
+    </tr>
+    <tr>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>arm30_sample_b12</th>
+      <td>1</td>
+      <td>0.000</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>224.522</td>
+      <td>161.429</td>
+      <td>0.533</td>
+    </tr>
+    <tr>
+      <th>arm30_sample</th>
+      <td>25</td>
+      <td>0.091</td>
+      <td>1.456</td>
+      <td>0</td>
+      <td>227.017</td>
+      <td>188.806</td>
+      <td>0.534</td>
+    </tr>
+    <tr>
+      <th>arm30_mean</th>
+      <td>25</td>
+      <td>0.030</td>
+      <td>0.062</td>
+      <td>0</td>
+      <td>227.017</td>
+      <td>221.130</td>
+      <td>0.467</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+fig, ax = plt.subplots(figsize=(10, 4))
+for name in ('arm30_sample_b12', 'arm30_sample', 'arm30_mean'):
+    r = next(r for r in json.loads((ARM / f'results/{name}.json').read_text()) if r['bearing'] == 12)
+    ax.plot([l['t'] - r['log'][0]['t'] for l in r['log']], [l['ee_mm'] for l in r['log']], label=name)
+ax.axhline(10, color='k', ls=':', label='1 cm')
+ax.set(yscale='log', xlabel='time since PARK (s)', ylabel='gripper to dot (mm)', title='Bearing 12: 30 Hz torque networks', xlim=(0, 2))
+ax.legend(); plt.show()
+```
+
+
+    
+![png](driving_v2_sensors_files/driving_v2_sensors_118_0.png)
+    
+
+
+Reading the results:
+
+- No network gets the gripper within 1 cm. The gripper starts about 22.5 cm from the dot at PARK. Each network moves it a few centimetres closer, then the arm swings away and passes 1 m from the dot about 0.5 s after PARK.
+- The network trained on bearing 12 alone fits its training rows almost exactly (torque loss 0.0001) and still swings away after 0.53 s. So the failure comes from holding the torques for 33 ms, not from the network learning badly.
+- The averaged torques are much easier to learn (test loss 0.06 against 1.46), but they fail in the same way.
+- This matches test 3b: the expert's own controller fails when its torque is held for 33 ms.
+
+What this means for the arm: to output torques, as the expert does, the arm network has to run at the expert's rate, 1 kHz. The next test is the same network at 1 kHz.
