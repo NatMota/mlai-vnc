@@ -1,0 +1,27 @@
+{
+  "counts": {
+    "height": {
+      "attempts": 100,
+      "replayable": 100
+    },
+    "no_speed": {
+      "attempts": 100,
+      "replayable": 100
+    },
+    "longer_arm": {
+      "attempts": 100,
+      "replayable": 100
+    },
+    "wider_arm": {
+      "attempts": 100,
+      "replayable": 100
+    }
+  },
+  "camera_frames": 115366,
+  "all_camera_files_present": true,
+  "unchanged_stop_network": true,
+  "identical_parking_for_arm_variants": true,
+  "unchanged_driving_for_arm_variants": true,
+  "unchanged_arm_for_driving_variants": true,
+  "frozen_hashes_verified": true
+}

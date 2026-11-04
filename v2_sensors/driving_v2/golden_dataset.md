@@ -12544,3 +12544,2290 @@ The original prediction was above 70 accurate first triggers out of 100 recorded
 The two runs share exactly the same first 300 updates, verified from all six raw/total loss fields. The arm checkpoint is identical and the physical PARK threshold is unchanged. The 1,000-epoch model is selected at epoch 993 by total offline validation loss. Changing the target clip alters supervision far from PARK and increases the squared-error contribution of physical errors within the final half metre; this is not a pure change of units.
 
 These are six repeatedly used, initially visible validation targets and one seed. They support a development decision, not a generalisation claim. Keep test data untouched. No new official MLflow runs or replay animations were created.
+
+### Iterations 37 to 40: cumulative time-to-PARK full test plan
+
+Freeze the four existing seed-7 configurations before testing: (37) camera height with original arm; (38) remove six wheel-speed features; (39) retain that driving model and extend arm torque training to 1,200 epochs; (40) widen the arm torque layers to 128/128. Driving remains 300 epochs with wheel MSE plus time-to-PARK MSE, 3-second normalization and a 0.25-second trigger. Arm STOP remains the same separately trained distance network.
+
+Evaluate each on every one of the same 100 test targets, with both learned networks, full camera rendering, 30 Hz camera/driving and 1 kHz arm torque/physics. Keep native arm holding before PARK, fixed fingers, existing encoder quantisation, thresholds and timeouts unchanged. Save camera previews and complete recorded trajectories for all 400 attempts. No search rule, retraining, new seed, noise or threshold adjustment.
+
+The six-case validation results suggested that removing wheel speeds helps parking, longer arm training alone hurts STOP distance, and widening improves it. Test whether those directions persist across all bearings, ranges and heights; do not assume the initially visible six cases predict blind-start behaviour. Report every failure, PARK/STOP counts, parking error, closest reach, distance at STOP and the 10 mm full-task success rate. Missing-event medians are conditional.
+
+These test targets were already used for baseline iterations 34 to 36 and informed earlier diagnosis. This subsequent frozen comparison is not a new blind test. Do not tune these checkpoints from its outcomes. Use original training/validation histories, four official MLflow runs and four selectable animation players, each with ghost expert and camera inset. Previous notebook cells remain unchanged.
+
+
+
+```python
+from pathlib import Path
+import sys, json
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from IPython.display import display, Markdown, HTML
+sys.path.insert(0,str(Path('../arm').resolve()))
+import report_time_cumulative as tc
+# Retain the same click-to-load player used by earlier notebook sections.
+import uuid
+def lazy_player(url,height=810):
+    k=uuid.uuid4().hex[:8]
+    return HTML(f"<div><button onclick=\"var f=document.getElementById('player{k}');f.src='{url}';f.style.display='block';this.style.display='none'\" style=\"padding:8px 14px;font-size:14px\">Load the 3D player</button><iframe id=\"player{k}\" style=\"display:none;width:100%;height:{height}px;border:0\"></iframe></div>")
+tc_scores=pd.DataFrame(tc.scores())
+display(tc_scores[['iteration','change','attempts','parked','stopped','success_10mm','median_park_error_cm','median_closest_mm','median_stop_mm','execution_failures']].round(2))
+print('Four frozen seed-7 configurations; all 100 test targets each. No retraining or test-based checkpoint selection.')
+print('Test targets were previously used for baseline evaluation; this is not a new blind test.')
+print('Total simulation wall time:',json.loads((tc.ROOT/'completion.json').read_text())['elapsed_s'],'seconds')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>iteration</th>
+      <th>change</th>
+      <th>attempts</th>
+      <th>parked</th>
+      <th>stopped</th>
+      <th>success_10mm</th>
+      <th>median_park_error_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_stop_mm</th>
+      <th>execution_failures</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>37</td>
+      <td>Add camera height</td>
+      <td>100</td>
+      <td>87</td>
+      <td>80</td>
+      <td>0</td>
+      <td>18.68</td>
+      <td>293.53</td>
+      <td>387.47</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>38</td>
+      <td>Remove wheel-speed inputs</td>
+      <td>100</td>
+      <td>100</td>
+      <td>92</td>
+      <td>0</td>
+      <td>5.60</td>
+      <td>52.50</td>
+      <td>298.47</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>39</td>
+      <td>Longer arm training</td>
+      <td>100</td>
+      <td>100</td>
+      <td>98</td>
+      <td>0</td>
+      <td>5.60</td>
+      <td>98.26</td>
+      <td>193.65</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>40</td>
+      <td>Wider arm layers</td>
+      <td>100</td>
+      <td>100</td>
+      <td>96</td>
+      <td>2</td>
+      <td>5.60</td>
+      <td>59.14</td>
+      <td>85.22</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Four frozen seed-7 configurations; all 100 test targets each. No retraining or test-based checkpoint selection.
+    Test targets were previously used for baseline evaluation; this is not a new blind test.
+    Total simulation wall time: 1132.591391891241 seconds
+
+
+### Iteration 37: cumulative time-to-PARK height
+
+
+```python
+tc_name='height'
+tc_report=tc.select(tc_name)
+tc_config=json.loads((tc.ROOT/tc_name/'config.json').read_text())
+display(pd.DataFrame([tc_report.score(7)]).round(2))
+print('Driving inputs:',tc_config['drive_inputs'],'; arm hidden width:',tc_config['arm_hidden'])
+print('PARK: predicted time <= 0.25 s. Arm STOP: predicted gripper distance <= 1 cm. Same thresholds as the validation checks.')
+for kind in ['driving','torque','stop']:
+    chosen=json.loads((tc.ROOT/tc_name/'models'/f'{kind}_seed7_summary.json').read_text())
+    print(kind,': selected epoch',chosen['selected_epoch'],'; original training rows',chosen['train_rows'],'; validation rows',chosen['val_rows'])
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>seed</th>
+      <th>attempts</th>
+      <th>parked</th>
+      <th>stopped</th>
+      <th>success_10mm</th>
+      <th>success_percent</th>
+      <th>wilson95_low_percent</th>
+      <th>wilson95_high_percent</th>
+      <th>median_park_error_cm</th>
+      <th>median_abs_heading_error_deg</th>
+      <th>median_closest_mm</th>
+      <th>median_stop_mm</th>
+      <th>median_park_s</th>
+      <th>median_stop_s</th>
+      <th>timeouts</th>
+      <th>execution_failures</th>
+      <th>sum_case_wall_s</th>
+      <th>median_case_wall_s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7</td>
+      <td>100</td>
+      <td>87</td>
+      <td>80</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3.7</td>
+      <td>18.68</td>
+      <td>10.5</td>
+      <td>293.53</td>
+      <td>387.47</td>
+      <td>8.73</td>
+      <td>9.28</td>
+      <td>20</td>
+      <td>0</td>
+      <td>1698.39</td>
+      <td>17.55</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Driving inputs: 17 ; arm hidden width: 64
+    PARK: predicted time <= 0.25 s. Arm STOP: predicted gripper distance <= 1 cm. Same thresholds as the validation checks.
+    driving : selected epoch 300 ; original training rows 25928 ; validation rows 26428
+    torque : selected epoch 300 ; original training rows 295084 ; validation rows 288818
+    stop : selected epoch 600 ; original training rows 295084 ; validation rows 288818
+
+
+
+```python
+tc.losses(tc_name);plt.show()
+print('Original training histories, not retraining. Each checkpoint was selected on its own total offline validation loss. Test outcomes are not per-epoch losses.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_198_0.png)
+
+
+
+    Original training histories, not retraining. Each checkpoint was selected on its own total offline validation loss. Test outcomes are not per-epoch losses.
+
+
+
+```python
+tc_report=tc.select(tc_name)
+tc_report.outcomes(7);plt.show()
+display(tc_report.table(7).round(3))
+# Compare the initially visible validation setting with blind starts in this full test.
+tc_raw=json.loads((tc.ROOT/tc_name/'seed7.json').read_text())
+tc_visible={r['dot']:r['frames'][0]['visible'] if r['frames'] else None for r in tc_raw}
+tc_strata=tc_report.table(7).copy();tc_strata['initially_visible']=tc_strata.index.map(tc_visible)
+display(tc_strata.groupby('initially_visible',dropna=False).agg(attempts=('parked','size'),PARK=('parked','sum'),STOP=('stop_s',lambda x:x.notna().sum()),success_10mm=('success','sum'),median_park_cm=('park_error_cm','median'),median_STOP_mm=('at_stop_mm','median')).round(2))
+
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_199_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>status</th>
+      <th>success</th>
+      <th>parked</th>
+      <th>park_s</th>
+      <th>stop_s</th>
+      <th>park_error_cm</th>
+      <th>park_heading_error_deg</th>
+      <th>at_stop_mm</th>
+      <th>closest_mm</th>
+      <th>end_mm</th>
+      <th>post_stop_drift_mm</th>
+      <th>post_park_base_drift_cm</th>
+      <th>timed_out</th>
+      <th>elapsed_s</th>
+      <th>camera_visible_fraction</th>
+      <th>target_bearing_deg</th>
+      <th>target_range_m</th>
+      <th>target_height_m</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.300</td>
+      <td>8.209</td>
+      <td>9.457</td>
+      <td>-19.981</td>
+      <td>851.396</td>
+      <td>609.565</td>
+      <td>1206.087</td>
+      <td>354.691</td>
+      <td>19.944</td>
+      <td>False</td>
+      <td>14.483</td>
+      <td>0.981</td>
+      <td>0.986</td>
+      <td>1.042</td>
+      <td>0.178</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>no_stop_timeout</td>
+      <td>False</td>
+      <td>True</td>
+      <td>9.800</td>
+      <td>NaN</td>
+      <td>8.392</td>
+      <td>12.901</td>
+      <td>NaN</td>
+      <td>143.235</td>
+      <td>467.269</td>
+      <td>NaN</td>
+      <td>0.475</td>
+      <td>True</td>
+      <td>20.435</td>
+      <td>0.457</td>
+      <td>194.926</td>
+      <td>1.095</td>
+      <td>1.028</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.233</td>
+      <td>9.315</td>
+      <td>7.915</td>
+      <td>-3.808</td>
+      <td>145.074</td>
+      <td>133.293</td>
+      <td>159.635</td>
+      <td>14.561</td>
+      <td>0.473</td>
+      <td>False</td>
+      <td>17.250</td>
+      <td>0.610</td>
+      <td>259.736</td>
+      <td>1.504</td>
+      <td>0.422</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>no_park_timeout</td>
+      <td>False</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>646.831</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>True</td>
+      <td>18.142</td>
+      <td>0.172</td>
+      <td>111.687</td>
+      <td>1.257</td>
+      <td>0.589</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>9.133</td>
+      <td>11.212</td>
+      <td>16.066</td>
+      <td>-6.532</td>
+      <td>386.621</td>
+      <td>227.368</td>
+      <td>501.949</td>
+      <td>115.328</td>
+      <td>0.645</td>
+      <td>False</td>
+      <td>19.145</td>
+      <td>0.656</td>
+      <td>205.751</td>
+      <td>1.041</td>
+      <td>0.328</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.167</td>
+      <td>9.100</td>
+      <td>14.062</td>
+      <td>-9.365</td>
+      <td>307.620</td>
+      <td>303.136</td>
+      <td>377.175</td>
+      <td>69.554</td>
+      <td>0.377</td>
+      <td>False</td>
+      <td>15.661</td>
+      <td>0.941</td>
+      <td>347.116</td>
+      <td>1.181</td>
+      <td>0.493</td>
+    </tr>
+    <tr>
+      <th>981</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.733</td>
+      <td>7.442</td>
+      <td>27.246</td>
+      <td>16.481</td>
+      <td>318.659</td>
+      <td>293.535</td>
+      <td>298.304</td>
+      <td>-20.354</td>
+      <td>0.446</td>
+      <td>False</td>
+      <td>14.533</td>
+      <td>0.933</td>
+      <td>297.945</td>
+      <td>1.569</td>
+      <td>0.564</td>
+    </tr>
+    <tr>
+      <th>985</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>4.000</td>
+      <td>5.831</td>
+      <td>55.881</td>
+      <td>19.196</td>
+      <td>600.571</td>
+      <td>547.746</td>
+      <td>673.881</td>
+      <td>73.310</td>
+      <td>1.099</td>
+      <td>False</td>
+      <td>12.964</td>
+      <td>0.789</td>
+      <td>284.446</td>
+      <td>1.417</td>
+      <td>1.210</td>
+    </tr>
+    <tr>
+      <th>986</th>
+      <td>no_park_timeout</td>
+      <td>False</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>787.690</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>True</td>
+      <td>18.760</td>
+      <td>0.235</td>
+      <td>98.931</td>
+      <td>1.279</td>
+      <td>0.179</td>
+    </tr>
+    <tr>
+      <th>989</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.900</td>
+      <td>8.060</td>
+      <td>7.300</td>
+      <td>-2.064</td>
+      <td>146.818</td>
+      <td>132.486</td>
+      <td>370.700</td>
+      <td>223.882</td>
+      <td>0.445</td>
+      <td>False</td>
+      <td>14.336</td>
+      <td>0.743</td>
+      <td>287.737</td>
+      <td>1.749</td>
+      <td>1.193</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 18 columns</p>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>success_10mm</th>
+      <th>median_park_cm</th>
+      <th>median_STOP_mm</th>
+    </tr>
+    <tr>
+      <th>initially_visible</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>False</th>
+      <td>53</td>
+      <td>40</td>
+      <td>33</td>
+      <td>0</td>
+      <td>18.39</td>
+      <td>347.98</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>47</td>
+      <td>47</td>
+      <td>47</td>
+      <td>0</td>
+      <td>18.68</td>
+      <td>392.34</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+tc_report.stopping(7);plt.show()
+print('Medians for PARK and STOP exclude missing events. The success denominator retains all 100 attempts. Closest approach is not the STOP error.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_200_0.png)
+
+
+
+    Medians for PARK and STOP exclude missing events. The success denominator retains all 100 attempts. Closest approach is not the STOP error.
+
+
+
+```python
+tc_report.distances(7);plt.show()
+print('First ten test IDs in manifest order, selected independently of outcomes. Every recorded attempt is available in the player below.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_201_0.png)
+
+
+
+    First ten test IDs in manifest order, selected independently of outcomes. Every recorded attempt is available in the player below.
+
+
+
+```python
+tc_url=tc.player_url(tc_name)
+display(lazy_player(tc_url))
+display(HTML(f'<a href="{tc_url}" target="_blank">Open all 100 test runs with ghost expert and camera</a>'))
+print('Select a target, then Play / Pause / Restart. Camera previews load on demand; the model used the full-resolution sensor. No simulation rerun is needed.')
+```
+
+
+<div><button onclick="var f=document.getElementById('playerecda4ff6');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/time_cumulative_test/height/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px;font-size:14px">Load the 3D player</button><iframe id="playerecda4ff6" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+
+
+
+<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/time_cumulative_test/height/viewer_golden_seed7.html" target="_blank">Open all 100 test runs with ghost expert and camera</a>
+
+
+    Select a target, then Play / Pause / Restart. Camera previews load on demand; the model used the full-resolution sensor. No simulation rerun is needed.
+
+
+
+```python
+display(Markdown(tc.reading(tc_name)))
+```
+
+
+Iteration 37: 87/100 PARK, 80/100 STOP, 0/100 within 10 mm at STOP. Median park error 18.7 cm among parked attempts; median distance at STOP 387.5 mm among stopped attempts. 0 execution/termination failures. Missing PARK or STOP remains a failed full task. Closest distance includes the 0.5-second observation after STOP. These are the same seed-7 checkpoints previously checked on six validation targets. The test targets were previously evaluated for baseline iterations 34 to 36, so this is a subsequent frozen comparison, not a new blind test.
+
+
+### Iteration 38: cumulative time-to-PARK no-speed
+
+
+```python
+tc_name='no_speed'
+tc_report=tc.select(tc_name)
+tc_config=json.loads((tc.ROOT/tc_name/'config.json').read_text())
+display(pd.DataFrame([tc_report.score(7)]).round(2))
+print('Driving inputs:',tc_config['drive_inputs'],'; arm hidden width:',tc_config['arm_hidden'])
+print('PARK: predicted time <= 0.25 s. Arm STOP: predicted gripper distance <= 1 cm. Same thresholds as the validation checks.')
+for kind in ['driving','torque','stop']:
+    chosen=json.loads((tc.ROOT/tc_name/'models'/f'{kind}_seed7_summary.json').read_text())
+    print(kind,': selected epoch',chosen['selected_epoch'],'; original training rows',chosen['train_rows'],'; validation rows',chosen['val_rows'])
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>seed</th>
+      <th>attempts</th>
+      <th>parked</th>
+      <th>stopped</th>
+      <th>success_10mm</th>
+      <th>success_percent</th>
+      <th>wilson95_low_percent</th>
+      <th>wilson95_high_percent</th>
+      <th>median_park_error_cm</th>
+      <th>median_abs_heading_error_deg</th>
+      <th>median_closest_mm</th>
+      <th>median_stop_mm</th>
+      <th>median_park_s</th>
+      <th>median_stop_s</th>
+      <th>timeouts</th>
+      <th>execution_failures</th>
+      <th>sum_case_wall_s</th>
+      <th>median_case_wall_s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7</td>
+      <td>100</td>
+      <td>100</td>
+      <td>92</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3.7</td>
+      <td>5.6</td>
+      <td>2.68</td>
+      <td>52.5</td>
+      <td>298.47</td>
+      <td>7.25</td>
+      <td>9.09</td>
+      <td>8</td>
+      <td>0</td>
+      <td>1730.96</td>
+      <td>17.39</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Driving inputs: 11 ; arm hidden width: 64
+    PARK: predicted time <= 0.25 s. Arm STOP: predicted gripper distance <= 1 cm. Same thresholds as the validation checks.
+    driving : selected epoch 299 ; original training rows 25928 ; validation rows 26428
+    torque : selected epoch 300 ; original training rows 295084 ; validation rows 288818
+    stop : selected epoch 600 ; original training rows 295084 ; validation rows 288818
+
+
+
+```python
+tc.losses(tc_name);plt.show()
+print('Original training histories, not retraining. Each checkpoint was selected on its own total offline validation loss. Test outcomes are not per-epoch losses.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_206_0.png)
+
+
+
+    Original training histories, not retraining. Each checkpoint was selected on its own total offline validation loss. Test outcomes are not per-epoch losses.
+
+
+
+```python
+tc_report=tc.select(tc_name)
+tc_report.outcomes(7);plt.show()
+display(tc_report.table(7).round(3))
+# Compare the initially visible validation setting with blind starts in this full test.
+tc_raw=json.loads((tc.ROOT/tc_name/'seed7.json').read_text())
+tc_visible={r['dot']:r['frames'][0]['visible'] if r['frames'] else None for r in tc_raw}
+tc_strata=tc_report.table(7).copy();tc_strata['initially_visible']=tc_strata.index.map(tc_visible)
+display(tc_strata.groupby('initially_visible',dropna=False).agg(attempts=('parked','size'),PARK=('parked','sum'),STOP=('stop_s',lambda x:x.notna().sum()),success_10mm=('success','sum'),median_park_cm=('park_error_cm','median'),median_STOP_mm=('at_stop_mm','median')).round(2))
+
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_207_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>status</th>
+      <th>success</th>
+      <th>parked</th>
+      <th>park_s</th>
+      <th>stop_s</th>
+      <th>park_error_cm</th>
+      <th>park_heading_error_deg</th>
+      <th>at_stop_mm</th>
+      <th>closest_mm</th>
+      <th>end_mm</th>
+      <th>post_stop_drift_mm</th>
+      <th>post_park_base_drift_cm</th>
+      <th>timed_out</th>
+      <th>elapsed_s</th>
+      <th>camera_visible_fraction</th>
+      <th>target_bearing_deg</th>
+      <th>target_range_m</th>
+      <th>target_height_m</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>2.367</td>
+      <td>5.334</td>
+      <td>4.686</td>
+      <td>5.795</td>
+      <td>163.487</td>
+      <td>162.510</td>
+      <td>755.807</td>
+      <td>592.320</td>
+      <td>1.637</td>
+      <td>False</td>
+      <td>12.496</td>
+      <td>0.977</td>
+      <td>0.986</td>
+      <td>1.042</td>
+      <td>0.178</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.433</td>
+      <td>9.869</td>
+      <td>5.378</td>
+      <td>-1.436</td>
+      <td>341.118</td>
+      <td>86.602</td>
+      <td>429.422</td>
+      <td>88.304</td>
+      <td>1.122</td>
+      <td>False</td>
+      <td>18.639</td>
+      <td>0.481</td>
+      <td>194.926</td>
+      <td>1.095</td>
+      <td>1.028</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.000</td>
+      <td>10.741</td>
+      <td>5.468</td>
+      <td>-3.223</td>
+      <td>413.724</td>
+      <td>23.434</td>
+      <td>457.143</td>
+      <td>43.419</td>
+      <td>0.663</td>
+      <td>False</td>
+      <td>19.483</td>
+      <td>0.651</td>
+      <td>259.736</td>
+      <td>1.504</td>
+      <td>0.422</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>9.267</td>
+      <td>10.542</td>
+      <td>7.410</td>
+      <td>-4.816</td>
+      <td>60.226</td>
+      <td>49.622</td>
+      <td>104.039</td>
+      <td>43.813</td>
+      <td>0.380</td>
+      <td>False</td>
+      <td>18.277</td>
+      <td>0.614</td>
+      <td>111.687</td>
+      <td>1.257</td>
+      <td>0.589</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.700</td>
+      <td>9.269</td>
+      <td>5.912</td>
+      <td>-3.983</td>
+      <td>290.135</td>
+      <td>48.200</td>
+      <td>330.560</td>
+      <td>40.425</td>
+      <td>0.747</td>
+      <td>False</td>
+      <td>17.091</td>
+      <td>0.622</td>
+      <td>205.751</td>
+      <td>1.041</td>
+      <td>0.328</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>2.700</td>
+      <td>5.418</td>
+      <td>8.652</td>
+      <td>-0.769</td>
+      <td>476.189</td>
+      <td>59.128</td>
+      <td>524.373</td>
+      <td>48.183</td>
+      <td>0.458</td>
+      <td>False</td>
+      <td>12.679</td>
+      <td>0.618</td>
+      <td>347.116</td>
+      <td>1.181</td>
+      <td>0.493</td>
+    </tr>
+    <tr>
+      <th>981</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.000</td>
+      <td>8.543</td>
+      <td>5.680</td>
+      <td>-1.510</td>
+      <td>467.917</td>
+      <td>22.171</td>
+      <td>527.228</td>
+      <td>59.310</td>
+      <td>0.702</td>
+      <td>False</td>
+      <td>16.857</td>
+      <td>0.695</td>
+      <td>297.945</td>
+      <td>1.569</td>
+      <td>0.564</td>
+    </tr>
+    <tr>
+      <th>985</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>5.667</td>
+      <td>7.046</td>
+      <td>19.183</td>
+      <td>-0.560</td>
+      <td>136.551</td>
+      <td>52.977</td>
+      <td>429.389</td>
+      <td>292.838</td>
+      <td>0.433</td>
+      <td>False</td>
+      <td>14.140</td>
+      <td>0.833</td>
+      <td>284.446</td>
+      <td>1.417</td>
+      <td>1.210</td>
+    </tr>
+    <tr>
+      <th>986</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.967</td>
+      <td>10.099</td>
+      <td>3.087</td>
+      <td>-6.836</td>
+      <td>471.111</td>
+      <td>413.142</td>
+      <td>1342.531</td>
+      <td>871.420</td>
+      <td>12.309</td>
+      <td>False</td>
+      <td>17.290</td>
+      <td>0.579</td>
+      <td>98.931</td>
+      <td>1.279</td>
+      <td>0.179</td>
+    </tr>
+    <tr>
+      <th>989</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.200</td>
+      <td>9.199</td>
+      <td>13.896</td>
+      <td>0.418</td>
+      <td>185.676</td>
+      <td>180.974</td>
+      <td>318.117</td>
+      <td>132.441</td>
+      <td>0.809</td>
+      <td>False</td>
+      <td>15.737</td>
+      <td>0.808</td>
+      <td>287.737</td>
+      <td>1.749</td>
+      <td>1.193</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 18 columns</p>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>success_10mm</th>
+      <th>median_park_cm</th>
+      <th>median_STOP_mm</th>
+    </tr>
+    <tr>
+      <th>initially_visible</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>False</th>
+      <td>53</td>
+      <td>53</td>
+      <td>45</td>
+      <td>0</td>
+      <td>5.33</td>
+      <td>290.14</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>47</td>
+      <td>47</td>
+      <td>47</td>
+      <td>0</td>
+      <td>5.81</td>
+      <td>311.08</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+tc_report.stopping(7);plt.show()
+print('Medians for PARK and STOP exclude missing events. The success denominator retains all 100 attempts. Closest approach is not the STOP error.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_208_0.png)
+
+
+
+    Medians for PARK and STOP exclude missing events. The success denominator retains all 100 attempts. Closest approach is not the STOP error.
+
+
+
+```python
+tc_report.distances(7);plt.show()
+print('First ten test IDs in manifest order, selected independently of outcomes. Every recorded attempt is available in the player below.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_209_0.png)
+
+
+
+    First ten test IDs in manifest order, selected independently of outcomes. Every recorded attempt is available in the player below.
+
+
+
+```python
+tc_url=tc.player_url(tc_name)
+display(lazy_player(tc_url))
+display(HTML(f'<a href="{tc_url}" target="_blank">Open all 100 test runs with ghost expert and camera</a>'))
+print('Select a target, then Play / Pause / Restart. Camera previews load on demand; the model used the full-resolution sensor. No simulation rerun is needed.')
+```
+
+
+<div><button onclick="var f=document.getElementById('playerd6973431');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/time_cumulative_test/no_speed/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px;font-size:14px">Load the 3D player</button><iframe id="playerd6973431" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+
+
+
+<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/time_cumulative_test/no_speed/viewer_golden_seed7.html" target="_blank">Open all 100 test runs with ghost expert and camera</a>
+
+
+    Select a target, then Play / Pause / Restart. Camera previews load on demand; the model used the full-resolution sensor. No simulation rerun is needed.
+
+
+
+```python
+display(Markdown(tc.reading(tc_name)))
+```
+
+
+Iteration 38: 100/100 PARK, 92/100 STOP, 0/100 within 10 mm at STOP. Median park error 5.6 cm among parked attempts; median distance at STOP 298.5 mm among stopped attempts. 0 execution/termination failures. Missing PARK or STOP remains a failed full task. Closest distance includes the 0.5-second observation after STOP. These are the same seed-7 checkpoints previously checked on six validation targets. The test targets were previously evaluated for baseline iterations 34 to 36, so this is a subsequent frozen comparison, not a new blind test.
+
+
+### Iteration 39: cumulative time-to-PARK longer-arm
+
+
+```python
+tc_name='longer_arm'
+tc_report=tc.select(tc_name)
+tc_config=json.loads((tc.ROOT/tc_name/'config.json').read_text())
+display(pd.DataFrame([tc_report.score(7)]).round(2))
+print('Driving inputs:',tc_config['drive_inputs'],'; arm hidden width:',tc_config['arm_hidden'])
+print('PARK: predicted time <= 0.25 s. Arm STOP: predicted gripper distance <= 1 cm. Same thresholds as the validation checks.')
+for kind in ['driving','torque','stop']:
+    chosen=json.loads((tc.ROOT/tc_name/'models'/f'{kind}_seed7_summary.json').read_text())
+    print(kind,': selected epoch',chosen['selected_epoch'],'; original training rows',chosen['train_rows'],'; validation rows',chosen['val_rows'])
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>seed</th>
+      <th>attempts</th>
+      <th>parked</th>
+      <th>stopped</th>
+      <th>success_10mm</th>
+      <th>success_percent</th>
+      <th>wilson95_low_percent</th>
+      <th>wilson95_high_percent</th>
+      <th>median_park_error_cm</th>
+      <th>median_abs_heading_error_deg</th>
+      <th>median_closest_mm</th>
+      <th>median_stop_mm</th>
+      <th>median_park_s</th>
+      <th>median_stop_s</th>
+      <th>timeouts</th>
+      <th>execution_failures</th>
+      <th>sum_case_wall_s</th>
+      <th>median_case_wall_s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7</td>
+      <td>100</td>
+      <td>100</td>
+      <td>98</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3.7</td>
+      <td>5.6</td>
+      <td>2.68</td>
+      <td>98.26</td>
+      <td>193.65</td>
+      <td>7.25</td>
+      <td>8.65</td>
+      <td>2</td>
+      <td>0</td>
+      <td>1617.47</td>
+      <td>16.06</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Driving inputs: 11 ; arm hidden width: 64
+    PARK: predicted time <= 0.25 s. Arm STOP: predicted gripper distance <= 1 cm. Same thresholds as the validation checks.
+    driving : selected epoch 299 ; original training rows 25928 ; validation rows 26428
+    torque : selected epoch 1200 ; original training rows 295084 ; validation rows 288818
+    stop : selected epoch 600 ; original training rows 295084 ; validation rows 288818
+
+
+
+```python
+tc.losses(tc_name);plt.show()
+print('Original training histories, not retraining. Each checkpoint was selected on its own total offline validation loss. Test outcomes are not per-epoch losses.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_214_0.png)
+
+
+
+    Original training histories, not retraining. Each checkpoint was selected on its own total offline validation loss. Test outcomes are not per-epoch losses.
+
+
+
+```python
+tc_report=tc.select(tc_name)
+tc_report.outcomes(7);plt.show()
+display(tc_report.table(7).round(3))
+# Compare the initially visible validation setting with blind starts in this full test.
+tc_raw=json.loads((tc.ROOT/tc_name/'seed7.json').read_text())
+tc_visible={r['dot']:r['frames'][0]['visible'] if r['frames'] else None for r in tc_raw}
+tc_strata=tc_report.table(7).copy();tc_strata['initially_visible']=tc_strata.index.map(tc_visible)
+display(tc_strata.groupby('initially_visible',dropna=False).agg(attempts=('parked','size'),PARK=('parked','sum'),STOP=('stop_s',lambda x:x.notna().sum()),success_10mm=('success','sum'),median_park_cm=('park_error_cm','median'),median_STOP_mm=('at_stop_mm','median')).round(2))
+
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_215_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>status</th>
+      <th>success</th>
+      <th>parked</th>
+      <th>park_s</th>
+      <th>stop_s</th>
+      <th>park_error_cm</th>
+      <th>park_heading_error_deg</th>
+      <th>at_stop_mm</th>
+      <th>closest_mm</th>
+      <th>end_mm</th>
+      <th>post_stop_drift_mm</th>
+      <th>post_park_base_drift_cm</th>
+      <th>timed_out</th>
+      <th>elapsed_s</th>
+      <th>camera_visible_fraction</th>
+      <th>target_bearing_deg</th>
+      <th>target_range_m</th>
+      <th>target_height_m</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>2.367</td>
+      <td>5.075</td>
+      <td>4.686</td>
+      <td>5.795</td>
+      <td>329.847</td>
+      <td>101.648</td>
+      <td>282.760</td>
+      <td>-47.087</td>
+      <td>0.801</td>
+      <td>False</td>
+      <td>12.254</td>
+      <td>0.935</td>
+      <td>0.986</td>
+      <td>1.042</td>
+      <td>0.178</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.433</td>
+      <td>8.608</td>
+      <td>5.378</td>
+      <td>-1.436</td>
+      <td>93.517</td>
+      <td>16.121</td>
+      <td>318.906</td>
+      <td>225.389</td>
+      <td>0.550</td>
+      <td>False</td>
+      <td>16.054</td>
+      <td>0.449</td>
+      <td>194.926</td>
+      <td>1.095</td>
+      <td>1.028</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.000</td>
+      <td>11.874</td>
+      <td>5.468</td>
+      <td>-3.223</td>
+      <td>421.502</td>
+      <td>242.010</td>
+      <td>500.625</td>
+      <td>79.123</td>
+      <td>1.152</td>
+      <td>False</td>
+      <td>21.482</td>
+      <td>0.788</td>
+      <td>259.736</td>
+      <td>1.504</td>
+      <td>0.422</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>9.267</td>
+      <td>9.850</td>
+      <td>7.410</td>
+      <td>-4.816</td>
+      <td>110.561</td>
+      <td>108.131</td>
+      <td>152.304</td>
+      <td>41.743</td>
+      <td>0.244</td>
+      <td>False</td>
+      <td>17.297</td>
+      <td>0.588</td>
+      <td>111.687</td>
+      <td>1.257</td>
+      <td>0.589</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.700</td>
+      <td>7.371</td>
+      <td>5.912</td>
+      <td>-3.983</td>
+      <td>413.771</td>
+      <td>380.606</td>
+      <td>406.988</td>
+      <td>-6.783</td>
+      <td>0.229</td>
+      <td>False</td>
+      <td>13.924</td>
+      <td>0.603</td>
+      <td>205.751</td>
+      <td>1.041</td>
+      <td>0.328</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>2.700</td>
+      <td>3.305</td>
+      <td>8.652</td>
+      <td>-0.769</td>
+      <td>268.486</td>
+      <td>211.872</td>
+      <td>357.932</td>
+      <td>89.447</td>
+      <td>0.131</td>
+      <td>False</td>
+      <td>9.051</td>
+      <td>0.870</td>
+      <td>347.116</td>
+      <td>1.181</td>
+      <td>0.493</td>
+    </tr>
+    <tr>
+      <th>981</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.000</td>
+      <td>6.616</td>
+      <td>5.680</td>
+      <td>-1.510</td>
+      <td>177.698</td>
+      <td>148.453</td>
+      <td>264.633</td>
+      <td>86.935</td>
+      <td>0.205</td>
+      <td>False</td>
+      <td>13.658</td>
+      <td>0.748</td>
+      <td>297.945</td>
+      <td>1.569</td>
+      <td>0.564</td>
+    </tr>
+    <tr>
+      <th>985</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>5.667</td>
+      <td>7.378</td>
+      <td>19.183</td>
+      <td>-0.560</td>
+      <td>328.622</td>
+      <td>109.144</td>
+      <td>672.899</td>
+      <td>344.277</td>
+      <td>2.535</td>
+      <td>False</td>
+      <td>15.123</td>
+      <td>0.869</td>
+      <td>284.446</td>
+      <td>1.417</td>
+      <td>1.210</td>
+    </tr>
+    <tr>
+      <th>986</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.967</td>
+      <td>11.589</td>
+      <td>3.087</td>
+      <td>-6.836</td>
+      <td>497.701</td>
+      <td>402.902</td>
+      <td>582.893</td>
+      <td>85.192</td>
+      <td>3.822</td>
+      <td>False</td>
+      <td>19.821</td>
+      <td>0.631</td>
+      <td>98.931</td>
+      <td>1.279</td>
+      <td>0.179</td>
+    </tr>
+    <tr>
+      <th>989</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.200</td>
+      <td>8.952</td>
+      <td>13.896</td>
+      <td>0.418</td>
+      <td>292.237</td>
+      <td>74.552</td>
+      <td>642.805</td>
+      <td>350.568</td>
+      <td>1.646</td>
+      <td>False</td>
+      <td>14.352</td>
+      <td>0.905</td>
+      <td>287.737</td>
+      <td>1.749</td>
+      <td>1.193</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 18 columns</p>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>success_10mm</th>
+      <th>median_park_cm</th>
+      <th>median_STOP_mm</th>
+    </tr>
+    <tr>
+      <th>initially_visible</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>False</th>
+      <td>53</td>
+      <td>53</td>
+      <td>51</td>
+      <td>0</td>
+      <td>5.33</td>
+      <td>164.54</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>47</td>
+      <td>47</td>
+      <td>47</td>
+      <td>0</td>
+      <td>5.81</td>
+      <td>262.99</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+tc_report.stopping(7);plt.show()
+print('Medians for PARK and STOP exclude missing events. The success denominator retains all 100 attempts. Closest approach is not the STOP error.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_216_0.png)
+
+
+
+    Medians for PARK and STOP exclude missing events. The success denominator retains all 100 attempts. Closest approach is not the STOP error.
+
+
+
+```python
+tc_report.distances(7);plt.show()
+print('First ten test IDs in manifest order, selected independently of outcomes. Every recorded attempt is available in the player below.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_217_0.png)
+
+
+
+    First ten test IDs in manifest order, selected independently of outcomes. Every recorded attempt is available in the player below.
+
+
+
+```python
+tc_url=tc.player_url(tc_name)
+display(lazy_player(tc_url))
+display(HTML(f'<a href="{tc_url}" target="_blank">Open all 100 test runs with ghost expert and camera</a>'))
+print('Select a target, then Play / Pause / Restart. Camera previews load on demand; the model used the full-resolution sensor. No simulation rerun is needed.')
+```
+
+
+<div><button onclick="var f=document.getElementById('playeree4259db');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/time_cumulative_test/longer_arm/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px;font-size:14px">Load the 3D player</button><iframe id="playeree4259db" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+
+
+
+<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/time_cumulative_test/longer_arm/viewer_golden_seed7.html" target="_blank">Open all 100 test runs with ghost expert and camera</a>
+
+
+    Select a target, then Play / Pause / Restart. Camera previews load on demand; the model used the full-resolution sensor. No simulation rerun is needed.
+
+
+
+```python
+display(Markdown(tc.reading(tc_name)))
+```
+
+
+Iteration 39: 100/100 PARK, 98/100 STOP, 0/100 within 10 mm at STOP. Median park error 5.6 cm among parked attempts; median distance at STOP 193.7 mm among stopped attempts. 0 execution/termination failures. Missing PARK or STOP remains a failed full task. Closest distance includes the 0.5-second observation after STOP. These are the same seed-7 checkpoints previously checked on six validation targets. The test targets were previously evaluated for baseline iterations 34 to 36, so this is a subsequent frozen comparison, not a new blind test.
+
+
+### Iteration 40: cumulative time-to-PARK wider-arm
+
+
+```python
+tc_name='wider_arm'
+tc_report=tc.select(tc_name)
+tc_config=json.loads((tc.ROOT/tc_name/'config.json').read_text())
+display(pd.DataFrame([tc_report.score(7)]).round(2))
+print('Driving inputs:',tc_config['drive_inputs'],'; arm hidden width:',tc_config['arm_hidden'])
+print('PARK: predicted time <= 0.25 s. Arm STOP: predicted gripper distance <= 1 cm. Same thresholds as the validation checks.')
+for kind in ['driving','torque','stop']:
+    chosen=json.loads((tc.ROOT/tc_name/'models'/f'{kind}_seed7_summary.json').read_text())
+    print(kind,': selected epoch',chosen['selected_epoch'],'; original training rows',chosen['train_rows'],'; validation rows',chosen['val_rows'])
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>seed</th>
+      <th>attempts</th>
+      <th>parked</th>
+      <th>stopped</th>
+      <th>success_10mm</th>
+      <th>success_percent</th>
+      <th>wilson95_low_percent</th>
+      <th>wilson95_high_percent</th>
+      <th>median_park_error_cm</th>
+      <th>median_abs_heading_error_deg</th>
+      <th>median_closest_mm</th>
+      <th>median_stop_mm</th>
+      <th>median_park_s</th>
+      <th>median_stop_s</th>
+      <th>timeouts</th>
+      <th>execution_failures</th>
+      <th>sum_case_wall_s</th>
+      <th>median_case_wall_s</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7</td>
+      <td>100</td>
+      <td>100</td>
+      <td>96</td>
+      <td>2</td>
+      <td>2.0</td>
+      <td>0.55</td>
+      <td>7.0</td>
+      <td>5.6</td>
+      <td>2.68</td>
+      <td>59.14</td>
+      <td>85.22</td>
+      <td>7.25</td>
+      <td>9.01</td>
+      <td>4</td>
+      <td>0</td>
+      <td>1676.07</td>
+      <td>16.94</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Driving inputs: 11 ; arm hidden width: 128
+    PARK: predicted time <= 0.25 s. Arm STOP: predicted gripper distance <= 1 cm. Same thresholds as the validation checks.
+    driving : selected epoch 299 ; original training rows 25928 ; validation rows 26428
+    torque : selected epoch 1171 ; original training rows 295084 ; validation rows 288818
+    stop : selected epoch 600 ; original training rows 295084 ; validation rows 288818
+
+
+
+```python
+tc.losses(tc_name);plt.show()
+print('Original training histories, not retraining. Each checkpoint was selected on its own total offline validation loss. Test outcomes are not per-epoch losses.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_222_0.png)
+
+
+
+    Original training histories, not retraining. Each checkpoint was selected on its own total offline validation loss. Test outcomes are not per-epoch losses.
+
+
+
+```python
+tc_report=tc.select(tc_name)
+tc_report.outcomes(7);plt.show()
+display(tc_report.table(7).round(3))
+# Compare the initially visible validation setting with blind starts in this full test.
+tc_raw=json.loads((tc.ROOT/tc_name/'seed7.json').read_text())
+tc_visible={r['dot']:r['frames'][0]['visible'] if r['frames'] else None for r in tc_raw}
+tc_strata=tc_report.table(7).copy();tc_strata['initially_visible']=tc_strata.index.map(tc_visible)
+display(tc_strata.groupby('initially_visible',dropna=False).agg(attempts=('parked','size'),PARK=('parked','sum'),STOP=('stop_s',lambda x:x.notna().sum()),success_10mm=('success','sum'),median_park_cm=('park_error_cm','median'),median_STOP_mm=('at_stop_mm','median')).round(2))
+
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_223_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>status</th>
+      <th>success</th>
+      <th>parked</th>
+      <th>park_s</th>
+      <th>stop_s</th>
+      <th>park_error_cm</th>
+      <th>park_heading_error_deg</th>
+      <th>at_stop_mm</th>
+      <th>closest_mm</th>
+      <th>end_mm</th>
+      <th>post_stop_drift_mm</th>
+      <th>post_park_base_drift_cm</th>
+      <th>timed_out</th>
+      <th>elapsed_s</th>
+      <th>camera_visible_fraction</th>
+      <th>target_bearing_deg</th>
+      <th>target_range_m</th>
+      <th>target_height_m</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>2.367</td>
+      <td>5.704</td>
+      <td>4.686</td>
+      <td>5.795</td>
+      <td>215.296</td>
+      <td>105.927</td>
+      <td>160.560</td>
+      <td>-54.737</td>
+      <td>0.743</td>
+      <td>False</td>
+      <td>13.155</td>
+      <td>1.000</td>
+      <td>0.986</td>
+      <td>1.042</td>
+      <td>0.178</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.433</td>
+      <td>9.013</td>
+      <td>5.378</td>
+      <td>-1.436</td>
+      <td>39.483</td>
+      <td>34.144</td>
+      <td>34.512</td>
+      <td>-4.971</td>
+      <td>0.482</td>
+      <td>False</td>
+      <td>16.938</td>
+      <td>0.371</td>
+      <td>194.926</td>
+      <td>1.095</td>
+      <td>1.028</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>no_stop_timeout</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.000</td>
+      <td>NaN</td>
+      <td>5.468</td>
+      <td>-3.223</td>
+      <td>NaN</td>
+      <td>68.413</td>
+      <td>455.206</td>
+      <td>NaN</td>
+      <td>1.592</td>
+      <td>True</td>
+      <td>21.917</td>
+      <td>0.758</td>
+      <td>259.736</td>
+      <td>1.504</td>
+      <td>0.422</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>9.267</td>
+      <td>10.039</td>
+      <td>7.410</td>
+      <td>-4.816</td>
+      <td>65.173</td>
+      <td>14.693</td>
+      <td>34.106</td>
+      <td>-31.067</td>
+      <td>0.267</td>
+      <td>False</td>
+      <td>17.371</td>
+      <td>0.596</td>
+      <td>111.687</td>
+      <td>1.257</td>
+      <td>0.589</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.700</td>
+      <td>7.783</td>
+      <td>5.912</td>
+      <td>-3.983</td>
+      <td>323.405</td>
+      <td>311.244</td>
+      <td>380.312</td>
+      <td>56.907</td>
+      <td>0.338</td>
+      <td>False</td>
+      <td>14.602</td>
+      <td>0.598</td>
+      <td>205.751</td>
+      <td>1.041</td>
+      <td>0.328</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>2.700</td>
+      <td>6.972</td>
+      <td>8.652</td>
+      <td>-0.769</td>
+      <td>544.676</td>
+      <td>94.096</td>
+      <td>932.996</td>
+      <td>388.320</td>
+      <td>2.232</td>
+      <td>False</td>
+      <td>14.965</td>
+      <td>0.924</td>
+      <td>347.116</td>
+      <td>1.181</td>
+      <td>0.493</td>
+    </tr>
+    <tr>
+      <th>981</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.000</td>
+      <td>6.653</td>
+      <td>5.680</td>
+      <td>-1.510</td>
+      <td>65.377</td>
+      <td>50.283</td>
+      <td>65.884</td>
+      <td>0.506</td>
+      <td>0.209</td>
+      <td>False</td>
+      <td>13.762</td>
+      <td>0.786</td>
+      <td>297.945</td>
+      <td>1.569</td>
+      <td>0.564</td>
+    </tr>
+    <tr>
+      <th>985</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>5.667</td>
+      <td>7.353</td>
+      <td>19.183</td>
+      <td>-0.560</td>
+      <td>58.440</td>
+      <td>58.309</td>
+      <td>82.933</td>
+      <td>24.493</td>
+      <td>0.492</td>
+      <td>False</td>
+      <td>15.069</td>
+      <td>0.873</td>
+      <td>284.446</td>
+      <td>1.417</td>
+      <td>1.210</td>
+    </tr>
+    <tr>
+      <th>986</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.967</td>
+      <td>10.000</td>
+      <td>3.087</td>
+      <td>-6.836</td>
+      <td>439.299</td>
+      <td>435.951</td>
+      <td>466.290</td>
+      <td>26.991</td>
+      <td>0.373</td>
+      <td>False</td>
+      <td>17.021</td>
+      <td>0.527</td>
+      <td>98.931</td>
+      <td>1.279</td>
+      <td>0.179</td>
+    </tr>
+    <tr>
+      <th>989</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.200</td>
+      <td>8.388</td>
+      <td>13.896</td>
+      <td>0.418</td>
+      <td>165.112</td>
+      <td>79.557</td>
+      <td>79.377</td>
+      <td>-85.735</td>
+      <td>0.483</td>
+      <td>False</td>
+      <td>13.763</td>
+      <td>0.963</td>
+      <td>287.737</td>
+      <td>1.749</td>
+      <td>1.193</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 18 columns</p>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>success_10mm</th>
+      <th>median_park_cm</th>
+      <th>median_STOP_mm</th>
+    </tr>
+    <tr>
+      <th>initially_visible</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>False</th>
+      <td>53</td>
+      <td>53</td>
+      <td>49</td>
+      <td>2</td>
+      <td>5.33</td>
+      <td>49.98</td>
+    </tr>
+    <tr>
+      <th>True</th>
+      <td>47</td>
+      <td>47</td>
+      <td>47</td>
+      <td>0</td>
+      <td>5.81</td>
+      <td>137.81</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+```python
+tc_report.stopping(7);plt.show()
+print('Medians for PARK and STOP exclude missing events. The success denominator retains all 100 attempts. Closest approach is not the STOP error.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_224_0.png)
+
+
+
+    Medians for PARK and STOP exclude missing events. The success denominator retains all 100 attempts. Closest approach is not the STOP error.
+
+
+
+```python
+tc_report.distances(7);plt.show()
+print('First ten test IDs in manifest order, selected independently of outcomes. Every recorded attempt is available in the player below.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_225_0.png)
+
+
+
+    First ten test IDs in manifest order, selected independently of outcomes. Every recorded attempt is available in the player below.
+
+
+
+```python
+tc_url=tc.player_url(tc_name)
+display(lazy_player(tc_url))
+display(HTML(f'<a href="{tc_url}" target="_blank">Open all 100 test runs with ghost expert and camera</a>'))
+print('Select a target, then Play / Pause / Restart. Camera previews load on demand; the model used the full-resolution sensor. No simulation rerun is needed.')
+```
+
+
+<div><button onclick="var f=document.getElementById('player3c9ab5bf');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/time_cumulative_test/wider_arm/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px;font-size:14px">Load the 3D player</button><iframe id="player3c9ab5bf" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+
+
+
+<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/time_cumulative_test/wider_arm/viewer_golden_seed7.html" target="_blank">Open all 100 test runs with ghost expert and camera</a>
+
+
+    Select a target, then Play / Pause / Restart. Camera previews load on demand; the model used the full-resolution sensor. No simulation rerun is needed.
+
+
+
+```python
+display(Markdown(tc.reading(tc_name)))
+```
+
+
+Iteration 40: 100/100 PARK, 96/100 STOP, 2/100 within 10 mm at STOP. Median park error 5.6 cm among parked attempts; median distance at STOP 85.2 mm among stopped attempts. 0 execution/termination failures. Missing PARK or STOP remains a failed full task. Closest distance includes the 0.5-second observation after STOP. These are the same seed-7 checkpoints previously checked on six validation targets. The test targets were previously evaluated for baseline iterations 34 to 36, so this is a subsequent frozen comparison, not a new blind test.
+
+
+### Reading the four full time-to-PARK evaluations
+
+Compare each row to the preceding configuration. The first two change driving inputs; the last two retain the same driving checkpoint and change only arm torque training. The independent arm STOP checkpoint is unchanged throughout. The four configurations were fixed before this evaluation, from the six-case validation development work.
+
+All 100 bearings, ranges and heights are included, including initially invisible targets. The earlier six validation targets were initially visible, so the full results can differ substantially. No fixed search policy has been added. Report the full success rate and failures alongside conditional parking and reaching errors; neither a low median nor passing close to the target establishes successful stopping.
+
+This is one seed per configuration. These test targets had already been evaluated in iterations 34 to 36, so the results should be described as a subsequent frozen comparison. Do not treat them as a fresh untouched test or use them to choose epochs. The distance-PARK experiments remain separate and unchanged.
