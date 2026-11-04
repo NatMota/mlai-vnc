@@ -1,0 +1,17 @@
+{
+  "variant": "fast",
+  "seed": 7,
+  "dot": 131,
+  "elapsed_s": 21.68134776968509,
+  "trajectory_and_metrics_sha256": "9ce00eeb51628a47b26810410ef74f484b89de0efe1f75677c6d9d3e671f1f26",
+  "hashes": {
+    "camera": "de873c9b00491ae4d2d04f333d95a3f893fb2ba2a89c0fc40fe5fa9f01190039",
+    "driving_policy": "0f32843033e7843fb3954c381a5fc1fc83e5dca54299b9a56e1fc963d65306c0",
+    "arm_policy": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "counts": {
+    "camera": 412,
+    "driving_policy": 412,
+    "arm_policy": 0
+  }
+}

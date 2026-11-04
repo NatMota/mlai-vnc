@@ -22,3 +22,7 @@ v2_sensors/**/viewer_*.html
 # Recorded camera previews are embedded in the generated golden-data players.
 v2_sensors/arm/results/golden_11109/*_camera/
 v2_sensors/arm/results/golden_11109/seed*_dot*.json
+# Full test camera previews and replay archives are retained locally and in MLflow.
+v2_sensors/arm/results/golden_11110/*_camera/
+v2_sensors/arm/results/golden_11110/seed*_dot*.json
+v2_sensors/arm/results/golden_11110/replay_*.zip

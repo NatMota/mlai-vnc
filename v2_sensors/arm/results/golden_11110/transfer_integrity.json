@@ -1,0 +1,23 @@
+[
+  {
+    "seed": 7,
+    "attempts": 100,
+    "camera_previews": 31236,
+    "source_archive_sha256": "d19833f4344a6c9b8291ddfb6f67a895c2a58d89adc99957e4745eed683bd472",
+    "verified_on_mac": true
+  },
+  {
+    "seed": 1,
+    "attempts": 100,
+    "camera_previews": 31613,
+    "source_archive_sha256": "879b1a5aa20830524ad998b416dbdeb024bd3c31f9ccead801cdeb3382b21309",
+    "verified_on_mac": true
+  },
+  {
+    "seed": 2,
+    "attempts": 100,
+    "camera_previews": 31906,
+    "source_archive_sha256": "ce96e1f6fee36cc7b5a01bbfd370a283dbdcc837f038f7b3b9e0b5f7e1709e77",
+    "verified_on_mac": true
+  }
+]

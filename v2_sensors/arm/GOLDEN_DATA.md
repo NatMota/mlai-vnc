@@ -72,7 +72,7 @@ Verify downloaded files from the extracted folder with `shasum -a 256 -c SHA256S
 
 ## Train the golden models (ticket 11109)
 
-`train_golden.py` opens training and validation trajectories only. It verifies source/camera hashes and timing, preserves the existing encoder conventions, weights each run equally, and selects each checkpoint on validation loss. Seeds 7, 1 and 2 are iterations 34 to 36. The architectures and losses remain those specified in the notebook plan.
+`train_golden.py` opens training and validation trajectories only. It verifies source/camera hashes and timing, preserves the existing encoder conventions, weights each run equally, and selects each checkpoint on validation loss. Seeds 7, 1 and 2 become official iterations 34 to 36 only after their reserved-test evaluations. Training and validation smoke checks do not create numbered MLflow runs. The architectures and losses remain those specified in the notebook plan.
 
 ```bash
 python v2_sensors/arm/check_train_golden.py
@@ -96,6 +96,43 @@ CAMERA_RENDERER=egl NATIVE_ROOT=/path/to/comp0245-native-expert \
 
 Use a Python environment with PyBullet and the built native `sensor_parking` executable. `CAMERA_RENDERER=tiny` selects CPU rendering explicitly. Validation uses the ten target IDs fixed in the training config, for each seed; the final 100-target test belongs to ticket 11110. The expert is a recorded reference only. Actual distance at the exact STOP step is scored; subsequent drift is separate.
 
-The original notebook now includes tables, every loss term, stopping diagnostics and lazy 3D players with recorded camera previews. Its first 320 cells and outputs are preserved. Only the appended analysis was executed, because historical cells retrain and overwrite earlier models. Player HTML files are generated and published as MLflow artifacts, with their camera images embedded. `report_golden.py` rebuilds them from saved validation results and camera previews; the training weights do not depend on those previews.
+The historical notebook remains unchanged at 361 cells, including its previous validation analysis. Continue in `../driving_v2/golden_dataset.ipynb`. Validation smoke checks appear there as a short table without animations. Their former MLflow entries are archived, with artifacts retained; `results/golden_11109/archived_smoke_runs.json` records the IDs. Training and validation histories are retained with the eventual official test iterations.
 
-Continue new golden-data work in `../driving_v2/golden_dataset.ipynb`. It starts with split checks and a five-row training preview, then the three frozen baselines with their full analysis. The existing `driving_v2_sensors.ipynb` remains intact at 361 cells. The new notebook is executed and can be read without downloading the full data package; set `GOLDEN_DATA_ROOT` to the extracted package for new data loading or training. The fixed native PD-plus-model-gravity arm hold during driving remains part of this baseline; learned torque control starts at PARK.
+The new notebook can be read from saved manifests, previews and results without downloading the full data package. Set `GOLDEN_DATA_ROOT` to the extracted package for new data loading or training. The fixed native PD-plus-model-gravity arm hold during driving remains part of this baseline; learned torque control starts at PARK.
+
+## Frozen full test (ticket 11110)
+
+Evaluate all 100 reserved targets for each of the three frozen seeds, giving 300 attempts on the same 100 targets. Seed 7 was chosen as the representative by validation before simulation outcomes. No checkpoints, thresholds or settings may be chosen from these test outcomes.
+
+```bash
+CAMERA_RENDERER=egl NATIVE_ROOT=/path/to/comp0245-native-expert \
+  CAMERA_URDF=/path/to/comp0245-native-expert/assets/summit_xl_arm_description/summit_xl_complete.urdf \
+  python v2_sensors/arm/evaluate_golden.py \
+  --data /path/to/COMP0245_Golden_300 \
+  --models /path/to/frozen_models \
+  --frozen-hashes v2_sensors/arm/results/golden_11109/config.json \
+  --out /path/to/new_test_output --jobs 2
+```
+
+Use the simulator's Python environment with NumPy and PyBullet; the CUDA training environment alone is not sufficient. `--preflight` restricts the command to one predetermined validation target and seed 7. It creates no MLflow entry or animation. The reference loader caches decompressed arrays once; the cached replay was checked against the earlier recording and was identical.
+
+Success requires PARK and STOP with actual gripper distance at the exact STOP step at most 10 mm. Closest approach, post-STOP drift and error at PARK are separate measurements. Without STOP the fixed deadline is expert completion plus 4 seconds; after STOP the simulation observes a further 0.5 seconds. No PARK, no STOP, execution failures and early terminations remain in the denominator.
+
+The native physics engine runs on CPU and the camera renderer uses EGL on NVIDIA. Driving and camera update at 30 Hz; arm encoder feedback and torques at 1 kHz. During reaching, this test harness exchanges Python/JSON requests with the native process every millisecond. The checked batching option reduces exchanges during driving while preserving each 1 ms physics tick. It does not inherit all the speedups of the native-only expert collector. There is no new measurement noise, delay, damping, elasticity or motor-inertia correction. Existing model quirks, encoder quantisation, camera error and limits remain.
+
+`report_test_golden.py` reads saved test results, checks the complete target roster, produces per-seed metrics with Wilson 95% intervals and builds the players. Each player contains all available recorded attempts for its seed, with the ghost expert and camera inset. Camera previews stay as external files so the browser does not allocate all images at startup; the MLflow replay ZIP contains the HTML and its camera folders. Extract the whole ZIP before opening the HTML. Failed attempts without frames stay in the score table and have no fabricated replay.
+
+`log_golden.py` refuses to log before all 300 attempts are accounted for. It records official test iterations 34, 35 and 36 with their original training/validation loss histories, frozen models, source/configuration hashes, test metrics, full replay archives and executed notebook. Its run record supports resuming an interrupted upload without creating duplicate runs. Validation smoke checks never consume an iteration number.
+
+
+### Exact execution speedups
+
+The full renderer is preserved. A validation comparison on seeds 7, 1 and 2 at target IDs 6 and 131 compared hashes of every full RGB, depth and segmentation frame, every policy input/output, recorded trajectories and event metrics. All six cases matched exactly. Cached fisheye pixel mappings avoid recomputing geometry that does not depend on robot pose. Batched driving advances the same 1 ms native physics/holding loop to one tick before each camera update, then advances the final tick separately so the arm encoder retains its exact previous sample at PARK. After PARK, the arm still receives fresh feedback and issues torques at every millisecond.
+
+`check_full_run_speed.py` reproduces the comparison against a saved copy of the original camera module. Six concurrent cases took 28.54 s with the original camera and 24.45 s with caching and batching, including startup and hash checks. That is a 1.17× speedup at the same worker count. The earlier full evaluation used only two workers; increasing to six also improves overall throughput. Neither number establishes a 5–10 minute full evaluation. The final completion file records actual elapsed simulation time.
+
+To resume an interrupted evaluation, use `--resume --batch-driving --parity-summary /path/to/speed_summary.json`. It verifies model, native simulator, split, rates and scoring settings; the checked source hashes must match. Completed attempts are kept regardless of success. Source changes and the execution settings for the resumed segment are recorded separately in `resume_config.json`.
+
+The completed test took 1,192.8 seconds of active execution across both segments (19.9 minutes), excluding the pause. The resumed segment evaluated the remaining 235 attempts with six workers in 686.2 seconds. No execution failures occurred; weak task outcomes remain in the results.
+
+The notebook serves replay HTML and camera files from a read-only directory through a loopback HTTP server at `127.0.0.1:8899`. This avoids Jupyter’s HTML sandbox blocking image authentication. It does not expose a simulator or change Jupyter authentication. Rerun the replay cell to start it; the extracted MLflow ZIP also opens directly as a local HTML file.

@@ -1,0 +1,269 @@
+{
+  "status": "stopped for performance investigation at user request",
+  "completed": 65,
+  "expected": 300,
+  "at_utc": "2026-11-04T19:24:28.066716+00:00",
+  "completed_cases": [
+    {
+      "seed": 7,
+      "dot": 11
+    },
+    {
+      "seed": 7,
+      "dot": 113
+    },
+    {
+      "seed": 7,
+      "dot": 136
+    },
+    {
+      "seed": 7,
+      "dot": 147
+    },
+    {
+      "seed": 7,
+      "dot": 148
+    },
+    {
+      "seed": 7,
+      "dot": 154
+    },
+    {
+      "seed": 7,
+      "dot": 162
+    },
+    {
+      "seed": 7,
+      "dot": 17
+    },
+    {
+      "seed": 7,
+      "dot": 196
+    },
+    {
+      "seed": 7,
+      "dot": 221
+    },
+    {
+      "seed": 7,
+      "dot": 229
+    },
+    {
+      "seed": 7,
+      "dot": 232
+    },
+    {
+      "seed": 7,
+      "dot": 239
+    },
+    {
+      "seed": 7,
+      "dot": 248
+    },
+    {
+      "seed": 7,
+      "dot": 260
+    },
+    {
+      "seed": 7,
+      "dot": 271
+    },
+    {
+      "seed": 7,
+      "dot": 274
+    },
+    {
+      "seed": 7,
+      "dot": 277
+    },
+    {
+      "seed": 7,
+      "dot": 281
+    },
+    {
+      "seed": 7,
+      "dot": 285
+    },
+    {
+      "seed": 7,
+      "dot": 302
+    },
+    {
+      "seed": 7,
+      "dot": 306
+    },
+    {
+      "seed": 7,
+      "dot": 311
+    },
+    {
+      "seed": 7,
+      "dot": 315
+    },
+    {
+      "seed": 7,
+      "dot": 316
+    },
+    {
+      "seed": 7,
+      "dot": 317
+    },
+    {
+      "seed": 7,
+      "dot": 33
+    },
+    {
+      "seed": 7,
+      "dot": 35
+    },
+    {
+      "seed": 7,
+      "dot": 361
+    },
+    {
+      "seed": 7,
+      "dot": 40
+    },
+    {
+      "seed": 7,
+      "dot": 413
+    },
+    {
+      "seed": 7,
+      "dot": 427
+    },
+    {
+      "seed": 7,
+      "dot": 43
+    },
+    {
+      "seed": 7,
+      "dot": 432
+    },
+    {
+      "seed": 7,
+      "dot": 44
+    },
+    {
+      "seed": 7,
+      "dot": 463
+    },
+    {
+      "seed": 7,
+      "dot": 478
+    },
+    {
+      "seed": 7,
+      "dot": 479
+    },
+    {
+      "seed": 7,
+      "dot": 48
+    },
+    {
+      "seed": 7,
+      "dot": 492
+    },
+    {
+      "seed": 7,
+      "dot": 502
+    },
+    {
+      "seed": 7,
+      "dot": 52
+    },
+    {
+      "seed": 7,
+      "dot": 534
+    },
+    {
+      "seed": 7,
+      "dot": 545
+    },
+    {
+      "seed": 7,
+      "dot": 554
+    },
+    {
+      "seed": 7,
+      "dot": 56
+    },
+    {
+      "seed": 7,
+      "dot": 571
+    },
+    {
+      "seed": 7,
+      "dot": 585
+    },
+    {
+      "seed": 7,
+      "dot": 586
+    },
+    {
+      "seed": 7,
+      "dot": 592
+    },
+    {
+      "seed": 7,
+      "dot": 599
+    },
+    {
+      "seed": 7,
+      "dot": 600
+    },
+    {
+      "seed": 7,
+      "dot": 605
+    },
+    {
+      "seed": 7,
+      "dot": 628
+    },
+    {
+      "seed": 7,
+      "dot": 632
+    },
+    {
+      "seed": 7,
+      "dot": 642
+    },
+    {
+      "seed": 7,
+      "dot": 646
+    },
+    {
+      "seed": 7,
+      "dot": 65
+    },
+    {
+      "seed": 7,
+      "dot": 652
+    },
+    {
+      "seed": 7,
+      "dot": 653
+    },
+    {
+      "seed": 7,
+      "dot": 664
+    },
+    {
+      "seed": 7,
+      "dot": 83
+    },
+    {
+      "seed": 7,
+      "dot": 92
+    },
+    {
+      "seed": 7,
+      "dot": 97
+    },
+    {
+      "seed": 7,
+      "dot": 98
+    }
+  ],
+  "policy_changed": false
+}

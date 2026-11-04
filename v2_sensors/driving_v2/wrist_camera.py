@@ -46,6 +46,18 @@ dots = np.stack([RAYS @ f for f, _ in FACES], -1)
 FACE_OF = np.argmax(dots, -1)
 
 
+# The fisheye-to-cube pixel map depends only on camera geometry, not on robot pose.
+FACE_LOOKUP=[]
+for k,(f,up) in enumerate(FACES):
+    sel=INSIDE & (FACE_OF==k)
+    right,down=np.cross(f,up),-up
+    d=RAYS[sel];along=d @ f
+    a,b=(d @ right)/along,(d @ down)/along
+    col=np.clip(np.rint((a+1)/2*(FACE-1)),0,FACE-1).astype(int)
+    row=np.clip(np.rint((b+1)/2*(FACE-1)),0,FACE-1).astype(int)
+    FACE_LOOKUP.append((sel,row,col,along))
+
+
 def pixel_to_ray(row, col):
     uu, vv = (col - c) / c, (row - c) / c
     r = np.hypot(uu, vv); t, ph = r * np.pi / 2, np.arctan2(vv, uu)
@@ -105,7 +117,7 @@ class Scene:
             proj[8] -= 1 / FACE
             proj[9] -= 1 / FACE
         for k, (f, up) in enumerate(FACES):
-            sel = INSIDE & (FACE_OF == k)
+            sel,row,col,along = FACE_LOOKUP[k]
             if not sel.any():
                 continue
             fw, upw = C @ f, C @ up
@@ -114,11 +126,6 @@ class Scene:
                                                      physicsClientId=self.cid)
             img = np.asarray(img, np.uint8).reshape(FACE, FACE, 4)[..., :3]
             zbuf = np.asarray(zbuf).reshape(FACE, FACE); mask = np.asarray(mask).reshape(FACE, FACE)
-            right, down = np.cross(f, up), -up
-            d = RAYS[sel]; along = d @ f
-            a, b = (d @ right) / along, (d @ down) / along             # in [-1, 1] on this face
-            col = np.clip(np.rint((a + 1) / 2 * (FACE - 1)), 0, FACE - 1).astype(int)
-            row = np.clip(np.rint((b + 1) / 2 * (FACE - 1)), 0, FACE - 1).astype(int)
             rgb[sel] = img[row, col]
             z = FAR * NEAR / (FAR - (FAR - NEAR) * zbuf[row, col])     # metres along the face axis
             depth[sel] = z / along                                      # metres along the pixel's ray

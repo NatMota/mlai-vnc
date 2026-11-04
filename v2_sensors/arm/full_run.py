@@ -29,7 +29,7 @@ DRIVING = HERE.parent / 'driving_v2'
 EXPERT = json.loads((DRIVING / 'expert_reference.json').read_text())['bearings']
 
 
-def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None):
+def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driving=False):
     import pybullet as p
     if camera_dir is not None:
         from render_golden import png
@@ -71,6 +71,8 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None):
         next_frame = 0; frames = []; log = []; closest = np.inf; tau = np.zeros(7); ttp = None; never_seen = 0
         while not state['done']:
             f = state['frame']; t = f['time_s']; step = f['step']
+            if not np.isfinite(np.r_[f['base'], f['quaternion'], f['joints'], state['ee_distance_m']]).all():
+                raise FloatingPointError('Nonfinite simulator state')
             if step >= next_frame:                                   # a camera frame and a driving decision, every 1/30 s
                 B = np.array(p.getMatrixFromQuaternion(f['quaternion'])).reshape(3, 3)
                 scene.pose(np.r_[f['base'], f['quaternion']], names, f['joints'], target)
@@ -118,10 +120,29 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None):
                                     est_err_mm=None if est is None else float(1000 * np.linalg.norm(est - true_dot))))
             else:
                 enc.read(np.array(f['joints'][sensors.ARM]))            # keep the encoder's speed estimate current
+                if batch_driving:
+                    # The native hold controller still runs every 1 ms. Stop one tick before
+                    # the next camera decision so the arm encoder has the exact previous sample at PARK.
+                    req['ms'] = max(1, next_frame - step - 1)
             state = call(req)
         f = state['frame']
-        park_xy = frames[-1]['base'][:2] if park_step is None else next(fr['base'][:2] for fr in frames if fr['parked'])
-        return dict(bearing=bearing, split=split, parked=parked, park_s=None if park_step is None else park_step / 1000,
+        park_frame = next((fr for fr in frames if fr['parked']), None)
+        park_xy = frames[-1]['base'][:2] if park_frame is None else park_frame['base'][:2]
+        heading_error = None
+        if park_frame is not None and 'park_base_quaternion' in ref:
+            yaw = p.getEulerFromQuaternion(park_frame['quaternion'])[2]
+            expert_yaw = p.getEulerFromQuaternion(ref['park_base_quaternion'])[2]
+            heading_error = float(np.arctan2(np.sin(yaw-expert_yaw), np.cos(yaw-expert_yaw)))
+        expected_end = (stop_t + .5) if stop_t is not None else limit
+        early = f['time_s'] < expected_end - .002
+        success = bool(parked and stop_mm is not None and stop_mm <= 10 and not early)
+        reason = ('early_native_termination' if early else 'success' if success else
+                  'no_park_timeout' if not parked else 'no_stop_timeout' if stop_t is None else 'stop_outside_10mm')
+        return dict(bearing=bearing, split=split, parked=parked, success=success, status=reason,
+                    park_heading_error_rad=heading_error, timed_out=stop_t is None and not early,
+                    final_time_s=f['time_s'], final_step=f['step'],
+                    post_stop_drift_mm=None if stop_mm is None else 1000 * state['ee_distance_m'] - stop_mm,
+                    post_park_base_drift_m=None if park_frame is None else float(np.linalg.norm(np.array(f['base'][:2])-park_xy)), park_s=None if park_step is None else park_step / 1000,
                     expert_park_s=ref['park_time_s'], park_error_vs_expert_m=float(np.hypot(*(np.array(park_xy) - np.array(ref['park_base_xy'])))),
                     final_base_error_vs_expert_m=float(np.hypot(*(np.array(f['base'][:2]) - np.array(ref['final_base_xy'])))),
                     stop_s=stop_t, expert_stop_s=expert_stop, expert_stop_mm=1000 * m['final_pre_step_ee_error_m'],
@@ -133,6 +154,7 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None):
     finally:
         sim.kill()
         sim.wait()
+        if 'scene' in locals(): p.disconnect()
 
 
 if __name__ == '__main__':

@@ -93,40 +93,43 @@ def reading(seed):
             'A better offline fit has not established reliable end-to-end reaching. The untouched test evaluation is ticket #11110.')
 
 
-def build_viewer(seed):
+def build_viewer(seed, results=RESULTS, split='validation', embed_camera=True):
+
     sys.path.insert(0,str(OLD))
     import replay
-    ghosts = read(RESULTS/'expert_validation.json'); runs=[]
+    ghosts = read(results / f'expert_{split}.json'); runs=[]
     def frame(f):
         out = dict(f, command=f.get('wheel',[0]*4), park_probability=float(f['parked']), speed_m_s=0., tau=f.get('tau',[0]*7))
-        if f.get('camera_src'):
-            out['camera_src'] = 'data:image/png;base64,' + base64.b64encode((RESULTS/f['camera_src']).read_bytes()).decode('ascii')
+        if embed_camera and f.get('camera_src'):
+            out['camera_src'] = 'data:image/png;base64,' + base64.b64encode((results/f['camera_src']).read_bytes()).decode('ascii')
         return out
-    for r in read(RESULTS/f'seed{seed}.json'):
+    for r in read(results/f'seed{seed}.json'):
+        if not r['frames']: continue  # Failed attempts remain in the score table; there is no motion to replay.
         e=ghosts[str(r['dot'])]
-        runs.append(dict(bearing_deg=r['dot'],split='validation',target=e['target'],
+        runs.append(dict(bearing_deg=r['dot'],split='test' if split == 'test' else 'validation',target=e['target'],
             metrics=dict(model_park_s=r['park_s'],expert_park_s=e['park_s'],park_xy_error_m=r['park_error_vs_expert_m'] if r['parked'] else None,
-                         park_yaw_error_deg=None,final_xy_error_m=r['final_base_error_vs_expert_m'],stop_mm=r['at_network_stop_mm'],closest_mm=r['min_mm']),
+                         park_yaw_error_deg=None if r.get('park_heading_error_rad') is None else float(np.degrees(r['park_heading_error_rad'])),final_xy_error_m=r['final_base_error_vs_expert_m'],stop_mm=r['at_network_stop_mm'],closest_mm=r['min_mm']),
             model=dict(frames=[frame(f) for f in r['frames']],final=dict(time_s=r['frames'][-1]['time_s'])),
             expert=dict(frames=[frame(f) for f in e['frames']],final=dict(time_s=e['frames'][-1]['time_s']))))
     names=read(HERE.parent/'driving_v2/closed_loop_native/result_wheels_live_dot.json')['joint_names']
     payload=dict(joint_names=names,runs=runs,geometry=replay.geometry(replay.native_root(),names),
-                 recording_description=f'Seed {seed}; 10 fixed validation targets. Learned driving and reaching. Ghost: recorded expert. No trajectory truncation. Camera inset: actual recorded frames, 128 px preview of the 256 px sensor.')
+                 recording_description=f'Seed {seed}; {len(runs)} recorded {split} targets. Learned driving and reaching. Ghost: recorded expert. No trajectory truncation. Camera inset: actual recorded frames, 128 px preview of the 256 px sensor.')
     page=(OLD/'replay_template.html').read_text()
     page=page.replace('<aside>','<aside><section><img id="sensorImage" alt="Recorded front camera" style="width:100%;image-rendering:auto"><p class="note">Actual camera at the displayed robot state</p></section>')
     page=page.replace('function text(m,e){','function text(m,e){if(m.camera_src){$("sensorImage").src=m.camera_src;}')
+    page=page.replace("${m.parked?'PARK':", "${m.stopped?'STOP':m.parked?'PARK':")
     page=page.replace('${r.bearing_deg}°','target ${r.bearing_deg}')
-    page=page.replace('Select train or test run','Select validation run')
+    page=page.replace('Select train or test run',f'Select {split} run')
     page=page.replace('Recorded robot motion · model + ghost expert',f'Golden data · seed {seed} · model + ghost expert')
     page=page.replace('Every target is 1.1 m from the origin and 0.5 m high.','Targets vary in bearing, radius and height.')
     page=page.replace('Model: 30 Hz. Expert and physics: 1,000 Hz. Park probability ≥ 0.5 latches zero wheel commands; no recovery. The supplied controller holds the arm.',
-        'Driving and camera: 30 Hz. Learned arm torques and physics: 1,000 Hz. PARK latches zero wheels. STOP ends the attempt; the network continues producing hold torques.')
+        'Driving and camera: 30 Hz. Learned arm torques and physics: 1,000 Hz. PARK latches zero wheels. Before PARK, native arm-hold torques are not logged here (n/a). After STOP, the learned network runs for another 0.5 s.')
     page=page.replace("for(const name of ['Front right','Front left','Back left','Back right'])", "for(const name of ['Joint 1','Joint 2','Joint 3','Joint 4','Joint 5','Joint 6','Joint 7'])")
-    page=page.replace('m.command[i].toFixed(2)','m.tau[i].toFixed(2)').replace('e.command[i].toFixed(2)','e.tau[i].toFixed(2)')
+    page=page.replace('m.command[i].toFixed(2)',"(m.parked?m.tau[i].toFixed(2):'n/a')").replace('e.command[i].toFixed(2)','e.tau[i].toFixed(2)')
     page=page.replace('Command · rad/s','Torque · N m')
     page=page.replace('\\nPark probability ${m.park_probability.toFixed(3)} · Speed ${m.speed_m_s.toFixed(2)} / ${e.speed_m_s.toFixed(2)} m/s',
         '\\nGripper distance: model ${m.ee_mm.toFixed(1)} mm / expert ${e.ee_mm.toFixed(1)} mm')
-    page=page.replace('Heading difference ${fmt(m.park_yaw_error_deg,1)}°','Distance at STOP ${fmt(m.stop_mm,1)} mm; closest ${fmt(m.closest_mm,1)} mm')
+    page=page.replace('Heading difference ${fmt(m.park_yaw_error_deg,1)}°','Heading difference ${fmt(m.park_yaw_error_deg,1)}°<br>Distance at STOP ${fmt(m.stop_mm,1)} mm; closest ${fmt(m.closest_mm,1)} mm')
     page=page.replace('__PLOTLY__',(OLD/'replay_assets/plotly.min.js').read_text())
     page=page.replace('__DATA__',json.dumps(payload,separators=(',',':')).replace('</','<\\/'))
-    out=RESULTS/f'viewer_golden_seed{seed}.html';out.write_text(page);return out
+    out=results/f'viewer_golden_seed{seed}.html';out.write_text(page);return out
