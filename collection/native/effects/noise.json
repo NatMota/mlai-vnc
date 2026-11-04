@@ -1,0 +1,10 @@
+{
+ "condition": "noise",
+ "noise_flag": 1,
+ "robot_noise": {
+  "joint_cov": 0.0001,
+  "joint_vel_cov": 0.0001,
+  "base_pos_cov": 0.1,
+  "base_ori_cov": 0.1
+ }
+}

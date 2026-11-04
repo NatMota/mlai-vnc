@@ -1,0 +1,5 @@
+{
+ "condition": "delay",
+ "delay_measure_flag": 1,
+ "delay_measure_steps": 3
+}

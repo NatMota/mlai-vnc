@@ -33,10 +33,12 @@ class Physics {
 public:
     std::vector<std::string> names;
     V7 lower, upper;
-    explicit Physics(const std::string& assets, Physics* shared=nullptr);
+    // self_collision: load the URDF with Bullet's self-collision flag, as the course's collision_enable does.
+    explicit Physics(const std::string& assets, Physics* shared=nullptr, bool self_collision=false);
     ~Physics();
     State state();
-    V17 step(const State&, const Action&, bool advance=true);
+    // extra: torques added to the 4 wheels and 7 arm joints (course motor model); nullptr adds nothing.
+    V17 step(const State&, const Action&, bool advance=true, const V17* extra=nullptr);
     void advance();
     void isolate();
     void reset();

@@ -22,7 +22,7 @@ struct Physics::Impl {
         return id;
     }
 };
-Physics::Physics(const std::string& assets, Physics* shared):p(new Impl) {
+Physics::Physics(const std::string& assets, Physics* shared, bool self_collision):p(new Impl) {
     p->owned=!shared;p->c=shared?shared->p->c:b3ConnectPhysicsDirect();
     if(!p->c) throw std::runtime_error("Cannot connect Bullet DIRECT");
     b3SharedMemoryCommandHandle cmd;int floor=0;
@@ -34,7 +34,7 @@ Physics::Physics(const std::string& assets, Physics* shared):p(new Impl) {
     p->send(cmd);
     floor=p->load(assets+"/plane.urdf",0);}
     int visual_flag=std::getenv("EXPERT_SKIP_VISUALS")?URDF_IGNORE_VISUAL_SHAPES:0;
-    p->robot=p->load(assets+"/summit_xl_arm_description/summit_xl_complete.urdf",URDF_USE_INERTIA_FROM_FILE|URDF_USE_IMPLICIT_CYLINDER|visual_flag);
+    p->robot=p->load(assets+"/summit_xl_arm_description/summit_xl_complete.urdf",URDF_USE_INERTIA_FROM_FILE|URDF_USE_IMPLICIT_CYLINDER|visual_flag|(self_collision?URDF_USE_SELF_COLLISION:0));
     // Preserve the original wrapper's effective damping settings (body IDs 0,1).
     for(int body : {floor,p->robot}) {
         cmd=b3InitChangeDynamicsInfo(p->c);
@@ -101,10 +101,11 @@ State Physics::state(){
     s.qdd=(s.qd-p->prev)/dt;p->prev=s.qd;
     return s;
 }
-V17 Physics::step(const State& s,const Action& a,bool advance_world){
+V17 Physics::step(const State& s,const Action& a,bool advance_world,const V17* extra){
     V17 torque=V17::Zero();
     torque.head<4>()=30*(a.wheel-s.qd.head<4>());
     torque.segment<7>(4)=a.tau;
+    if(extra)torque.head<11>()+=extra->head<11>();
     auto cmd=b3JointControlCommandInit2(p->c,p->robot,CONTROL_MODE_TORQUE);
     for(int i=0;i<11;i++) b3JointControlSetDesiredForceTorque(cmd,p->joints[i].m_uIndex,torque[i]);
     p->send(cmd);

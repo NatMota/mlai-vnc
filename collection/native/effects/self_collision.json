@@ -1,0 +1,4 @@
+{
+ "condition": "self_collision",
+ "collision_enable": 1
+}

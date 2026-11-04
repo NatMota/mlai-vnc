@@ -67,6 +67,13 @@ def vec(row, prefix, values, labels):
         row[f'{prefix}_{label}'] = float(value)
 
 cls = ns['pb'].SimInterface
+# The course's motor inertia term is commented out in ServoMotorModel.compute_torque. With REFERENCE_MOTOR_INERTIA_COEFF
+# set, it is switched back on exactly as written there: minus the coefficient times the previous step's acceleration.
+INERTIA = float(os.environ.get('REFERENCE_MOTOR_INERTIA_COEFF', '0'))
+if INERTIA:
+    from simulation_and_control.controllers.servo_motor import ServoMotorModel
+    _compute = ServoMotorModel.compute_torque
+    ServoMotorModel.compute_torque = lambda self, cmd, q, qd, qdd, M: _compute(self, cmd, q, qd, qdd, M) - INERTIA * np.asarray(qdd)
 original_step, original_mass = cls.Step, cls.ComputeMassMatrix
 
 def capture_mass(self, *args, **kwargs):

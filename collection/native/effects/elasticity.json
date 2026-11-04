@@ -1,0 +1,5 @@
+{
+ "condition": "elasticity",
+ "motor_elastic_torque": 1,
+ "motor_elastic_coeff": 1.0
+}

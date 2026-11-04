@@ -1,0 +1,5 @@
+{
+ "condition": "inertia",
+ "motor_inertia": 1,
+ "motor_inertia_coeff": 0.001
+}

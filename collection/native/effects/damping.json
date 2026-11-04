@@ -1,0 +1,5 @@
+{
+ "condition": "damping",
+ "motor_damping": 1,
+ "motor_damping_coeff": 1.0
+}
