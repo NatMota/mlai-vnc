@@ -109,7 +109,9 @@ def physical_scale(imu=False, encoders=True, time=True):
     return select_inputs(s, imu, encoders, time)
 
 
-def load_run(bearing, target_mode='sample', hz=30, stop_target='time', imu=False):
+def load_run(bearing, target_mode='sample', hz=30, stop_target='time', imu=False, camera_dot=False):
+    """camera_dot: the dot input is the corner camera and tracker's estimate along the recorded run (camera_dot.py),
+    held between its 1/30 s frames, as the network gets it in testing; otherwise the simulator's exact dot."""
     run = DATA / f'run_{bearing // 12 - 1}'
     m = json.loads((run / 'manifest.json').read_text())
     arm, base = table(run, 'arm_controller'), table(run, 'base_state')
@@ -128,7 +130,12 @@ def load_run(bearing, target_mode='sample', hz=30, stop_target='time', imu=False
     extra = [imu_readings(run, park, stop)] if imu else []
     if imu:
         assert hz == 1000 and len(extra[0]) == len(d)
-    X = np.c_[(angle[rows], speed[rows], dot_in_robot(m['target_position_world_m'], pos[d], yaw[d]), *extra, t - park / 1000, t)]
+    if camera_dot:
+        from camera_dot import estimate_per_step
+        dot = estimate_per_step(bearing, d)
+    else:
+        dot = dot_in_robot(m['target_position_world_m'], pos[d], yaw[d])
+    X = np.c_[(angle[rows], speed[rows], dot, *extra, t - park / 1000, t)]
     if stop_target == 'distance':
         dist = table(run, 'kinematics')['ee_distance_error_m'][d]
         ttp = np.clip(dist, 0, DIST_CLIP) / DIST_CLIP
@@ -173,9 +180,10 @@ if __name__ == '__main__':
     ap.add_argument('--no-scaling', action='store_true'); ap.add_argument('--physical-inputs', action='store_true')
     ap.add_argument('--stop-hidden', type=int, default=0); ap.add_argument('--stop-weight', type=float, default=1.0)
     ap.add_argument('--imu', action='store_true'); ap.add_argument('--no-encoders', action='store_true')
+    ap.add_argument('--camera-dot', action='store_true', help="the dot input from the camera and tracker along the recorded runs (camera_dot.py)")
     args = ap.parse_args()
     SN = 'time_to_stop' if args.stop == 'time' else 'distance'
-    runs = [load_run(b, args.target, args.hz, args.stop, imu=args.imu) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
+    runs = [load_run(b, args.target, args.hz, args.stop, imu=args.imu, camera_dot=args.camera_dot) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
     for r in runs:
         r['X'] = select_inputs(r['X'], args.imu, not args.no_encoders, not args.no_time)
     val = [r for r in runs if r['split'] == 'train' and args.val_fold is not None and FOLD[r['bearing']] == args.val_fold]
@@ -231,7 +239,7 @@ if __name__ == '__main__':
     sd.update(ttp_clip=np.float32(CLIP if args.stop == 'time' else DIST_CLIP), ttp_thresh=np.float32(THRESH if args.stop == 'time' else DIST_THRESH))
     diff = max(float(np.abs(policy(sd, x_raw[i])[0] - (py[i].numpy() * ys + ym)).max()) for i in range(50))
     stop_diff = max(abs(policy(sd, x_raw[i])[1] / float(sd['ttp_clip']) - float(pt[i])) for i in range(50))
-    sd.update(info_inputs=np.int64(len(xm)), info_stop_target=args.stop, info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_imu=np.int64(args.imu), info_encoders=np.int64(not args.no_encoders), info_time=np.int64(not args.no_time), info_stop_hidden=np.int64(args.stop_hidden), info_stop_weight=np.float64(args.stop_weight), info_scaling='none' if args.no_scaling else 'physical_inputs' if args.physical_inputs else 'standardised', info_train_bearings=np.array([r['bearing'] for r in train]))
+    sd.update(info_inputs=np.int64(len(xm)), info_stop_target=args.stop, info_epochs=np.int64(args.epochs), info_val_fold=np.int64(-1 if args.val_fold is None else args.val_fold), info_hz=np.int64(args.hz), info_seed=np.int64(args.seed), info_target=args.target, info_imu=np.int64(args.imu), info_encoders=np.int64(not args.no_encoders), info_time=np.int64(not args.no_time), info_stop_hidden=np.int64(args.stop_hidden), info_stop_weight=np.float64(args.stop_weight), info_scaling='none' if args.no_scaling else 'physical_inputs' if args.physical_inputs else 'standardised', info_dot_input='camera_tracker' if args.camera_dot else 'simulator', info_train_bearings=np.array([r['bearing'] for r in train]))
     out = HERE / 'models'; out.mkdir(exist_ok=True)
     np.savez(out / f'{args.name}.npz', **sd)
     (out / f'{args.name}_history.json').write_text(json.dumps(history))

@@ -60,7 +60,8 @@ if __name__ == '__main__':
     w = dict(np.load(HERE / f'models/{a.torque_model}.npz'))
     assert str(w['info_scaling']) == 'physical_inputs' and str(w['info_stop_target']) == 'distance'
     flags = dict(imu=bool(w.get('info_imu', 0)), encoders=bool(w.get('info_encoders', 1)), time=bool(w.get('info_time', w['shared.0.weight'].shape[1] == 19)))
-    runs = [load_run(b, str(w['info_target']), int(w['info_hz']), 'distance', imu=flags['imu']) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
+    camera_dot = str(w.get('info_dot_input', 'simulator')) == 'camera_tracker'      # the same dot input as the torque network
+    runs = [load_run(b, str(w['info_target']), int(w['info_hz']), 'distance', imu=flags['imu'], camera_dot=camera_dot) for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
     for r in runs:
         r['X'] = select_inputs(r['X'], flags['imu'], flags['encoders'], flags['time'])
     xs = physical_scale(flags['imu'], flags['encoders'], flags['time'])

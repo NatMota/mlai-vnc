@@ -157,6 +157,17 @@ ARM_ITERATIONS['30-stopnet'] = dict(iteration=30, name='arm-1khz-iteration-27-on
     change="Iteration 27's networks (iteration 23's torques and the separate stop network), unchanged, tested on the 100 new test dots, with the dot from the camera and the expert driving. All simulator effects off.",
     lesson='On new dots the median closest is 181 mm (54 mm on the 25 original bearings), 21 of 100 within 50 mm. It is 61 mm on dots 0.4 to 0.6 m high and 241 mm at other heights, the same V against height as iteration 23. The separate stop network never says stop in the first 0.5 s. The expert data under each effect: damping, elasticity and inertia leave the expert unchanged (993 to 997 of 1000 dots reached); noise (198), self-collision (73) and the 3 ms delay (0) break it.')
 
+ARM_ITERATIONS[31] = dict(iteration=31, name='arm-1khz-trained-on-camera-dot', file='arm1k_e77_phys_camdot', results='arm1k_e77_phys_camdot_camera',
+    hz=1000, target='sample', seed=7, epochs=77, bearings='21 training bearings', n_inputs=17, dot_input='camera_tracker',
+    anchors=_stop_anchors(31, 'arm1k_e77_phys_camdot'),
+    change="Iteration 23 retrained with the dot input from the corner camera and tracker along the expert's recorded runs (camera_dot.py: the test's own render, dot finder and height-keeping tracker every 1/30 s, held between frames) instead of the simulator's exact dot. Everything else unchanged. Tested with the dot from the corner camera and tracker.",
+    lesson="Training on the camera's dot does not help the arm: the fit is unchanged (test torque loss 0.583 against 0.59) but in testing the arm is worse on every one of the 25 bearings, by a median 8 mm: median closest 70 mm against 57 mm, 1 bearing within 50 mm against 9, 12 of 25 stop at PARK with the shared head. The camera's error is the same in training and testing (30 mm against 26 mm at PARK, bearing by bearing), so the match was real and still cost more than it gained. For the arm, the exact dot in training is the better choice.")
+ARM_ITERATIONS[32] = dict(iteration=32, name='arm-1khz-separate-stop-network-trained-on-camera-dot', file='arm1k_e77_phys_camdot_stopnet', results='arm1k_e77_phys_camdot_stopnet_camera',
+    hz=1000, target='sample', seed=7, epochs=77, bearings='21 training bearings', n_inputs=17, dot_input='camera_tracker',
+    anchors=_stop_anchors(32, 'arm1k_e77_phys_camdot_stopnet')[:2] + [("the stop network's epochs", "#iteration-32-the-stop-networks-epochs")] + _stop_anchors(32, 'arm1k_e77_phys_camdot_stopnet')[2:],
+    change="Iteration 27 on top of iteration 31: the separate stop network (17 -> 32 ReLU -> 16 ReLU -> 1) trained on the same camera dot as the torque network, epochs chosen by 5-fold validation. Tested with the dot from the corner camera and tracker.",
+    lesson="The separate stop network trained on the camera's dot still never stops at PARK, but stops earlier (median 0.73 s after PARK against 1.19 s) and further from the dot (115 mm against 88 mm), on every bearing. Median closest 68 mm against 54 mm in iteration 27, no bearing within 50 mm. Its stop network fits the expert's data a little less well (test stop loss 0.00020 against 0.00014, 593 epochs chosen). Iteration 27, both networks trained on the exact dot, stays the best arm with the camera; the camera's 3 cm bias is better left to networks that never saw it than trained in.")
+
 
 def add(iteration):
     import mlflow, pandas as pd
