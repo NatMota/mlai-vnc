@@ -30,11 +30,13 @@ export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
 python v2_sensors/arm/check_render_golden.py --self-test
 python v2_sensors/arm/render_golden.py \
   --source /path/to/run_1000/baseline \
-  --out /path/to/camera_golden_egl_aligned --split train --jobs 2
+  --out /path/to/camera_golden_egl_aligned --split train --renderer nvidia --jobs 2
 python v2_sensors/arm/render_golden.py \
   --source /path/to/run_1000/baseline \
-  --out /path/to/camera_golden_egl_aligned --split val --jobs 2
+  --out /path/to/camera_golden_egl_aligned --split val --renderer nvidia --jobs 2
 ```
+
+Use `--renderer cpu` for TinyRenderer (including Mac). The CLI overrides `CAMERA_RENDERER` for this process and its workers; omitting it preserves the environment/default. Rendering selection does not change CPU physics. The shared [data package](GOLDEN_DATA.md) contains 300 expert runs but 200 camera traces: test cameras render live along the student's trajectory.
 
 Train IDs come from `collection/native/effects/dots_spread.json`, key `100`; validation IDs come from `split_1000.json`, key `val`. Test IDs are rejected by this renderer CLI. An existing output is reused only when provenance matches. A changed renderer/code/source requires a separate output directory; originals are preserved. Each process handles one run, disconnects PyBullet and exits. Writes are atomic, and `summary.json` is updated after each result.
 

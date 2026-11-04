@@ -1,7 +1,8 @@
 """Render recorded golden trajectories from t=0, using the deployment camera and encoder code.
 
-python render_golden.py --source /path/to/run_1000/baseline --split train --jobs 2
-Set CAMERA_RENDERER=tiny (default) or egl consistently during training AND evaluation.
+python render_golden.py --source /path/to/run_1000/baseline --split train --renderer cpu --jobs 2
+Use --renderer cpu or nvidia; otherwise CAMERA_RENDERER=tiny (default) or egl applies.
+Only train and validation trajectories are rendered here; test cameras run live with the student policy.
 Only recorded poses position the scene; simulator truth never supplies a detection or tracker input.
 """
 import argparse
@@ -194,13 +195,17 @@ def main():
     ap.add_argument('--source', required=True, type=Path)
     ap.add_argument('--out', type=Path, default=OUT)
     ap.add_argument('--split', choices=['train', 'val'], default='train')
+    ap.add_argument('--renderer', choices=['cpu', 'nvidia'],
+                    help='camera rendering only: CPU TinyRenderer or Linux NVIDIA EGL; physics stays on CPU')
     ap.add_argument('--selection', type=Path, default=ROOT / 'collection/native/effects/dots_spread.json')
     ap.add_argument('--splits', type=Path, default=ROOT / 'collection/native/effects/split_1000.json')
     ap.add_argument('--ids', nargs='+', type=int)
     ap.add_argument('--jobs', type=int, default=2)
     a = ap.parse_args()
+    if a.renderer:
+        os.environ['CAMERA_RENDERER'] = {'cpu': 'tiny', 'nvidia': 'egl'}[a.renderer]
     split_plan = json.loads(a.splits.read_text())
-    ids = a.ids if a.ids is not None else (json.loads(a.selection.read_text())['100'] if a.split == 'train' else split_plan['val'])
+    ids = a.ids if a.ids is not None else (json.loads(a.selection.read_text())['100'] if a.split == 'train' else split_plan[a.split])
     if len(ids) != len(set(ids)) or not set(ids) <= set(split_plan[a.split]):
         raise ValueError('Duplicate IDs or requested IDs outside the named split')
     if a.jobs < 1:
