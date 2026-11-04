@@ -49,8 +49,9 @@ def _frame(f):
                 tau=f['tau'] if f['tau'] is not None else [0.0] * 7, ee_mm=f['ee_mm'])
 
 
-def build_viewer(model, out_name=None, expert_file=None):
-    """expert_file: expert runs for dots (export_dot_cases.py) instead of the 25 original bearings."""
+def build_viewer(model, out_name=None, expert_file=None, full_run=False):
+    """expert_file: expert runs for dots (export_dot_cases.py) instead of the 25 original bearings.
+    full_run: the results come from full_run.py (the driving network drives and parks, no expert in the loop)."""
     expert = json.loads(Path(expert_file).read_text()) if expert_file else expert_frames()
     runs = []
     for r in json.loads((HERE / f'results/{model}.json').read_text()):
@@ -61,17 +62,19 @@ def build_viewer(model, out_name=None, expert_file=None):
             if f['parked'] and f['ee_mm'] > CUT_MM:    # only after PARK: before it the dot can be more than 1.5 m away
                 break
         cut = frames[-1]['parked'] and frames[-1]['ee_mm'] > CUT_MM
-        metrics = dict(model_park_s=e['park_s'], expert_park_s=e['park_s'], closest_mm=r['min_mm'], expert_mm=e['stop_mm'],
-                       stop_s=r['stop_s'], expert_stop_s=e['stop_s'], at_expert_stop_mm=r['at_expert_stop_mm'], cut=cut)
+        metrics = dict(model_park_s=r.get('park_s', e['park_s']), expert_park_s=e['park_s'], closest_mm=r['min_mm'], expert_mm=e['stop_mm'],
+                       stop_s=r['stop_s'], expert_stop_s=e['stop_s'], at_expert_stop_mm=r.get('at_expert_stop_mm', r.get('end_mm')), cut=cut)
         runs.append(dict(bearing_deg=r['bearing'], split=r['split'], target=e['target'], metrics=metrics,
                          model=dict(frames=frames, final=dict(time_s=frames[-1]['time_s'])),
                          expert=dict(frames=[_frame(f) for f in e['frames']], final=dict(time_s=e['frames'][-1]['time_s']))))
     joint_names = old_replay_joint_names()
     payload = dict(joint_names=joint_names, runs=runs,
-                   recording_description=f'Model: arm network {model}; the expert drives and parks, then the network moves the arm. Expert: its own full run.')
+                   recording_description=(f'Model: {model}; the driving network drives and parks, then the arm network moves the arm, no expert. Expert: its own full run.' if full_run else
+                                          f'Model: arm network {model}; the expert drives and parks, then the network moves the arm. Expert: its own full run.'))
     payload['geometry'] = old_replay.geometry(old_replay.native_root(), joint_names)
     replace = [
         ('Park probability ≥ 0.5 latches zero wheel commands; no recovery. The supplied controller holds the arm.',
+         'The driving network drives and parks the model robot from the camera and wheel encoders; after its PARK the arm network gets only its own torques. The expert drives and reaches on its own. A model run is cut once the gripper is 1.5 m from the dot.' if full_run else
          'The expert drives and parks in both runs. After PARK the model arm gets only the network\'s torques. A model run is cut once the gripper is 1.5 m from the dot.'),
         ('\\nPark probability ${m.park_probability.toFixed(3)} · Speed ${m.speed_m_s.toFixed(2)} / ${e.speed_m_s.toFixed(2)} m/s',
          '\\nGripper to dot: model ${m.ee_mm.toFixed(1)} mm / expert ${e.ee_mm.toFixed(1)} mm'),

@@ -168,6 +168,16 @@ ARM_ITERATIONS[32] = dict(iteration=32, name='arm-1khz-separate-stop-network-tra
     change="Iteration 27 on top of iteration 31: the separate stop network (17 -> 32 ReLU -> 16 ReLU -> 1) trained on the same camera dot as the torque network, epochs chosen by 5-fold validation. Tested with the dot from the corner camera and tracker.",
     lesson="The separate stop network trained on the camera's dot still never stops at PARK, but stops earlier (median 0.73 s after PARK against 1.19 s) and further from the dot (115 mm against 88 mm), on every bearing. Median closest 68 mm against 54 mm in iteration 27, no bearing within 50 mm. Its stop network fits the expert's data a little less well (test stop loss 0.00020 against 0.00014, 593 epochs chosen). Iteration 27, both networks trained on the exact dot, stays the best arm with the camera; the camera's 3 cm bias is better left to networks that never saw it than trained in.")
 
+ARM_ITERATIONS[33] = dict(iteration=33, name='full-run-iteration-13-drives-iteration-27-reaches', file='arm1k_e77_phys_stopnet', driving_file='camera_flag_ttp_scaled_tail100_encoders',
+    results='full_camera_flag_ttp_scaled_tail100_encoders_arm1k_e77_phys_stopnet', full_run=True,
+    hz=1000, target='sample', seed=7, epochs=77, bearings='21 training bearings', n_inputs=17, dot_input='camera_tracker',
+    anchors=[('Plan and expected results', '#iteration-33-plan-and-expected-results'), ('results', '#iteration-33-results'),
+             ("the reach after the network's own park", '#iteration-33-the-reach-after-the-networks-own-park'),
+             ('3D replay', '#iteration-33-3d-replay-full_camera_flag_ttp_scaled_tail100_encoders_arm1k_e77_phys_stopnet-the-full-run'),
+             ('reading the results', '#iteration-33-reading-the-results')],
+    change="The full run with no expert in the loop: the driving network of iteration 13 (seed 7; wheel encoders and the camera, 2x16 ReLU, PARK when its predicted time to park is 0.25 s or less) drives and parks, then the arm network of iteration 27 reaches and stops from the camera and arm encoders. No training; 8 of the 25 bearings (the 4 test bearings and 4 training bearings).",
+    lesson="All 8 bearings parked, a median 6.3 cm from the expert's park (5 to 9 cm), within a second of its time. The reach is worse from the network's park: median closest 101 mm against 57 mm for the same arm with the expert driving, none within 50 mm; the stop network never fires at PARK and stops a median 127 mm from the dot. The handover costs about 45 mm: the gripper starts 250 to 280 mm away instead of 225 mm and the arm closes the same distance as before. The park error is the driving network's (iteration 13 parked a median 7.4 cm off), so the first gain is park accuracy and the second is arm training from parks spread around the expert's.")
+
 
 def add(iteration):
     import mlflow, pandas as pd
@@ -186,6 +196,8 @@ def add(iteration):
          'within_1cm_at_expert_stop': int((df.at_expert_stop_mm <= 10).sum()), 'stopped': int(df.stop_s.notna().sum()),
          'gripper_past_1_5m': int(sum(blown)), 'final_train_torque_mse': float(h.train_torque_mse.dropna().iloc[-1]),
          f'final_train_{stop}_mse': float(h[f'train_{stop}_mse'].dropna().iloc[-1])}
+    if 'parked' in df:
+        m.update(parked=int(df.parked.sum()), median_park_error_vs_expert_m=float(df.park_error_vs_expert_m.median()), median_park_delay_vs_expert_s=float((df.park_s - df.expert_park_s).median()))
     if 'at_network_stop_mm' in df and df.at_network_stop_mm.notna().any():
         m['median_at_network_stop_mm'] = float(df.at_network_stop_mm.median())
     if df.stop_vs_expert_s.notna().any():
@@ -204,7 +216,7 @@ def add(iteration):
                     if stopnet else '')
     scaling = str(w['info_scaling']) if 'info_scaling' in w.files else 'standardised'; raw = scaling == 'none'
     sh = int(w['info_stop_hidden']) if 'info_stop_hidden' in w.files else 0; sw = float(w['info_stop_weight']) if 'info_stop_weight' in w.files else 1.0
-    params = dict(version='v2', iteration=iteration, model=spec['name'], part='arm', inputs=len(names), input_names=','.join(names),
+    params = dict(version='v2', iteration=iteration, model=spec['name'], part='full_run' if spec.get('full_run') else 'arm', **({'driving_model': spec['driving_file']} if spec.get('driving_file') else {}), inputs=len(names), input_names=','.join(names),
                   outputs=f'7_arm_torques_Nm+{stop}', stop_target=stop, stop_threshold=float(w['ttp_thresh']), control_hz=spec['hz'], torque_target=spec['target'],
                   hidden='2x64_relu' + (f'+stop_branch_{sh}_relu' if sh else '') + ('+separate_stop_net_32_16_relu' if stopnet else ''), imu=int(imu_on), arm_encoders=int(enc_on), stop_hidden=sh, stop_loss_weight=sw, parameters=n_params, optimizer='adam', learning_rate=0.01, epochs=epochs, batch='full', seed=seed,
                   loss=f"torque_mse_{'Nm2' if raw else 'standardised'}+{stop}_mse_scaled_weight{sw:g}", trajectory_weighting='equal',
@@ -219,7 +231,8 @@ def add(iteration):
         f"**Inputs.** {len(names)}: " + ('arm encoder angles and speeds (7 each, Kinova Jaco 2 actuator resolutions), ' if enc_on else 'no arm encoders, ') + "the dot in the robot frame (x, y, z, " + ('from the corner camera and tracker, image every 1/30 s' if spec.get('dot_input') == 'camera_tracker' else 'from the simulator for this test') + ')' + (', an IMU on the end effector (3 accelerations and 3 rotation rates in the hand frame, every 1 ms, Bosch BMI088 noise)' if imu_on else '') + (', time since PARK and time since the start' if any(n.startswith('time_') for n in names) else '') + '.', '',
         f"**Outputs.** The 7 arm torques (N m, clipped to ±30) at {rate}, and " + ("time to stop in seconds (clipped at 3 s); stop when it is 0.25 s or less." if stop == 'time_to_stop' else "the distance from the gripper to the dot (clipped at 0.25 m); stop when it is 1 cm or less."), '',
         f"**Training.** 2×64 ReLU network{f', with a {sh}-unit ReLU layer of its own for the stop head' if sh else ''}{stopnet_desc}, {n_params:,} parameters. Loss: torque MSE in {'N m² (no scaling of inputs or torques)' if raw else 'standardised units'}{' (inputs divided by physical sizes: angles by π, speeds by the speed limits, the dot by 1 m)' if scaling == 'physical_inputs' else ''} plus {stop.replace('_', '-')} MSE (weight {sw:g}), each training run counted equally. Adam, lr 0.01, {epochs} full-batch epochs, seed {seed}, trained on {spec['bearings']}. Data: the expert's full runs recorded every 1 ms, from PARK to its stop.", '',
-        ('**Test.** In the simulator on the 100 new test dots (1.0 to 2.0 m away, 0.1 to 1.25 m high, all bearings; seed 0, collection/native/effects/targets_1000.json), all simulator effects off. The expert drives and parks, then only the arm network moves the arm.' if spec.get('expert_file') else '**Test.** In the simulator on 25 bearings. The expert drives and parks, then only the arm network moves the arm.'), '',
+        ('**Test.** The full run in the simulator with no expert in the loop: the driving network drives and parks from the wheel encoders and the camera, then only the arm network moves the arm. ' + f"{len(df)} bearings." if spec.get('full_run') else
+         '**Test.** In the simulator on the 100 new test dots (1.0 to 2.0 m away, 0.1 to 1.25 m high, all bearings; seed 0, collection/native/effects/targets_1000.json), all simulator effects off. The expert drives and parks, then only the arm network moves the arm.' if spec.get('expert_file') else '**Test.** In the simulator on 25 bearings. The expert drives and parks, then only the arm network moves the arm.'), '',
         f"- Closest the gripper gets to the dot: median {m['median_closest_mm']:.0f} mm, best {m['best_closest_mm']:.0f} mm; within 1 cm on {m['closest_within_1cm']} of {len(df)}.",
         f"- At the expert's stop time: median {m['median_at_expert_stop_mm']:.0f} mm from the dot. The gripper went more than 1.5 m from the dot on {m['gripper_past_1_5m']} of {len(df)}.",
         (f"- When the network said stop, the gripper was a median {m['median_at_network_stop_mm']:.0f} mm from the dot." if 'median_at_network_stop_mm' in m else ''),
@@ -245,6 +258,8 @@ def add(iteration):
             client.log_batch(run.info.run_id, metrics=batch[i:i + 1000])
         mlflow.log_artifact(str(HERE / f"models/{spec['file']}.npz"), 'model')
         mlflow.log_artifact(str(HERE / f"models/{spec['file']}_history.json"), 'model')
+        if spec.get('driving_file'):
+            mlflow.log_artifact(str(HERE.parent / f"driving_v2/models/{spec['driving_file']}.npz"), 'model/driving')
         mlflow.log_table(df, 'tests/per_bearing.json')
         mlflow.log_artifact(str(HERE / f"results/viewer_{res}.html"), 'player')
         mlflow.log_artifact(str(NOTEBOOK), 'notebook')
