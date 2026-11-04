@@ -47,6 +47,11 @@ def prepare(a):
                split_sha256=sha(a.data/'split.json'), test_trajectories_opened=0,
                change='append camera-tracked robot-frame height in metres; 16 to 17 driving inputs; unchanged reaching',
                expectation='lower paired median parking error, particularly low/high targets; worse or equal error does not support the benefit on these six cases')
+    cfg['without_wheel_velocity'] = a.without_wheel_velocity
+    if a.without_wheel_velocity:
+        cfg.update(change='retain camera height; remove six wheel-speed inputs: 17 to 11 inputs; unchanged reaching and tracker',
+                   expectation='test whether omitting speed inputs reduces paired parking error; no assumed benefit',
+                   candidate_variant='height_no_speed')
     save(a.out/'config.json',cfg)
     print(json.dumps(cfg, indent=2), flush=True)
 
@@ -66,6 +71,12 @@ def train(a):
     # Height comes from the existing causal tracker, including zeros before first sighting.
     for split in ('train','val'):
         assert all(r['drive'][0].shape[1] == 17 for r in records[split])
+    if cfg.get('without_wheel_velocity', False):
+        from train_golden import sensors
+        for split in records:
+            for r in records[split]:
+                x,y,p = r['drive']
+                r['drive'] = (x[:, sensors.DRIVING_NO_SPEED_COLS], y, p)
     args=argparse.Namespace(out=models,device=a.device,epochs=cfg['epochs'],stop_epochs=600,chunk=cfg['chunk'])
     _,summary=train_one(records,'driving',cfg['seed'],args)
     arm=a.baseline/'reaching_seed7.npz'
@@ -98,7 +109,7 @@ def evaluate(a):
     assert sha(a.out/'models'/arm.name)==sha(arm)
     wa=dict(np.load(arm,allow_pickle=False))
     jobs=[];ghosts={}
-    models={'baseline':a.baseline/'driving_seed7.npz','height':a.out/'models/driving_seed7.npz'}
+    models={'baseline':a.baseline/'driving_seed7.npz',cfg.get('candidate_variant','height'):a.out/'models/driving_seed7.npz'}
     for dot in cfg['validation_cases']:
         case,ghost=case_for(a.data,dot,'val');ghosts[str(dot)]=ghost
         for variant,model in models.items():
@@ -123,5 +134,6 @@ if __name__=='__main__':
     for name in ('data','baseline','out'): p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--device',choices=['cpu','cuda'],default='cuda')
     p.add_argument('--jobs',type=int,default=3)
+    p.add_argument('--without-wheel-velocity',action='store_true')
     args=p.parse_args()
     globals()[args.stage](args)

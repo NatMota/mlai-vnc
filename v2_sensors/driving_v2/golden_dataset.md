@@ -8248,3 +8248,393 @@ The largest parking gains were on the two middle-height targets, rather than con
 This is one seed and six selected validation targets, all initially visible. No conclusion about unseen-target acquisition or generalisation is justified. The extra input also changes random initialisation under the same seed, so additional seeds would be needed to establish a robust benefit. No changes were made to search behaviour, losses, wheel-speed inputs, physics, sensor rates or reaching weights. The reserved test set was not rerun.
 
 The comparison is a development check without a new official MLflow entry. Original iterations 34–36 and their results remain unchanged.
+
+
+## Development iteration: height without wheel-speed inputs
+
+Keep camera-derived height and remove only the six wheel-speed inputs (four individual speeds, mean speed, right-minus-left speed). The driving network becomes 11 -> 16 -> 16 with unchanged wheel-command and time-to-PARK outputs. The tracker still uses wheel encoder speeds. Retain accumulated wheel angles and their two combinations, camera range, bearing sine/cosine, visibility and height.
+
+Train driving from scratch with seed 7 and the same 100 training/100 validation runs, 300 epochs, Adam 0.01, FP32, losses and scaling convention. Keep the reaching checkpoint unchanged. Compare with the saved 17-input height model on the same six initially visible validation targets: 673, 506, 830, 720, 16, 333. Run both complete systems from the normal start through reaching. No search rules, test-set evaluation, new official MLflow entry or camera videos.
+
+Hypothesis: removing the speed shortcut may improve parking even if offline command loss rises. No improvement is assumed; equal/worse parking error would not support the change on this screen. Preserve the previous comparison and append the paired results. One seed and six targets remain a development check.
+
+
+### No-speed comparison: inputs and execution
+
+
+```python
+from pathlib import Path
+import json, hashlib
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from IPython.display import display, Markdown
+NS = Path('../arm/results/driving_height_no_speed11')
+NS_BASE = Path('../arm/results/driving_height17')
+ns_config = json.loads((NS/'config.json').read_text())
+ns_training = json.loads((NS/'models/summary.json').read_text())
+assert ns_config['validation_cases'] == json.loads((NS_BASE/'config.json').read_text())['validation_cases']
+assert (NS/'models/reaching_seed7.npz').read_bytes() == (NS_BASE/'models/reaching_seed7.npz').read_bytes()
+display(pd.DataFrame(ns_config['cases']))
+print('11 inputs: six accumulated-angle features; camera range, sin/cos bearing, visibility, height.')
+print('Wheel speeds remain in the tracker. Reaching weights unchanged. Seed 7, 300 epochs, same losses.')
+print('Selected epoch:', ns_training['driving']['selected_epoch'])
+print('Training including loading: %.2f s; 12 full simulations: %.2f s' % (ns_training['elapsed_s'], json.loads((NS/'results/completion.json').read_text())['elapsed_s']))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dot</th>
+      <th>range_m</th>
+      <th>height_m</th>
+      <th>initially_visible</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>673</td>
+      <td>1.274653</td>
+      <td>0.234875</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>506</td>
+      <td>1.787443</td>
+      <td>0.257822</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>830</td>
+      <td>1.352278</td>
+      <td>0.896056</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>720</td>
+      <td>1.734537</td>
+      <td>0.791538</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>1.148734</td>
+      <td>1.127223</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>333</td>
+      <td>1.551641</td>
+      <td>1.211776</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    11 inputs: six accumulated-angle features; camera range, sin/cos bearing, visibility, height.
+    Wheel speeds remain in the tracker. Reaching weights unchanged. Seed 7, 300 epochs, same losses.
+    Selected epoch: 299
+    Training including loading: 11.89 s; 12 full simulations: 45.89 s
+
+
+### No-speed comparison: losses
+
+
+```python
+fig, axes = plt.subplots(1, 2, figsize=(12, 3.5))
+for label, directory, colour in [('Height with speeds', NS_BASE/'models', 'tab:blue'), ('Height without speeds', NS/'models', 'tab:orange')]:
+    hist = pd.DataFrame(json.loads((directory/'driving_seed7_history.json').read_text()))
+    for ax, field, title in zip(axes, ['command','aux'], ['Wheel-command MSE','Time-to-PARK MSE (normalised by 3 s)']):
+        ax.plot(hist.epoch, hist['train_'+field], color=colour, label=label+' training')
+        ax.plot(hist.epoch, hist['val_'+field], color=colour, linestyle='--', label=label+' validation')
+        ax.set(title=title, xlabel='Epoch', ylabel='Equal-run MSE', yscale='log'); ax.grid(alpha=.2)
+axes[0].legend(fontsize=8); fig.tight_layout(); plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_74_0.png)
+
+
+
+### No-speed comparison: six paired full runs
+
+
+```python
+ns_rows = json.loads((NS/'results/summary.json').read_text())
+ns_results = pd.DataFrame([dict(variant=r['variant'], dot=r['dot'], parked=r['parked'],
+    park_cm=100*r['park_error_vs_expert_m'] if r['parked'] else np.nan,
+    heading_deg=abs(np.degrees(r['park_heading_error_rad'])) if r['park_heading_error_rad'] is not None else np.nan,
+    park_s=r['park_s'], stopped=r['stop_s'] is not None, closest_mm=r['min_mm'],
+    at_stop_mm=r['at_network_stop_mm'], success=r['success']) for r in ns_rows])
+assert len(ns_results)==12 and ns_results.groupby('variant').size().eq(6).all()
+ns_pairs=ns_results.pivot(index='dot',columns='variant',values=['park_cm','heading_deg','closest_mm','at_stop_mm'])
+display(ns_pairs.round(1))
+ns_scores=ns_results.groupby('variant').agg(attempts=('dot','size'),PARK=('parked','sum'),STOP=('stopped','sum'),
+    median_park_cm=('park_cm','median'),median_heading_deg=('heading_deg','median'),
+    median_closest_mm=('closest_mm','median'),median_at_STOP_mm=('at_stop_mm','median'),success_10mm=('success','sum'))
+display(ns_scores.round(2))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">park_cm</th>
+      <th colspan="2" halign="left">heading_deg</th>
+      <th colspan="2" halign="left">closest_mm</th>
+      <th colspan="2" halign="left">at_stop_mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th>baseline</th>
+      <th>height_no_speed</th>
+      <th>baseline</th>
+      <th>height_no_speed</th>
+      <th>baseline</th>
+      <th>height_no_speed</th>
+      <th>baseline</th>
+      <th>height_no_speed</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>15.9</td>
+      <td>8.6</td>
+      <td>11.6</td>
+      <td>2.8</td>
+      <td>337.7</td>
+      <td>155.2</td>
+      <td>486.1</td>
+      <td>180.3</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>60.0</td>
+      <td>19.3</td>
+      <td>8.6</td>
+      <td>1.2</td>
+      <td>577.9</td>
+      <td>213.5</td>
+      <td>619.6</td>
+      <td>219.3</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>49.4</td>
+      <td>3.8</td>
+      <td>0.9</td>
+      <td>3.6</td>
+      <td>652.0</td>
+      <td>130.4</td>
+      <td>752.8</td>
+      <td>264.9</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>12.1</td>
+      <td>3.8</td>
+      <td>14.3</td>
+      <td>1.4</td>
+      <td>519.9</td>
+      <td>163.5</td>
+      <td>793.2</td>
+      <td>280.2</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>30.7</td>
+      <td>4.1</td>
+      <td>0.9</td>
+      <td>2.6</td>
+      <td>299.2</td>
+      <td>24.3</td>
+      <td>314.4</td>
+      <td>67.2</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>14.2</td>
+      <td>4.8</td>
+      <td>18.6</td>
+      <td>1.2</td>
+      <td>249.4</td>
+      <td>30.2</td>
+      <td>279.7</td>
+      <td>1134.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_heading_deg</th>
+      <th>median_closest_mm</th>
+      <th>median_at_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>baseline</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>23.31</td>
+      <td>10.06</td>
+      <td>428.82</td>
+      <td>552.86</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>height_no_speed</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>2.00</td>
+      <td>142.78</td>
+      <td>242.11</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+### No-speed comparison: parking and reaching
+
+
+```python
+fig, axes = plt.subplots(1, 2, figsize=(12, 3.8))
+ns_ids=ns_config['validation_cases']; loc=np.arange(len(ns_ids))
+for shift, variant, label in [(-.18,'baseline','Height with speeds'),(.18,'height_no_speed','Height without speeds')]:
+    d=ns_results[ns_results.variant==variant].set_index('dot').loc[ns_ids]
+    axes[0].bar(loc+shift,d.park_cm,width=.36,label=label)
+    axes[1].bar(loc+shift,d.closest_mm,width=.36,label=label)
+for ax in axes:
+    ax.set_xticks(loc,ns_ids);ax.set_xlabel('Fixed validation target');ax.legend(fontsize=8);ax.grid(axis='y',alpha=.2)
+axes[0].set(title='Parking error versus expert',ylabel='cm')
+axes[1].set(title='Closest gripper approach after PARK',ylabel='mm')
+fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_78_0.png)
+
+
+
+### No-speed comparison: reading the result
+
+
+```python
+ns_b=ns_scores.loc['baseline'];ns_c=ns_scores.loc['height_no_speed']
+ns_better=int((ns_pairs['park_cm']['height_no_speed'] < ns_pairs['park_cm']['baseline']).sum())
+ns_verdict='improved' if ns_c.median_park_cm < ns_b.median_park_cm else 'worsened'
+display(Markdown(f"""Removing the six speed inputs **{ns_verdict} median parking error from {ns_b.median_park_cm:.1f} cm to {ns_c.median_park_cm:.1f} cm**. It improved {ns_better}/6 individual targets. PARK counts: {int(ns_b.PARK)}/6 with speeds and {int(ns_c.PARK)}/6 without. STOP counts: {int(ns_b.STOP)}/6 and {int(ns_c.STOP)}/6 respectively.
+
+Median closest reach changed from **{ns_b.median_closest_mm:.1f} mm to {ns_c.median_closest_mm:.1f} mm**; median distance at STOP changed from **{ns_b.median_at_STOP_mm:.1f} mm to {ns_c.median_at_STOP_mm:.1f} mm**. Success within 10 mm: {int(ns_b.success_10mm)}/6 versus {int(ns_c.success_10mm)}/6. Missing PARK/STOP attempts remain in the counts; conditional medians omit undefined events.
+
+This tests the feature-removal intervention, not a definitive causal diagnosis of speed copying. The architecture width, losses, training schedule and reaching weights are unchanged, but input size changes random initialisation under the same seed. One seed and six initially visible validation targets cannot establish generalisation or behaviour before first detection. No search rules, additional sensors, DART, DAgger or reserved-test evaluation were introduced. Encoder speeds are still used by the tracker.
+
+These are development checks. Previous notebook cells and official iterations remain unchanged; no new official MLflow run was created."""))
+```
+
+
+Removing the six speed inputs **improved median parking error from 23.3 cm to 4.4 cm**. It improved 6/6 individual targets. PARK counts: 6/6 with speeds and 6/6 without. STOP counts: 6/6 and 6/6 respectively.
+
+Median closest reach changed from **428.8 mm to 142.8 mm**; median distance at STOP changed from **552.9 mm to 242.1 mm**. Success within 10 mm: 0/6 versus 0/6. Missing PARK/STOP attempts remain in the counts; conditional medians omit undefined events.
+
+This tests the feature-removal intervention, not a definitive causal diagnosis of speed copying. The architecture width, losses, training schedule and reaching weights are unchanged, but input size changes random initialisation under the same seed. One seed and six initially visible validation targets cannot establish generalisation or behaviour before first detection. No search rules, additional sensors, DART, DAgger or reserved-test evaluation were introduced. Encoder speeds are still used by the tracker.
+
+These are development checks. Previous notebook cells and official iterations remain unchanged; no new official MLflow run was created.

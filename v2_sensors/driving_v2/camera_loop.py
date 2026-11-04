@@ -11,6 +11,7 @@ import json, os, subprocess, sys, time
 from pathlib import Path
 import numpy as np
 import pybullet as p
+from sensors import DRIVING_NO_SPEED_COLS
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -67,14 +68,18 @@ def wheel_features(q, qd, q0):
 def driving_inputs(w, wheel, dot, visible, height=None):
     """Legacy 15/16 inputs, or 17 with tracked robot-frame height appended in metres."""
     n = w['shared.0.weight'].shape[1]
-    if n not in (15, 16, 17):
+    if n not in (11, 15, 16, 17):
         raise ValueError(f'Unsupported driving input count: {n}')
     camera = [0., 0., 0.] if dot is None else [float(np.hypot(*dot[:2])), np.sin(np.arctan2(dot[1], dot[0])), np.cos(np.arctan2(dot[1], dot[0]))]
-    x = np.r_[wheel, camera, [float(visible)] if n >= 16 else []]
-    if n == 17:
+    x = np.r_[wheel, camera, [float(visible)] if n in (11, 16, 17) else []]
+    if n in (11, 17):
         if not bool(w.get('info_camera_height', False)):
-            raise ValueError('17-input driving checkpoint must declare camera height')
+            raise ValueError('Height-enabled driving checkpoint must declare camera height')
         x = np.r_[x, 0. if height is None else height]
+    if n == 11:
+        if bool(w.get('info_wheel_velocity', True)):
+            raise ValueError('11-input checkpoint must declare omitted wheel velocities')
+        x = x[DRIVING_NO_SPEED_COLS]
     return x.astype(np.float32)
 
 

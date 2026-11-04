@@ -31,6 +31,10 @@ def count(q):
     return np.floor(np.asarray(q) / TICK) * TICK
 
 
+# Columns retained from the 17-input driving vector when wheel speeds are omitted.
+DRIVING_NO_SPEED_COLS = [0, 1, 2, 3, 8, 9, 12, 13, 14, 15, 16]
+
+
 def wheel_features(angle, speed):
     """12 inputs from wheel angles since the start (4) and wheel speeds (4). Wheel order FR, FL, BL, BR."""
     angle, speed = np.atleast_2d(angle), np.atleast_2d(speed)

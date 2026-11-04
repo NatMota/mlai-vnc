@@ -1,0 +1,24 @@
+{
+  "baseline_all_six_event_metrics_exact": true,
+  "reaching_checkpoint_unchanged": true,
+  "retained_feature_scaling_unchanged": true,
+  "columns_from_17": [
+    0,
+    1,
+    2,
+    3,
+    8,
+    9,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "source_sha256": {
+    "v2_sensors/arm/driving_height.py": "e177a61441ca38faba63146b6041a7384ccc482d189b0c1155a262bfdbf1b9b3",
+    "v2_sensors/arm/train_golden.py": "c5bf0c91357952d7f9f1c43e9e1c20f128fea9ae17ffb92d2c11e93e0161216d",
+    "v2_sensors/driving_v2/camera_loop.py": "77d0e3760ab29ab0eee9fe7f529fe5573f5edddc18dfce09ba63644d15a3be3f",
+    "v2_sensors/driving_v2/sensors.py": "e8d59c74670ab0643edee7e4d5598bd47d93b1846cc2f16af9dd67235415959e"
+  }
+}

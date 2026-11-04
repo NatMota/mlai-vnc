@@ -192,8 +192,9 @@ def train_one(records, kind, seed, args):
     xm, xs = np.zeros(x.shape[1], np.float32), np.ones(x.shape[1], np.float32)
     ym, ys = np.zeros(y.shape[1], np.float32), np.ones(y.shape[1], np.float32)
     if kind == 'driving':
-        xm[ANGLE_COLS] = x[:, ANGLE_COLS].mean(0)
-        xs[ANGLE_COLS] = np.maximum(x[:, ANGLE_COLS].std(0), 1e-6)
+        angle_cols = list(range(6)) if x.shape[1] == 11 else ANGLE_COLS
+        xm[angle_cols] = x[:, angle_cols].mean(0)
+        xs[angle_cols] = np.maximum(x[:, angle_cols].std(0), 1e-6)
         model = Driving(x.shape[1])
     else:
         xs = physical_scale(False, True, False).astype(np.float32)
@@ -263,7 +264,7 @@ def train_one(records, kind, seed, args):
                 input_mean=xm.tolist(), input_scale=xs.tolist(), output_mean=ym.tolist(), output_scale=ys.tolist())
     w.update(info_seed=np.int64(seed), info_epochs=np.int64(best['epoch']), info_encoders=np.int64(1),
              info_time=np.int64(0), info_imu=np.int64(0), info_dot_input='camera_tracker',
-             info_inputs=np.int64(len(xm)), info_camera_height=np.int64(kind == 'driving' and len(xm) == 17), info_target='sample', info_hz=np.int64(30 if kind=='driving' else 1000),
+             info_inputs=np.int64(len(xm)), info_camera_height=np.int64(kind == 'driving' and len(xm) in (11, 17)), info_wheel_velocity=np.int64(len(xm) != 11), info_target='sample', info_hz=np.int64(30 if kind=='driving' else 1000),
              info_input_mean=xm, info_input_std=xs,
              info_scaling='standardised_angles' if kind=='driving' else 'physical_inputs',
              info_stop_target='time' if kind=='driving' else 'distance',
