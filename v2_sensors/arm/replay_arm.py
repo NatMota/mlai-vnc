@@ -49,8 +49,9 @@ def _frame(f):
                 tau=f['tau'] if f['tau'] is not None else [0.0] * 7, ee_mm=f['ee_mm'])
 
 
-def build_viewer(model, out_name=None):
-    expert = expert_frames()
+def build_viewer(model, out_name=None, expert_file=None):
+    """expert_file: expert runs for dots (export_dot_cases.py) instead of the 25 original bearings."""
+    expert = json.loads(Path(expert_file).read_text()) if expert_file else expert_frames()
     runs = []
     for r in json.loads((HERE / f'results/{model}.json').read_text()):
         e = expert[str(r['bearing'])]

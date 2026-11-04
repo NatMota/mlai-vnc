@@ -1,0 +1,212 @@
+{
+ "baseline": {
+  "runs": 100,
+  "skipped_no_park": 0,
+  "arm1k_e77_dist_notime_phys": {
+   "torque_rmse_per_joint_Nm": [
+    0.967,
+    2.68,
+    0.75,
+    2.978,
+    0.598,
+    2.686,
+    0.532
+   ],
+   "torque_rmse_Nm": 2.4331028095171208,
+   "stop_rmse_mm": 75.07138017635052
+  },
+  "arm1k_e77_phys_stopnet": {
+   "torque_rmse_per_joint_Nm": [
+    0.967,
+    2.68,
+    0.75,
+    2.978,
+    0.598,
+    2.686,
+    0.532
+   ],
+   "torque_rmse_Nm": 2.4331028095171208,
+   "stop_rmse_mm": 80.83509047072371
+  }
+ },
+ "damping": {
+  "runs": 100,
+  "skipped_no_park": 0,
+  "arm1k_e77_dist_notime_phys": {
+   "torque_rmse_per_joint_Nm": [
+    0.992,
+    2.623,
+    0.744,
+    2.955,
+    0.584,
+    2.696,
+    0.534
+   ],
+   "torque_rmse_Nm": 2.46336999228087,
+   "stop_rmse_mm": 74.9868879940037
+  },
+  "arm1k_e77_phys_stopnet": {
+   "torque_rmse_per_joint_Nm": [
+    0.992,
+    2.623,
+    0.744,
+    2.955,
+    0.584,
+    2.696,
+    0.534
+   ],
+   "torque_rmse_Nm": 2.46336999228087,
+   "stop_rmse_mm": 79.79680382855125
+  }
+ },
+ "elasticity": {
+  "runs": 100,
+  "skipped_no_park": 0,
+  "arm1k_e77_dist_notime_phys": {
+   "torque_rmse_per_joint_Nm": [
+    1.006,
+    3.375,
+    0.796,
+    2.861,
+    0.598,
+    2.707,
+    0.539
+   ],
+   "torque_rmse_Nm": 2.63693593214623,
+   "stop_rmse_mm": 77.56630668486298
+  },
+  "arm1k_e77_phys_stopnet": {
+   "torque_rmse_per_joint_Nm": [
+    1.006,
+    3.375,
+    0.796,
+    2.861,
+    0.598,
+    2.707,
+    0.539
+   ],
+   "torque_rmse_Nm": 2.63693593214623,
+   "stop_rmse_mm": 78.41026106481915
+  }
+ },
+ "inertia": {
+  "runs": 100,
+  "skipped_no_park": 0,
+  "arm1k_e77_dist_notime_phys": {
+   "torque_rmse_per_joint_Nm": [
+    0.987,
+    2.744,
+    0.743,
+    3.015,
+    0.606,
+    2.701,
+    0.545
+   ],
+   "torque_rmse_Nm": 2.4304221896701255,
+   "stop_rmse_mm": 74.89278513064023
+  },
+  "arm1k_e77_phys_stopnet": {
+   "torque_rmse_per_joint_Nm": [
+    0.987,
+    2.744,
+    0.743,
+    3.015,
+    0.606,
+    2.701,
+    0.545
+   ],
+   "torque_rmse_Nm": 2.4304221896701255,
+   "stop_rmse_mm": 80.68330603576963
+  }
+ },
+ "noise": {
+  "runs": 100,
+  "skipped_no_park": 0,
+  "arm1k_e77_dist_notime_phys": {
+   "torque_rmse_per_joint_Nm": [
+    5.969,
+    7.86,
+    3.124,
+    10.255,
+    2.901,
+    8.539,
+    0.701
+   ],
+   "torque_rmse_Nm": 6.835845861648685,
+   "stop_rmse_mm": 149.6630769718596
+  },
+  "arm1k_e77_phys_stopnet": {
+   "torque_rmse_per_joint_Nm": [
+    5.969,
+    7.86,
+    3.124,
+    10.255,
+    2.901,
+    8.539,
+    0.701
+   ],
+   "torque_rmse_Nm": 6.835845861648685,
+   "stop_rmse_mm": 96.15913310054592
+  }
+ },
+ "self_collision": {
+  "runs": 100,
+  "skipped_no_park": 0,
+  "arm1k_e77_dist_notime_phys": {
+   "torque_rmse_per_joint_Nm": [
+    35.664,
+    14.226,
+    16.327,
+    8.163,
+    21.01,
+    14.203,
+    9.15
+   ],
+   "torque_rmse_Nm": 20.87194363766536,
+   "stop_rmse_mm": 101.54900181165668
+  },
+  "arm1k_e77_phys_stopnet": {
+   "torque_rmse_per_joint_Nm": [
+    35.664,
+    14.226,
+    16.327,
+    8.163,
+    21.01,
+    14.203,
+    9.15
+   ],
+   "torque_rmse_Nm": 20.87194363766536,
+   "stop_rmse_mm": 278.88279500507497
+  }
+ },
+ "delay": {
+  "runs": 100,
+  "skipped_no_park": 0,
+  "arm1k_e77_dist_notime_phys": {
+   "torque_rmse_per_joint_Nm": [
+    556.943,
+    101.04,
+    472.767,
+    114.385,
+    403.524,
+    402.398,
+    225.87
+   ],
+   "torque_rmse_Nm": 355.49357939044046,
+   "stop_rmse_mm": 5035.749431095633
+  },
+  "arm1k_e77_phys_stopnet": {
+   "torque_rmse_per_joint_Nm": [
+    556.943,
+    101.04,
+    472.767,
+    114.385,
+    403.524,
+    402.398,
+    225.87
+   ],
+   "torque_rmse_Nm": 355.49357939044046,
+   "stop_rmse_mm": 8210.808097663225
+  }
+ }
+}

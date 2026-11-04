@@ -24,8 +24,13 @@ NATIVE = Path(os.environ.get('NATIVE_ROOT', Path.home() / 'github/comp0245-nativ
 PIXI = next(x for x in [Path.home() / '.local/bin/pixi', Path.home() / '.pixi/bin/pixi'] if x.exists())
 
 
-def one(w, bearing, camera=False):
-    m = json.loads((DATA / f'run_{bearing // 12 - 1}/manifest.json').read_text())
+def one(w, bearing, camera=False, case=None):
+    """One test run. bearing: one of the 25 original bearings, or with case (from export_dot_cases.py) a dot index."""
+    if case is None:
+        m = json.loads((DATA / f'run_{bearing // 12 - 1}/manifest.json').read_text()); split = SPLIT[bearing]
+    else:
+        m = dict(target_position_world_m=case['target'], steps=case['steps'], termination=case['termination'],
+                 final_pre_step_ee_error_m=case['final_mm'] / 1000); split = 'dot'
     target, expert_stop = m['target_position_world_m'], m['steps'] - 1
     sim = subprocess.Popen([str(PIXI), 'run', 'build-clang19/sensor_parking', str(NATIVE / 'assets')], cwd=NATIVE,
                            stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True,
@@ -108,7 +113,7 @@ def one(w, bearing, camera=False):
             state = call(req)
         d = [l['ee_mm'] for l in log]
         at_expert_stop = next((l['ee_mm'] for l in log if l['t'] >= expert_stop / 1000), 1000 * state['ee_distance_m'])
-        return dict(bearing=bearing, split=SPLIT[bearing], expert_termination=m['termination'],
+        return dict(bearing=bearing, split=split, expert_termination=m['termination'],
                     expert_stop_mm=1000 * m['final_pre_step_ee_error_m'], expert_stop_s=expert_stop / 1000,
                     stop_s=stop_t, at_network_stop_mm=next((l['ee_mm'] for l in log if stop_t is not None and l['t'] >= stop_t), None),
                     min_mm=float(closest) if d else None, at_expert_stop_mm=at_expert_stop,
@@ -124,15 +129,20 @@ def one(w, bearing, camera=False):
 if __name__ == '__main__':
     ap = argparse.ArgumentParser(); ap.add_argument('model'); ap.add_argument('--bearings', type=int, nargs='*')
     ap.add_argument('--camera', action='store_true'); ap.add_argument('--jobs', type=int, default=6)
+    ap.add_argument('--cases', help='dots from export_dot_cases.py instead of the 25 bearings'); ap.add_argument('--tag', default='')
     a = ap.parse_args()
     w = dict(np.load(HERE / f'models/{a.model}.npz'))
-    bearings = a.bearings or [b for b in sorted(SPLIT) if SPLIT[b] != 'holdout']
+    cases = json.loads(Path(a.cases).read_text()) if a.cases else None
+    bearings = (a.bearings or [int(k) for k in cases]) if cases else (a.bearings or [b for b in sorted(SPLIT) if SPLIT[b] != 'holdout'])
     from concurrent.futures import ProcessPoolExecutor      # processes: the camera renders in Python
     from functools import partial
     with ProcessPoolExecutor(a.jobs) as pool:
-        rows = list(pool.map(partial(one, w, camera=a.camera), bearings))
+        if cases:
+            rows = list(pool.map(partial(one, w), bearings, [a.camera] * len(bearings), [cases[str(b)] for b in bearings]))
+        else:
+            rows = list(pool.map(partial(one, w, camera=a.camera), bearings))
     out = HERE / 'results'; out.mkdir(exist_ok=True)
-    (out / f"{a.model}{'_camera' if a.camera else ''}.json").write_text(json.dumps(rows))
+    (out / f"{a.model}{'_camera' if a.camera else ''}{a.tag}.json").write_text(json.dumps(rows))
     for r in rows:
         print(r['bearing'], r['split'], 'expert', round(r['expert_stop_mm'], 1), 'mm | stop', r['stop_s'], 'expert stop', r['expert_stop_s'],
               '| min', round(r['min_mm'], 1), 'at expert stop', round(r['at_expert_stop_mm'], 1), 'end', round(r['end_mm'], 1))

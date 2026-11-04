@@ -141,6 +141,22 @@ ARM_ITERATIONS[29] = dict(iteration=29, name='arm-1khz-imu-no-encoders-camera-do
     change='Iteration 23 with an IMU on the end effector instead of the arm encoders: the dot position and the 6 IMU readings, 9 inputs. Tested with the dot from the corner camera and tracker.',
     lesson='Without the arm encoders the fit to the expert data is still good (test torque loss 0.517), for the same reason as iteration 28, but in testing the arm is out of control: it falls a median 350 mm after its closest point, 23% of torques are at the limit and the gripper passes 1.5 m from the dot on 2 bearings. The median closest of 61 mm comes from falling through the dot. The IMU alone cannot replace the encoders.')
 
+_A30 = [('Plan and expected results', '#iteration-30-plan-and-expected-results'), ('results', '#iteration-30-results'),
+        ('by dot height', '#iteration-30-by-dot-height'), ('the expert data under each effect', '#iteration-30-the-expert-data-under-each-effect'),
+        ('reading the results', '#iteration-30-reading-the-results')]
+ARM_ITERATIONS[30] = dict(iteration=30, name='arm-1khz-iteration-23-on-new-dots-camera', file='arm1k_e77_dist_notime_phys', results='arm1k_e77_dist_notime_phys_camera_dots',
+    hz=1000, target='sample', seed=7, epochs=77, bearings='21 training bearings', n_inputs=17, dot_input='camera_tracker',
+    expert_file='results/dot_cases_test_baseline.json',
+    anchors=_A30 + [('3D replay', '#iteration-30-3d-replay-iteration-23-on-the-new-dots')],
+    change="Iteration 23's network, unchanged, tested on the 100 new test dots (1.0 to 2.0 m away, 0.1 to 1.25 m high, all bearings), with the dot from the camera and the expert driving. All simulator effects off.",
+    lesson="On new dots the median closest is 205 mm (57 mm on the 25 original bearings), 15 of 100 within 50 mm. It is 76 mm on dots 0.4 to 0.6 m high and 265 mm at other heights: the closest point falls in a V against the dot's height, lowest near 0.6 m, and does not depend on the dot's distance. The network reaches to about one height whatever the camera says. The shared stop head says stop in the first 0.5 s on 66 of 100 dots.")
+ARM_ITERATIONS['30-stopnet'] = dict(iteration=30, name='arm-1khz-iteration-27-on-new-dots-camera', file='arm1k_e77_phys_stopnet', results='arm1k_e77_phys_stopnet_camera_dots',
+    hz=1000, target='sample', seed=7, epochs=77, bearings='21 training bearings', n_inputs=17, dot_input='camera_tracker',
+    expert_file='results/dot_cases_test_baseline.json',
+    anchors=_A30 + [('3D replay', '#iteration-30-3d-replay-iteration-27-on-the-new-dots')],
+    change="Iteration 27's networks (iteration 23's torques and the separate stop network), unchanged, tested on the 100 new test dots, with the dot from the camera and the expert driving. All simulator effects off.",
+    lesson='On new dots the median closest is 181 mm (54 mm on the 25 original bearings), 21 of 100 within 50 mm. It is 61 mm on dots 0.4 to 0.6 m high and 241 mm at other heights, the same V against height as iteration 23. The separate stop network never says stop in the first 0.5 s. The expert data under each effect: damping, elasticity and inertia leave the expert unchanged (993 to 997 of 1000 dots reached); noise (198), self-collision (73) and the 3 ms delay (0) break it.')
+
 
 def add(iteration):
     import mlflow, pandas as pd
@@ -192,7 +208,7 @@ def add(iteration):
         f"**Inputs.** {len(names)}: " + ('arm encoder angles and speeds (7 each, Kinova Jaco 2 actuator resolutions), ' if enc_on else 'no arm encoders, ') + "the dot in the robot frame (x, y, z, " + ('from the corner camera and tracker, image every 1/30 s' if spec.get('dot_input') == 'camera_tracker' else 'from the simulator for this test') + ')' + (', an IMU on the end effector (3 accelerations and 3 rotation rates in the hand frame, every 1 ms, Bosch BMI088 noise)' if imu_on else '') + (', time since PARK and time since the start' if any(n.startswith('time_') for n in names) else '') + '.', '',
         f"**Outputs.** The 7 arm torques (N m, clipped to ±30) at {rate}, and " + ("time to stop in seconds (clipped at 3 s); stop when it is 0.25 s or less." if stop == 'time_to_stop' else "the distance from the gripper to the dot (clipped at 0.25 m); stop when it is 1 cm or less."), '',
         f"**Training.** 2×64 ReLU network{f', with a {sh}-unit ReLU layer of its own for the stop head' if sh else ''}{stopnet_desc}, {n_params:,} parameters. Loss: torque MSE in {'N m² (no scaling of inputs or torques)' if raw else 'standardised units'}{' (inputs divided by physical sizes: angles by π, speeds by the speed limits, the dot by 1 m)' if scaling == 'physical_inputs' else ''} plus {stop.replace('_', '-')} MSE (weight {sw:g}), each training run counted equally. Adam, lr 0.01, {epochs} full-batch epochs, seed {seed}, trained on {spec['bearings']}. Data: the expert's full runs recorded every 1 ms, from PARK to its stop.", '',
-        '**Test.** In the simulator on 25 bearings. The expert drives and parks, then only the arm network moves the arm.', '',
+        ('**Test.** In the simulator on the 100 new test dots (1.0 to 2.0 m away, 0.1 to 1.25 m high, all bearings; seed 0, collection/native/effects/targets_1000.json), all simulator effects off. The expert drives and parks, then only the arm network moves the arm.' if spec.get('expert_file') else '**Test.** In the simulator on 25 bearings. The expert drives and parks, then only the arm network moves the arm.'), '',
         f"- Closest the gripper gets to the dot: median {m['median_closest_mm']:.0f} mm, best {m['best_closest_mm']:.0f} mm; within 1 cm on {m['closest_within_1cm']} of {len(df)}.",
         f"- At the expert's stop time: median {m['median_at_expert_stop_mm']:.0f} mm from the dot. The gripper went more than 1.5 m from the dot on {m['gripper_past_1_5m']} of {len(df)}.",
         (f"- When the network said stop, the gripper was a median {m['median_at_network_stop_mm']:.0f} mm from the dot." if 'median_at_network_stop_mm' in m else ''),
