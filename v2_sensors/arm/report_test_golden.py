@@ -1,5 +1,6 @@
 """Analysis of the frozen 100-target tests. This module never trains or selects models."""
 import json
+import os
 from pathlib import Path
 import zipfile
 import subprocess
@@ -18,6 +19,8 @@ RESULTS=HERE/'results/golden_11110'
 
 def preview_server():
     """Serve replay files on loopback; Jupyter sandboxes HTML and blocks its image cookies."""
+    if os.environ.get('GOLDEN_REPLAY_BASE_URL'):
+        return os.environ['GOLDEN_REPLAY_BASE_URL'].rstrip('/')
     url='http://127.0.0.1:8899'
     expected=(RESULTS/'completion.json').read_bytes()
     def ready():

@@ -30,7 +30,7 @@ def lazy_player(url, height=810):
 
 ```
 
-    Full dataset: not configured; saved manifests, preview and results remain available
+    Full dataset: /media/nm/Fast Drive/comp0245-camera-11108/shared/COMP0245_Golden_300_2026-11-04
 
 
 ## Dataset and split
@@ -3289,13 +3289,13 @@ display(HTML(f'<a href="{player_url}" target="_blank">Open all 100 test replays 
 ```
 
 
-<div><button onclick="var f=document.getElementById('player875be51c');f.src='http://127.0.0.1:8899/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playera2f7a1e2');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player875be51c" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playera2f7a1e2" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
-<a href="http://127.0.0.1:8899/viewer_golden_seed7.html" target="_blank">Open all 100 test replays in a separate tab</a>
+<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed7.html" target="_blank">Open all 100 test replays in a separate tab</a>
 
 
 #### Iteration 34: reading the result
@@ -5556,13 +5556,13 @@ display(HTML(f'<a href="{player_url}" target="_blank">Open all 100 test replays 
 ```
 
 
-<div><button onclick="var f=document.getElementById('playerc6deb672');f.src='http://127.0.0.1:8899/viewer_golden_seed1.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player8de70b31');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed1.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerc6deb672" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player8de70b31" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
-<a href="http://127.0.0.1:8899/viewer_golden_seed1.html" target="_blank">Open all 100 test replays in a separate tab</a>
+<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed1.html" target="_blank">Open all 100 test replays in a separate tab</a>
 
 
 #### Iteration 35: reading the result
@@ -7823,13 +7823,13 @@ display(HTML(f'<a href="{player_url}" target="_blank">Open all 100 test replays 
 ```
 
 
-<div><button onclick="var f=document.getElementById('playera708957f');f.src='http://127.0.0.1:8899/viewer_golden_seed2.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playerf4c2a9bc');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed2.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playera708957f" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playerf4c2a9bc" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
-<a href="http://127.0.0.1:8899/viewer_golden_seed2.html" target="_blank">Open all 100 test replays in a separate tab</a>
+<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed2.html" target="_blank">Open all 100 test replays in a separate tab</a>
 
 
 #### Iteration 36: reading the result
