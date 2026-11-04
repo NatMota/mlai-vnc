@@ -11370,3 +11370,399 @@ Changing PARK supervision improved parking error on **1/6** targets with PARK in
 The distance-based configuration issued PARK on **6/6** and arm STOP on **6/6**, with **0/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
 
 The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows.
+
+
+## Development check: tenfold PARK-distance loss weight
+
+Plan recorded before training. Test only the first proposed intervention: increase the normalized PARK-distance MSE coefficient from 1 to 10, retaining wheel-command MSE coefficient 1. No near-completion resampling, new head, new input, history, threshold adjustment or training-budget change.
+
+Use the current 11-input no-speed driving model, two 16-unit layers, seed 7, 300 epochs, FP32 and Adam 0.01, with the same 100 training/100 validation runs. Start from the same seeded initialization. Select the checkpoint with minimum weighted total validation loss. Save raw component losses and the weighted total separately; totals with different weights are not directly comparable. Labels remain horizontal distance to the expert PARK base position, clipped at 3 metres and divided by 3. The runtime PARK threshold stays 5 cm.
+
+Freeze the wider arm checkpoint and its separate STOP network from the preceding distance-PARK comparison. Evaluate only six full validation episodes from the normal start: 673, 506, 830, 720, 16, 333. Compare against the six saved weight-1 wider-arm runs. This fixes arm weights while changing only the driving loss coefficient. Camera and driving remain at 30 Hz, arm torque and physics at 1 kHz, with unchanged rendering, sensor models, clipping and deadlines. The test set remains untouched.
+
+Hypothesis: increasing PARK's influence may reduce actual parking error from the weight-1 median of 8.4 cm, without increasing non-parks. Equal or worse median parking error does not support that improvement on this screen. A lower PARK prediction loss alone does not establish better driving. Report raw wheel/PARK validation losses, all six PARK/STOP outcomes, actual parking and gripper distances. No official iteration, MLflow run or validation animation. Preserve the preceding 166 notebook cells.
+
+
+### PARK weight 10 versus weight 1
+
+
+```python
+from pathlib import Path
+import json
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from IPython.display import display, Markdown
+PW=Path('../arm/results/park_weight10');PW_BASE=PW.parent/'park_distance_four'
+pw_config=json.loads((PW/'config.json').read_text());pw_training=json.loads((PW/'training_summary.json').read_text())
+pw_rows=[dict(r,weight=1) for r in json.loads((PW_BASE/'results/summary.json').read_text()) if r['variant']=='wider_arm']
+pw_rows += [dict(r,weight=10) for r in json.loads((PW/'results/summary.json').read_text())]
+pw_data=pd.DataFrame([dict(weight=r['weight'],dot=r['dot'],PARK=r['parked'],STOP=r['stop_s'] is not None,park_cm=100*r['park_error_vs_expert_m'] if r['parked'] else np.nan,closest_mm=r['min_mm'],arm_STOP_mm=r['at_network_stop_mm'],success=r['success']) for r in pw_rows])
+assert len(pw_data)==12 and pw_data.groupby('weight').size().eq(6).all()
+pw_score=pw_data.groupby('weight').agg(attempts=('dot','size'),PARK=('PARK','sum'),STOP=('STOP','sum'),median_park_cm=('park_cm','median'),median_closest_mm=('closest_mm','median'),median_arm_STOP_mm=('arm_STOP_mm','median'),within_10mm=('success','sum'))
+display(pw_score.round(2))
+print('New training/loading %.1f s; six full simulations %.1f s' % (pw_training['elapsed_s'],json.loads((PW/'results/completion.json').read_text())['elapsed_s']))
+print('Seed 7, 300 epochs, 11 sensor inputs, 16/16 hidden layers, 5 cm PARK threshold; exact wider arm and STOP checkpoint unchanged.')
+print('Selected epoch:',pw_training['variants'][0]['selected_epoch'])
+print('Closest distance includes the 0.5-second observation after arm STOP. Missing PARK/STOP values remain in counts, but are omitted from their distance medians.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_arm_STOP_mm</th>
+      <th>within_10mm</th>
+    </tr>
+    <tr>
+      <th>weight</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>8.37</td>
+      <td>104.88</td>
+      <td>214.56</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>11.11</td>
+      <td>113.23</td>
+      <td>220.63</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    New training/loading 11.8 s; six full simulations 22.5 s
+    Seed 7, 300 epochs, 11 sensor inputs, 16/16 hidden layers, 5 cm PARK threshold; exact wider arm and STOP checkpoint unchanged.
+    Selected epoch: 300
+    Closest distance includes the 0.5-second observation after arm STOP. Missing PARK/STOP values remain in counts, but are omitted from their distance medians.
+
+
+#### Raw training and validation losses
+
+
+```python
+pw_hist={weight:pd.DataFrame(json.loads((root/'models/no_speed11/driving_seed7_history.json').read_text())) for weight,root in [(1,PW_BASE),(10,PW)]}
+fig,axes=plt.subplots(1,2,figsize=(12,3.5))
+for weight,h in pw_hist.items():
+    for ax,field in zip(axes,['command','aux']):
+        ax.plot(h.epoch,h['train_'+field],label=f'weight {weight}: training')
+        ax.plot(h.epoch,h['val_'+field],linestyle='--',label=f'weight {weight}: validation')
+axes[0].set(title='Wheel-command MSE',ylabel='(rad/s) squared');axes[1].set(title='Raw PARK-distance MSE',ylabel='Squared error after dividing metres by 3')
+for ax in axes:ax.set(xlabel='Epoch',yscale='log');ax.grid(alpha=.2);ax.legend(fontsize=7)
+fig.tight_layout();plt.show()
+pw_losses=[]
+for weight,root in [(1,PW_BASE),(10,PW)]:
+    m=json.loads((root/'models/no_speed11/driving_seed7_summary.json').read_text());r=pw_hist[weight].set_index('epoch').loc[m['selected_epoch']]
+    pw_losses.append(dict(weight=weight,epoch=m['selected_epoch'],val_wheel_MSE=r.val_command,val_raw_PARK_MSE=r.val_aux,val_weighted_total=r.val_total))
+display(pd.DataFrame(pw_losses))
+print('Raw component losses are comparable; total loss has a different coefficient and is not directly comparable across weights.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_170_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>weight</th>
+      <th>epoch</th>
+      <th>val_wheel_MSE</th>
+      <th>val_raw_PARK_MSE</th>
+      <th>val_weighted_total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>297</td>
+      <td>0.386144</td>
+      <td>0.002990</td>
+      <td>0.389133</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>10</td>
+      <td>300</td>
+      <td>0.396763</td>
+      <td>0.000919</td>
+      <td>0.405955</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Raw component losses are comparable; total loss has a different coefficient and is not directly comparable across weights.
+
+
+#### Paired outcomes for the same six targets
+
+
+```python
+display(pw_data.pivot(index='dot',columns='weight',values=['PARK','STOP','park_cm','closest_mm','arm_STOP_mm']).round(2))
+pw_pairs=pw_data.pivot(index='dot',columns='weight',values='park_cm').dropna()
+print('Parking error improved on %d/%d targets with PARK in both conditions.' % ((pw_pairs[10]<pw_pairs[1]).sum(),len(pw_pairs)))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">PARK</th>
+      <th colspan="2" halign="left">STOP</th>
+      <th colspan="2" halign="left">park_cm</th>
+      <th colspan="2" halign="left">closest_mm</th>
+      <th colspan="2" halign="left">arm_STOP_mm</th>
+    </tr>
+    <tr>
+      <th>weight</th>
+      <th>1</th>
+      <th>10</th>
+      <th>1</th>
+      <th>10</th>
+      <th>1</th>
+      <th>10</th>
+      <th>1</th>
+      <th>10</th>
+      <th>1</th>
+      <th>10</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>9.770025</td>
+      <td>11.909654</td>
+      <td>101.775705</td>
+      <td>166.727325</td>
+      <td>304.212378</td>
+      <td>358.559072</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>27.263601</td>
+      <td>37.683314</td>
+      <td>29.0385</td>
+      <td>99.615567</td>
+      <td>37.603724</td>
+      <td>101.839256</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>5.486256</td>
+      <td>9.487884</td>
+      <td>218.439542</td>
+      <td>361.7784</td>
+      <td>283.366232</td>
+      <td>454.042391</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>1.216561</td>
+      <td>6.579514</td>
+      <td>386.214906</td>
+      <td>42.549489</td>
+      <td>391.789289</td>
+      <td>276.708852</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>12.539656</td>
+      <td>19.27331</td>
+      <td>107.976842</td>
+      <td>126.841199</td>
+      <td>145.76135</td>
+      <td>164.552413</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>6.962757</td>
+      <td>10.302678</td>
+      <td>46.782024</td>
+      <td>60.660075</td>
+      <td>55.240336</td>
+      <td>78.738578</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Parking error improved on 0/6 targets with PARK in both conditions.
+
+
+#### PARK predictions versus actual remaining distance
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pw_config['validation_cases']):
+    r=json.loads((PW/'results'/f'wider_arm_dot{dot}.json').read_text())
+    f=[f for f in r['frames'] if f.get('driving_park_distance_m') is not None]
+    ax.plot([x['time_s'] for x in f],[100*np.linalg.norm(np.array(x['base'][:2])-r['expert_park_base_xy']) for x in f],label='Actual distance')
+    ax.plot([x['time_s'] for x in f],[100*x['driving_park_distance_m'] for x in f],label='Predicted distance')
+    ax.axhline(5,color='grey',linestyle='--',label='5 cm threshold')
+    if r['park_s'] is not None:ax.axvline(r['park_s'],color='black',linestyle=':',label='PARK')
+    ax.set(title=f'Target {dot}',xlabel='Seconds from start',ylabel='Distance (cm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_174_0.png)
+
+
+
+#### Reaching with the unchanged arm checkpoint
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pw_config['validation_cases']):
+    r=json.loads((PW/'results'/f'wider_arm_dot{dot}.json').read_text());d=pd.DataFrame(r['log'])
+    if not len(d):ax.text(.5,.5,'No PARK / no reaching',ha='center',transform=ax.transAxes);ax.set_title(f'Target {dot}');ax.set_axis_off();continue
+    ax.plot(d.t-r['park_s'],d.ee_mm,label='Actual gripper-to-dot distance')
+    ax.plot(d.t-r['park_s'],1000*d.ttp_s,label='Frozen arm STOP prediction')
+    if r['stop_s'] is not None:ax.axvline(r['stop_s']-r['park_s'],color='black',linestyle=':',label='Arm STOP')
+    ax.axhline(10,color='grey',linestyle='--');ax.set(title=f'Target {dot}',xlabel='Seconds after PARK',ylabel='Distance (mm)');ax.grid(alpha=.2)
+for ax in axes.flat:
+    if ax.get_legend_handles_labels()[0]:ax.legend(fontsize=7);break
+fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_176_0.png)
+
+
+
+#### Reading this single-change experiment
+
+
+```python
+b=pw_score.loc[1];c=pw_score.loc[10]
+display(Markdown(f"""Increasing the PARK-distance coefficient from 1 to 10 changed median parking error from **{b.median_park_cm:.1f} to {c.median_park_cm:.1f} cm**. The new model issued PARK in **{int(c.PARK)}/6** and arm STOP in **{int(c.STOP)}/6** runs. Median closest reach changed from **{b.median_closest_mm:.1f} to {c.median_closest_mm:.1f} mm**, and median distance at arm STOP from **{b.median_arm_STOP_mm:.1f} to {c.median_arm_STOP_mm:.1f} mm**. Success within 10 mm at arm STOP was **{int(c.within_10mm)}/6**.
+
+Only the driving loss coefficient changed. The shared trunk means this can alter wheel commands as well as PARK predictions. The arm weights stayed identical; changes in reaching reflect a different handover and subsequent trajectory. Neither the 5 cm threshold nor the training budget was adjusted after these results. The six cases are initially visible validation targets and use one seed, so this is a development comparison, not a generalisation result. No official MLflow run or reserved-test evaluation was created."""))
+```
+
+
+Increasing the PARK-distance coefficient from 1 to 10 changed median parking error from **8.4 to 11.1 cm**. The new model issued PARK in **6/6** and arm STOP in **6/6** runs. Median closest reach changed from **104.9 to 113.2 mm**, and median distance at arm STOP from **214.6 to 220.6 mm**. Success within 10 mm at arm STOP was **0/6**.
+
+Only the driving loss coefficient changed. The shared trunk means this can alter wheel commands as well as PARK predictions. The arm weights stayed identical; changes in reaching reflect a different handover and subsequent trajectory. Neither the 5 cm threshold nor the training budget was adjusted after these results. The six cases are initially visible validation targets and use one seed, so this is a development comparison, not a generalisation result. No official MLflow run or reserved-test evaluation was created.

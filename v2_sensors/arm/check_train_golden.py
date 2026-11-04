@@ -28,11 +28,24 @@ def main():
     for a,b in zip(full.parameters(),chunked.parameters()):
         torch.testing.assert_close(a,b,atol=1e-6,rtol=1e-5)
 
+    # Weighting the auxiliary term must change both full/chunked gradients exactly,
+    # while the reported component losses stay unweighted for comparison.
+    weighted, manual = Driving(), Driving()
+    manual.load_state_dict(copy.deepcopy(weighted.state_dict()))
+    raw = objective(weighted, data, 'driving', 3, backward=True, aux_weight=10.)
+    command, auxiliary = manual(data[0])
+    first = (data[3] * (command-data[1]).square().mean(1)).sum()
+    second = (data[3] * (auxiliary-data[2]).square()).sum()
+    (first + 10*second).backward()
+    np.testing.assert_allclose(raw, [first.detach().item(),second.detach().item()],atol=1e-6)
+    for a,b in zip(weighted.parameters(),manual.parameters()):
+        torch.testing.assert_close(a.grad,b.grad,atol=1e-6,rtol=1e-5)
+
     q=np.random.default_rng(7).normal(0,.01,(50,7))
     got=arm_readings(q)
     want=sensors.ArmEncoders.readings_for_run(q,.001)
     for a,b in zip(got,want): np.testing.assert_array_equal(a,b)
-    print('PASS: equal run weighting, one full-batch update across chunks, runtime encoder parity')
+    print('PASS: equal run weighting, full-batch/chunk gradients, 10x auxiliary weighting, runtime encoder parity')
 
 
 if __name__ == '__main__': main()

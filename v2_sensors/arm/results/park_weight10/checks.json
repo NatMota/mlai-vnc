@@ -1,0 +1,9 @@
+{
+  "epoch_zero_raw_losses_identical": true,
+  "weighted_total_verified_all_epochs": true,
+  "arm_checkpoint_exact": true,
+  "source_hashes_match": true,
+  "weighted_gradient_check": "passed",
+  "simulation_attempts": 6,
+  "test_trajectories_opened": 0
+}

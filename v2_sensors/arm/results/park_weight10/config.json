@@ -1,0 +1,81 @@
+{
+  "seed": 7,
+  "driving_epochs": 300,
+  "lr": 0.01,
+  "dtype": "float32",
+  "chunk": 32768,
+  "validation_cases": [
+    673,
+    506,
+    830,
+    720,
+    16,
+    333
+  ],
+  "cases": [
+    {
+      "dot": 673,
+      "range_m": 1.2746534894794994,
+      "height_m": 0.2348753097311087,
+      "initially_visible": true
+    },
+    {
+      "dot": 506,
+      "range_m": 1.7874425114599553,
+      "height_m": 0.25782178195547145,
+      "initially_visible": true
+    },
+    {
+      "dot": 830,
+      "range_m": 1.3522775567422742,
+      "height_m": 0.8960560734670561,
+      "initially_visible": true
+    },
+    {
+      "dot": 720,
+      "range_m": 1.7345368403244252,
+      "height_m": 0.7915375931659664,
+      "initially_visible": true
+    },
+    {
+      "dot": 16,
+      "range_m": 1.1487338924706232,
+      "height_m": 1.1272227094062415,
+      "initially_visible": true
+    },
+    {
+      "dot": 333,
+      "range_m": 1.5516410473905111,
+      "height_m": 1.2117764064657652,
+      "initially_visible": true
+    }
+  ],
+  "split": "val",
+  "lineup": [
+    [
+      "wider_arm",
+      "no_speed11",
+      "wider"
+    ]
+  ],
+  "park_target": "distance",
+  "park_distance_scale_m": 3.0,
+  "park_distance_threshold_m": 0.05,
+  "park_weight": 10.0,
+  "loss": "wheel MSE + 10 * normalized PARK-distance MSE",
+  "label": "2D distance to expert base position at parking_step; retain measured post-PARK drift",
+  "arm_sha256": {
+    "wider": "f348c69f9d4d60bdd42b0702fb78d050dcd5ae6749f7f6792ab1da60f3bbd83a"
+  },
+  "arm_retraining": false,
+  "arm_note": "Reuse unchanged original, 1200-epoch 64/64 and 1200-epoch 128/128 torque checkpoints; same separate STOP network",
+  "checkpoint_selection": "minimum total offline validation loss; earliest tie",
+  "test_trajectories_opened": 0,
+  "source_sha256": {
+    "train_golden.py": "259b411a04062e6d764713e7bb17a62094c9bcd6f4518059696bd020effe3718",
+    "parking_target.py": "279361bca7adc2b434cb193c2d01e1ca3878e9d61ced8aaaab424c94dc1a88c3",
+    "park_distance_batch.py": "7b9468b37e5e66863f9d6c173c66ee3aeca5279217e2bd98682d98ce2f784e74",
+    "full_run.py": "e10a2c065cedc527bd6a7a80d04ead562e32ce153fd62c88ecb40f037968007d"
+  },
+  "policy_sha256": "906d7b2068a1eebdad84171364dcdbc02e9ddcdb89ad53a920170feac6e93c50"
+}

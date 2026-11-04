@@ -164,7 +164,7 @@ def tensors(runs, kind, scale, device):
     return [torch.as_tensor(a, dtype=torch.float32, device=device) for a in ((x - xm) / xs, (y - ym) / ys, p, w)]
 
 
-def objective(model, data, kind, chunk, backward=False):
+def objective(model, data, kind, chunk, backward=False, aux_weight=1.):
     totals = torch.zeros(2, device=data[0].device)
     for begin in range(0, len(data[0]), chunk):
         x, y, p, w = [a[begin:begin + chunk] for a in data]
@@ -176,7 +176,7 @@ def objective(model, data, kind, chunk, backward=False):
             first = (w * (commands - y).square().mean(1)).sum()
             second = (w * (auxiliary - p).square()).sum()
         if backward:
-            (first + second).backward()
+            (first + aux_weight * second).backward()
         totals += torch.stack([first.detach(), second.detach()])
     return totals.cpu().numpy()
 
@@ -196,6 +196,9 @@ def infer_export(w, x, kind):
 
 def train_one(records, kind, seed, args):
     distance_park = kind == 'driving' and getattr(args, 'park_target', 'time') == 'distance'
+    aux_weight = float(getattr(args, 'park_weight', 1.)) if kind == 'driving' else 1.
+    if not np.isfinite(aux_weight) or aux_weight <= 0:
+        raise ValueError('PARK loss weight must be finite and positive')
     torch.manual_seed(seed)
     x, y, _, _ = arrays(records['train'], kind)
     xm, xs = np.zeros(x.shape[1], np.float32), np.ones(x.shape[1], np.float32)
@@ -225,13 +228,13 @@ def train_one(records, kind, seed, args):
         # Epoch zero is before any optimizer update. Each later record is after one update.
         if epoch:
             opt.zero_grad(set_to_none=True)
-            objective(model, train, kind, args.chunk, backward=True)
+            objective(model, train, kind, args.chunk, backward=True, aux_weight=aux_weight)
             opt.step()
         with torch.no_grad():
             tr = objective(model, train, kind, args.chunk)
             va = objective(model, val, kind, args.chunk)
-        row = dict(epoch=epoch, train_command=float(tr[0]), train_aux=float(tr[1]), train_total=float(sum(tr)),
-                   val_command=float(va[0]), val_aux=float(va[1]), val_total=float(sum(va)),
+        row = dict(epoch=epoch, train_command=float(tr[0]), train_aux=float(tr[1]), train_total=float(tr[0]+aux_weight*tr[1]),
+                   val_command=float(va[0]), val_aux=float(va[1]), val_total=float(va[0]+aux_weight*va[1]),
                    seconds=time.monotonic() - tick)
         history.append(row)
         if not np.isfinite(list(row.values())).all():
@@ -274,12 +277,13 @@ def train_one(records, kind, seed, args):
             diff = max(float(np.max(np.abs(a-b))) for a,b in zip(saved, expected))
         checks.append(dict(split=split, max_abs_difference=diff, atol=1e-4, rtol=1e-5))
     meta = dict(kind=kind, seed=seed, selected_epoch=best['epoch'], selected_val_loss=best['loss'],
+                auxiliary_loss_weight=aux_weight,
                 elapsed_s=time.monotonic()-started, export_checks=checks, train_rows=len(train[0]), val_rows=len(val[0]),
                 loss_terms=['distance_mse'] if kind=='stop' else ['wheel_mse', 'park_distance_mse' if distance_park else 'time_to_park_mse'] if kind=='driving' else ['standardized_torque_mse','auxiliary_distance_mse'],
                 run_weighting='equal mean per run', checkpoint_rule='minimum validation total, earliest tie',
                 input_mean=xm.tolist(), input_scale=xs.tolist(), output_mean=ym.tolist(), output_scale=ys.tolist())
     w.update(info_arm_history_ms=np.array([0, 50, 100] if kind == 'torque' and len(xm) == 51 else [0]),
-             info_seed=np.int64(seed), info_epochs=np.int64(best['epoch']), info_encoders=np.int64(1),
+             info_seed=np.int64(seed), info_epochs=np.int64(best['epoch']), info_encoders=np.int64(1), info_auxiliary_loss_weight=np.float32(aux_weight),
              info_time=np.int64(0), info_imu=np.int64(0), info_dot_input='camera_tracker',
              info_inputs=np.int64(len(xm)), info_camera_height=np.int64(kind == 'driving' and len(xm) in (11, 17)), info_wheel_velocity=np.int64(len(xm) != 11), info_target='sample', info_hz=np.int64(30 if kind=='driving' else 1000),
              info_input_mean=xm, info_input_std=xs,

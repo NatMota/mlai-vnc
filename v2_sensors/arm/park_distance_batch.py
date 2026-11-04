@@ -50,12 +50,15 @@ def train(a):
     a.out.mkdir(parents=True)
     start = time.monotonic(); torch.set_num_threads(4)
     previous = json.loads((a.prior_root/'driving_height_no_speed11/config.json').read_text())
+    lineup = [row for row in LINEUP if a.configuration is None or row[0] == a.configuration]
     arm_sources = {'original': a.prior_root/'driving_height_no_speed11/models/reaching_seed7.npz',
                    **{n: a.prior_root/f'arm_cumulative/models/{n}/reaching_seed7.npz' for n in ('longer','wider')}}
+    arm_sources = {n:p for n,p in arm_sources.items() if n in {row[2] for row in lineup}}
     cfg = dict(seed=7, driving_epochs=300, lr=.01, dtype='float32', chunk=32768,
                validation_cases=previous['validation_cases'], cases=previous['cases'], split='val',
-               lineup=LINEUP, park_target='distance', park_distance_scale_m=DISTANCE_SCALE_M,
-               park_distance_threshold_m=PARK_THRESHOLD_M, loss='wheel MSE + normalized PARK-distance MSE, weights 1 and 1',
+               lineup=lineup, park_target='distance', park_distance_scale_m=DISTANCE_SCALE_M,
+               park_distance_threshold_m=PARK_THRESHOLD_M, park_weight=a.park_weight,
+               loss=f'wheel MSE + {a.park_weight:g} * normalized PARK-distance MSE',
                label='2D distance to expert base position at parking_step; retain measured post-PARK drift',
                arm_sha256={n:sha(p) for n,p in arm_sources.items()},
                arm_retraining=False, arm_note='Reuse unchanged original, 1200-epoch 64/64 and 1200-epoch 128/128 torque checkpoints; same separate STOP network',
@@ -69,11 +72,12 @@ def train(a):
     save(a.out/'data_audit.json',audit)
     summaries=[]
     for name,remove in [('height17',False),('no_speed11',True)]:
+        if name not in {row[1] for row in lineup}: continue
         data=records
         if remove:
             data={split:[dict(r,drive=(r['drive'][0][:,sensors.DRIVING_NO_SPEED_COLS],*r['drive'][1:])) for r in rs] for split,rs in records.items()}
         dest=a.out/'models'/name; dest.mkdir(parents=True)
-        args=argparse.Namespace(out=dest,device=a.device,epochs=300,stop_epochs=600,chunk=32768,park_target='distance')
+        args=argparse.Namespace(out=dest,device=a.device,epochs=300,stop_epochs=600,chunk=32768,park_target='distance',park_weight=a.park_weight)
         _,meta=train_one(data,'driving',7,args)
         summaries.append(dict(variant=name,**meta))
         save(a.out/'training_summary.json',dict(variants=summaries,elapsed_s=time.monotonic()-start,torch=torch.__version__,numpy=np.__version__))
@@ -97,7 +101,7 @@ def evaluate(a):
     if out.exists(): raise FileExistsError(out)
     out.mkdir()
     for name,digest in cfg['arm_sha256'].items():assert sha(a.out/'arms'/f'{name}.npz')==digest
-    drives={n:dict(np.load(a.out/'models'/n/'driving_seed7.npz',allow_pickle=False)) for n in ('height17','no_speed11')}
+    drives={n:dict(np.load(a.out/'models'/n/'driving_seed7.npz',allow_pickle=False)) for n in dict.fromkeys(row[1] for row in cfg['lineup'])}
     arms={n:dict(np.load(a.out/'arms'/f'{n}.npz',allow_pickle=False)) for n in cfg['arm_sha256']}
     for w in drives.values():
         assert 'ttp_clip' not in w and str(w['info_stop_target'])=='distance'
@@ -107,14 +111,14 @@ def evaluate(a):
     jobs=[]
     for dot in cfg['validation_cases']:
         case,_=case_for(a.data,dot,'val')
-        for name,drive,arm in LINEUP:jobs.append((name,dot,case,drives[drive],arms[arm]))
+        for name,drive,arm in cfg['lineup']:jobs.append((name,dot,case,drives[drive],arms[arm]))
     rows=[]; start=time.monotonic()
     with ProcessPoolExecutor(a.jobs) as pool:
         for r in pool.map(attempt,jobs):
             save(out/f"{r['variant']}_dot{r['dot']}.json",r)
             rows.append({k:v for k,v in r.items() if k not in ('frames','log')})
             save(out/'summary.json',rows)
-            print(f"{len(rows)}/24 {r['variant']} dot{r['dot']}: PARK={r['parked']}, park={100*r['park_error_vs_expert_m']:.1f} cm, closest={r['min_mm']}, STOP={r['at_network_stop_mm']}",flush=True)
+            print(f"{len(rows)}/{len(jobs)} {r['variant']} dot{r['dot']}: PARK={r['parked']}, park={100*r['park_error_vs_expert_m']:.1f} cm, closest={r['min_mm']}, STOP={r['at_network_stop_mm']}",flush=True)
     save(out/'completion.json',dict(attempts=len(rows),elapsed_s=time.monotonic()-start))
 
 
@@ -123,6 +127,8 @@ if __name__=='__main__':
     p.add_argument('stage',choices=['check','train','evaluate'])
     for key in ('data','prior-root','out'):p.add_argument('--'+key,type=Path)
     p.add_argument('--device',choices=['cpu','cuda'],default='cuda');p.add_argument('--jobs',type=int,default=3)
+    p.add_argument('--park-weight',type=float,default=1.)
+    p.add_argument('--configuration',choices=[r[0] for r in LINEUP])
     args=p.parse_args()
     if args.stage=='check':check()
     else:
