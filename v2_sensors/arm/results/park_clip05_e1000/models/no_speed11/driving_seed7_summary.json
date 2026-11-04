@@ -1,0 +1,72 @@
+{
+  "kind": "driving",
+  "seed": 7,
+  "selected_epoch": 993,
+  "selected_val_loss": 0.2994251847267151,
+  "auxiliary_loss_weight": 1.0,
+  "elapsed_s": 4.465844284743071,
+  "export_checks": [
+    {
+      "split": "train",
+      "max_abs_difference": 4.0531158447265625e-06,
+      "atol": 0.0001,
+      "rtol": 1e-05
+    },
+    {
+      "split": "val",
+      "max_abs_difference": 6.9141387939453125e-06,
+      "atol": 0.0001,
+      "rtol": 1e-05
+    }
+  ],
+  "train_rows": 25928,
+  "val_rows": 26428,
+  "loss_terms": [
+    "wheel_mse",
+    "park_distance_mse"
+  ],
+  "run_weighting": "equal mean per run",
+  "checkpoint_rule": "minimum validation total, earliest tie",
+  "input_mean": [
+    4.473457336425781,
+    4.765933036804199,
+    4.756045818328857,
+    4.4613189697265625,
+    4.614188194274902,
+    -0.29360100626945496,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "input_scale": [
+    5.8376078605651855,
+    5.71417760848999,
+    5.746085166931152,
+    5.869965076446533,
+    3.5997815132141113,
+    9.075634956359863,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "output_mean": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "output_scale": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "park_target": "distance",
+  "park_distance_scale_m": 0.5,
+  "park_distance_threshold_m": 0.05,
+  "label": "horizontal Euclidean distance to recorded expert PARK base position"
+}

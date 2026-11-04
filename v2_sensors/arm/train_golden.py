@@ -46,7 +46,7 @@ def arm_readings(q):
     return angles, speed
 
 
-def load_data(root, driving_height=False, park_target='time'):
+def load_data(root, driving_height=False, park_target='time', park_scale_m=DISTANCE_SCALE_M):
     if park_target not in ('time', 'distance'):
         raise ValueError('PARK target must be time or distance')
     splits = json.loads((root / 'split.json').read_text())
@@ -105,9 +105,9 @@ def load_data(root, driving_height=False, park_target='time'):
                 wheel[parked] = 0
                 ttp = np.clip((park - drive_steps) / 1000, 0, 3) / 3
                 if park_target == 'distance':
-                    ttp = parking_distance(a['base_position'], park, drive_steps)
-                    row.update(park_distance_max_m=float(ttp.max() * DISTANCE_SCALE_M),
-                               parked_distance_max_m=float(ttp[parked].max(initial=0) * DISTANCE_SCALE_M))
+                    ttp = parking_distance(a['base_position'], park, drive_steps, park_scale_m)
+                    row.update(park_distance_max_m=float(ttp.max() * park_scale_m),
+                               parked_distance_max_m=float(ttp[parked].max(initial=0) * park_scale_m))
                 astep = np.arange(park, n)
                 angles, speed = arm_readings(a['q'][:, 4:11])
                 acam = camera_inputs(split, dot, astep, root=root / 'camera')
@@ -133,7 +133,7 @@ def load_data(root, driving_height=False, park_target='time'):
         raise ValueError('Empty training/validation set')
     return records, dict(split_sha256=sha(root / 'split.json'), manifest_sha256=sha(root / 'manifest.json'),
                          source_revision=manifest['code_revision'], rows=audit,
-                         park_target=park_target,
+                         park_target=park_target, park_distance_scale_m=park_scale_m,
                          distance_label='hand_distance_expert: aligned pre-step kinematics',
                          wheel_speed_dt_s=sensors.DT,
                          wheel_timing_note='Saved sensor features use the runtime 1/30 s denominator at rounded frame steps; no rescaling.',
@@ -196,6 +196,9 @@ def infer_export(w, x, kind):
 
 def train_one(records, kind, seed, args):
     distance_park = kind == 'driving' and getattr(args, 'park_target', 'time') == 'distance'
+    park_scale_m = float(getattr(args, 'park_scale_m', DISTANCE_SCALE_M))
+    if not np.isfinite(park_scale_m) or park_scale_m <= 0:
+        raise ValueError('Distance scale must be finite and positive')
     aux_weight = float(getattr(args, 'park_weight', 1.)) if kind == 'driving' else 1.
     if not np.isfinite(aux_weight) or aux_weight <= 0:
         raise ValueError('PARK loss weight must be finite and positive')
@@ -292,9 +295,9 @@ def train_one(records, kind, seed, args):
              ttp_clip=np.float32(3 if kind=='driving' else .25), ttp_thresh=np.float32(.25 if kind=='driving' else .01))
     if distance_park:
         w.pop('ttp_clip'); w.pop('ttp_thresh')
-        w.update(info_stop_target='distance', park_distance_scale_m=np.float32(DISTANCE_SCALE_M),
+        w.update(info_stop_target='distance', park_distance_scale_m=np.float32(park_scale_m),
                  park_distance_threshold_m=np.float32(PARK_THRESHOLD_M))
-        meta.update(park_target='distance', park_distance_scale_m=DISTANCE_SCALE_M,
+        meta.update(park_target='distance', park_distance_scale_m=park_scale_m,
                     park_distance_threshold_m=PARK_THRESHOLD_M,
                     label='horizontal Euclidean distance to recorded expert PARK base position')
     np.savez(prefix.with_suffix('.npz'), **w)

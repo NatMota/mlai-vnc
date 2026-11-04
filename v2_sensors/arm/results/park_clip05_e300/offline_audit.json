@@ -1,0 +1,3250 @@
+{
+  "summary": [
+    {
+      "model": "park_distance_four",
+      "runs": 100,
+      "ever_trigger": 94,
+      "within_5cm": 38,
+      "over_10cm": 17,
+      "median_actual_at_trigger_m": 0.05977046489715576,
+      "mean_run_near_mae_m": 0.05669319580309093
+    },
+    {
+      "model": "park_weight10",
+      "runs": 100,
+      "ever_trigger": 98,
+      "within_5cm": 62,
+      "over_10cm": 17,
+      "median_actual_at_trigger_m": 0.012974152341485023,
+      "mean_run_near_mae_m": 0.04647350089624524
+    },
+    {
+      "model": "park_clip05_e300",
+      "runs": 100,
+      "ever_trigger": 98,
+      "within_5cm": 60,
+      "over_10cm": 8,
+      "median_actual_at_trigger_m": 0.03415231592953205,
+      "mean_run_near_mae_m": 0.03139486045576632
+    },
+    {
+      "model": "park_clip05_e1000",
+      "runs": 100,
+      "ever_trigger": 100,
+      "within_5cm": 37,
+      "over_10cm": 12,
+      "median_actual_at_trigger_m": 0.06619063019752502,
+      "mean_run_near_mae_m": 0.018247904796153305
+    }
+  ],
+  "per_run": [
+    {
+      "model": "park_distance_four",
+      "dot": 6,
+      "actual_at_trigger_m": 0.14299984276294708,
+      "predicted_at_trigger_m": 0.04390905797481537,
+      "first_trigger_s": 5.1,
+      "near_mae_m": 0.036850329488515854
+    },
+    {
+      "model": "park_weight10",
+      "dot": 6,
+      "actual_at_trigger_m": 0.048136208206415176,
+      "predicted_at_trigger_m": 0.0497477725148201,
+      "first_trigger_s": 5.8,
+      "near_mae_m": 0.017309771850705147
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 6,
+      "actual_at_trigger_m": 0.0246140006929636,
+      "predicted_at_trigger_m": 0.03649267554283142,
+      "first_trigger_s": 6.033,
+      "near_mae_m": 0.0207622479647398
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 6,
+      "actual_at_trigger_m": 0.09507516026496887,
+      "predicted_at_trigger_m": 0.04980941861867905,
+      "first_trigger_s": 5.4,
+      "near_mae_m": 0.022609496489167213
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 16,
+      "actual_at_trigger_m": 0.09878779947757721,
+      "predicted_at_trigger_m": 0.042784713208675385,
+      "first_trigger_s": 3.0,
+      "near_mae_m": 0.02433822490274906
+    },
+    {
+      "model": "park_weight10",
+      "dot": 16,
+      "actual_at_trigger_m": 0.08090339601039886,
+      "predicted_at_trigger_m": 0.048448216170072556,
+      "first_trigger_s": 3.133,
+      "near_mae_m": 0.015039327554404736
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 16,
+      "actual_at_trigger_m": 0.03291923180222511,
+      "predicted_at_trigger_m": 0.0497402548789978,
+      "first_trigger_s": 3.567,
+      "near_mae_m": 0.020706309005618095
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 16,
+      "actual_at_trigger_m": 0.08493860810995102,
+      "predicted_at_trigger_m": 0.04289359971880913,
+      "first_trigger_s": 3.1,
+      "near_mae_m": 0.016370398923754692
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 23,
+      "actual_at_trigger_m": 0.3353688418865204,
+      "predicted_at_trigger_m": 0.04456351697444916,
+      "first_trigger_s": 6.8,
+      "near_mae_m": 0.1294972002506256
+    },
+    {
+      "model": "park_weight10",
+      "dot": 23,
+      "actual_at_trigger_m": 0.2682862877845764,
+      "predicted_at_trigger_m": 0.04714196175336838,
+      "first_trigger_s": 7.067,
+      "near_mae_m": 0.01597338542342186
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 23,
+      "actual_at_trigger_m": 0.25167348980903625,
+      "predicted_at_trigger_m": 0.04840201139450073,
+      "first_trigger_s": 7.133,
+      "near_mae_m": 0.033782120794057846
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 23,
+      "actual_at_trigger_m": 0.2682862877845764,
+      "predicted_at_trigger_m": 0.04366965591907501,
+      "first_trigger_s": 7.067,
+      "near_mae_m": 0.013585939072072506
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 45,
+      "actual_at_trigger_m": null,
+      "predicted_at_trigger_m": null,
+      "first_trigger_s": null,
+      "near_mae_m": 0.10548236221075058
+    },
+    {
+      "model": "park_weight10",
+      "dot": 45,
+      "actual_at_trigger_m": 0.007530365604907274,
+      "predicted_at_trigger_m": 0.048506755381822586,
+      "first_trigger_s": 4.467,
+      "near_mae_m": 0.027112387120723724
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 45,
+      "actual_at_trigger_m": 0.02859911136329174,
+      "predicted_at_trigger_m": 0.04976434260606766,
+      "first_trigger_s": 4.233,
+      "near_mae_m": 0.01608511246740818
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 45,
+      "actual_at_trigger_m": 0.01924068108201027,
+      "predicted_at_trigger_m": 0.043205391615629196,
+      "first_trigger_s": 4.333,
+      "near_mae_m": 0.022517098113894463
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 55,
+      "actual_at_trigger_m": 0.1240512803196907,
+      "predicted_at_trigger_m": 0.03880295902490616,
+      "first_trigger_s": 5.233,
+      "near_mae_m": 0.12345677614212036
+    },
+    {
+      "model": "park_weight10",
+      "dot": 55,
+      "actual_at_trigger_m": 0.18431158363819122,
+      "predicted_at_trigger_m": 0.04862920939922333,
+      "first_trigger_s": 4.967,
+      "near_mae_m": 0.007829454727470875
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 55,
+      "actual_at_trigger_m": 0.10526222735643387,
+      "predicted_at_trigger_m": 0.04313027113676071,
+      "first_trigger_s": 5.333,
+      "near_mae_m": 0.0551622100174427
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 55,
+      "actual_at_trigger_m": 0.09930115938186646,
+      "predicted_at_trigger_m": 0.04354934021830559,
+      "first_trigger_s": 5.367,
+      "near_mae_m": 0.014123629778623581
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 80,
+      "actual_at_trigger_m": 0.0503196194767952,
+      "predicted_at_trigger_m": 0.048458971083164215,
+      "first_trigger_s": 5.367,
+      "near_mae_m": 0.011296302080154419
+    },
+    {
+      "model": "park_weight10",
+      "dot": 80,
+      "actual_at_trigger_m": 0.03141232952475548,
+      "predicted_at_trigger_m": 0.048306770622730255,
+      "first_trigger_s": 5.533,
+      "near_mae_m": 0.02252206765115261
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 80,
+      "actual_at_trigger_m": 0.0017514709616079926,
+      "predicted_at_trigger_m": 0.048610344529151917,
+      "first_trigger_s": 5.967,
+      "near_mae_m": 0.05231364443898201
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 80,
+      "actual_at_trigger_m": 0.021440405398607254,
+      "predicted_at_trigger_m": 0.04341992735862732,
+      "first_trigger_s": 5.633,
+      "near_mae_m": 0.01711973361670971
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 86,
+      "actual_at_trigger_m": 0.07991479337215424,
+      "predicted_at_trigger_m": 0.042885150760412216,
+      "first_trigger_s": 4.533,
+      "near_mae_m": 0.028156278654932976
+    },
+    {
+      "model": "park_weight10",
+      "dot": 86,
+      "actual_at_trigger_m": 0.07991479337215424,
+      "predicted_at_trigger_m": 0.04812847822904587,
+      "first_trigger_s": 4.533,
+      "near_mae_m": 0.0061782244592905045
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 86,
+      "actual_at_trigger_m": 0.0659443587064743,
+      "predicted_at_trigger_m": 0.049503304064273834,
+      "first_trigger_s": 4.633,
+      "near_mae_m": 0.009818058460950851
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 86,
+      "actual_at_trigger_m": 0.07991479337215424,
+      "predicted_at_trigger_m": 0.0448145791888237,
+      "first_trigger_s": 4.533,
+      "near_mae_m": 0.017390292137861252
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 93,
+      "actual_at_trigger_m": 0.04161965474486351,
+      "predicted_at_trigger_m": 0.04784389212727547,
+      "first_trigger_s": 5.467,
+      "near_mae_m": 0.020549412816762924
+    },
+    {
+      "model": "park_weight10",
+      "dot": 93,
+      "actual_at_trigger_m": 0.003085229778662324,
+      "predicted_at_trigger_m": 0.049720510840415955,
+      "first_trigger_s": 5.967,
+      "near_mae_m": 0.03915344551205635
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 93,
+      "actual_at_trigger_m": 0.00035541184479370713,
+      "predicted_at_trigger_m": 0.04354503005743027,
+      "first_trigger_s": 6.133,
+      "near_mae_m": 0.06029517203569412
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 93,
+      "actual_at_trigger_m": 0.005691437516361475,
+      "predicted_at_trigger_m": 0.04760663956403732,
+      "first_trigger_s": 5.867,
+      "near_mae_m": 0.05357220768928528
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 104,
+      "actual_at_trigger_m": 0.012675130739808083,
+      "predicted_at_trigger_m": 0.049784913659095764,
+      "first_trigger_s": 6.1,
+      "near_mae_m": 0.04670427739620209
+    },
+    {
+      "model": "park_weight10",
+      "dot": 104,
+      "actual_at_trigger_m": 0.0024400840047746897,
+      "predicted_at_trigger_m": 0.04944653809070587,
+      "first_trigger_s": 6.333,
+      "near_mae_m": 0.04568399116396904
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 104,
+      "actual_at_trigger_m": 0.015445769764482975,
+      "predicted_at_trigger_m": 0.049845583736896515,
+      "first_trigger_s": 6.067,
+      "near_mae_m": 0.029627665877342224
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 104,
+      "actual_at_trigger_m": 0.012675130739808083,
+      "predicted_at_trigger_m": 0.04099832475185394,
+      "first_trigger_s": 6.1,
+      "near_mae_m": 0.03130672127008438
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 114,
+      "actual_at_trigger_m": 0.0018339729867875576,
+      "predicted_at_trigger_m": 0.046451106667518616,
+      "first_trigger_s": 4.267,
+      "near_mae_m": 0.08239083737134933
+    },
+    {
+      "model": "park_weight10",
+      "dot": 114,
+      "actual_at_trigger_m": 0.007117984350770712,
+      "predicted_at_trigger_m": 0.048226721584796906,
+      "first_trigger_s": 4.033,
+      "near_mae_m": 0.03196750581264496
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 114,
+      "actual_at_trigger_m": 0.007117984350770712,
+      "predicted_at_trigger_m": 0.04315420985221863,
+      "first_trigger_s": 4.033,
+      "near_mae_m": 0.03946961835026741
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 114,
+      "actual_at_trigger_m": 0.035455722361803055,
+      "predicted_at_trigger_m": 0.044628605246543884,
+      "first_trigger_s": 3.7,
+      "near_mae_m": 0.00640875706449151
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 121,
+      "actual_at_trigger_m": 0.06909766048192978,
+      "predicted_at_trigger_m": 0.04971618950366974,
+      "first_trigger_s": 6.4,
+      "near_mae_m": 0.05190806835889816
+    },
+    {
+      "model": "park_weight10",
+      "dot": 121,
+      "actual_at_trigger_m": 0.00015956413699313998,
+      "predicted_at_trigger_m": 0.049845874309539795,
+      "first_trigger_s": 7.4,
+      "near_mae_m": 0.08147864788770676
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 121,
+      "actual_at_trigger_m": 0.04053288698196411,
+      "predicted_at_trigger_m": 0.04966109246015549,
+      "first_trigger_s": 6.633,
+      "near_mae_m": 0.004252210725098848
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 121,
+      "actual_at_trigger_m": 0.033593226224184036,
+      "predicted_at_trigger_m": 0.04787607118487358,
+      "first_trigger_s": 6.7,
+      "near_mae_m": 0.007080244831740856
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 131,
+      "actual_at_trigger_m": 0.050008658319711685,
+      "predicted_at_trigger_m": 0.04531461000442505,
+      "first_trigger_s": 7.067,
+      "near_mae_m": 0.017759118229150772
+    },
+    {
+      "model": "park_weight10",
+      "dot": 131,
+      "actual_at_trigger_m": 0.010501449927687645,
+      "predicted_at_trigger_m": 0.04885207861661911,
+      "first_trigger_s": 7.433,
+      "near_mae_m": 0.035319238901138306
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 131,
+      "actual_at_trigger_m": 0.0006502295145764947,
+      "predicted_at_trigger_m": 0.039519332349300385,
+      "first_trigger_s": 7.833,
+      "near_mae_m": 0.07108194380998611
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 131,
+      "actual_at_trigger_m": 0.03020884096622467,
+      "predicted_at_trigger_m": 0.04328380525112152,
+      "first_trigger_s": 7.233,
+      "near_mae_m": 0.012448953464627266
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 134,
+      "actual_at_trigger_m": 0.11314785480499268,
+      "predicted_at_trigger_m": 0.04230022430419922,
+      "first_trigger_s": 6.467,
+      "near_mae_m": 0.11461935937404633
+    },
+    {
+      "model": "park_weight10",
+      "dot": 134,
+      "actual_at_trigger_m": 0.14774277806282043,
+      "predicted_at_trigger_m": 0.04915136098861694,
+      "first_trigger_s": 6.3,
+      "near_mae_m": 0.011784461326897144
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 134,
+      "actual_at_trigger_m": 0.09504307806491852,
+      "predicted_at_trigger_m": 0.04661145806312561,
+      "first_trigger_s": 6.567,
+      "near_mae_m": 0.062045641243457794
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 134,
+      "actual_at_trigger_m": 0.08397894352674484,
+      "predicted_at_trigger_m": 0.03900105506181717,
+      "first_trigger_s": 6.633,
+      "near_mae_m": 0.021243508905172348
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 143,
+      "actual_at_trigger_m": 0.10172710567712784,
+      "predicted_at_trigger_m": 0.04860277473926544,
+      "first_trigger_s": 4.767,
+      "near_mae_m": 0.12347371876239777
+    },
+    {
+      "model": "park_weight10",
+      "dot": 143,
+      "actual_at_trigger_m": 0.0018418660620227456,
+      "predicted_at_trigger_m": 0.039443500339984894,
+      "first_trigger_s": 5.8,
+      "near_mae_m": 0.06073429435491562
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 143,
+      "actual_at_trigger_m": 0.05496273934841156,
+      "predicted_at_trigger_m": 0.0496177077293396,
+      "first_trigger_s": 5.1,
+      "near_mae_m": 0.019214121624827385
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 143,
+      "actual_at_trigger_m": 0.04752177372574806,
+      "predicted_at_trigger_m": 0.047255948185920715,
+      "first_trigger_s": 5.167,
+      "near_mae_m": 0.009711277671158314
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 149,
+      "actual_at_trigger_m": 0.0002454130444675684,
+      "predicted_at_trigger_m": 0.046270258724689484,
+      "first_trigger_s": 6.0,
+      "near_mae_m": 0.08931340277194977
+    },
+    {
+      "model": "park_weight10",
+      "dot": 149,
+      "actual_at_trigger_m": 0.02791683003306389,
+      "predicted_at_trigger_m": 0.04854053258895874,
+      "first_trigger_s": 5.367,
+      "near_mae_m": 0.0219487976282835
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 149,
+      "actual_at_trigger_m": 0.037524424493312836,
+      "predicted_at_trigger_m": 0.049779146909713745,
+      "first_trigger_s": 5.267,
+      "near_mae_m": 0.008382191881537437
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 149,
+      "actual_at_trigger_m": 0.02791683003306389,
+      "predicted_at_trigger_m": 0.039908505976200104,
+      "first_trigger_s": 5.367,
+      "near_mae_m": 0.010302968323230743
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 151,
+      "actual_at_trigger_m": null,
+      "predicted_at_trigger_m": null,
+      "first_trigger_s": null,
+      "near_mae_m": 0.09471148997545242
+    },
+    {
+      "model": "park_weight10",
+      "dot": 151,
+      "actual_at_trigger_m": 0.0014535863883793354,
+      "predicted_at_trigger_m": 0.04790738224983215,
+      "first_trigger_s": 5.267,
+      "near_mae_m": 0.1321312040090561
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 151,
+      "actual_at_trigger_m": 0.0037446205969899893,
+      "predicted_at_trigger_m": 0.04973261058330536,
+      "first_trigger_s": 4.967,
+      "near_mae_m": 0.06558097153902054
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 151,
+      "actual_at_trigger_m": 0.06206333637237549,
+      "predicted_at_trigger_m": 0.04721175134181976,
+      "first_trigger_s": 4.3,
+      "near_mae_m": 0.01437603309750557
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 153,
+      "actual_at_trigger_m": 0.08278179168701172,
+      "predicted_at_trigger_m": 0.04626898467540741,
+      "first_trigger_s": 5.133,
+      "near_mae_m": 0.03558634966611862
+    },
+    {
+      "model": "park_weight10",
+      "dot": 153,
+      "actual_at_trigger_m": 0.08278179168701172,
+      "predicted_at_trigger_m": 0.04808633774518967,
+      "first_trigger_s": 5.133,
+      "near_mae_m": 0.009078335016965866
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 153,
+      "actual_at_trigger_m": 0.06551825255155563,
+      "predicted_at_trigger_m": 0.04775974899530411,
+      "first_trigger_s": 5.267,
+      "near_mae_m": 0.012994998134672642
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 153,
+      "actual_at_trigger_m": 0.09236858785152435,
+      "predicted_at_trigger_m": 0.0466754175722599,
+      "first_trigger_s": 5.067,
+      "near_mae_m": 0.021603398025035858
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 159,
+      "actual_at_trigger_m": null,
+      "predicted_at_trigger_m": null,
+      "first_trigger_s": null,
+      "near_mae_m": 0.10923047363758087
+    },
+    {
+      "model": "park_weight10",
+      "dot": 159,
+      "actual_at_trigger_m": null,
+      "predicted_at_trigger_m": null,
+      "first_trigger_s": null,
+      "near_mae_m": 0.10176153481006622
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 159,
+      "actual_at_trigger_m": 0.0007706624455749989,
+      "predicted_at_trigger_m": 0.049155548214912415,
+      "first_trigger_s": 2.533,
+      "near_mae_m": 0.053290531039237976
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 159,
+      "actual_at_trigger_m": 0.059344641864299774,
+      "predicted_at_trigger_m": 0.049495160579681396,
+      "first_trigger_s": 1.9,
+      "near_mae_m": 0.020108096301555634
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 172,
+      "actual_at_trigger_m": 0.027347294613718987,
+      "predicted_at_trigger_m": 0.04595731198787689,
+      "first_trigger_s": 6.833,
+      "near_mae_m": 0.012925793416798115
+    },
+    {
+      "model": "park_weight10",
+      "dot": 172,
+      "actual_at_trigger_m": 0.004091857932507992,
+      "predicted_at_trigger_m": 0.04686971753835678,
+      "first_trigger_s": 7.133,
+      "near_mae_m": 0.028951473534107208
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 172,
+      "actual_at_trigger_m": 0.03416422754526138,
+      "predicted_at_trigger_m": 0.04782939702272415,
+      "first_trigger_s": 6.767,
+      "near_mae_m": 0.007906571961939335
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 172,
+      "actual_at_trigger_m": 0.030683085322380066,
+      "predicted_at_trigger_m": 0.043567001819610596,
+      "first_trigger_s": 6.8,
+      "near_mae_m": 0.01304056029766798
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 198,
+      "actual_at_trigger_m": 0.07660549134016037,
+      "predicted_at_trigger_m": 0.03160508722066879,
+      "first_trigger_s": 3.333,
+      "near_mae_m": 0.0167918112128973
+    },
+    {
+      "model": "park_weight10",
+      "dot": 198,
+      "actual_at_trigger_m": 0.18194501101970673,
+      "predicted_at_trigger_m": 0.048031534999608994,
+      "first_trigger_s": 2.767,
+      "near_mae_m": 0.012550891377031803
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 198,
+      "actual_at_trigger_m": 0.016457734629511833,
+      "predicted_at_trigger_m": 0.04971456527709961,
+      "first_trigger_s": 3.9,
+      "near_mae_m": 0.031373944133520126
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 198,
+      "actual_at_trigger_m": 0.021670006215572357,
+      "predicted_at_trigger_m": 0.0455186665058136,
+      "first_trigger_s": 3.833,
+      "near_mae_m": 0.023777255788445473
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 199,
+      "actual_at_trigger_m": 0.010436933487653732,
+      "predicted_at_trigger_m": 0.04434160143136978,
+      "first_trigger_s": 5.5,
+      "near_mae_m": 0.04822844639420509
+    },
+    {
+      "model": "park_weight10",
+      "dot": 199,
+      "actual_at_trigger_m": 0.00166538346093148,
+      "predicted_at_trigger_m": 0.03807860240340233,
+      "first_trigger_s": 5.7,
+      "near_mae_m": 0.046183280646800995
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 199,
+      "actual_at_trigger_m": 0.006828355137258768,
+      "predicted_at_trigger_m": 0.0455172136425972,
+      "first_trigger_s": 5.533,
+      "near_mae_m": 0.04082446172833443
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 199,
+      "actual_at_trigger_m": 0.04476021230220795,
+      "predicted_at_trigger_m": 0.03815416991710663,
+      "first_trigger_s": 5.133,
+      "near_mae_m": 0.006987623870372772
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 201,
+      "actual_at_trigger_m": 0.0961461290717125,
+      "predicted_at_trigger_m": 0.04877825826406479,
+      "first_trigger_s": 3.967,
+      "near_mae_m": 0.0816558226943016
+    },
+    {
+      "model": "park_weight10",
+      "dot": 201,
+      "actual_at_trigger_m": 0.0013497686013579369,
+      "predicted_at_trigger_m": 0.038599755614995956,
+      "first_trigger_s": 5.067,
+      "near_mae_m": 0.10657981783151627
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 201,
+      "actual_at_trigger_m": 0.06948011368513107,
+      "predicted_at_trigger_m": 0.04848138242959976,
+      "first_trigger_s": 4.167,
+      "near_mae_m": 0.01888715848326683
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 201,
+      "actual_at_trigger_m": 0.08210404217243195,
+      "predicted_at_trigger_m": 0.047970619052648544,
+      "first_trigger_s": 4.067,
+      "near_mae_m": 0.01739777810871601
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 204,
+      "actual_at_trigger_m": 0.08452924340963364,
+      "predicted_at_trigger_m": 0.04555579274892807,
+      "first_trigger_s": 6.167,
+      "near_mae_m": 0.03655826672911644
+    },
+    {
+      "model": "park_weight10",
+      "dot": 204,
+      "actual_at_trigger_m": 0.08452924340963364,
+      "predicted_at_trigger_m": 0.047420091927051544,
+      "first_trigger_s": 6.167,
+      "near_mae_m": 0.009381136856973171
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 204,
+      "actual_at_trigger_m": 0.05359611287713051,
+      "predicted_at_trigger_m": 0.04522529989480972,
+      "first_trigger_s": 6.4,
+      "near_mae_m": 0.017409253865480423
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 204,
+      "actual_at_trigger_m": 0.09487572312355042,
+      "predicted_at_trigger_m": 0.03772095963358879,
+      "first_trigger_s": 6.1,
+      "near_mae_m": 0.019400248304009438
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 213,
+      "actual_at_trigger_m": 0.004263526294380426,
+      "predicted_at_trigger_m": 0.04350714758038521,
+      "first_trigger_s": 5.8,
+      "near_mae_m": 0.03433974087238312
+    },
+    {
+      "model": "park_weight10",
+      "dot": 213,
+      "actual_at_trigger_m": 0.05569582059979439,
+      "predicted_at_trigger_m": 0.04900001734495163,
+      "first_trigger_s": 5.267,
+      "near_mae_m": 0.0077524916268885136
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 213,
+      "actual_at_trigger_m": 0.025927675887942314,
+      "predicted_at_trigger_m": 0.049892038106918335,
+      "first_trigger_s": 5.533,
+      "near_mae_m": 0.024853184819221497
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 213,
+      "actual_at_trigger_m": 0.05152471363544464,
+      "predicted_at_trigger_m": 0.043446727097034454,
+      "first_trigger_s": 5.3,
+      "near_mae_m": 0.006446059327572584
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 224,
+      "actual_at_trigger_m": 0.04876352474093437,
+      "predicted_at_trigger_m": 0.006401466205716133,
+      "first_trigger_s": 5.067,
+      "near_mae_m": 0.026233775541186333
+    },
+    {
+      "model": "park_weight10",
+      "dot": 224,
+      "actual_at_trigger_m": 0.04876352474093437,
+      "predicted_at_trigger_m": 0.04454474896192551,
+      "first_trigger_s": 5.067,
+      "near_mae_m": 0.014719483442604542
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 224,
+      "actual_at_trigger_m": 0.030543090775609016,
+      "predicted_at_trigger_m": 0.047252774238586426,
+      "first_trigger_s": 5.233,
+      "near_mae_m": 0.013265690766274929
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 224,
+      "actual_at_trigger_m": 0.04116630181670189,
+      "predicted_at_trigger_m": 0.048895463347435,
+      "first_trigger_s": 5.133,
+      "near_mae_m": 0.006721531040966511
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 235,
+      "actual_at_trigger_m": 0.08250908553600311,
+      "predicted_at_trigger_m": 0.048272550106048584,
+      "first_trigger_s": 7.067,
+      "near_mae_m": 0.01666831038892269
+    },
+    {
+      "model": "park_weight10",
+      "dot": 235,
+      "actual_at_trigger_m": 0.09335094690322876,
+      "predicted_at_trigger_m": 0.048428162932395935,
+      "first_trigger_s": 7.0,
+      "near_mae_m": 0.008405646309256554
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 235,
+      "actual_at_trigger_m": 0.07250065356492996,
+      "predicted_at_trigger_m": 0.0459941104054451,
+      "first_trigger_s": 7.133,
+      "near_mae_m": 0.013234995305538177
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 235,
+      "actual_at_trigger_m": 0.1048959270119667,
+      "predicted_at_trigger_m": 0.04434319585561752,
+      "first_trigger_s": 6.933,
+      "near_mae_m": 0.013427534140646458
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 243,
+      "actual_at_trigger_m": 0.049569353461265564,
+      "predicted_at_trigger_m": 0.045445069670677185,
+      "first_trigger_s": 6.767,
+      "near_mae_m": 0.032231274992227554
+    },
+    {
+      "model": "park_weight10",
+      "dot": 243,
+      "actual_at_trigger_m": 9.430223144590855e-05,
+      "predicted_at_trigger_m": 0.04425942525267601,
+      "first_trigger_s": 7.533,
+      "near_mae_m": 0.07880669832229614
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 243,
+      "actual_at_trigger_m": 0.02311747707426548,
+      "predicted_at_trigger_m": 0.049283064901828766,
+      "first_trigger_s": 7.033,
+      "near_mae_m": 0.02034839428961277
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 243,
+      "actual_at_trigger_m": 0.017800629138946533,
+      "predicted_at_trigger_m": 0.04229217767715454,
+      "first_trigger_s": 7.1,
+      "near_mae_m": 0.030550062656402588
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 245,
+      "actual_at_trigger_m": 0.07737237960100174,
+      "predicted_at_trigger_m": 0.046531081199645996,
+      "first_trigger_s": 5.5,
+      "near_mae_m": 0.011296318843960762
+    },
+    {
+      "model": "park_weight10",
+      "dot": 245,
+      "actual_at_trigger_m": 0.04395309090614319,
+      "predicted_at_trigger_m": 0.047925375401973724,
+      "first_trigger_s": 5.8,
+      "near_mae_m": 0.010802105069160461
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 245,
+      "actual_at_trigger_m": 0.017208591103553772,
+      "predicted_at_trigger_m": 0.04356531798839569,
+      "first_trigger_s": 6.1,
+      "near_mae_m": 0.022553039714694023
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 245,
+      "actual_at_trigger_m": 0.08632298558950424,
+      "predicted_at_trigger_m": 0.046495966613292694,
+      "first_trigger_s": 5.433,
+      "near_mae_m": 0.015582461841404438
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 250,
+      "actual_at_trigger_m": 0.027758050709962845,
+      "predicted_at_trigger_m": 0.049520671367645264,
+      "first_trigger_s": 5.167,
+      "near_mae_m": 0.02057037688791752
+    },
+    {
+      "model": "park_weight10",
+      "dot": 250,
+      "actual_at_trigger_m": 0.0016486443346366286,
+      "predicted_at_trigger_m": 0.04130658507347107,
+      "first_trigger_s": 5.8,
+      "near_mae_m": 0.13107220828533173
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 250,
+      "actual_at_trigger_m": 0.007433895021677017,
+      "predicted_at_trigger_m": 0.04686631262302399,
+      "first_trigger_s": 5.4,
+      "near_mae_m": 0.041671641170978546
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 250,
+      "actual_at_trigger_m": 0.06657105684280396,
+      "predicted_at_trigger_m": 0.04940834268927574,
+      "first_trigger_s": 4.8,
+      "near_mae_m": 0.010581099428236485
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 253,
+      "actual_at_trigger_m": 0.019446786493062973,
+      "predicted_at_trigger_m": 0.046109553426504135,
+      "first_trigger_s": 3.8,
+      "near_mae_m": 0.025673167780041695
+    },
+    {
+      "model": "park_weight10",
+      "dot": 253,
+      "actual_at_trigger_m": 0.016909223049879074,
+      "predicted_at_trigger_m": 0.046612273901700974,
+      "first_trigger_s": 3.833,
+      "near_mae_m": 0.01359213050454855
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 253,
+      "actual_at_trigger_m": 0.03886013850569725,
+      "predicted_at_trigger_m": 0.048941947519779205,
+      "first_trigger_s": 3.567,
+      "near_mae_m": 0.012381401844322681
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 253,
+      "actual_at_trigger_m": 0.07501045614480972,
+      "predicted_at_trigger_m": 0.04760720208287239,
+      "first_trigger_s": 3.233,
+      "near_mae_m": 0.020526599138975143
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 257,
+      "actual_at_trigger_m": 0.059527359902858734,
+      "predicted_at_trigger_m": 0.04570534825325012,
+      "first_trigger_s": 3.3,
+      "near_mae_m": 0.052639007568359375
+    },
+    {
+      "model": "park_weight10",
+      "dot": 257,
+      "actual_at_trigger_m": 0.001356491819024086,
+      "predicted_at_trigger_m": 0.044882893562316895,
+      "first_trigger_s": 4.2,
+      "near_mae_m": 0.1242479532957077
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 257,
+      "actual_at_trigger_m": 0.0021761914249509573,
+      "predicted_at_trigger_m": 0.048059508204460144,
+      "first_trigger_s": 3.867,
+      "near_mae_m": 0.04454541206359863
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 257,
+      "actual_at_trigger_m": 0.021210480481386185,
+      "predicted_at_trigger_m": 0.04921598359942436,
+      "first_trigger_s": 3.667,
+      "near_mae_m": 0.02321757934987545
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 265,
+      "actual_at_trigger_m": 0.08435661345720291,
+      "predicted_at_trigger_m": 0.04290458559989929,
+      "first_trigger_s": 7.2,
+      "near_mae_m": 0.07480686157941818
+    },
+    {
+      "model": "park_weight10",
+      "dot": 265,
+      "actual_at_trigger_m": 0.06385725736618042,
+      "predicted_at_trigger_m": 0.04891009256243706,
+      "first_trigger_s": 7.333,
+      "near_mae_m": 0.01341757457703352
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 265,
+      "actual_at_trigger_m": 0.0736953541636467,
+      "predicted_at_trigger_m": 0.048032812774181366,
+      "first_trigger_s": 7.267,
+      "near_mae_m": 0.03867977857589722
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 265,
+      "actual_at_trigger_m": 0.06385725736618042,
+      "predicted_at_trigger_m": 0.04382413253188133,
+      "first_trigger_s": 7.333,
+      "near_mae_m": 0.029846234247088432
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 267,
+      "actual_at_trigger_m": 0.0667094737291336,
+      "predicted_at_trigger_m": 0.040602270513772964,
+      "first_trigger_s": 4.367,
+      "near_mae_m": 0.0736505538225174
+    },
+    {
+      "model": "park_weight10",
+      "dot": 267,
+      "actual_at_trigger_m": 0.0016191293252632022,
+      "predicted_at_trigger_m": 0.048781029880046844,
+      "first_trigger_s": 5.133,
+      "near_mae_m": 0.05768902599811554
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 267,
+      "actual_at_trigger_m": 0.0625927746295929,
+      "predicted_at_trigger_m": 0.04818842560052872,
+      "first_trigger_s": 4.4,
+      "near_mae_m": 0.022775614634156227
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 267,
+      "actual_at_trigger_m": 0.05871262028813362,
+      "predicted_at_trigger_m": 0.04609149694442749,
+      "first_trigger_s": 4.433,
+      "near_mae_m": 0.013577505014836788
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 268,
+      "actual_at_trigger_m": 0.05886782705783844,
+      "predicted_at_trigger_m": 0.045888178050518036,
+      "first_trigger_s": 5.767,
+      "near_mae_m": 0.038235608488321304
+    },
+    {
+      "model": "park_weight10",
+      "dot": 268,
+      "actual_at_trigger_m": 0.0011322717182338238,
+      "predicted_at_trigger_m": 0.04718344286084175,
+      "first_trigger_s": 6.667,
+      "near_mae_m": 0.14501754939556122
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 268,
+      "actual_at_trigger_m": 0.00504789873957634,
+      "predicted_at_trigger_m": 0.041273921728134155,
+      "first_trigger_s": 6.333,
+      "near_mae_m": 0.04374973848462105
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 268,
+      "actual_at_trigger_m": 0.007444411050528288,
+      "predicted_at_trigger_m": 0.04387318342924118,
+      "first_trigger_s": 6.3,
+      "near_mae_m": 0.037322841584682465
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 273,
+      "actual_at_trigger_m": 0.008932743221521378,
+      "predicted_at_trigger_m": 0.04623705893754959,
+      "first_trigger_s": 4.233,
+      "near_mae_m": 0.04869797080755234
+    },
+    {
+      "model": "park_weight10",
+      "dot": 273,
+      "actual_at_trigger_m": 0.0009973206324502826,
+      "predicted_at_trigger_m": 0.04938672482967377,
+      "first_trigger_s": 4.533,
+      "near_mae_m": 0.056890811771154404
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 273,
+      "actual_at_trigger_m": 0.0052873012609779835,
+      "predicted_at_trigger_m": 0.048851028084754944,
+      "first_trigger_s": 4.333,
+      "near_mae_m": 0.0626785084605217
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 273,
+      "actual_at_trigger_m": 0.031541936099529266,
+      "predicted_at_trigger_m": 0.04875027760863304,
+      "first_trigger_s": 3.967,
+      "near_mae_m": 0.01023268885910511
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 279,
+      "actual_at_trigger_m": null,
+      "predicted_at_trigger_m": null,
+      "first_trigger_s": null,
+      "near_mae_m": 0.11348891258239746
+    },
+    {
+      "model": "park_weight10",
+      "dot": 279,
+      "actual_at_trigger_m": 0.007256717421114445,
+      "predicted_at_trigger_m": 0.047290463000535965,
+      "first_trigger_s": 3.8,
+      "near_mae_m": 0.023071439936757088
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 279,
+      "actual_at_trigger_m": 0.0368618480861187,
+      "predicted_at_trigger_m": 0.049186691641807556,
+      "first_trigger_s": 3.5,
+      "near_mae_m": 0.00904136523604393
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 279,
+      "actual_at_trigger_m": 0.010693858377635479,
+      "predicted_at_trigger_m": 0.046958889812231064,
+      "first_trigger_s": 3.767,
+      "near_mae_m": 0.03566493093967438
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 286,
+      "actual_at_trigger_m": 0.05497242882847786,
+      "predicted_at_trigger_m": 0.04281590133905411,
+      "first_trigger_s": 3.967,
+      "near_mae_m": 0.04083249345421791
+    },
+    {
+      "model": "park_weight10",
+      "dot": 286,
+      "actual_at_trigger_m": 0.00038016296457499266,
+      "predicted_at_trigger_m": 0.048505380749702454,
+      "first_trigger_s": 4.933,
+      "near_mae_m": 0.09862307459115982
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 286,
+      "actual_at_trigger_m": 0.0410483218729496,
+      "predicted_at_trigger_m": 0.049886733293533325,
+      "first_trigger_s": 4.1,
+      "near_mae_m": 0.014829439111053944
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 286,
+      "actual_at_trigger_m": 0.10603297501802444,
+      "predicted_at_trigger_m": 0.04228157550096512,
+      "first_trigger_s": 3.567,
+      "near_mae_m": 0.030101116746664047
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 298,
+      "actual_at_trigger_m": 0.08272846788167953,
+      "predicted_at_trigger_m": 0.04778857156634331,
+      "first_trigger_s": 6.633,
+      "near_mae_m": 0.022692272439599037
+    },
+    {
+      "model": "park_weight10",
+      "dot": 298,
+      "actual_at_trigger_m": 0.08272846788167953,
+      "predicted_at_trigger_m": 0.04944314807653427,
+      "first_trigger_s": 6.633,
+      "near_mae_m": 0.009473418816924095
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 298,
+      "actual_at_trigger_m": 0.06282088160514832,
+      "predicted_at_trigger_m": 0.04639630764722824,
+      "first_trigger_s": 6.767,
+      "near_mae_m": 0.005975598003715277
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 298,
+      "actual_at_trigger_m": 0.09359362721443176,
+      "predicted_at_trigger_m": 0.045727841556072235,
+      "first_trigger_s": 6.567,
+      "near_mae_m": 0.017334679141640663
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 329,
+      "actual_at_trigger_m": 0.1063288152217865,
+      "predicted_at_trigger_m": 0.03974144905805588,
+      "first_trigger_s": 7.133,
+      "near_mae_m": 0.1365969330072403
+    },
+    {
+      "model": "park_weight10",
+      "dot": 329,
+      "actual_at_trigger_m": 0.1397712677717209,
+      "predicted_at_trigger_m": 0.04725383222103119,
+      "first_trigger_s": 6.967,
+      "near_mae_m": 0.022498996928334236
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 329,
+      "actual_at_trigger_m": 0.08311042934656143,
+      "predicted_at_trigger_m": 0.04973200708627701,
+      "first_trigger_s": 7.267,
+      "near_mae_m": 0.058903228491544724
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 329,
+      "actual_at_trigger_m": 0.0677233636379242,
+      "predicted_at_trigger_m": 0.045247770845890045,
+      "first_trigger_s": 7.367,
+      "near_mae_m": 0.04113466665148735
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 333,
+      "actual_at_trigger_m": 0.271918386220932,
+      "predicted_at_trigger_m": 0.037434596568346024,
+      "first_trigger_s": 3.567,
+      "near_mae_m": 0.028140679001808167
+    },
+    {
+      "model": "park_weight10",
+      "dot": 333,
+      "actual_at_trigger_m": 0.3221239745616913,
+      "predicted_at_trigger_m": 0.046189144253730774,
+      "first_trigger_s": 3.367,
+      "near_mae_m": 0.016012798994779587
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 333,
+      "actual_at_trigger_m": 0.22175045311450958,
+      "predicted_at_trigger_m": 0.03915037214756012,
+      "first_trigger_s": 3.767,
+      "near_mae_m": 0.02872002124786377
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 333,
+      "actual_at_trigger_m": 0.20519864559173584,
+      "predicted_at_trigger_m": 0.040997810661792755,
+      "first_trigger_s": 3.833,
+      "near_mae_m": 0.013797260820865631
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 345,
+      "actual_at_trigger_m": 0.043454233556985855,
+      "predicted_at_trigger_m": 0.044034503400325775,
+      "first_trigger_s": 2.533,
+      "near_mae_m": 0.026631047949194908
+    },
+    {
+      "model": "park_weight10",
+      "dot": 345,
+      "actual_at_trigger_m": 0.0007663340657018125,
+      "predicted_at_trigger_m": 0.049817316234111786,
+      "first_trigger_s": 3.333,
+      "near_mae_m": 0.0782959833741188
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 345,
+      "actual_at_trigger_m": 0.043454233556985855,
+      "predicted_at_trigger_m": 0.04960843175649643,
+      "first_trigger_s": 2.533,
+      "near_mae_m": 0.015461436472833157
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 345,
+      "actual_at_trigger_m": 0.09343639016151428,
+      "predicted_at_trigger_m": 0.049249157309532166,
+      "first_trigger_s": 2.133,
+      "near_mae_m": 0.02522209845483303
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 352,
+      "actual_at_trigger_m": 0.0011606416665017605,
+      "predicted_at_trigger_m": 0.04380316659808159,
+      "first_trigger_s": 5.667,
+      "near_mae_m": 0.09249839186668396
+    },
+    {
+      "model": "park_weight10",
+      "dot": 352,
+      "actual_at_trigger_m": 0.003104592440649867,
+      "predicted_at_trigger_m": 0.04746795818209648,
+      "first_trigger_s": 5.533,
+      "near_mae_m": 0.03494742885231972
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 352,
+      "actual_at_trigger_m": 0.007582180202007294,
+      "predicted_at_trigger_m": 0.04192498326301575,
+      "first_trigger_s": 5.467,
+      "near_mae_m": 0.027618862688541412
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 352,
+      "actual_at_trigger_m": 0.06107082962989807,
+      "predicted_at_trigger_m": 0.04825131222605705,
+      "first_trigger_s": 4.933,
+      "near_mae_m": 0.013552404008805752
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 358,
+      "actual_at_trigger_m": 0.0906268060207367,
+      "predicted_at_trigger_m": 0.040184132754802704,
+      "first_trigger_s": 6.2,
+      "near_mae_m": 0.06974676996469498
+    },
+    {
+      "model": "park_weight10",
+      "dot": 358,
+      "actual_at_trigger_m": 0.024807337671518326,
+      "predicted_at_trigger_m": 0.049614667892456055,
+      "first_trigger_s": 6.7,
+      "near_mae_m": 0.0166444331407547
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 358,
+      "actual_at_trigger_m": 0.0851646438241005,
+      "predicted_at_trigger_m": 0.04324256628751755,
+      "first_trigger_s": 6.233,
+      "near_mae_m": 0.04798310622572899
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 358,
+      "actual_at_trigger_m": 0.07971867173910141,
+      "predicted_at_trigger_m": 0.042821526527404785,
+      "first_trigger_s": 6.267,
+      "near_mae_m": 0.021412113681435585
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 359,
+      "actual_at_trigger_m": 0.0757015123963356,
+      "predicted_at_trigger_m": 0.043193355202674866,
+      "first_trigger_s": 4.3,
+      "near_mae_m": 0.04722360149025917
+    },
+    {
+      "model": "park_weight10",
+      "dot": 359,
+      "actual_at_trigger_m": 0.0009132405975833535,
+      "predicted_at_trigger_m": 0.049073390662670135,
+      "first_trigger_s": 5.2,
+      "near_mae_m": 0.07327843457460403
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 359,
+      "actual_at_trigger_m": 0.0757015123963356,
+      "predicted_at_trigger_m": 0.049953483045101166,
+      "first_trigger_s": 4.3,
+      "near_mae_m": 0.017130140215158463
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 359,
+      "actual_at_trigger_m": 0.0856533944606781,
+      "predicted_at_trigger_m": 0.049841418862342834,
+      "first_trigger_s": 4.233,
+      "near_mae_m": 0.020671503618359566
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 374,
+      "actual_at_trigger_m": 0.002426204737275839,
+      "predicted_at_trigger_m": 0.047187790274620056,
+      "first_trigger_s": 5.767,
+      "near_mae_m": 0.0648195892572403
+    },
+    {
+      "model": "park_weight10",
+      "dot": 374,
+      "actual_at_trigger_m": 0.01002321857959032,
+      "predicted_at_trigger_m": 0.0482717826962471,
+      "first_trigger_s": 5.6,
+      "near_mae_m": 0.01929878443479538
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 374,
+      "actual_at_trigger_m": 0.037265755236148834,
+      "predicted_at_trigger_m": 0.04987878352403641,
+      "first_trigger_s": 5.3,
+      "near_mae_m": 0.01446190383285284
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 374,
+      "actual_at_trigger_m": 0.07041773945093155,
+      "predicted_at_trigger_m": 0.049258120357990265,
+      "first_trigger_s": 5.0,
+      "near_mae_m": 0.0166037455201149
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 409,
+      "actual_at_trigger_m": 0.009018735960125923,
+      "predicted_at_trigger_m": 0.04792215675115585,
+      "first_trigger_s": 7.733,
+      "near_mae_m": 0.02791687101125717
+    },
+    {
+      "model": "park_weight10",
+      "dot": 409,
+      "actual_at_trigger_m": 0.052324943244457245,
+      "predicted_at_trigger_m": 0.049216367304325104,
+      "first_trigger_s": 7.3,
+      "near_mae_m": 0.009459465742111206
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 409,
+      "actual_at_trigger_m": 0.03293265402317047,
+      "predicted_at_trigger_m": 0.047772668302059174,
+      "first_trigger_s": 7.467,
+      "near_mae_m": 0.012923450209200382
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 409,
+      "actual_at_trigger_m": 0.08042851090431213,
+      "predicted_at_trigger_m": 0.04932944104075432,
+      "first_trigger_s": 7.1,
+      "near_mae_m": 0.010962785221636295
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 418,
+      "actual_at_trigger_m": 0.004702578764408827,
+      "predicted_at_trigger_m": 0.047027070075273514,
+      "first_trigger_s": 6.733,
+      "near_mae_m": 0.05528393015265465
+    },
+    {
+      "model": "park_weight10",
+      "dot": 418,
+      "actual_at_trigger_m": 0.029565325006842613,
+      "predicted_at_trigger_m": 0.049624454230070114,
+      "first_trigger_s": 6.333,
+      "near_mae_m": 0.018936047330498695
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 418,
+      "actual_at_trigger_m": 0.015197064727544785,
+      "predicted_at_trigger_m": 0.04627788066864014,
+      "first_trigger_s": 6.5,
+      "near_mae_m": 0.024590833112597466
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 418,
+      "actual_at_trigger_m": 0.051067620515823364,
+      "predicted_at_trigger_m": 0.04689975455403328,
+      "first_trigger_s": 6.133,
+      "near_mae_m": 0.0058586145751178265
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 421,
+      "actual_at_trigger_m": 0.04529677331447601,
+      "predicted_at_trigger_m": 0.04637327045202255,
+      "first_trigger_s": 3.767,
+      "near_mae_m": 0.02118779718875885
+    },
+    {
+      "model": "park_weight10",
+      "dot": 421,
+      "actual_at_trigger_m": 0.0043062991462647915,
+      "predicted_at_trigger_m": 0.002089020097628236,
+      "first_trigger_s": 5.033,
+      "near_mae_m": 0.12029113620519638
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 421,
+      "actual_at_trigger_m": 0.0056303152814507484,
+      "predicted_at_trigger_m": 0.04326299577951431,
+      "first_trigger_s": 4.267,
+      "near_mae_m": 0.0558774434030056
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 421,
+      "actual_at_trigger_m": 0.03900941088795662,
+      "predicted_at_trigger_m": 0.04671211168169975,
+      "first_trigger_s": 3.833,
+      "near_mae_m": 0.0076252976432442665
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 438,
+      "actual_at_trigger_m": 0.10324396938085556,
+      "predicted_at_trigger_m": 0.04808308184146881,
+      "first_trigger_s": 5.467,
+      "near_mae_m": 0.093768410384655
+    },
+    {
+      "model": "park_weight10",
+      "dot": 438,
+      "actual_at_trigger_m": 0.09760291874408722,
+      "predicted_at_trigger_m": 0.04925502464175224,
+      "first_trigger_s": 5.5,
+      "near_mae_m": 0.015580837614834309
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 438,
+      "actual_at_trigger_m": 0.09760291874408722,
+      "predicted_at_trigger_m": 0.049859561026096344,
+      "first_trigger_s": 5.5,
+      "near_mae_m": 0.05176430195569992
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 438,
+      "actual_at_trigger_m": 0.08674750477075577,
+      "predicted_at_trigger_m": 0.042607031762599945,
+      "first_trigger_s": 5.567,
+      "near_mae_m": 0.017855312675237656
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 447,
+      "actual_at_trigger_m": 0.04814595356583595,
+      "predicted_at_trigger_m": 0.04586297273635864,
+      "first_trigger_s": 6.333,
+      "near_mae_m": 0.02518177218735218
+    },
+    {
+      "model": "park_weight10",
+      "dot": 447,
+      "actual_at_trigger_m": 0.0005917231319472194,
+      "predicted_at_trigger_m": 0.04538796842098236,
+      "first_trigger_s": 7.1,
+      "near_mae_m": 0.09249771386384964
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 447,
+      "actual_at_trigger_m": 0.025605665519833565,
+      "predicted_at_trigger_m": 0.046867869794368744,
+      "first_trigger_s": 6.567,
+      "near_mae_m": 0.02050611935555935
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 447,
+      "actual_at_trigger_m": 0.025605665519833565,
+      "predicted_at_trigger_m": 0.04917966201901436,
+      "first_trigger_s": 6.567,
+      "near_mae_m": 0.02059055306017399
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 455,
+      "actual_at_trigger_m": 0.02175239473581314,
+      "predicted_at_trigger_m": 0.048259589821100235,
+      "first_trigger_s": 6.5,
+      "near_mae_m": 0.023678191006183624
+    },
+    {
+      "model": "park_weight10",
+      "dot": 455,
+      "actual_at_trigger_m": 0.006393877789378166,
+      "predicted_at_trigger_m": 0.04799649119377136,
+      "first_trigger_s": 6.667,
+      "near_mae_m": 0.03060787543654442
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 455,
+      "actual_at_trigger_m": 0.016351545229554176,
+      "predicted_at_trigger_m": 0.044790588319301605,
+      "first_trigger_s": 6.567,
+      "near_mae_m": 0.030532682314515114
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 455,
+      "actual_at_trigger_m": 0.03591978922486305,
+      "predicted_at_trigger_m": 0.04912077635526657,
+      "first_trigger_s": 6.333,
+      "near_mae_m": 0.010364776477217674
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 457,
+      "actual_at_trigger_m": 0.07712028920650482,
+      "predicted_at_trigger_m": 0.04078085348010063,
+      "first_trigger_s": 5.2,
+      "near_mae_m": 0.06306269019842148
+    },
+    {
+      "model": "park_weight10",
+      "dot": 457,
+      "actual_at_trigger_m": 0.0009373717475682497,
+      "predicted_at_trigger_m": 0.04817957058548927,
+      "first_trigger_s": 6.3,
+      "near_mae_m": 0.1289442479610443
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 457,
+      "actual_at_trigger_m": 0.06931816041469574,
+      "predicted_at_trigger_m": 0.049929067492485046,
+      "first_trigger_s": 5.267,
+      "near_mae_m": 0.008914032019674778
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 457,
+      "actual_at_trigger_m": 0.09495402127504349,
+      "predicted_at_trigger_m": 0.048570167273283005,
+      "first_trigger_s": 5.067,
+      "near_mae_m": 0.019658159464597702
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 465,
+      "actual_at_trigger_m": 0.00501657510176301,
+      "predicted_at_trigger_m": 0.04149937257170677,
+      "first_trigger_s": 7.467,
+      "near_mae_m": 0.0437316820025444
+    },
+    {
+      "model": "park_weight10",
+      "dot": 465,
+      "actual_at_trigger_m": 0.03863644599914551,
+      "predicted_at_trigger_m": 0.04698246717453003,
+      "first_trigger_s": 7.0,
+      "near_mae_m": 0.014702415093779564
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 465,
+      "actual_at_trigger_m": 0.02181633934378624,
+      "predicted_at_trigger_m": 0.0447906032204628,
+      "first_trigger_s": 7.167,
+      "near_mae_m": 0.020682653412222862
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 465,
+      "actual_at_trigger_m": 0.06762100011110306,
+      "predicted_at_trigger_m": 0.04732629284262657,
+      "first_trigger_s": 6.767,
+      "near_mae_m": 0.008268428035080433
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 467,
+      "actual_at_trigger_m": 0.15280087292194366,
+      "predicted_at_trigger_m": 0.04267587512731552,
+      "first_trigger_s": 5.333,
+      "near_mae_m": 0.15549336373806
+    },
+    {
+      "model": "park_weight10",
+      "dot": 467,
+      "actual_at_trigger_m": 0.2330961376428604,
+      "predicted_at_trigger_m": 0.04140133410692215,
+      "first_trigger_s": 5.0,
+      "near_mae_m": 0.013349521905183792
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 467,
+      "actual_at_trigger_m": 0.12600062787532806,
+      "predicted_at_trigger_m": 0.04856747388839722,
+      "first_trigger_s": 5.467,
+      "near_mae_m": 0.05601253733038902
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 467,
+      "actual_at_trigger_m": 0.11417876929044724,
+      "predicted_at_trigger_m": 0.04021269828081131,
+      "first_trigger_s": 5.533,
+      "near_mae_m": 0.01571630872786045
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 486,
+      "actual_at_trigger_m": 0.19030359387397766,
+      "predicted_at_trigger_m": 0.04825996980071068,
+      "first_trigger_s": 6.433,
+      "near_mae_m": 0.029227364808321
+    },
+    {
+      "model": "park_weight10",
+      "dot": 486,
+      "actual_at_trigger_m": 0.11417331546545029,
+      "predicted_at_trigger_m": 0.0481112077832222,
+      "first_trigger_s": 6.767,
+      "near_mae_m": 0.011932735331356525
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 486,
+      "actual_at_trigger_m": 0.10176119953393936,
+      "predicted_at_trigger_m": 0.048234790563583374,
+      "first_trigger_s": 6.833,
+      "near_mae_m": 0.03593388572335243
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 486,
+      "actual_at_trigger_m": 0.12087325751781464,
+      "predicted_at_trigger_m": 0.0361943393945694,
+      "first_trigger_s": 6.733,
+      "near_mae_m": 0.013804321177303791
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 506,
+      "actual_at_trigger_m": 0.06001356989145279,
+      "predicted_at_trigger_m": 0.045421794056892395,
+      "first_trigger_s": 5.3,
+      "near_mae_m": 0.056918781250715256
+    },
+    {
+      "model": "park_weight10",
+      "dot": 506,
+      "actual_at_trigger_m": 0.0032540520187467337,
+      "predicted_at_trigger_m": 0.042112767696380615,
+      "first_trigger_s": 5.967,
+      "near_mae_m": 0.035669323056936264
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 506,
+      "actual_at_trigger_m": 0.055801957845687866,
+      "predicted_at_trigger_m": 0.04645509272813797,
+      "first_trigger_s": 5.333,
+      "near_mae_m": 0.023921741172671318
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 506,
+      "actual_at_trigger_m": 0.05158471688628197,
+      "predicted_at_trigger_m": 0.04226675629615784,
+      "first_trigger_s": 5.367,
+      "near_mae_m": 0.015507175587117672
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 511,
+      "actual_at_trigger_m": 0.005812523420900106,
+      "predicted_at_trigger_m": 0.04638803377747536,
+      "first_trigger_s": 7.367,
+      "near_mae_m": 0.025266455486416817
+    },
+    {
+      "model": "park_weight10",
+      "dot": 511,
+      "actual_at_trigger_m": 0.04615822434425354,
+      "predicted_at_trigger_m": 0.04823579639196396,
+      "first_trigger_s": 6.933,
+      "near_mae_m": 0.015090991742908955
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 511,
+      "actual_at_trigger_m": 0.02581377699971199,
+      "predicted_at_trigger_m": 0.04603167623281479,
+      "first_trigger_s": 7.133,
+      "near_mae_m": 0.014243092387914658
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 511,
+      "actual_at_trigger_m": 0.06673288345336914,
+      "predicted_at_trigger_m": 0.04161077365279198,
+      "first_trigger_s": 6.767,
+      "near_mae_m": 0.009739184752106667
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 521,
+      "actual_at_trigger_m": 0.30622613430023193,
+      "predicted_at_trigger_m": 0.03809819743037224,
+      "first_trigger_s": 5.633,
+      "near_mae_m": 0.09142483025789261
+    },
+    {
+      "model": "park_weight10",
+      "dot": 521,
+      "actual_at_trigger_m": 0.23094691336154938,
+      "predicted_at_trigger_m": 0.04880997911095619,
+      "first_trigger_s": 5.933,
+      "near_mae_m": 0.015362926758825779
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 521,
+      "actual_at_trigger_m": 0.21418780088424683,
+      "predicted_at_trigger_m": 0.04301608353853226,
+      "first_trigger_s": 6.0,
+      "near_mae_m": 0.03317166119813919
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 521,
+      "actual_at_trigger_m": 0.23094691336154938,
+      "predicted_at_trigger_m": 0.04184781014919281,
+      "first_trigger_s": 5.933,
+      "near_mae_m": 0.013165495358407497
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 525,
+      "actual_at_trigger_m": 0.08907632529735565,
+      "predicted_at_trigger_m": 0.04425055533647537,
+      "first_trigger_s": 6.467,
+      "near_mae_m": 0.03200133517384529
+    },
+    {
+      "model": "park_weight10",
+      "dot": 525,
+      "actual_at_trigger_m": 0.07861599326133728,
+      "predicted_at_trigger_m": 0.04909014701843262,
+      "first_trigger_s": 6.533,
+      "near_mae_m": 0.010601312853395939
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 525,
+      "actual_at_trigger_m": 0.07861599326133728,
+      "predicted_at_trigger_m": 0.04963991791009903,
+      "first_trigger_s": 6.533,
+      "near_mae_m": 0.023130422458052635
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 525,
+      "actual_at_trigger_m": 0.07349845767021179,
+      "predicted_at_trigger_m": 0.04600847139954567,
+      "first_trigger_s": 6.567,
+      "near_mae_m": 0.012171627022325993
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 527,
+      "actual_at_trigger_m": null,
+      "predicted_at_trigger_m": null,
+      "first_trigger_s": null,
+      "near_mae_m": 0.2134743481874466
+    },
+    {
+      "model": "park_weight10",
+      "dot": 527,
+      "actual_at_trigger_m": null,
+      "predicted_at_trigger_m": null,
+      "first_trigger_s": null,
+      "near_mae_m": 0.18280959129333496
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 527,
+      "actual_at_trigger_m": null,
+      "predicted_at_trigger_m": null,
+      "first_trigger_s": null,
+      "near_mae_m": 0.08654962480068207
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 527,
+      "actual_at_trigger_m": 0.0428633876144886,
+      "predicted_at_trigger_m": 0.04778837412595749,
+      "first_trigger_s": 3.967,
+      "near_mae_m": 0.011594608426094055
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 530,
+      "actual_at_trigger_m": 0.09878651052713394,
+      "predicted_at_trigger_m": 0.04520963877439499,
+      "first_trigger_s": 3.4,
+      "near_mae_m": 0.05264472961425781
+    },
+    {
+      "model": "park_weight10",
+      "dot": 530,
+      "actual_at_trigger_m": 0.22929537296295166,
+      "predicted_at_trigger_m": 0.04249759763479233,
+      "first_trigger_s": 2.833,
+      "near_mae_m": 0.01716626062989235
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 530,
+      "actual_at_trigger_m": 0.09290595352649689,
+      "predicted_at_trigger_m": 0.04787331819534302,
+      "first_trigger_s": 3.433,
+      "near_mae_m": 0.0434994176030159
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 530,
+      "actual_at_trigger_m": 0.07620459794998169,
+      "predicted_at_trigger_m": 0.04282844066619873,
+      "first_trigger_s": 3.533,
+      "near_mae_m": 0.014327249489724636
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 544,
+      "actual_at_trigger_m": 0.08491066843271255,
+      "predicted_at_trigger_m": 0.04422270506620407,
+      "first_trigger_s": 6.267,
+      "near_mae_m": 0.02455602027475834
+    },
+    {
+      "model": "park_weight10",
+      "dot": 544,
+      "actual_at_trigger_m": 0.08491066843271255,
+      "predicted_at_trigger_m": 0.04751934856176376,
+      "first_trigger_s": 6.267,
+      "near_mae_m": 0.009360863827168941
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 544,
+      "actual_at_trigger_m": 0.06953028589487076,
+      "predicted_at_trigger_m": 0.04842406511306763,
+      "first_trigger_s": 6.367,
+      "near_mae_m": 0.01945294812321663
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 544,
+      "actual_at_trigger_m": 0.09050948917865753,
+      "predicted_at_trigger_m": 0.042820144444704056,
+      "first_trigger_s": 6.233,
+      "near_mae_m": 0.014107971452176571
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 558,
+      "actual_at_trigger_m": 0.07147084921598434,
+      "predicted_at_trigger_m": 0.046495936810970306,
+      "first_trigger_s": 4.567,
+      "near_mae_m": 0.01438344456255436
+    },
+    {
+      "model": "park_weight10",
+      "dot": 558,
+      "actual_at_trigger_m": 0.04540351778268814,
+      "predicted_at_trigger_m": 0.04944832623004913,
+      "first_trigger_s": 4.8,
+      "near_mae_m": 0.011708442121744156
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 558,
+      "actual_at_trigger_m": 0.01478858944028616,
+      "predicted_at_trigger_m": 0.049276866018772125,
+      "first_trigger_s": 5.133,
+      "near_mae_m": 0.026552172377705574
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 558,
+      "actual_at_trigger_m": 0.08476784080266953,
+      "predicted_at_trigger_m": 0.0475032813847065,
+      "first_trigger_s": 4.467,
+      "near_mae_m": 0.013102269731462002
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 562,
+      "actual_at_trigger_m": 0.01013378705829382,
+      "predicted_at_trigger_m": 0.04758609086275101,
+      "first_trigger_s": 3.333,
+      "near_mae_m": 0.0871715173125267
+    },
+    {
+      "model": "park_weight10",
+      "dot": 562,
+      "actual_at_trigger_m": 0.007352021522819996,
+      "predicted_at_trigger_m": 0.02883138507604599,
+      "first_trigger_s": 5.433,
+      "near_mae_m": 0.13238440454006195
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 562,
+      "actual_at_trigger_m": 0.013033812865614891,
+      "predicted_at_trigger_m": 0.047016605734825134,
+      "first_trigger_s": 3.3,
+      "near_mae_m": 0.031645216047763824
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 562,
+      "actual_at_trigger_m": 0.09853897988796234,
+      "predicted_at_trigger_m": 0.04369862377643585,
+      "first_trigger_s": 2.467,
+      "near_mae_m": 0.04109164699912071
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 568,
+      "actual_at_trigger_m": 0.06273913383483887,
+      "predicted_at_trigger_m": 0.049127139151096344,
+      "first_trigger_s": 6.133,
+      "near_mae_m": 0.030752630904316902
+    },
+    {
+      "model": "park_weight10",
+      "dot": 568,
+      "actual_at_trigger_m": 0.011950243264436722,
+      "predicted_at_trigger_m": 0.04914847016334534,
+      "first_trigger_s": 6.6,
+      "near_mae_m": 0.03146916255354881
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 568,
+      "actual_at_trigger_m": 0.0009525513160042465,
+      "predicted_at_trigger_m": 0.016476275399327278,
+      "first_trigger_s": 6.9,
+      "near_mae_m": 0.04896492511034012
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 568,
+      "actual_at_trigger_m": 0.01780347339808941,
+      "predicted_at_trigger_m": 0.04944952204823494,
+      "first_trigger_s": 6.533,
+      "near_mae_m": 0.03282472491264343
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 582,
+      "actual_at_trigger_m": 0.09686122089624405,
+      "predicted_at_trigger_m": 0.04471124708652496,
+      "first_trigger_s": 3.833,
+      "near_mae_m": 0.08795611560344696
+    },
+    {
+      "model": "park_weight10",
+      "dot": 582,
+      "actual_at_trigger_m": 0.1205989196896553,
+      "predicted_at_trigger_m": 0.04984226077795029,
+      "first_trigger_s": 3.7,
+      "near_mae_m": 0.022545279935002327
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 582,
+      "actual_at_trigger_m": 0.09128589183092117,
+      "predicted_at_trigger_m": 0.04998030513525009,
+      "first_trigger_s": 3.867,
+      "near_mae_m": 0.036527179181575775
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 582,
+      "actual_at_trigger_m": 0.0810178741812706,
+      "predicted_at_trigger_m": 0.04412996023893356,
+      "first_trigger_s": 3.933,
+      "near_mae_m": 0.01742587611079216
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 587,
+      "actual_at_trigger_m": 0.0775689035654068,
+      "predicted_at_trigger_m": 0.042060814797878265,
+      "first_trigger_s": 3.0,
+      "near_mae_m": 0.0687401220202446
+    },
+    {
+      "model": "park_weight10",
+      "dot": 587,
+      "actual_at_trigger_m": 0.0009768758900463581,
+      "predicted_at_trigger_m": 0.047536157071590424,
+      "first_trigger_s": 4.133,
+      "near_mae_m": 0.10997053235769272
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 587,
+      "actual_at_trigger_m": 0.05033392831683159,
+      "predicted_at_trigger_m": 0.04676320403814316,
+      "first_trigger_s": 3.233,
+      "near_mae_m": 0.007062289398163557
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 587,
+      "actual_at_trigger_m": 0.10435289889574051,
+      "predicted_at_trigger_m": 0.04613807052373886,
+      "first_trigger_s": 2.8,
+      "near_mae_m": 0.027769967913627625
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 611,
+      "actual_at_trigger_m": 0.07677032053470612,
+      "predicted_at_trigger_m": 0.04876181483268738,
+      "first_trigger_s": 7.0,
+      "near_mae_m": 0.08149324357509613
+    },
+    {
+      "model": "park_weight10",
+      "dot": 611,
+      "actual_at_trigger_m": 0.002233162522315979,
+      "predicted_at_trigger_m": 0.04751117527484894,
+      "first_trigger_s": 7.867,
+      "near_mae_m": 0.06104913726449013
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 611,
+      "actual_at_trigger_m": 0.03414040431380272,
+      "predicted_at_trigger_m": 0.04968752712011337,
+      "first_trigger_s": 7.333,
+      "near_mae_m": 0.009468348696827888
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 611,
+      "actual_at_trigger_m": 0.024009838700294495,
+      "predicted_at_trigger_m": 0.04937193915247917,
+      "first_trigger_s": 7.433,
+      "near_mae_m": 0.01717964932322502
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 620,
+      "actual_at_trigger_m": 0.013998061418533325,
+      "predicted_at_trigger_m": 0.04259134829044342,
+      "first_trigger_s": 4.733,
+      "near_mae_m": 0.03472581505775452
+    },
+    {
+      "model": "park_weight10",
+      "dot": 620,
+      "actual_at_trigger_m": 0.013998061418533325,
+      "predicted_at_trigger_m": 0.04650648310780525,
+      "first_trigger_s": 4.733,
+      "near_mae_m": 0.014177418313920498
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 620,
+      "actual_at_trigger_m": 0.05557527765631676,
+      "predicted_at_trigger_m": 0.045151516795158386,
+      "first_trigger_s": 4.3,
+      "near_mae_m": 0.015788894146680832
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 620,
+      "actual_at_trigger_m": 0.10167252272367477,
+      "predicted_at_trigger_m": 0.043020084500312805,
+      "first_trigger_s": 3.933,
+      "near_mae_m": 0.02448250539600849
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 622,
+      "actual_at_trigger_m": 0.08690215647220612,
+      "predicted_at_trigger_m": 0.046056024730205536,
+      "first_trigger_s": 4.2,
+      "near_mae_m": 0.0977587103843689
+    },
+    {
+      "model": "park_weight10",
+      "dot": 622,
+      "actual_at_trigger_m": 0.0004949672729708254,
+      "predicted_at_trigger_m": 0.04059985652565956,
+      "first_trigger_s": 5.233,
+      "near_mae_m": 0.08755823969841003
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 622,
+      "actual_at_trigger_m": 0.03891054168343544,
+      "predicted_at_trigger_m": 0.04766613990068436,
+      "first_trigger_s": 4.6,
+      "near_mae_m": 0.006615628954023123
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 622,
+      "actual_at_trigger_m": 0.0356411375105381,
+      "predicted_at_trigger_m": 0.04832535982131958,
+      "first_trigger_s": 4.633,
+      "near_mae_m": 0.007193689700216055
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 626,
+      "actual_at_trigger_m": 0.04038364067673683,
+      "predicted_at_trigger_m": 0.049376003444194794,
+      "first_trigger_s": 5.4,
+      "near_mae_m": 0.015766950324177742
+    },
+    {
+      "model": "park_weight10",
+      "dot": 626,
+      "actual_at_trigger_m": 0.004869368392974138,
+      "predicted_at_trigger_m": 0.04265860840678215,
+      "first_trigger_s": 5.833,
+      "near_mae_m": 0.03160800039768219
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 626,
+      "actual_at_trigger_m": 0.005978419911116362,
+      "predicted_at_trigger_m": 0.04189921170473099,
+      "first_trigger_s": 5.8,
+      "near_mae_m": 0.05173010006546974
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 626,
+      "actual_at_trigger_m": 0.021533949300646782,
+      "predicted_at_trigger_m": 0.0493491068482399,
+      "first_trigger_s": 5.6,
+      "near_mae_m": 0.018231812864542007
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 635,
+      "actual_at_trigger_m": 0.12806333601474762,
+      "predicted_at_trigger_m": 0.04982979595661163,
+      "first_trigger_s": 3.633,
+      "near_mae_m": 0.02193831466138363
+    },
+    {
+      "model": "park_weight10",
+      "dot": 635,
+      "actual_at_trigger_m": 0.09467877447605133,
+      "predicted_at_trigger_m": 0.04878285527229309,
+      "first_trigger_s": 3.833,
+      "near_mae_m": 0.007450741250067949
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 635,
+      "actual_at_trigger_m": 0.06730081140995026,
+      "predicted_at_trigger_m": 0.047722190618515015,
+      "first_trigger_s": 4.033,
+      "near_mae_m": 0.0256245918571949
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 635,
+      "actual_at_trigger_m": 0.10489688813686371,
+      "predicted_at_trigger_m": 0.03994171693921089,
+      "first_trigger_s": 3.767,
+      "near_mae_m": 0.023700326681137085
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 637,
+      "actual_at_trigger_m": 0.0720166265964508,
+      "predicted_at_trigger_m": 0.04613037034869194,
+      "first_trigger_s": 6.067,
+      "near_mae_m": 0.04127238318324089
+    },
+    {
+      "model": "park_weight10",
+      "dot": 637,
+      "actual_at_trigger_m": 0.0005355486064217985,
+      "predicted_at_trigger_m": 0.04998384788632393,
+      "first_trigger_s": 7.0,
+      "near_mae_m": 0.07639297097921371
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 637,
+      "actual_at_trigger_m": 0.08109688758850098,
+      "predicted_at_trigger_m": 0.04343442618846893,
+      "first_trigger_s": 6.0,
+      "near_mae_m": 0.01728241518139839
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 637,
+      "actual_at_trigger_m": 0.08581969887018204,
+      "predicted_at_trigger_m": 0.049367427825927734,
+      "first_trigger_s": 5.967,
+      "near_mae_m": 0.0189588014036417
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 660,
+      "actual_at_trigger_m": 0.14297650754451752,
+      "predicted_at_trigger_m": 0.03829531744122505,
+      "first_trigger_s": 4.567,
+      "near_mae_m": 0.044383130967617035
+    },
+    {
+      "model": "park_weight10",
+      "dot": 660,
+      "actual_at_trigger_m": 0.22504298388957977,
+      "predicted_at_trigger_m": 0.043161142617464066,
+      "first_trigger_s": 4.233,
+      "near_mae_m": 0.017470404505729675
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 660,
+      "actual_at_trigger_m": 0.0316333994269371,
+      "predicted_at_trigger_m": 0.04508524388074875,
+      "first_trigger_s": 5.267,
+      "near_mae_m": 0.006888042204082012
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 660,
+      "actual_at_trigger_m": 0.024761050939559937,
+      "predicted_at_trigger_m": 0.04966075345873833,
+      "first_trigger_s": 5.333,
+      "near_mae_m": 0.019948448985815048
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 663,
+      "actual_at_trigger_m": 0.08538739383220673,
+      "predicted_at_trigger_m": 0.03943600505590439,
+      "first_trigger_s": 7.9,
+      "near_mae_m": 0.0967644676566124
+    },
+    {
+      "model": "park_weight10",
+      "dot": 663,
+      "actual_at_trigger_m": 0.12656745314598083,
+      "predicted_at_trigger_m": 0.048707619309425354,
+      "first_trigger_s": 7.667,
+      "near_mae_m": 0.02640468440949917
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 663,
+      "actual_at_trigger_m": 0.07521309703588486,
+      "predicted_at_trigger_m": 0.04588989168405533,
+      "first_trigger_s": 7.967,
+      "near_mae_m": 0.04524235799908638
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 663,
+      "actual_at_trigger_m": 0.0658102035522461,
+      "predicted_at_trigger_m": 0.04895942285656929,
+      "first_trigger_s": 8.033,
+      "near_mae_m": 0.03899203613400459
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 668,
+      "actual_at_trigger_m": 0.11156445741653442,
+      "predicted_at_trigger_m": 0.049778055399656296,
+      "first_trigger_s": 6.6,
+      "near_mae_m": 0.10532960295677185
+    },
+    {
+      "model": "park_weight10",
+      "dot": 668,
+      "actual_at_trigger_m": 0.17835524678230286,
+      "predicted_at_trigger_m": 0.0492699109017849,
+      "first_trigger_s": 6.3,
+      "near_mae_m": 0.006771530490368605
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 668,
+      "actual_at_trigger_m": 0.1053568422794342,
+      "predicted_at_trigger_m": 0.04974215477705002,
+      "first_trigger_s": 6.633,
+      "near_mae_m": 0.06683045625686646
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 668,
+      "actual_at_trigger_m": 0.09341943264007568,
+      "predicted_at_trigger_m": 0.03908393532037735,
+      "first_trigger_s": 6.7,
+      "near_mae_m": 0.020702926442027092
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 673,
+      "actual_at_trigger_m": 0.025181302800774574,
+      "predicted_at_trigger_m": 0.046981409192085266,
+      "first_trigger_s": 2.8,
+      "near_mae_m": 0.024139123037457466
+    },
+    {
+      "model": "park_weight10",
+      "dot": 673,
+      "actual_at_trigger_m": 0.001906122430227697,
+      "predicted_at_trigger_m": 0.04971681162714958,
+      "first_trigger_s": 3.267,
+      "near_mae_m": 0.0895768478512764
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 673,
+      "actual_at_trigger_m": 0.012216356582939625,
+      "predicted_at_trigger_m": 0.04736233502626419,
+      "first_trigger_s": 2.933,
+      "near_mae_m": 0.031295958906412125
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 673,
+      "actual_at_trigger_m": 0.05243360996246338,
+      "predicted_at_trigger_m": 0.04482622444629669,
+      "first_trigger_s": 2.533,
+      "near_mae_m": 0.007985860109329224
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 676,
+      "actual_at_trigger_m": 0.04824337363243103,
+      "predicted_at_trigger_m": 0.04925321042537689,
+      "first_trigger_s": 4.233,
+      "near_mae_m": 0.011893165297806263
+    },
+    {
+      "model": "park_weight10",
+      "dot": 676,
+      "actual_at_trigger_m": 0.007419147063046694,
+      "predicted_at_trigger_m": 0.045402005314826965,
+      "first_trigger_s": 4.667,
+      "near_mae_m": 0.02504497393965721
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 676,
+      "actual_at_trigger_m": 0.0030751063022762537,
+      "predicted_at_trigger_m": -0.005622494965791702,
+      "first_trigger_s": 4.8,
+      "near_mae_m": 0.05646255239844322
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 676,
+      "actual_at_trigger_m": 0.08330833166837692,
+      "predicted_at_trigger_m": 0.047922175377607346,
+      "first_trigger_s": 3.933,
+      "near_mae_m": 0.009286634624004364
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 687,
+      "actual_at_trigger_m": 0.0134236179292202,
+      "predicted_at_trigger_m": 0.0454786941409111,
+      "first_trigger_s": 4.9,
+      "near_mae_m": 0.04081380367279053
+    },
+    {
+      "model": "park_weight10",
+      "dot": 687,
+      "actual_at_trigger_m": 0.055888984352350235,
+      "predicted_at_trigger_m": 0.04922697693109512,
+      "first_trigger_s": 4.467,
+      "near_mae_m": 0.011114469729363918
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 687,
+      "actual_at_trigger_m": 0.05964495986700058,
+      "predicted_at_trigger_m": 0.045187465846538544,
+      "first_trigger_s": 4.433,
+      "near_mae_m": 0.008645366877317429
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 687,
+      "actual_at_trigger_m": 0.055888984352350235,
+      "predicted_at_trigger_m": 0.04663265123963356,
+      "first_trigger_s": 4.467,
+      "near_mae_m": 0.01614151895046234
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 692,
+      "actual_at_trigger_m": 0.05175819993019104,
+      "predicted_at_trigger_m": 0.046538595110177994,
+      "first_trigger_s": 5.333,
+      "near_mae_m": 0.03027554228901863
+    },
+    {
+      "model": "park_weight10",
+      "dot": 692,
+      "actual_at_trigger_m": 0.0010999675141647458,
+      "predicted_at_trigger_m": 0.0481201708316803,
+      "first_trigger_s": 6.167,
+      "near_mae_m": 0.11266417056322098
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 692,
+      "actual_at_trigger_m": 0.048030003905296326,
+      "predicted_at_trigger_m": 0.049444906413555145,
+      "first_trigger_s": 5.367,
+      "near_mae_m": 0.014073367230594158
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 692,
+      "actual_at_trigger_m": 0.1045626699924469,
+      "predicted_at_trigger_m": 0.04859165474772453,
+      "first_trigger_s": 4.9,
+      "near_mae_m": 0.026609625667333603
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 720,
+      "actual_at_trigger_m": 0.10131089389324188,
+      "predicted_at_trigger_m": 0.04599021375179291,
+      "first_trigger_s": 4.767,
+      "near_mae_m": 0.125164195895195
+    },
+    {
+      "model": "park_weight10",
+      "dot": 720,
+      "actual_at_trigger_m": 0.11926722526550293,
+      "predicted_at_trigger_m": 0.04902738332748413,
+      "first_trigger_s": 4.667,
+      "near_mae_m": 0.03173679858446121
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 720,
+      "actual_at_trigger_m": 0.0751919224858284,
+      "predicted_at_trigger_m": 0.049527108669281006,
+      "first_trigger_s": 4.933,
+      "near_mae_m": 0.03783735632896423
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 720,
+      "actual_at_trigger_m": 0.06144709512591362,
+      "predicted_at_trigger_m": 0.04724608734250069,
+      "first_trigger_s": 5.033,
+      "near_mae_m": 0.017941860482096672
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 737,
+      "actual_at_trigger_m": 0.058725930750370026,
+      "predicted_at_trigger_m": 0.04220758378505707,
+      "first_trigger_s": 6.533,
+      "near_mae_m": 0.04839770495891571
+    },
+    {
+      "model": "park_weight10",
+      "dot": 737,
+      "actual_at_trigger_m": 0.00048048439202830195,
+      "predicted_at_trigger_m": 0.046579957008361816,
+      "first_trigger_s": 7.433,
+      "near_mae_m": 0.09429231286048889
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 737,
+      "actual_at_trigger_m": 0.015730516985058784,
+      "predicted_at_trigger_m": 0.04973895102739334,
+      "first_trigger_s": 6.967,
+      "near_mae_m": 0.02644197642803192
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 737,
+      "actual_at_trigger_m": 0.013201636262238026,
+      "predicted_at_trigger_m": 0.04732507839798927,
+      "first_trigger_s": 7.0,
+      "near_mae_m": 0.03698517754673958
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 749,
+      "actual_at_trigger_m": 0.10585591197013855,
+      "predicted_at_trigger_m": 0.04128660261631012,
+      "first_trigger_s": 5.867,
+      "near_mae_m": 0.11249229311943054
+    },
+    {
+      "model": "park_weight10",
+      "dot": 749,
+      "actual_at_trigger_m": 0.0891280248761177,
+      "predicted_at_trigger_m": 0.049312181770801544,
+      "first_trigger_s": 5.967,
+      "near_mae_m": 0.026601798832416534
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 749,
+      "actual_at_trigger_m": 0.08396943658590317,
+      "predicted_at_trigger_m": 0.047044359147548676,
+      "first_trigger_s": 6.0,
+      "near_mae_m": 0.04842447489500046
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 749,
+      "actual_at_trigger_m": 0.07402332127094269,
+      "predicted_at_trigger_m": 0.044565632939338684,
+      "first_trigger_s": 6.067,
+      "near_mae_m": 0.021546322852373123
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 758,
+      "actual_at_trigger_m": 0.014987649396061897,
+      "predicted_at_trigger_m": 0.042067065834999084,
+      "first_trigger_s": 4.667,
+      "near_mae_m": 0.02818395383656025
+    },
+    {
+      "model": "park_weight10",
+      "dot": 758,
+      "actual_at_trigger_m": 0.006085612345486879,
+      "predicted_at_trigger_m": 0.046774279326200485,
+      "first_trigger_s": 4.767,
+      "near_mae_m": 0.031101426109671593
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 758,
+      "actual_at_trigger_m": 0.014987649396061897,
+      "predicted_at_trigger_m": 0.04498978704214096,
+      "first_trigger_s": 4.667,
+      "near_mae_m": 0.04295603185892105
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 758,
+      "actual_at_trigger_m": 0.0202582236379385,
+      "predicted_at_trigger_m": 0.03147532790899277,
+      "first_trigger_s": 4.6,
+      "near_mae_m": 0.016634469851851463
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 764,
+      "actual_at_trigger_m": 0.012961703352630138,
+      "predicted_at_trigger_m": 0.048179637640714645,
+      "first_trigger_s": 5.6,
+      "near_mae_m": 0.045932140201330185
+    },
+    {
+      "model": "park_weight10",
+      "dot": 764,
+      "actual_at_trigger_m": 0.0012686860281974077,
+      "predicted_at_trigger_m": 0.04988916590809822,
+      "first_trigger_s": 5.967,
+      "near_mae_m": 0.07509687542915344
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 764,
+      "actual_at_trigger_m": 0.015455962158739567,
+      "predicted_at_trigger_m": 0.04907698184251785,
+      "first_trigger_s": 5.567,
+      "near_mae_m": 0.029454169794917107
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 764,
+      "actual_at_trigger_m": 0.015455962158739567,
+      "predicted_at_trigger_m": 0.0471344031393528,
+      "first_trigger_s": 5.567,
+      "near_mae_m": 0.03302875906229019
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 795,
+      "actual_at_trigger_m": 0.03554243594408035,
+      "predicted_at_trigger_m": 0.045161716639995575,
+      "first_trigger_s": 4.767,
+      "near_mae_m": 0.019353210926055908
+    },
+    {
+      "model": "park_weight10",
+      "dot": 795,
+      "actual_at_trigger_m": 0.0016673470381647348,
+      "predicted_at_trigger_m": 0.04737266153097153,
+      "first_trigger_s": 5.5,
+      "near_mae_m": 0.09799930453300476
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 795,
+      "actual_at_trigger_m": 0.014991424977779388,
+      "predicted_at_trigger_m": 0.04807142913341522,
+      "first_trigger_s": 5.0,
+      "near_mae_m": 0.03368503600358963
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 795,
+      "actual_at_trigger_m": 0.09264283627271652,
+      "predicted_at_trigger_m": 0.049135901033878326,
+      "first_trigger_s": 4.267,
+      "near_mae_m": 0.02488926239311695
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 798,
+      "actual_at_trigger_m": 0.05391615256667137,
+      "predicted_at_trigger_m": 0.044461026787757874,
+      "first_trigger_s": 5.4,
+      "near_mae_m": 0.029695449396967888
+    },
+    {
+      "model": "park_weight10",
+      "dot": 798,
+      "actual_at_trigger_m": 0.0008682772167958319,
+      "predicted_at_trigger_m": 0.04702410101890564,
+      "first_trigger_s": 6.233,
+      "near_mae_m": 0.13665908575057983
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 798,
+      "actual_at_trigger_m": 0.006074699107557535,
+      "predicted_at_trigger_m": 0.04292851686477661,
+      "first_trigger_s": 5.9,
+      "near_mae_m": 0.04864785075187683
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 798,
+      "actual_at_trigger_m": 0.04676634445786476,
+      "predicted_at_trigger_m": 0.042151130735874176,
+      "first_trigger_s": 5.467,
+      "near_mae_m": 0.00883160438388586
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 810,
+      "actual_at_trigger_m": 0.07369029521942139,
+      "predicted_at_trigger_m": 0.043929003179073334,
+      "first_trigger_s": 4.067,
+      "near_mae_m": 0.0717957392334938
+    },
+    {
+      "model": "park_weight10",
+      "dot": 810,
+      "actual_at_trigger_m": 0.00103469705209136,
+      "predicted_at_trigger_m": 0.04247407615184784,
+      "first_trigger_s": 5.1,
+      "near_mae_m": 0.13288937509059906
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 810,
+      "actual_at_trigger_m": 0.019993776455521584,
+      "predicted_at_trigger_m": 0.049252450466156006,
+      "first_trigger_s": 4.6,
+      "near_mae_m": 0.020984096452593803
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 810,
+      "actual_at_trigger_m": 0.03470023348927498,
+      "predicted_at_trigger_m": 0.04851997271180153,
+      "first_trigger_s": 4.433,
+      "near_mae_m": 0.009590755216777325
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 823,
+      "actual_at_trigger_m": 0.0005620098672807217,
+      "predicted_at_trigger_m": 0.04947713389992714,
+      "first_trigger_s": 3.733,
+      "near_mae_m": 0.08270605653524399
+    },
+    {
+      "model": "park_weight10",
+      "dot": 823,
+      "actual_at_trigger_m": 0.0063622258603572845,
+      "predicted_at_trigger_m": 0.045339036732912064,
+      "first_trigger_s": 3.5,
+      "near_mae_m": 0.03831968456506729
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 823,
+      "actual_at_trigger_m": 0.007090618368238211,
+      "predicted_at_trigger_m": 0.04582979530096054,
+      "first_trigger_s": 3.467,
+      "near_mae_m": 0.044048283249139786
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 823,
+      "actual_at_trigger_m": 0.0399993434548378,
+      "predicted_at_trigger_m": 0.04867129400372505,
+      "first_trigger_s": 3.067,
+      "near_mae_m": 0.0069002630189061165
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 830,
+      "actual_at_trigger_m": 0.040795452892780304,
+      "predicted_at_trigger_m": 0.04895888641476631,
+      "first_trigger_s": 4.3,
+      "near_mae_m": 0.010781354270875454
+    },
+    {
+      "model": "park_weight10",
+      "dot": 830,
+      "actual_at_trigger_m": 0.019700992852449417,
+      "predicted_at_trigger_m": 0.04972144961357117,
+      "first_trigger_s": 4.533,
+      "near_mae_m": 0.018689358606934547
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 830,
+      "actual_at_trigger_m": 0.010381598956882954,
+      "predicted_at_trigger_m": 0.04833564907312393,
+      "first_trigger_s": 4.633,
+      "near_mae_m": 0.027730494737625122
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 830,
+      "actual_at_trigger_m": 0.040795452892780304,
+      "predicted_at_trigger_m": 0.03742438182234764,
+      "first_trigger_s": 4.3,
+      "near_mae_m": 0.012059742584824562
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 879,
+      "actual_at_trigger_m": 0.2714635729789734,
+      "predicted_at_trigger_m": 0.042799755930900574,
+      "first_trigger_s": 6.033,
+      "near_mae_m": 0.019905151799321175
+    },
+    {
+      "model": "park_weight10",
+      "dot": 879,
+      "actual_at_trigger_m": 0.22129033505916595,
+      "predicted_at_trigger_m": 0.04988764971494675,
+      "first_trigger_s": 6.233,
+      "near_mae_m": 0.017511295154690742
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 879,
+      "actual_at_trigger_m": 0.23783963918685913,
+      "predicted_at_trigger_m": 0.04709896445274353,
+      "first_trigger_s": 6.167,
+      "near_mae_m": 0.054383739829063416
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 879,
+      "actual_at_trigger_m": 0.22129033505916595,
+      "predicted_at_trigger_m": 0.04282857105135918,
+      "first_trigger_s": 6.233,
+      "near_mae_m": 0.013800185173749924
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 880,
+      "actual_at_trigger_m": 0.0567888543009758,
+      "predicted_at_trigger_m": 0.03299417346715927,
+      "first_trigger_s": 3.933,
+      "near_mae_m": 0.020667390897870064
+    },
+    {
+      "model": "park_weight10",
+      "dot": 880,
+      "actual_at_trigger_m": 0.0567888543009758,
+      "predicted_at_trigger_m": 0.04597798362374306,
+      "first_trigger_s": 3.933,
+      "near_mae_m": 0.007439568173140287
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 880,
+      "actual_at_trigger_m": 0.017273997887969017,
+      "predicted_at_trigger_m": 0.04385527968406677,
+      "first_trigger_s": 4.367,
+      "near_mae_m": 0.021516168490052223
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 880,
+      "actual_at_trigger_m": 0.09908530116081238,
+      "predicted_at_trigger_m": 0.041437990963459015,
+      "first_trigger_s": 3.6,
+      "near_mae_m": 0.01558658853173256
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 881,
+      "actual_at_trigger_m": 0.009909761138260365,
+      "predicted_at_trigger_m": 0.047792404890060425,
+      "first_trigger_s": 6.7,
+      "near_mae_m": 0.03452277556061745
+    },
+    {
+      "model": "park_weight10",
+      "dot": 881,
+      "actual_at_trigger_m": 0.05704686790704727,
+      "predicted_at_trigger_m": 0.047779589891433716,
+      "first_trigger_s": 6.267,
+      "near_mae_m": 0.006913937162607908
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 881,
+      "actual_at_trigger_m": 0.04019106179475784,
+      "predicted_at_trigger_m": 0.04480866342782974,
+      "first_trigger_s": 6.4,
+      "near_mae_m": 0.007892487570643425
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 881,
+      "actual_at_trigger_m": 0.07652165740728378,
+      "predicted_at_trigger_m": 0.043806206434965134,
+      "first_trigger_s": 6.133,
+      "near_mae_m": 0.020046856254339218
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 910,
+      "actual_at_trigger_m": 0.0073334393091499805,
+      "predicted_at_trigger_m": 0.049597643315792084,
+      "first_trigger_s": 5.8,
+      "near_mae_m": 0.09388396143913269
+    },
+    {
+      "model": "park_weight10",
+      "dot": 910,
+      "actual_at_trigger_m": 0.0644989013671875,
+      "predicted_at_trigger_m": 0.04844754934310913,
+      "first_trigger_s": 1.8,
+      "near_mae_m": 0.010308009572327137
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 910,
+      "actual_at_trigger_m": 0.0013618445955216885,
+      "predicted_at_trigger_m": 0.04903527349233627,
+      "first_trigger_s": 2.467,
+      "near_mae_m": 0.03926343470811844
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 910,
+      "actual_at_trigger_m": 0.03895800933241844,
+      "predicted_at_trigger_m": 0.04782037064433098,
+      "first_trigger_s": 2.033,
+      "near_mae_m": 0.016786210238933563
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 921,
+      "actual_at_trigger_m": 0.0779268890619278,
+      "predicted_at_trigger_m": 0.04468684270977974,
+      "first_trigger_s": 4.6,
+      "near_mae_m": 0.05910983681678772
+    },
+    {
+      "model": "park_weight10",
+      "dot": 921,
+      "actual_at_trigger_m": 0.24886609613895416,
+      "predicted_at_trigger_m": 0.04390493035316467,
+      "first_trigger_s": 3.833,
+      "near_mae_m": 0.009287754073739052
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 921,
+      "actual_at_trigger_m": 0.07271582633256912,
+      "predicted_at_trigger_m": 0.048830389976501465,
+      "first_trigger_s": 4.633,
+      "near_mae_m": 0.027356844395399094
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 921,
+      "actual_at_trigger_m": 0.0579419769346714,
+      "predicted_at_trigger_m": 0.03960513323545456,
+      "first_trigger_s": 4.733,
+      "near_mae_m": 0.012724476866424084
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 934,
+      "actual_at_trigger_m": 0.0016963998787105083,
+      "predicted_at_trigger_m": 0.049387481063604355,
+      "first_trigger_s": 5.733,
+      "near_mae_m": 0.08827082067728043
+    },
+    {
+      "model": "park_weight10",
+      "dot": 934,
+      "actual_at_trigger_m": 0.00547385448589921,
+      "predicted_at_trigger_m": 0.04713468998670578,
+      "first_trigger_s": 5.567,
+      "near_mae_m": 0.029914960265159607
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 934,
+      "actual_at_trigger_m": 0.010569334961473942,
+      "predicted_at_trigger_m": 0.049259260296821594,
+      "first_trigger_s": 5.5,
+      "near_mae_m": 0.027512915432453156
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 934,
+      "actual_at_trigger_m": 0.04388991370797157,
+      "predicted_at_trigger_m": 0.04760733246803284,
+      "first_trigger_s": 5.133,
+      "near_mae_m": 0.004219037480652332
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 950,
+      "actual_at_trigger_m": 0.03210961073637009,
+      "predicted_at_trigger_m": 0.04809025302529335,
+      "first_trigger_s": 4.0,
+      "near_mae_m": 0.024429546669125557
+    },
+    {
+      "model": "park_weight10",
+      "dot": 950,
+      "actual_at_trigger_m": 0.06279927492141724,
+      "predicted_at_trigger_m": 0.04876624792814255,
+      "first_trigger_s": 3.7,
+      "near_mae_m": 0.006766123231500387
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 950,
+      "actual_at_trigger_m": 0.05106386914849281,
+      "predicted_at_trigger_m": 0.04947435110807419,
+      "first_trigger_s": 3.8,
+      "near_mae_m": 0.009224123321473598
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 950,
+      "actual_at_trigger_m": 0.0757061243057251,
+      "predicted_at_trigger_m": 0.04920231178402901,
+      "first_trigger_s": 3.6,
+      "near_mae_m": 0.02009410783648491
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 972,
+      "actual_at_trigger_m": 0.09277983009815216,
+      "predicted_at_trigger_m": 0.0473746620118618,
+      "first_trigger_s": 5.633,
+      "near_mae_m": 0.040522292256355286
+    },
+    {
+      "model": "park_weight10",
+      "dot": 972,
+      "actual_at_trigger_m": 0.00023201570729725063,
+      "predicted_at_trigger_m": 0.04010966047644615,
+      "first_trigger_s": 6.7,
+      "near_mae_m": 0.04876334220170975
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 972,
+      "actual_at_trigger_m": 0.00023201570729725063,
+      "predicted_at_trigger_m": 0.048453934490680695,
+      "first_trigger_s": 6.7,
+      "near_mae_m": 0.07317870110273361
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 972,
+      "actual_at_trigger_m": 0.030838755890727043,
+      "predicted_at_trigger_m": 0.04566767439246178,
+      "first_trigger_s": 6.167,
+      "near_mae_m": 0.01617876999080181
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 991,
+      "actual_at_trigger_m": null,
+      "predicted_at_trigger_m": null,
+      "first_trigger_s": null,
+      "near_mae_m": 0.17691925168037415
+    },
+    {
+      "model": "park_weight10",
+      "dot": 991,
+      "actual_at_trigger_m": 0.008348837494850159,
+      "predicted_at_trigger_m": 0.04998784884810448,
+      "first_trigger_s": 5.367,
+      "near_mae_m": 0.16201134026050568
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 991,
+      "actual_at_trigger_m": null,
+      "predicted_at_trigger_m": null,
+      "first_trigger_s": null,
+      "near_mae_m": 0.07004141807556152
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 991,
+      "actual_at_trigger_m": 0.0678689256310463,
+      "predicted_at_trigger_m": 0.04899192973971367,
+      "first_trigger_s": 3.933,
+      "near_mae_m": 0.018049044534564018
+    },
+    {
+      "model": "park_distance_four",
+      "dot": 998,
+      "actual_at_trigger_m": 0.03692584112286568,
+      "predicted_at_trigger_m": 0.041537344455718994,
+      "first_trigger_s": 3.167,
+      "near_mae_m": 0.027012016624212265
+    },
+    {
+      "model": "park_weight10",
+      "dot": 998,
+      "actual_at_trigger_m": 0.0005507470341399312,
+      "predicted_at_trigger_m": 0.04722999036312103,
+      "first_trigger_s": 3.967,
+      "near_mae_m": 0.10611191391944885
+    },
+    {
+      "model": "park_clip05_e300",
+      "dot": 998,
+      "actual_at_trigger_m": 0.015059473924338818,
+      "predicted_at_trigger_m": 0.0456257238984108,
+      "first_trigger_s": 3.433,
+      "near_mae_m": 0.028371071442961693
+    },
+    {
+      "model": "park_clip05_e1000",
+      "dot": 998,
+      "actual_at_trigger_m": 0.09765942394733429,
+      "predicted_at_trigger_m": 0.04409119859337807,
+      "first_trigger_s": 2.633,
+      "near_mae_m": 0.029941856861114502
+    }
+  ],
+  "checks": {
+    "first_300_updates_max_difference": 0.0,
+    "frozen_arm_identical": true,
+    "checkpoint_selection_verified": true,
+    "test_trajectories_opened": 0
+  },
+  "split_sha256": "286f578aec7e3ab0953592466e63014cc1dde7f467106fadf273b30762ac1abf",
+  "source_sha256": "72d733bd6667d199be99ce2798b484d9ce3478855de9ae4172198a7217c65254"
+}

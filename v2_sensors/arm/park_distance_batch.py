@@ -21,6 +21,7 @@ def check():
     xyz = np.array([[.3, .4, 8], [0, 0, 1], [.01, 0, 2], [4, 0, 0]])
     got = parking_distance(xyz, 1, np.arange(4))
     np.testing.assert_allclose(got, [.5/3, 0, .01/3, 1], atol=1e-8)
+    np.testing.assert_allclose(parking_distance(xyz, 1, np.arange(4), .5), [1, 0, .02, 1], atol=1e-8)
     rotated = xyz.copy(); rotated[:, :2] = xyz[:, :2] @ np.array([[0, -1], [1, 0]]) + [8, -5]
     np.testing.assert_allclose(parking_distance(rotated, 1, np.arange(4)), got, atol=1e-8)
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent/'driving_v2'))
@@ -36,6 +37,11 @@ def check():
         assert parked == expected and policy.ttp is None
         np.testing.assert_allclose(policy.park_distance_m, distance)
         np.testing.assert_array_equal(cmd, np.ones(4))
+    w['park_distance_scale_m'] = .5
+    for distance, expected in ((.049, 1), (.051, 0)):
+        w['park.bias'][0] = distance / .5
+        assert policy(w, np.zeros(17))[1] == expected
+        np.testing.assert_allclose(policy.park_distance_m, distance)
     del w['park_distance_scale_m']; del w['park_distance_threshold_m']
     w.update(ttp_clip=3., ttp_thresh=.25); w['park.bias'][0] = .2/3
     assert policy(w, np.zeros(17))[1] == 1 and policy.park_distance_m is None
@@ -54,9 +60,9 @@ def train(a):
     arm_sources = {'original': a.prior_root/'driving_height_no_speed11/models/reaching_seed7.npz',
                    **{n: a.prior_root/f'arm_cumulative/models/{n}/reaching_seed7.npz' for n in ('longer','wider')}}
     arm_sources = {n:p for n,p in arm_sources.items() if n in {row[2] for row in lineup}}
-    cfg = dict(seed=7, driving_epochs=300, lr=.01, dtype='float32', chunk=32768,
+    cfg = dict(seed=7, driving_epochs=a.epochs, lr=.01, dtype='float32', chunk=32768,
                validation_cases=previous['validation_cases'], cases=previous['cases'], split='val',
-               lineup=lineup, park_target='distance', park_distance_scale_m=DISTANCE_SCALE_M,
+               lineup=lineup, park_target='distance', park_distance_scale_m=a.park_scale_m,
                park_distance_threshold_m=PARK_THRESHOLD_M, park_weight=a.park_weight,
                loss=f'wheel MSE + {a.park_weight:g} * normalized PARK-distance MSE',
                label='2D distance to expert base position at parking_step; retain measured post-PARK drift',
@@ -68,7 +74,7 @@ def train(a):
     save(a.out/'config.json', cfg)
     arms=a.out/'arms'; arms.mkdir()
     for n,p in arm_sources.items(): shutil.copy2(p, arms/f'{n}.npz')
-    records,audit = load_data(a.data, driving_height=True, park_target='distance')
+    records,audit = load_data(a.data, driving_height=True, park_target='distance', park_scale_m=a.park_scale_m)
     save(a.out/'data_audit.json',audit)
     summaries=[]
     for name,remove in [('height17',False),('no_speed11',True)]:
@@ -77,7 +83,7 @@ def train(a):
         if remove:
             data={split:[dict(r,drive=(r['drive'][0][:,sensors.DRIVING_NO_SPEED_COLS],*r['drive'][1:])) for r in rs] for split,rs in records.items()}
         dest=a.out/'models'/name; dest.mkdir(parents=True)
-        args=argparse.Namespace(out=dest,device=a.device,epochs=300,stop_epochs=600,chunk=32768,park_target='distance',park_weight=a.park_weight)
+        args=argparse.Namespace(out=dest,device=a.device,epochs=a.epochs,stop_epochs=600,chunk=32768,park_target='distance',park_weight=a.park_weight,park_scale_m=a.park_scale_m)
         _,meta=train_one(data,'driving',7,args)
         summaries.append(dict(variant=name,**meta))
         save(a.out/'training_summary.json',dict(variants=summaries,elapsed_s=time.monotonic()-start,torch=torch.__version__,numpy=np.__version__))
@@ -127,6 +133,8 @@ if __name__=='__main__':
     p.add_argument('stage',choices=['check','train','evaluate'])
     for key in ('data','prior-root','out'):p.add_argument('--'+key,type=Path)
     p.add_argument('--device',choices=['cpu','cuda'],default='cuda');p.add_argument('--jobs',type=int,default=3)
+    p.add_argument('--epochs',type=int,default=300)
+    p.add_argument('--park-scale-m',type=float,default=DISTANCE_SCALE_M)
     p.add_argument('--park-weight',type=float,default=1.)
     p.add_argument('--configuration',choices=[r[0] for r in LINEUP])
     args=p.parse_args()

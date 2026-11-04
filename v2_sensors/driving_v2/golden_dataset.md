@@ -11766,3 +11766,781 @@ Only the driving loss coefficient changed. The shared trunk means this can alter
 Increasing the PARK-distance coefficient from 1 to 10 changed median parking error from **8.4 to 11.1 cm**. The new model issued PARK in **6/6** and arm STOP in **6/6** runs. Median closest reach changed from **104.9 to 113.2 mm**, and median distance at arm STOP from **214.6 to 220.6 mm**. Success within 10 mm at arm STOP was **0/6**.
 
 Only the driving loss coefficient changed. The shared trunk means this can alter wheel commands as well as PARK predictions. The arm weights stayed identical; changes in reaching reflect a different handover and subsequent trajectory. Neither the 5 cm threshold nor the training budget was adjusted after these results. The six cases are initially visible validation targets and use one seed, so this is a development comparison, not a generalisation result. No official MLflow run or reserved-test evaluation was created.
+
+
+### Development checks: half-metre PARK labels, then longer driving training
+
+Plan recorded before training: use the 11-input no-wheel-speed driving model, seed 7, 16/16 hidden layers, Adam 0.01, equal weight per run and unchanged wider arm plus STOP checkpoint. Both full runs retain camera/driving at 30 Hz and arm torque/physics at 1 kHz.
+
+1. Clip PARK labels at 0.5 m instead of 3 m and divide by 0.5; restore loss weight to 1. Train 300 epochs. The physical PARK threshold remains 5 cm, now 0.1 in output units.
+2. Keep that setup and extend driving training to 1,000 epochs, selecting the lowest total validation loss. Retrain with the same seed so the first 300 updates can be checked against the first experiment.
+
+Both use 100 training trajectories and 100 offline validation trajectories, followed by the same six full validation episodes (673, 506, 830, 720, 16, 333). No test trajectories, animations or official MLflow iterations.
+
+Prediction supplied before training: the first change raises accurate first PARK triggers within 5 cm from 38 to above 70 of 100 validation trajectories and reduces live median parking error from 8.4 to about 5 cm. Longer training is expected to add a smaller gain. If offline prediction improves without live parking improving, this would motivate investigating wheel commands and unfamiliar trajectory states; it would not by itself identify the cause. Changing the target scale also changes its effective squared-error weight in metre units, so this is not independent of loss balance.
+
+
+
+```python
+from pathlib import Path
+import json
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from IPython.display import display, Markdown
+PC_ROOT=Path('../arm/results')
+pc_names=['park_distance_four','park_weight10','park_clip05_e300','park_clip05_e1000']
+pc_labels=['3 m, 300 epochs, weight 1','3 m, 300 epochs, weight 10','0.5 m, 300 epochs, weight 1','0.5 m, 1000 epochs, weight 1']
+pc_scores=[]
+for name,label in zip(pc_names,pc_labels):
+    root=PC_ROOT/name
+    rs=[r for r in json.loads((root/'results/summary.json').read_text()) if r['variant']=='wider_arm']
+    m=json.loads((root/'models/no_speed11/driving_seed7_summary.json').read_text())
+    pc_scores.append(dict(model=label,selected_epoch=m['selected_epoch'],PARK=sum(r['parked'] for r in rs),STOP=sum(r['stop_s'] is not None for r in rs),park_cm=np.median([r['park_error_vs_expert_m']*100 for r in rs if r['parked']]),closest_mm=np.median([r['min_mm'] for r in rs if r['parked']]),arm_STOP_mm=np.median([r['at_network_stop_mm'] for r in rs if r['stop_s'] is not None]),success_10mm=sum(r['success'] for r in rs)))
+display(pd.DataFrame(pc_scores).round(2))
+print('Six full validation episodes per new model; one seed. Same frozen wider arm and separate STOP checkpoint.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>selected_epoch</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>park_cm</th>
+      <th>closest_mm</th>
+      <th>arm_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3 m, 300 epochs, weight 1</td>
+      <td>297</td>
+      <td>6</td>
+      <td>6</td>
+      <td>8.37</td>
+      <td>104.88</td>
+      <td>214.56</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3 m, 300 epochs, weight 10</td>
+      <td>300</td>
+      <td>6</td>
+      <td>6</td>
+      <td>11.11</td>
+      <td>113.23</td>
+      <td>220.63</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.5 m, 300 epochs, weight 1</td>
+      <td>300</td>
+      <td>6</td>
+      <td>6</td>
+      <td>6.68</td>
+      <td>91.23</td>
+      <td>108.09</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.5 m, 1000 epochs, weight 1</td>
+      <td>993</td>
+      <td>5</td>
+      <td>5</td>
+      <td>6.81</td>
+      <td>64.02</td>
+      <td>185.35</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Six full validation episodes per new model; one seed. Same frozen wider arm and separate STOP checkpoint.
+
+
+### Half-metre PARK target: 300 driving epochs
+
+
+```python
+PC=PC_ROOT/'park_clip05_e300'
+pc_config=json.loads((PC/'config.json').read_text());pc_train=json.loads((PC/'training_summary.json').read_text())
+pc_model=json.loads((PC/'models/no_speed11/driving_seed7_summary.json').read_text())
+pc_history=pd.DataFrame(json.loads((PC/'models/no_speed11/driving_seed7_history.json').read_text()))
+pc_rows=json.loads((PC/'results/summary.json').read_text())
+display(pd.DataFrame([dict(dot=r['dot'],PARK=r['parked'],STOP=r['stop_s'] is not None,park_cm=r['park_error_vs_expert_m']*100 if r['parked'] else np.nan,closest_mm=r['min_mm'],arm_STOP_mm=r['at_network_stop_mm']) for r in pc_rows]).round(2))
+print('Selected epoch',pc_model['selected_epoch'],'of 300; training including loading %.1f s; six simulations %.1f s' % (pc_train['elapsed_s'],json.loads((PC/'results/completion.json').read_text())['elapsed_s']))
+print('Input: 11 sensor features. Hidden layers: 16/16. Loss: wheel MSE + normalized PARK-distance MSE. Threshold: 5 cm.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dot</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>park_cm</th>
+      <th>closest_mm</th>
+      <th>arm_STOP_mm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>673</td>
+      <td>True</td>
+      <td>True</td>
+      <td>5.11</td>
+      <td>116.68</td>
+      <td>233.53</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>506</td>
+      <td>True</td>
+      <td>True</td>
+      <td>6.70</td>
+      <td>262.55</td>
+      <td>385.67</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>830</td>
+      <td>True</td>
+      <td>True</td>
+      <td>5.54</td>
+      <td>49.98</td>
+      <td>54.64</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>720</td>
+      <td>True</td>
+      <td>True</td>
+      <td>6.66</td>
+      <td>40.76</td>
+      <td>86.91</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>True</td>
+      <td>True</td>
+      <td>8.10</td>
+      <td>104.82</td>
+      <td>104.82</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>333</td>
+      <td>True</td>
+      <td>True</td>
+      <td>22.88</td>
+      <td>77.63</td>
+      <td>111.35</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Selected epoch 300 of 300; training including loading 11.7 s; six simulations 20.5 s
+    Input: 11 sensor features. Hidden layers: 16/16. Loss: wheel MSE + normalized PARK-distance MSE. Threshold: 5 cm.
+
+
+
+```python
+fig,axes=plt.subplots(1,2,figsize=(12,3.5))
+for ax,key,title in zip(axes,['command','aux'],['Wheel-command MSE','PARK-distance MSE (normalized by 0.5 m)']):
+    ax.plot(pc_history.epoch,pc_history['train_'+key],label='Training')
+    ax.plot(pc_history.epoch,pc_history['val_'+key],linestyle='--',label='Validation')
+    ax.axvline(pc_model['selected_epoch'],linestyle=':',color='grey',label='Selected checkpoint')
+    ax.set(title=title,xlabel='Epoch',ylabel='MSE',yscale='log');ax.grid(alpha=.2);ax.legend(fontsize=8)
+fig.tight_layout();plt.show()
+display(pc_history.set_index('epoch').loc[[0,300,pc_model['selected_epoch']]].drop_duplicates())
+print('Normalized PARK MSE is not directly comparable to the 3 m target. Use physical prediction errors below.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_183_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>train_command</th>
+      <th>train_aux</th>
+      <th>train_total</th>
+      <th>val_command</th>
+      <th>val_aux</th>
+      <th>val_total</th>
+      <th>seconds</th>
+    </tr>
+    <tr>
+      <th>epoch</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.035195</td>
+      <td>0.237454</td>
+      <td>3.272648</td>
+      <td>3.180272</td>
+      <td>0.243928</td>
+      <td>3.424199</td>
+      <td>0.112749</td>
+    </tr>
+    <tr>
+      <th>300</th>
+      <td>0.381578</td>
+      <td>0.010516</td>
+      <td>0.392095</td>
+      <td>0.397223</td>
+      <td>0.010571</td>
+      <td>0.407794</td>
+      <td>0.003629</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Normalized PARK MSE is not directly comparable to the 3 m target. Use physical prediction errors below.
+
+
+
+```python
+pc_audit=json.loads((PC/'offline_audit.json').read_text())
+pc_offline=pd.DataFrame(pc_audit['summary'])
+display(pc_offline[['model','runs','ever_trigger','within_5cm','over_10cm','median_actual_at_trigger_m','mean_run_near_mae_m']].round(4))
+print('First-trigger counts use all 100 recorded validation trajectories. No trigger counts as a failure. Near-PARK MAE is an equal-run mean before the expert PARK step.')
+print('Checks:',pc_audit['checks'])
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>runs</th>
+      <th>ever_trigger</th>
+      <th>within_5cm</th>
+      <th>over_10cm</th>
+      <th>median_actual_at_trigger_m</th>
+      <th>mean_run_near_mae_m</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>park_distance_four</td>
+      <td>100</td>
+      <td>94</td>
+      <td>38</td>
+      <td>17</td>
+      <td>0.0598</td>
+      <td>0.0567</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>park_weight10</td>
+      <td>100</td>
+      <td>98</td>
+      <td>62</td>
+      <td>17</td>
+      <td>0.0130</td>
+      <td>0.0465</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>park_clip05_e300</td>
+      <td>100</td>
+      <td>98</td>
+      <td>60</td>
+      <td>8</td>
+      <td>0.0342</td>
+      <td>0.0314</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>park_clip05_e1000</td>
+      <td>100</td>
+      <td>100</td>
+      <td>37</td>
+      <td>12</td>
+      <td>0.0662</td>
+      <td>0.0182</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    First-trigger counts use all 100 recorded validation trajectories. No trigger counts as a failure. Near-PARK MAE is an equal-run mean before the expert PARK step.
+    Checks: {'first_300_updates_max_difference': 0.0, 'frozen_arm_identical': True, 'checkpoint_selection_verified': True, 'test_trajectories_opened': 0}
+
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pc_config['validation_cases']):
+    r=json.loads((PC/'results'/f'wider_arm_dot{dot}.json').read_text())
+    f=[x for x in r['frames'] if x.get('driving_park_distance_m') is not None]
+    ax.plot([x['time_s'] for x in f],[100*np.linalg.norm(np.array(x['base'][:2])-r['expert_park_base_xy']) for x in f],label='Actual distance')
+    ax.plot([x['time_s'] for x in f],[100*x['driving_park_distance_m'] for x in f],label='Predicted distance')
+    ax.axhline(5,color='grey',linestyle='--',label='5 cm threshold')
+    if r['park_s'] is not None:ax.axvline(r['park_s'],color='black',linestyle=':',label='PARK')
+    ax.set(title=f'Target {dot}',xlabel='Seconds',ylabel='Distance (cm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_185_0.png)
+
+
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pc_config['validation_cases']):
+    r=json.loads((PC/'results'/f'wider_arm_dot{dot}.json').read_text());d=pd.DataFrame(r['log'])
+    if not len(d):ax.set_title(f'Target {dot}: no reaching');continue
+    ax.plot(d.t-r['park_s'],d.ee_mm,label='Actual gripper distance')
+    ax.plot(d.t-r['park_s'],1000*d.ttp_s,label='Frozen STOP prediction')
+    ax.axhline(10,color='grey',linestyle='--')
+    if r['stop_s'] is not None:ax.axvline(r['stop_s']-r['park_s'],color='black',linestyle=':',label='STOP')
+    ax.set(title=f'Target {dot}',xlabel='Seconds after PARK',ylabel='Distance (mm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+print('Arm weights are unchanged. The traces include 0.5 seconds after STOP with learned holding torques. Closest distance includes that period; distance at STOP does not.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_186_0.png)
+
+
+
+    Arm weights are unchanged. The traces include 0.5 seconds after STOP with learned holding torques. Closest distance includes that period; distance at STOP does not.
+
+
+### Half-metre PARK target: 1000 driving epochs
+
+
+```python
+PC=PC_ROOT/'park_clip05_e1000'
+pc_config=json.loads((PC/'config.json').read_text());pc_train=json.loads((PC/'training_summary.json').read_text())
+pc_model=json.loads((PC/'models/no_speed11/driving_seed7_summary.json').read_text())
+pc_history=pd.DataFrame(json.loads((PC/'models/no_speed11/driving_seed7_history.json').read_text()))
+pc_rows=json.loads((PC/'results/summary.json').read_text())
+display(pd.DataFrame([dict(dot=r['dot'],PARK=r['parked'],STOP=r['stop_s'] is not None,park_cm=r['park_error_vs_expert_m']*100 if r['parked'] else np.nan,closest_mm=r['min_mm'],arm_STOP_mm=r['at_network_stop_mm']) for r in pc_rows]).round(2))
+print('Selected epoch',pc_model['selected_epoch'],'of 1000; training including loading %.1f s; six simulations %.1f s' % (pc_train['elapsed_s'],json.loads((PC/'results/completion.json').read_text())['elapsed_s']))
+print('Input: 11 sensor features. Hidden layers: 16/16. Loss: wheel MSE + normalized PARK-distance MSE. Threshold: 5 cm.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>dot</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>park_cm</th>
+      <th>closest_mm</th>
+      <th>arm_STOP_mm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>673</td>
+      <td>True</td>
+      <td>True</td>
+      <td>6.41</td>
+      <td>240.58</td>
+      <td>263.85</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>506</td>
+      <td>True</td>
+      <td>True</td>
+      <td>6.81</td>
+      <td>141.76</td>
+      <td>185.35</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>830</td>
+      <td>False</td>
+      <td>False</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>720</td>
+      <td>True</td>
+      <td>True</td>
+      <td>5.86</td>
+      <td>40.93</td>
+      <td>85.05</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>True</td>
+      <td>True</td>
+      <td>7.43</td>
+      <td>64.02</td>
+      <td>266.35</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>333</td>
+      <td>True</td>
+      <td>True</td>
+      <td>21.28</td>
+      <td>44.04</td>
+      <td>76.54</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Selected epoch 993 of 1000; training including loading 14.6 s; six simulations 24.8 s
+    Input: 11 sensor features. Hidden layers: 16/16. Loss: wheel MSE + normalized PARK-distance MSE. Threshold: 5 cm.
+
+
+
+```python
+fig,axes=plt.subplots(1,2,figsize=(12,3.5))
+for ax,key,title in zip(axes,['command','aux'],['Wheel-command MSE','PARK-distance MSE (normalized by 0.5 m)']):
+    ax.plot(pc_history.epoch,pc_history['train_'+key],label='Training')
+    ax.plot(pc_history.epoch,pc_history['val_'+key],linestyle='--',label='Validation')
+    ax.axvline(pc_model['selected_epoch'],linestyle=':',color='grey',label='Selected checkpoint')
+    ax.set(title=title,xlabel='Epoch',ylabel='MSE',yscale='log');ax.grid(alpha=.2);ax.legend(fontsize=8)
+fig.tight_layout();plt.show()
+display(pc_history.set_index('epoch').loc[[0,300,pc_model['selected_epoch']]].drop_duplicates())
+print('Normalized PARK MSE is not directly comparable to the 3 m target. Use physical prediction errors below.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_189_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>train_command</th>
+      <th>train_aux</th>
+      <th>train_total</th>
+      <th>val_command</th>
+      <th>val_aux</th>
+      <th>val_total</th>
+      <th>seconds</th>
+    </tr>
+    <tr>
+      <th>epoch</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.035195</td>
+      <td>0.237454</td>
+      <td>3.272648</td>
+      <td>3.180272</td>
+      <td>0.243928</td>
+      <td>3.424199</td>
+      <td>0.112354</td>
+    </tr>
+    <tr>
+      <th>300</th>
+      <td>0.381578</td>
+      <td>0.010516</td>
+      <td>0.392095</td>
+      <td>0.397223</td>
+      <td>0.010571</td>
+      <td>0.407794</td>
+      <td>0.002773</td>
+    </tr>
+    <tr>
+      <th>993</th>
+      <td>0.276457</td>
+      <td>0.008317</td>
+      <td>0.284774</td>
+      <td>0.290903</td>
+      <td>0.008522</td>
+      <td>0.299425</td>
+      <td>0.003546</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Normalized PARK MSE is not directly comparable to the 3 m target. Use physical prediction errors below.
+
+
+
+```python
+pc_audit=json.loads((PC/'offline_audit.json').read_text())
+pc_offline=pd.DataFrame(pc_audit['summary'])
+display(pc_offline[['model','runs','ever_trigger','within_5cm','over_10cm','median_actual_at_trigger_m','mean_run_near_mae_m']].round(4))
+print('First-trigger counts use all 100 recorded validation trajectories. No trigger counts as a failure. Near-PARK MAE is an equal-run mean before the expert PARK step.')
+print('Checks:',pc_audit['checks'])
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>runs</th>
+      <th>ever_trigger</th>
+      <th>within_5cm</th>
+      <th>over_10cm</th>
+      <th>median_actual_at_trigger_m</th>
+      <th>mean_run_near_mae_m</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>park_distance_four</td>
+      <td>100</td>
+      <td>94</td>
+      <td>38</td>
+      <td>17</td>
+      <td>0.0598</td>
+      <td>0.0567</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>park_weight10</td>
+      <td>100</td>
+      <td>98</td>
+      <td>62</td>
+      <td>17</td>
+      <td>0.0130</td>
+      <td>0.0465</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>park_clip05_e300</td>
+      <td>100</td>
+      <td>98</td>
+      <td>60</td>
+      <td>8</td>
+      <td>0.0342</td>
+      <td>0.0314</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>park_clip05_e1000</td>
+      <td>100</td>
+      <td>100</td>
+      <td>37</td>
+      <td>12</td>
+      <td>0.0662</td>
+      <td>0.0182</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    First-trigger counts use all 100 recorded validation trajectories. No trigger counts as a failure. Near-PARK MAE is an equal-run mean before the expert PARK step.
+    Checks: {'first_300_updates_max_difference': 0.0, 'frozen_arm_identical': True, 'checkpoint_selection_verified': True, 'test_trajectories_opened': 0}
+
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pc_config['validation_cases']):
+    r=json.loads((PC/'results'/f'wider_arm_dot{dot}.json').read_text())
+    f=[x for x in r['frames'] if x.get('driving_park_distance_m') is not None]
+    ax.plot([x['time_s'] for x in f],[100*np.linalg.norm(np.array(x['base'][:2])-r['expert_park_base_xy']) for x in f],label='Actual distance')
+    ax.plot([x['time_s'] for x in f],[100*x['driving_park_distance_m'] for x in f],label='Predicted distance')
+    ax.axhline(5,color='grey',linestyle='--',label='5 cm threshold')
+    if r['park_s'] is not None:ax.axvline(r['park_s'],color='black',linestyle=':',label='PARK')
+    ax.set(title=f'Target {dot}',xlabel='Seconds',ylabel='Distance (cm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_191_0.png)
+
+
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pc_config['validation_cases']):
+    r=json.loads((PC/'results'/f'wider_arm_dot{dot}.json').read_text());d=pd.DataFrame(r['log'])
+    if not len(d):ax.set_title(f'Target {dot}: no reaching');continue
+    ax.plot(d.t-r['park_s'],d.ee_mm,label='Actual gripper distance')
+    ax.plot(d.t-r['park_s'],1000*d.ttp_s,label='Frozen STOP prediction')
+    ax.axhline(10,color='grey',linestyle='--')
+    if r['stop_s'] is not None:ax.axvline(r['stop_s']-r['park_s'],color='black',linestyle=':',label='STOP')
+    ax.set(title=f'Target {dot}',xlabel='Seconds after PARK',ylabel='Distance (mm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+print('Arm weights are unchanged. The traces include 0.5 seconds after STOP with learned holding torques. Closest distance includes that period; distance at STOP does not.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_192_0.png)
+
+
+
+    Arm weights are unchanged. The traces include 0.5 seconds after STOP with learned holding torques. Closest distance includes that period; distance at STOP does not.
+
+
+### Reading the half-metre and longer-training checks
+
+The original prediction was above 70 accurate first triggers out of 100 recorded validation trajectories. The half-metre target at 300 epochs reaches 60, up from 38, so it improves the result without meeting that prediction. It also reduces first triggers beyond 10 cm from 17 to 8. At 1,000 epochs, accurate first triggers fall to 37 despite a lower mean error near PARK: regression error and a first threshold crossing measure different things.
+
+The two runs share exactly the same first 300 updates, verified from all six raw/total loss fields. The arm checkpoint is identical and the physical PARK threshold is unchanged. The 1,000-epoch model is selected at epoch 993 by total offline validation loss. Changing the target clip alters supervision far from PARK and increases the squared-error contribution of physical errors within the final half metre; this is not a pure change of units.
+
+These are six repeatedly used, initially visible validation targets and one seed. They support a development decision, not a generalisation claim. Keep test data untouched. No new official MLflow runs or replay animations were created.
