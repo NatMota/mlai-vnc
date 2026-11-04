@@ -69,3 +69,33 @@ python collection/native/tools/share_golden.py \
 ```
 
 Verify downloaded files from the extracted folder with `shasum -a 256 -c SHA256SUMS.txt` (Mac) or `sha256sum -c SHA256SUMS.txt` (Linux).
+
+## Train the golden models (ticket 11109)
+
+`train_golden.py` opens training and validation trajectories only. It verifies source/camera hashes and timing, preserves the existing encoder conventions, weights each run equally, and selects each checkpoint on validation loss. Seeds 7, 1 and 2 are iterations 34 to 36. The architectures and losses remain those specified in the notebook plan.
+
+```bash
+python v2_sensors/arm/check_train_golden.py
+python v2_sensors/arm/train_golden.py \
+  --data /path/to/COMP0245_Golden_300 \
+  --out /path/to/new_training_output \
+  --seeds 7 1 2 --epochs 300 --stop-epochs 600 --device cuda
+```
+
+Use `--device cpu` without CUDA. The recorded GPU environment used Python 3.12, PyTorch 2.6.0+cu124 and NumPy 2.2.6 on a GTX 1060. Physics remains on CPU; CUDA training and EGL rendering are separate choices. `models/golden_11109/environment.json` records the GPU driver and native simulator hashes. New output directories are required so earlier runs cannot be overwritten.
+
+The trainer saves folded NumPy weights, resumable PyTorch checkpoints, every epoch's losses, selected-epoch metadata and a data audit. NumPy exports are checked against PyTorch on fixed training and validation rows. Checkpoints are also MLflow artifacts; `.pt` files are not required for NumPy inference. The frozen models and histories are under `models/golden_11109`.
+
+```bash
+CAMERA_RENDERER=egl NATIVE_ROOT=/path/to/comp0245-native-expert \
+  CAMERA_URDF=/path/to/comp0245-native-expert/assets/summit_xl_arm_description/summit_xl_complete.urdf \
+  python v2_sensors/arm/validate_golden.py \
+  --data /path/to/COMP0245_Golden_300 \
+  --models /path/to/new_training_output --out /path/to/new_validation_output --jobs 2
+```
+
+Use a Python environment with PyBullet and the built native `sensor_parking` executable. `CAMERA_RENDERER=tiny` selects CPU rendering explicitly. Validation uses the ten target IDs fixed in the training config, for each seed; the final 100-target test belongs to ticket 11110. The expert is a recorded reference only. Actual distance at the exact STOP step is scored; subsequent drift is separate.
+
+The original notebook now includes tables, every loss term, stopping diagnostics and lazy 3D players with recorded camera previews. Its first 320 cells and outputs are preserved. Only the appended analysis was executed, because historical cells retrain and overwrite earlier models. Player HTML files are generated and published as MLflow artifacts, with their camera images embedded. `report_golden.py` rebuilds them from saved validation results and camera previews; the training weights do not depend on those previews.
+
+Continue new golden-data work in `../driving_v2/golden_dataset.ipynb`. It starts with split checks and a five-row training preview, then the three frozen baselines with their full analysis. The existing `driving_v2_sensors.ipynb` remains intact at 361 cells. The new notebook is executed and can be read without downloading the full data package; set `GOLDEN_DATA_ROOT` to the extracted package for new data loading or training. The fixed native PD-plus-model-gravity arm hold during driving remains part of this baseline; learned torque control starts at PARK.

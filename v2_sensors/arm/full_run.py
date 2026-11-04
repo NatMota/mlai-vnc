@@ -29,11 +29,18 @@ DRIVING = HERE.parent / 'driving_v2'
 EXPERT = json.loads((DRIVING / 'expert_reference.json').read_text())['bearings']
 
 
-def one(wd, wa, bearing, tag_frames=True):
+def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None):
     import pybullet as p
-    m = json.loads((DATA / f'run_{bearing // 12 - 1}/manifest.json').read_text())
+    if camera_dir is not None:
+        from render_golden import png
+        camera_dir = Path(camera_dir)
+        camera_dir.mkdir(parents=True, exist_ok=True)
+    if case is None:
+        m = json.loads((DATA / f'run_{bearing // 12 - 1}/manifest.json').read_text())
+        ref, split = EXPERT[str(int(bearing))], SPLIT[bearing]
+    else:
+        m, ref, split = case['manifest'], case['reference'], case['split']
     target, expert_stop = m['target_position_world_m'], (m['steps'] - 1) / 1000
-    ref = EXPERT[str(int(bearing))]
     limit = ref['park_time_s'] + 3.0 + (expert_stop - ref['park_time_s']) + 1.0      # the expert's time plus 3 s to park and 1 s to reach
     sim = subprocess.Popen([str(PIXI), 'run', 'build-clang19/sensor_parking', str(NATIVE / 'assets')], cwd=NATIVE,
                            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True,
@@ -60,7 +67,7 @@ def one(wd, wa, bearing, tag_frames=True):
         n_in = wa['shared.0.weight'].shape[1]
         use_time = bool(wa['info_time']) if 'info_time' in wa else n_in == 19
         visible_flag = wd['shared.0.weight'].shape[1] == 16
-        cmd = np.zeros(4); parked = False; park_step = None; stop_t = None; est = None; seen = None
+        cmd = np.zeros(4); parked = False; park_step = None; stop_t = None; stop_mm = None; est = None; seen = None
         next_frame = 0; frames = []; log = []; closest = np.inf; tau = np.zeros(7); ttp = None; never_seen = 0
         while not state['done']:
             f = state['frame']; t = f['time_s']; step = f['step']
@@ -68,6 +75,11 @@ def one(wd, wa, bearing, tag_frames=True):
                 B = np.array(p.getMatrixFromQuaternion(f['quaternion'])).reshape(3, 3)
                 scene.pose(np.r_[f['base'], f['quaternion']], names, f['joints'], target)
                 rgb, depth, _ = scene.fisheye(np.array(f['base']) + B @ MOUNT, np.c_[-B[:, 1], -B[:, 2], B[:, 0]])
+                camera_src = None
+                if camera_dir is not None:
+                    image_path = camera_dir / f'{step:06d}.png'
+                    png(image_path, rgb[::2, ::2])  # 128 px replay preview; detector still sees the original 256 px image.
+                    camera_src = f'{camera_dir.name}/{image_path.name}'
                 seen = see_dot(rgb, depth)
                 reading = wheels.read(f)
                 wheel_x, wheel_speed = sensors.wheel_features(reading['wheel_angle'], reading['wheel_speed'])[0], reading['wheel_speed']
@@ -86,7 +98,7 @@ def one(wd, wa, bearing, tag_frames=True):
                 frames.append(dict(time_s=t, base=f['base'], quaternion=f['quaternion'], joints=f['joints'], ee=f['ee'],
                                    parked=parked, stopped=stop_t is not None, ttp_s=ttp, tau=np.round(tau, 3).tolist(),
                                    ee_mm=1000 * state['ee_distance_m'], visible=seen is not None, true_dist=float(np.hypot(dx, dy)),
-                                   est_dist=dot_in[0] if not parked else None, wheel=np.round(cmd, 3).tolist()))
+                                   est_dist=dot_in[0] if not parked else None, wheel=np.round(cmd, 3).tolist(), camera_src=camera_src))
                 next_frame = round(len(frames) * 1000 / 30)
             req = dict(op='step', wheel=cmd.tolist(), park=parked, ms=1)
             if parked:
@@ -97,6 +109,7 @@ def one(wd, wa, bearing, tag_frames=True):
                 tau, ttp = arm_policy(wa, x)
                 if stop_t is None and ttp <= float(wa['ttp_thresh']):
                     stop_t = t
+                    stop_mm = 1000 * state['ee_distance_m']
                 req.update(arm=np.clip(tau, -30, 30).tolist(), stop=stop_t is not None)
                 closest = min(closest, 1000 * state['ee_distance_m'])
                 if step % 10 == 0:
@@ -108,17 +121,18 @@ def one(wd, wa, bearing, tag_frames=True):
             state = call(req)
         f = state['frame']
         park_xy = frames[-1]['base'][:2] if park_step is None else next(fr['base'][:2] for fr in frames if fr['parked'])
-        return dict(bearing=bearing, split=SPLIT[bearing], parked=parked, park_s=None if park_step is None else park_step / 1000,
+        return dict(bearing=bearing, split=split, parked=parked, park_s=None if park_step is None else park_step / 1000,
                     expert_park_s=ref['park_time_s'], park_error_vs_expert_m=float(np.hypot(*(np.array(park_xy) - np.array(ref['park_base_xy'])))),
                     final_base_error_vs_expert_m=float(np.hypot(*(np.array(f['base'][:2]) - np.array(ref['final_base_xy'])))),
                     stop_s=stop_t, expert_stop_s=expert_stop, expert_stop_mm=1000 * m['final_pre_step_ee_error_m'],
                     min_mm=float(closest) if np.isfinite(closest) else None, end_mm=1000 * state['ee_distance_m'],
                     at_expert_stop_mm=next((fr['ee_mm'] for fr in frames if fr['time_s'] >= expert_stop), 1000 * state['ee_distance_m']),
-                    at_network_stop_mm=next((l['ee_mm'] for l in log if stop_t is not None and l['t'] >= stop_t), None),
+                    at_network_stop_mm=stop_mm,
                     visible_at_park=None if park_step is None else next(fr['visible'] for fr in frames if fr['parked']),
                     steps_without_estimate=never_seen, limit_s=limit, log=log, frames=frames if tag_frames else [])
     finally:
         sim.kill()
+        sim.wait()
 
 
 if __name__ == '__main__':

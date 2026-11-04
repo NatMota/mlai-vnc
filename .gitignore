@@ -19,3 +19,6 @@ outputs/
 # v2 sensors: the expert driving dataset is small and is versioned with the code.
 !v2_sensors/driving_30/data/
 v2_sensors/**/viewer_*.html
+# Recorded camera previews are embedded in the generated golden-data players.
+v2_sensors/arm/results/golden_11109/*_camera/
+v2_sensors/arm/results/golden_11109/seed*_dot*.json

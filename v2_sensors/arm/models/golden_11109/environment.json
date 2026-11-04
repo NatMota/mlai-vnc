@@ -1,0 +1,13 @@
+{
+  "platform": "Linux-7.0.0-29-generic-x86_64-with-glibc2.39",
+  "gpu": "NVIDIA GeForce GTX 1060 6GB, 580.173.02",
+  "native_files": {
+    "src/sensor_parking.cpp": "a5b41dda5672b9c9bf5e3cae0b78ecd85d985b0f8cc940149c110a27a754d0f6",
+    "build-clang19/sensor_parking": "7c13efbd4d888b5feec37d67a8898bed478872fb73e7ec878004fa18ee1de2ac",
+    "pixi.toml": "6ddc47561b438770906474ed245fdf547447871e0aedd65464dd24042457a5ae",
+    "pixi.lock": "28be5a23d89ddd413e6cc6a71729225dad994a797abdbcfb9e8a1ee81abd273d"
+  },
+  "validation_renderer": "egl",
+  "training_dtype": "float32",
+  "training_device": "cuda"
+}

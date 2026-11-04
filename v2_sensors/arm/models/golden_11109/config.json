@@ -1,0 +1,34 @@
+{
+  "seeds": [
+    7,
+    1,
+    2
+  ],
+  "epochs": 300,
+  "stop_epochs": 600,
+  "chunk": 32768,
+  "lr": 0.01,
+  "device": "cuda",
+  "threads": 4,
+  "dtype": "float32",
+  "validation_cases": [
+    6,
+    131,
+    204,
+    268,
+    374,
+    506,
+    587,
+    676,
+    823,
+    998
+  ],
+  "torch": "2.6.0+cu124",
+  "numpy": "2.2.6",
+  "python": "3.12.3",
+  "git_commit": "948f2da525e968be6fac18237a9daf17e25da7af",
+  "trainer_sha256": "615f1c1da119ddf8965743089020b1208c2249b94dbbf7deba890ccce70c6e91",
+  "sensor_sha256": "ec282372f387e3aade997fabe85dfd80c218bb418ccc130d1622cb2c1c5e66e8",
+  "representative_seed_rule": "median of summed component validation objectives; seed order breaks ties",
+  "test_status": "reserved for ticket 11110; not evaluated here"
+}
