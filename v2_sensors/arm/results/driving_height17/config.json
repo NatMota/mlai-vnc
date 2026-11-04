@@ -1,0 +1,64 @@
+{
+  "seed": 7,
+  "epochs": 300,
+  "lr": 0.01,
+  "chunk": 32768,
+  "threads": 4,
+  "dtype": "float32",
+  "cases": [
+    {
+      "dot": 673,
+      "range_m": 1.2746534894794994,
+      "height_m": 0.2348753097311087,
+      "initially_visible": true
+    },
+    {
+      "dot": 506,
+      "range_m": 1.7874425114599553,
+      "height_m": 0.25782178195547145,
+      "initially_visible": true
+    },
+    {
+      "dot": 830,
+      "range_m": 1.3522775567422742,
+      "height_m": 0.8960560734670561,
+      "initially_visible": true
+    },
+    {
+      "dot": 720,
+      "range_m": 1.7345368403244252,
+      "height_m": 0.7915375931659664,
+      "initially_visible": true
+    },
+    {
+      "dot": 16,
+      "range_m": 1.1487338924706232,
+      "height_m": 1.1272227094062415,
+      "initially_visible": true
+    },
+    {
+      "dot": 333,
+      "range_m": 1.5516410473905111,
+      "height_m": 1.2117764064657652,
+      "initially_visible": true
+    }
+  ],
+  "split": "val",
+  "validation_cases": [
+    673,
+    506,
+    830,
+    720,
+    16,
+    333
+  ],
+  "selection": "one initially-visible validation target per low/mid/high height and near/far stratum; nearest stratum centre; no outcome selection",
+  "baseline_hashes": {
+    "driving_seed7.npz": "469f0b643ab5b4d5fb2ec7c784d6daada1477605fe892e119407409b42f0fe94",
+    "reaching_seed7.npz": "cea9ff269766842e9cfb499943fafa4344f7e8c377f3971cbcba3b7b54b00788"
+  },
+  "split_sha256": "286f578aec7e3ab0953592466e63014cc1dde7f467106fadf273b30762ac1abf",
+  "test_trajectories_opened": 0,
+  "change": "append camera-tracked robot-frame height in metres; 16 to 17 driving inputs; unchanged reaching",
+  "expectation": "lower paired median parking error, particularly low/high targets; worse or equal error does not support the benefit on these six cases"
+}

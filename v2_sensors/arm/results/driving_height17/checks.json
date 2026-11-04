@@ -1,0 +1,14 @@
+{
+  "source_sha256": {
+    "v2_sensors/arm/driving_height.py": "fec6b0852db55dbbd47e7775a56b916140e1d030acbb82d463399adf449ea41c",
+    "v2_sensors/arm/train_golden.py": "ab860cf229ca5ecfdce9c600d44ddf53ec8dd762a76c2ed4f0acef52051b8271",
+    "v2_sensors/arm/full_run.py": "0f33ab1ddc3743a09af961d19749f3a81908dc7beb56255541eca6e618f14663",
+    "v2_sensors/driving_v2/camera_loop.py": "d9f021e9a7f437dfdbe6f30cd34afef72be2aefbea6c565048d6df3eaf78dcfd",
+    "v2_sensors/driving_v2/sensors.py": "ec282372f387e3aade997fabe85dfd80c218bb418ccc130d1622cb2c1c5e66e8"
+  },
+  "baseline_dot506_parity": "exact PARK/STOP times, parking error, closest approach and STOP error match previous validation recording",
+  "height_input_check": "legacy input parity; causal zero before sighting; tracked height retained when hidden",
+  "arm_checkpoint_unchanged": true,
+  "old_input_scaling_unchanged": true,
+  "native_files_unchanged": true
+}

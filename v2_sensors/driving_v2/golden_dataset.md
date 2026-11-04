@@ -3289,9 +3289,9 @@ display(HTML(f'<a href="{player_url}" target="_blank">Open all 100 test replays 
 ```
 
 
-<div><button onclick="var f=document.getElementById('playera2f7a1e2');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player9d27662d');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playera2f7a1e2" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player9d27662d" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -5556,9 +5556,9 @@ display(HTML(f'<a href="{player_url}" target="_blank">Open all 100 test replays 
 ```
 
 
-<div><button onclick="var f=document.getElementById('player8de70b31');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed1.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('playere4e247af');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed1.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="player8de70b31" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="playere4e247af" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7823,9 +7823,9 @@ display(HTML(f'<a href="{player_url}" target="_blank">Open all 100 test replays 
 ```
 
 
-<div><button onclick="var f=document.getElementById('playerf4c2a9bc');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed2.html';f.style.display='block';this.style.display='none'"
+<div><button onclick="var f=document.getElementById('player9361c13a');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/viewer_golden_seed2.html';f.style.display='block';this.style.display='none'"
  style="padding:8px 14px;font-size:14px">Load the 3D player</button>
-<iframe id="playerf4c2a9bc" style="display:none;width:100%;height:810px;border:0"></iframe></div>
+<iframe id="player9361c13a" style="display:none;width:100%;height:810px;border:0"></iframe></div>
 
 
 
@@ -7850,3 +7850,401 @@ Seed 2: 96/100 PARK, 81/100 STOP and 0/100 successful stops within 10 mm (Wilson
 This completes the frozen baseline evaluation. Differences between seeds measure the variation from training on the same data. Future planned changes should be selected using training/validation, then evaluated on these same fixed test IDs. Test outcomes do not select a checkpoint or change a deadline.
 
 The historical `driving_v2_sensors.ipynb` remains unchanged at 361 cells. Validation smoke checks are not official MLflow runs; iterations 34 to 36 contain the full tests and original training histories.
+
+
+## Development iteration: camera height for driving
+
+### Plan and expected results
+
+Add one sensor input: tracked target height relative to the robot, in metres. Driving changes from 16 -> 16 -> 16 to 17 -> 16 -> 16, with the same four wheel-speed outputs and time-to-PARK head. All wheel-angle and speed inputs stay. Height comes from the existing camera/tracker, zero before first detection and held when temporarily hidden. There is no search rule or simulator-truth input.
+
+Train only driving, from scratch with seed 7, on all 100 golden training runs; choose the checkpoint on all 100 validation runs. Keep FP32, Adam learning rate 0.01, 300 epochs, equal run weighting, existing angle scaling, wheel MSE and time-to-PARK MSE unchanged. Height stays in metres. The existing seed-7 reaching checkpoint is retained byte for byte.
+
+Compare baseline and height models on the same six validation targets, selected before training by low/middle/high target height crossed with nearer/farther range. All are visible initially, so this checks approach and parking rather than unseen-target behaviour. Every episode starts normally and runs both learned networks through reaching. Full camera rendering, 30 Hz driving/camera, 1 kHz torque/physics and existing deadlines are unchanged. No camera videos or reserved-test evaluation are generated.
+
+Prediction: lower median parking error, especially for low/high targets whose expert parking distance changes with height. Equal or worse paired parking error does not support improvement on this screen. Report every case, PARK/STOP counts, heading, closest reach and distance at STOP; six targets and one seed do not establish generalisation.
+
+Frozen validation cases: 673, 506, 830, 720, 16, 333. Selection uses target metadata and initial visibility, never model outcomes. This is a development comparison, not an official test iteration or MLflow run.
+
+
+### Camera-height experiment: saved configuration and checks
+
+
+```python
+H = Path('../arm/results/driving_height17')
+height_config = json.loads((H/'config.json').read_text())
+height_training = json.loads((H/'models/summary.json').read_text())
+height_checks = json.loads((H/'checks.json').read_text())
+assert height_checks['arm_checkpoint_unchanged'] and height_checks['old_input_scaling_unchanged']
+display(pd.DataFrame(height_config['cases']).rename(columns={'dot':'validation_target'}))
+print('Driving: 17 -> 16 -> 16; seed 7; selected epoch', height_training['driving']['selected_epoch'])
+print('Reaching: existing seed-7 checkpoint unchanged. No test trajectories opened.')
+print('Training including loading: %.2f s; optimiser/export stage: %.2f s' % (height_training['elapsed_s'], height_training['driving']['elapsed_s']))
+print('Twelve full simulations: %.2f s' % json.loads((H/'results/completion.json').read_text())['elapsed_s'])
+print('Checks:', height_checks['height_input_check'])
+print('Baseline replay:', height_checks['baseline_dot506_parity'])
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>validation_target</th>
+      <th>range_m</th>
+      <th>height_m</th>
+      <th>initially_visible</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>673</td>
+      <td>1.274653</td>
+      <td>0.234875</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>506</td>
+      <td>1.787443</td>
+      <td>0.257822</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>830</td>
+      <td>1.352278</td>
+      <td>0.896056</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>720</td>
+      <td>1.734537</td>
+      <td>0.791538</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>16</td>
+      <td>1.148734</td>
+      <td>1.127223</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>333</td>
+      <td>1.551641</td>
+      <td>1.211776</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Driving: 17 -> 16 -> 16; seed 7; selected epoch 300
+    Reaching: existing seed-7 checkpoint unchanged. No test trajectories opened.
+    Training including loading: 14.05 s; optimiser/export stage: 1.89 s
+    Twelve full simulations: 43.67 s
+    Checks: legacy input parity; causal zero before sighting; tracked height retained when hidden
+    Baseline replay: exact PARK/STOP times, parking error, closest approach and STOP error match previous validation recording
+
+
+### Training and validation loss: unchanged objectives
+
+
+```python
+fig, axes = plt.subplots(1, 2, figsize=(12, 3.5))
+for label, directory, colour in [('Baseline', MODELS, 'tab:blue'), ('Camera height', H/'models', 'tab:orange')]:
+    history = pd.DataFrame(json.loads((directory/'driving_seed7_history.json').read_text()))
+    for axis, field, title in zip(axes, ['command', 'aux'], ['Wheel-command MSE', 'Time-to-PARK MSE (normalised by 3 s)']):
+        axis.plot(history.epoch, history['train_'+field], color=colour, label=label+' training')
+        axis.plot(history.epoch, history['val_'+field], color=colour, linestyle='--', label=label+' validation')
+        axis.set(xlabel='Epoch', ylabel='Equal-run MSE', title=title, yscale='log')
+        axis.grid(alpha=.2)
+axes[0].legend(fontsize=8)
+fig.tight_layout(); plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_63_0.png)
+
+
+
+### Paired results: complete driving and reaching episodes
+
+
+```python
+height_rows = json.loads((H/'results/summary.json').read_text())
+height_results = pd.DataFrame([dict(variant=r['variant'], dot=r['dot'], parked=r['parked'],
+    park_cm=100*r['park_error_vs_expert_m'] if r['parked'] else np.nan,
+    heading_deg=abs(np.degrees(r['park_heading_error_rad'])) if r['park_heading_error_rad'] is not None else np.nan,
+    park_s=r['park_s'], stopped=r['stop_s'] is not None, closest_mm=r['min_mm'],
+    at_stop_mm=r['at_network_stop_mm'], drift_mm=r['post_stop_drift_mm'], success=r['success']) for r in height_rows])
+assert len(height_results)==12 and height_results.groupby('variant').size().eq(6).all()
+height_pair = height_results.pivot(index='dot', columns='variant', values=['park_cm', 'heading_deg', 'closest_mm', 'at_stop_mm'])
+display(height_pair.round(1))
+height_score = height_results.groupby('variant').agg(attempts=('dot','size'), PARK=('parked','sum'), STOP=('stopped','sum'),
+    median_park_cm=('park_cm','median'), median_heading_deg=('heading_deg','median'),
+    median_closest_mm=('closest_mm','median'), median_at_STOP_mm=('at_stop_mm','median'), success_10mm=('success','sum'))
+display(height_score.round(2))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">park_cm</th>
+      <th colspan="2" halign="left">heading_deg</th>
+      <th colspan="2" halign="left">closest_mm</th>
+      <th colspan="2" halign="left">at_stop_mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th>baseline</th>
+      <th>height</th>
+      <th>baseline</th>
+      <th>height</th>
+      <th>baseline</th>
+      <th>height</th>
+      <th>baseline</th>
+      <th>height</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>21.0</td>
+      <td>15.9</td>
+      <td>11.5</td>
+      <td>11.6</td>
+      <td>289.9</td>
+      <td>337.7</td>
+      <td>317.1</td>
+      <td>486.1</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>56.2</td>
+      <td>60.0</td>
+      <td>2.7</td>
+      <td>8.6</td>
+      <td>576.7</td>
+      <td>577.9</td>
+      <td>578.3</td>
+      <td>619.6</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>42.3</td>
+      <td>49.4</td>
+      <td>0.5</td>
+      <td>0.9</td>
+      <td>577.7</td>
+      <td>652.0</td>
+      <td>662.5</td>
+      <td>752.8</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>14.1</td>
+      <td>12.1</td>
+      <td>13.5</td>
+      <td>14.3</td>
+      <td>100.3</td>
+      <td>519.9</td>
+      <td>259.4</td>
+      <td>793.2</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>61.0</td>
+      <td>30.7</td>
+      <td>2.7</td>
+      <td>0.9</td>
+      <td>596.9</td>
+      <td>299.2</td>
+      <td>623.5</td>
+      <td>314.4</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>29.8</td>
+      <td>14.2</td>
+      <td>16.1</td>
+      <td>18.6</td>
+      <td>300.7</td>
+      <td>249.4</td>
+      <td>339.9</td>
+      <td>279.7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_heading_deg</th>
+      <th>median_closest_mm</th>
+      <th>median_at_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>baseline</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>36.04</td>
+      <td>7.10</td>
+      <td>438.71</td>
+      <td>459.08</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>height</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>23.31</td>
+      <td>10.06</td>
+      <td>428.82</td>
+      <td>552.86</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+### Where height helped and where it did not
+
+
+```python
+fig, axes = plt.subplots(1, 2, figsize=(12, 3.8))
+ids = height_config['validation_cases']; locations = np.arange(len(ids))
+for offset, variant, colour in [(-.18,'baseline','tab:blue'),(.18,'height','tab:orange')]:
+    data = height_results[height_results.variant==variant].set_index('dot').loc[ids]
+    axes[0].bar(locations+offset, data.park_cm, width=.36, label=variant, color=colour)
+    axes[1].bar(locations+offset, data.closest_mm, width=.36, label=variant, color=colour)
+for ax in axes:
+    ax.set_xticks(locations, ids); ax.set_xlabel('Fixed validation target'); ax.legend(); ax.grid(axis='y',alpha=.2)
+axes[0].set(title='Parking error versus expert', ylabel='cm')
+axes[1].set(title='Closest gripper approach after PARK', ylabel='mm')
+fig.tight_layout(); plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_67_0.png)
+
+
+
+### Reading the result
+
+
+```python
+better = int((height_pair['park_cm']['height'] < height_pair['park_cm']['baseline']).sum())
+before, after = height_score.loc['baseline'], height_score.loc['height']
+display(Markdown(f"""Adding camera height improved parking on **{better}/6** validation targets. Median parking error fell from **{before.median_park_cm:.1f} cm to {after.median_park_cm:.1f} cm**, a {100*(1-after.median_park_cm/before.median_park_cm):.1f}% reduction. Both versions issued PARK and STOP in all six episodes.
+
+The whole task remains unstable. Median closest gripper distance changed from **{before.median_closest_mm:.1f} mm to {after.median_closest_mm:.1f} mm**, while median distance at STOP worsened from **{before.median_at_STOP_mm:.1f} mm to {after.median_at_STOP_mm:.1f} mm**. Neither version succeeded within 10 mm. The reaching weights are identical, but they receive different parked states and subsequent sensor inputs.
+
+The largest parking gains were on the two middle-height targets, rather than consistently on the high/low targets as predicted. Far low target 506 and far high target 333 became worse. This is partial support for the added input, not a clean explanation of the failure or evidence that the system is stable.
+
+This is one seed and six selected validation targets, all initially visible. No conclusion about unseen-target acquisition or generalisation is justified. The extra input also changes random initialisation under the same seed, so additional seeds would be needed to establish a robust benefit. No changes were made to search behaviour, losses, wheel-speed inputs, physics, sensor rates or reaching weights. The reserved test set was not rerun.
+
+The comparison is a development check without a new official MLflow entry. Original iterations 34–36 and their results remain unchanged."""))
+```
+
+
+Adding camera height improved parking on **4/6** validation targets. Median parking error fell from **36.0 cm to 23.3 cm**, a 35.3% reduction. Both versions issued PARK and STOP in all six episodes.
+
+The whole task remains unstable. Median closest gripper distance changed from **438.7 mm to 428.8 mm**, while median distance at STOP worsened from **459.1 mm to 552.9 mm**. Neither version succeeded within 10 mm. The reaching weights are identical, but they receive different parked states and subsequent sensor inputs.
+
+The largest parking gains were on the two middle-height targets, rather than consistently on the high/low targets as predicted. Far low target 506 and far high target 333 became worse. This is partial support for the added input, not a clean explanation of the failure or evidence that the system is stable.
+
+This is one seed and six selected validation targets, all initially visible. No conclusion about unseen-target acquisition or generalisation is justified. The extra input also changes random initialisation under the same seed, so additional seeds would be needed to establish a robust benefit. No changes were made to search behaviour, losses, wheel-speed inputs, physics, sensor rates or reaching weights. The reserved test set was not rerun.
+
+The comparison is a development check without a new official MLflow entry. Original iterations 34–36 and their results remain unchanged.

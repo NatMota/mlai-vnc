@@ -64,6 +64,20 @@ def wheel_features(q, qd, q0):
     return np.r_[t, qd[:4], (r + l) / 2, r - l, (vr + vl) / 2, vr - vl]
 
 
+def driving_inputs(w, wheel, dot, visible, height=None):
+    """Legacy 15/16 inputs, or 17 with tracked robot-frame height appended in metres."""
+    n = w['shared.0.weight'].shape[1]
+    if n not in (15, 16, 17):
+        raise ValueError(f'Unsupported driving input count: {n}')
+    camera = [0., 0., 0.] if dot is None else [float(np.hypot(*dot[:2])), np.sin(np.arctan2(dot[1], dot[0])), np.cos(np.arctan2(dot[1], dot[0]))]
+    x = np.r_[wheel, camera, [float(visible)] if n >= 16 else []]
+    if n == 17:
+        if not bool(w.get('info_camera_height', False)):
+            raise ValueError('17-input driving checkpoint must declare camera height')
+        x = np.r_[x, 0. if height is None else height]
+    return x.astype(np.float32)
+
+
 def policy(w, x):
     for layer in ('shared.0', 'shared.2'):
         x = np.maximum(x @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
@@ -98,7 +112,8 @@ def run(weights_path, bearing, max_s, use_visible_flag=False):
                 return out
     names = call()['joint_names']
     state = call(dict(op='reset', target=target, max_duration_s=max_s))
-    scene, tracker, log = Scene(), Tracker(), []
+    height_input = bool(w.get('info_camera_height', False))
+    scene, tracker, log = Scene(), Tracker(keep_height=height_input), []
     q0 = np.array(state['frame']['joints'][:4]); parked = False
     if use_encoders:
         robot_sensors.reset(state['frame'])
@@ -123,10 +138,8 @@ def run(weights_path, bearing, max_s, use_visible_flag=False):
             if dot is None:
                 dot_in = [0.0, 0.0, 0.0]            # never seen yet: no information
             else:
-                a = np.arctan2(dot[1], dot[0]); dot_in = [float(np.hypot(*dot)), np.sin(a), np.cos(a)]
-            x = np.r_[wheel_x, dot_in]
-            if use_visible_flag:
-                x = np.r_[x, float(seen is not None)]
+                a = np.arctan2(dot[1], dot[0]); dot_in = [float(np.hypot(*dot[:2])), np.sin(a), np.cos(a)]
+            x = driving_inputs(w, wheel_x, dot, seen is not None, dot[2] if height_input and dot is not None else None)
             cmd, prob = policy(w, x.astype(np.float32))
             park = parked or prob >= 0.5; parked = park
             # True dot relative to the robot, for logging only.

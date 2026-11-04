@@ -45,7 +45,7 @@ def arm_readings(q):
     return angles, speed
 
 
-def load_data(root):
+def load_data(root, driving_height=False):
     splits = json.loads((root / 'split.json').read_text())
     manifest = json.loads((root / 'manifest.json').read_text())
     files = {v['path']: v['sha256'] for v in manifest['files']}
@@ -92,6 +92,8 @@ def load_data(root):
                 drive_steps = np.r_[before, after]
                 dcam = camera_inputs(split, dot, drive_steps, root=root / 'camera')
                 xdrive = np.c_[dcam['wheel'], dcam['drive']].astype(np.float32)
+                if driving_height:
+                    xdrive = np.c_[xdrive, dcam['arm'][:, 2]].astype(np.float32)
                 wheel = a['wheel_command'][drive_steps].copy()
                 parked = drive_steps >= park
                 # Keep iteration 13's parked labels, checking the recorded commands first.
@@ -131,9 +133,9 @@ def load_data(root):
 
 
 class Driving(nn.Module):
-    def __init__(self):
+    def __init__(self, n_in=16):
         super().__init__()
-        self.shared = nn.Sequential(nn.Linear(16, 16), nn.ReLU(), nn.Linear(16, 16), nn.ReLU())
+        self.shared = nn.Sequential(nn.Linear(n_in, 16), nn.ReLU(), nn.Linear(16, 16), nn.ReLU())
         self.wheels, self.park = nn.Linear(16, 4), nn.Linear(16, 1)
 
     def forward(self, x):
@@ -192,7 +194,7 @@ def train_one(records, kind, seed, args):
     if kind == 'driving':
         xm[ANGLE_COLS] = x[:, ANGLE_COLS].mean(0)
         xs[ANGLE_COLS] = np.maximum(x[:, ANGLE_COLS].std(0), 1e-6)
-        model = Driving()
+        model = Driving(x.shape[1])
     else:
         xs = physical_scale(False, True, False).astype(np.float32)
         if kind == 'torque':
@@ -261,7 +263,7 @@ def train_one(records, kind, seed, args):
                 input_mean=xm.tolist(), input_scale=xs.tolist(), output_mean=ym.tolist(), output_scale=ys.tolist())
     w.update(info_seed=np.int64(seed), info_epochs=np.int64(best['epoch']), info_encoders=np.int64(1),
              info_time=np.int64(0), info_imu=np.int64(0), info_dot_input='camera_tracker',
-             info_inputs=np.int64(len(xm)), info_target='sample', info_hz=np.int64(30 if kind=='driving' else 1000),
+             info_inputs=np.int64(len(xm)), info_camera_height=np.int64(kind == 'driving' and len(xm) == 17), info_target='sample', info_hz=np.int64(30 if kind=='driving' else 1000),
              info_input_mean=xm, info_input_std=xs,
              info_scaling='standardised_angles' if kind=='driving' else 'physical_inputs',
              info_stop_target='time' if kind=='driving' else 'distance',
