@@ -1,0 +1,52 @@
+{
+  "frames": 287,
+  "visibility_mismatches": 4,
+  "mismatched_steps": [
+    8067,
+    8733,
+    8800,
+    8833
+  ],
+  "detection_delta_mm": {
+    "median": 0.006112979492172599,
+    "p95": 0.040160974860191295,
+    "max": 10.1653413772583
+  },
+  "arm_delta_mm": {
+    "median": 0.007674637250602245,
+    "p95": 31.196796417236328,
+    "max": 51.00651168823242
+  },
+  "cpu_summary": {
+    "split": "train",
+    "dot": 0,
+    "n_steps": 9549,
+    "frames": 287,
+    "seen_frames": 234,
+    "first_sighting_step": 1000,
+    "parking_step": 6230,
+    "park_error_mm": 11.457202499037072,
+    "post_park_seen_fraction": 0.77,
+    "termination": "reached",
+    "stalled": false,
+    "false_red_pixels_max": 0,
+    "seconds": 111.10403425991535,
+    "renderer": "tiny"
+  },
+  "gpu_summary": {
+    "split": "train",
+    "dot": 0,
+    "n_steps": 9549,
+    "frames": 287,
+    "seen_frames": 230,
+    "first_sighting_step": 1000,
+    "parking_step": 6230,
+    "park_error_mm": 11.4676341999438,
+    "post_park_seen_fraction": 0.73,
+    "termination": "reached",
+    "stalled": false,
+    "false_red_pixels_max": 0,
+    "seconds": 8.128375637345016,
+    "renderer": "egl"
+  }
+}

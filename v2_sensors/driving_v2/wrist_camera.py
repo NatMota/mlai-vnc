@@ -1,7 +1,8 @@
 """Wrist 180-degree fisheye RGB-D camera: render saved expert poses, find the dot by colour, estimate where it is.
 
 Run with any Python that has PyBullet:  python wrist_camera.py OUT.npz
-Robot and dot are exactly as in robotnik_arm_task.py (no repainting; dot radius 3 cm, colour [1, 0, 0, 0.85]).
+TinyRenderer preserves the course appearance. EGL makes unspecified materials white, the dot opaque
+so it writes depth, and aligns OpenGL's half-pixel sample centres with TinyRenderer.
 No physics is stepped: each frame resets the robot to a recorded expert pose and renders.
 """
 import json, os, sys
@@ -54,9 +55,13 @@ def pixel_to_ray(row, col):
 class Scene:
     def __init__(self):
         self.cid = p.connect(p.DIRECT)
+        if RENDERER not in ('tiny', 'egl'):
+            raise ValueError('CAMERA_RENDERER must be tiny or egl')
         if RENDERER == 'egl':
             import importlib.util
-            p.loadPlugin(importlib.util.find_spec('eglRenderer').origin, '_eglRendererPlugin', physicsClientId=self.cid)
+            egl = importlib.util.find_spec('eglRenderer')
+            if egl is None or p.loadPlugin(egl.origin, '_eglRendererPlugin', physicsClientId=self.cid) < 0:
+                raise RuntimeError('EGL renderer unavailable; use CAMERA_RENDERER=tiny explicitly')
         p.setAdditionalSearchPath(pybullet_data.getDataPath(), physicsClientId=self.cid)
         p.loadURDF('plane.urdf', physicsClientId=self.cid)
         self.robot = p.loadURDF(str(URDF), useFixedBase=True, physicsClientId=self.cid)
@@ -64,7 +69,21 @@ class Scene:
         info = [p.getJointInfo(self.robot, j, physicsClientId=self.cid) for j in range(n)]
         self.joint = {i[1].decode(): i[0] for i in info}
         self.hand = next(i[0] for i in info if i[12].decode() == 'robot_j2s7s300_end_effector')
-        shape = p.createVisualShape(p.GEOM_SPHERE, radius=DOT_RADIUS, rgbaColor=DOT_RGBA, physicsClientId=self.cid)
+        if RENDERER == 'egl':
+            # EGL invents a coloured palette for unspecified URDF materials, including a red wheel.
+            # Preserve explicit materials; match TinyRenderer's white default only where unspecified.
+            import xml.etree.ElementTree as ET
+            root = ET.parse(URDF).getroot()
+            ids = {p.getBodyInfo(self.robot, physicsClientId=self.cid)[0].decode(): -1,
+                   **{i[12].decode(): i[0] for i in info}}
+            for link in root.findall('link'):
+                for visual in link.findall('visual'):
+                    if visual.find('material') is None:
+                        p.changeVisualShape(self.robot, ids[link.get('name')], rgbaColor=[1, 1, 1, 1], physicsClientId=self.cid)
+        # EGL skips translucent geometry in its depth buffer. This is a documented GPU sensor variant,
+        # not assumed numerically interchangeable with TinyRenderer's rasterisation.
+        rgba = DOT_RGBA[:3] + [1.0] if RENDERER == 'egl' else DOT_RGBA
+        shape = p.createVisualShape(p.GEOM_SPHERE, radius=DOT_RADIUS, rgbaColor=rgba, physicsClientId=self.cid)
         self.dot = p.createMultiBody(baseMass=0, baseVisualShapeIndex=shape, physicsClientId=self.cid)
 
     def pose(self, base_pose, joint_names, q, target):
@@ -79,7 +98,12 @@ class Scene:
 
     def fisheye(self, eye, C):
         rgb = np.zeros((SIZE, SIZE, 3), np.uint8); depth = np.full((SIZE, SIZE), np.inf); seg = np.full((SIZE, SIZE), -1)
-        proj = p.computeProjectionMatrixFOV(90, 1, NEAR, FAR)
+        proj = list(p.computeProjectionMatrixFOV(90, 1, NEAR, FAR))
+        if RENDERER == 'egl':
+            # TinyRenderer samples triangle coverage at integer pixels (our_gl.cpp); OpenGL at x+.5,y+.5.
+            # Shift each cube-face projection by +0.5 pixel in window x/y to preserve the CPU ray lookup.
+            proj[8] -= 1 / FACE
+            proj[9] -= 1 / FACE
         for k, (f, up) in enumerate(FACES):
             sel = INSIDE & (FACE_OF == k)
             if not sel.any():

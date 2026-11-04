@@ -54,3 +54,10 @@ target_include_directories(sensor_parking PRIVATE ${BULLET_SOURCE}/examples ${BU
 target_compile_definitions(sensor_parking PRIVATE REFERENCE_ENGINE DEFAULT_LIBPYTHON="${PYTHON_LIBRARY}" DEFAULT_PYBULLET="${PYBULLET_BINARY}" ENGINE_SHA="${ENGINE_SHA}")
 target_link_libraries(sensor_parking PRIVATE pinocchio::pinocchio nlohmann_json::nlohmann_json ${BLAS_LIBRARY} ${LAPACK_LIBRARY} ${CMAKE_DL_LIBS})
 target_compile_options(sensor_parking PRIVATE -O3 -ffp-contract=off)
+
+# Camera replay validation only: the baseline expert streamed before its physics step.
+add_executable(golden_camera_stream src/golden_camera_stream.cpp src/physics.cpp src/controller.cpp)
+target_include_directories(golden_camera_stream PRIVATE ${BULLET_SOURCE}/examples ${BULLET_SOURCE}/src)
+target_compile_definitions(golden_camera_stream PRIVATE REFERENCE_ENGINE DEFAULT_LIBPYTHON="${PYTHON_LIBRARY}" DEFAULT_PYBULLET="${PYBULLET_BINARY}" ENGINE_SHA="${ENGINE_SHA}")
+target_link_libraries(golden_camera_stream PRIVATE pinocchio::pinocchio nlohmann_json::nlohmann_json ${BLAS_LIBRARY} ${LAPACK_LIBRARY} ${CMAKE_DL_LIBS})
+target_compile_options(golden_camera_stream PRIVATE -O3 -ffp-contract=off)

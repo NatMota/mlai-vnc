@@ -47,4 +47,4 @@ The `wheels+live_dot` result uses simulator truth, so it is a ceiling for the ca
 4. Test: `./run_camera_tests.sh models/NAME.npz camera_loop/NAME`.
 5. Open the notebook from `v2_sensors/` so its links resolve.
 
-The camera uses PyBullet's CPU renderer. The GPU renderer colours parts that have no colour in the robot files (wheels, arm ring) red, green, blue and yellow, which confuses the red detector.
+The camera defaults to PyBullet's CPU renderer. `CAMERA_RENDERER=egl` enables Linux/NVIDIA rendering with fixes for unspecified material colours, transparent-dot depth and half-pixel alignment. Training/evaluation renderer provenance and the remaining single-pixel occlusion differences are documented in [the golden-camera replay notes](arm/CAMERA_GOLDEN.md).

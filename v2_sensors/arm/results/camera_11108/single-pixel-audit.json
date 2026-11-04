@@ -1,0 +1,24 @@
+{
+  "dot": 687,
+  "step": 6000,
+  "red_pixels": 66,
+  "dot_seg_pixels": 65,
+  "bad_pixels": [
+    {
+      "row": 141,
+      "col": 104,
+      "rgb": [
+        171,
+        0,
+        0
+      ],
+      "seg_body": 0,
+      "range_m": 0.5199994471526173,
+      "nearest_dot_pixel_distance": 1.0
+    }
+  ],
+  "body_ids": {
+    "robot": 1,
+    "dot": 2
+  }
+}

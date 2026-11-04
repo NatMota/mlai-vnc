@@ -1,0 +1,486 @@
+{
+  "completed": 10,
+  "requested": 10,
+  "reports": [
+    {
+      "dot": 0,
+      "passed": true,
+      "renderer": "egl",
+      "frames": 287,
+      "state_max_abs_difference": 4.7556969384743297e-07,
+      "max_abs_errors": {
+        "detection": 1.4196766810359307e-05,
+        "arm": 1.4196766810359307e-05,
+        "drive": 6.607137295777665e-06,
+        "wheel_features": 0.046019554138183594
+      },
+      "max_vector_error_mm": {
+        "detection": 0.014979683451787167,
+        "arm": 0.014979683451787167
+      },
+      "source_sha256": "56722630b75bf71ed361a3040f2cfb5f777e41e8efb26b44665438947d2dcab2",
+      "camera_sha256": "d9a5cc3fbb39ed0ef4de5d82a43871f0fa51071221e6cafa485302094d52737f",
+      "engine": {
+        "engine_sha256": "b583b762a80703508c3c8744ccb5f449b11016fbc9a26513bf9ec942812fac6e",
+        "joint_names": [
+          "robot_front_right_wheel_joint",
+          "robot_front_left_wheel_joint",
+          "robot_back_left_wheel_joint",
+          "robot_back_right_wheel_joint",
+          "robot_j2s7s300_joint_1",
+          "robot_j2s7s300_joint_2",
+          "robot_j2s7s300_joint_3",
+          "robot_j2s7s300_joint_4",
+          "robot_j2s7s300_joint_5",
+          "robot_j2s7s300_joint_6",
+          "robot_j2s7s300_joint_7",
+          "robot_j2s7s300_joint_finger_1",
+          "robot_j2s7s300_joint_finger_tip_1",
+          "robot_j2s7s300_joint_finger_2",
+          "robot_j2s7s300_joint_finger_tip_2",
+          "robot_j2s7s300_joint_finger_3",
+          "robot_j2s7s300_joint_finger_tip_3"
+        ],
+        "type": "ready"
+      },
+      "termination": {
+        "parking_step": 6230,
+        "steps": 9549,
+        "termination": "reached",
+        "type": "done"
+      }
+    },
+    {
+      "dot": 25,
+      "passed": true,
+      "renderer": "egl",
+      "frames": 264,
+      "state_max_abs_difference": 4.7326484420295856e-07,
+      "max_abs_errors": {
+        "detection": 1.3832219139642277e-05,
+        "arm": 1.3832219139642277e-05,
+        "drive": 1.2717455441402237e-05,
+        "wheel_features": 0.04601931571960449
+      },
+      "max_vector_error_mm": {
+        "detection": 0.01761061350022677,
+        "arm": 0.01761061350022677
+      },
+      "source_sha256": "0b10652d2e27f0b74b0b0cbd99d7cd2aad0024c4a937972ca1f212668fcd68ff",
+      "camera_sha256": "1d249744eccc7817fabe3465a9641dad524843d04ad9626416ca6bce210dcfbc",
+      "engine": {
+        "engine_sha256": "b583b762a80703508c3c8744ccb5f449b11016fbc9a26513bf9ec942812fac6e",
+        "joint_names": [
+          "robot_front_right_wheel_joint",
+          "robot_front_left_wheel_joint",
+          "robot_back_left_wheel_joint",
+          "robot_back_right_wheel_joint",
+          "robot_j2s7s300_joint_1",
+          "robot_j2s7s300_joint_2",
+          "robot_j2s7s300_joint_3",
+          "robot_j2s7s300_joint_4",
+          "robot_j2s7s300_joint_5",
+          "robot_j2s7s300_joint_6",
+          "robot_j2s7s300_joint_7",
+          "robot_j2s7s300_joint_finger_1",
+          "robot_j2s7s300_joint_finger_tip_1",
+          "robot_j2s7s300_joint_finger_2",
+          "robot_j2s7s300_joint_finger_tip_2",
+          "robot_j2s7s300_joint_finger_3",
+          "robot_j2s7s300_joint_finger_tip_3"
+        ],
+        "type": "ready"
+      },
+      "termination": {
+        "parking_step": 6729,
+        "steps": 8770,
+        "termination": "reached",
+        "type": "done"
+      }
+    },
+    {
+      "dot": 69,
+      "passed": true,
+      "renderer": "egl",
+      "frames": 241,
+      "state_max_abs_difference": 4.7638460642929203e-07,
+      "max_abs_errors": {
+        "detection": 1.0761291379557392e-05,
+        "arm": 1.0761291379557392e-05,
+        "drive": 1.0945681423901732e-05,
+        "wheel_features": 0.0
+      },
+      "max_vector_error_mm": {
+        "detection": 0.011240963189519499,
+        "arm": 0.011240963189519499
+      },
+      "source_sha256": "143da81ca24229fbdbd67ca5d37b7347c8fcf7755ec7c6b39aeab6a238e39669",
+      "camera_sha256": "1864b886965fbf26079873cd953abcad12bcef7ad7bb30434e1de4afb985781c",
+      "engine": {
+        "engine_sha256": "b583b762a80703508c3c8744ccb5f449b11016fbc9a26513bf9ec942812fac6e",
+        "joint_names": [
+          "robot_front_right_wheel_joint",
+          "robot_front_left_wheel_joint",
+          "robot_back_left_wheel_joint",
+          "robot_back_right_wheel_joint",
+          "robot_j2s7s300_joint_1",
+          "robot_j2s7s300_joint_2",
+          "robot_j2s7s300_joint_3",
+          "robot_j2s7s300_joint_4",
+          "robot_j2s7s300_joint_5",
+          "robot_j2s7s300_joint_6",
+          "robot_j2s7s300_joint_7",
+          "robot_j2s7s300_joint_finger_1",
+          "robot_j2s7s300_joint_finger_tip_1",
+          "robot_j2s7s300_joint_finger_2",
+          "robot_j2s7s300_joint_finger_tip_2",
+          "robot_j2s7s300_joint_finger_3",
+          "robot_j2s7s300_joint_finger_tip_3"
+        ],
+        "type": "ready"
+      },
+      "termination": {
+        "parking_step": 4924,
+        "steps": 8001,
+        "termination": "reached",
+        "type": "done"
+      }
+    },
+    {
+      "dot": 115,
+      "passed": true,
+      "renderer": "egl",
+      "frames": 291,
+      "state_max_abs_difference": 4.714160617425023e-07,
+      "max_abs_errors": {
+        "detection": 1.0263304159874309e-05,
+        "arm": 1.0263304159874309e-05,
+        "drive": 6.321797248132199e-06,
+        "wheel_features": 0.0
+      },
+      "max_vector_error_mm": {
+        "detection": 0.010859326074139888,
+        "arm": 0.010859326074139888
+      },
+      "source_sha256": "66019db61b0689f085afc9f4852714ec3f95fe7ae38edaca11486045a595c7f6",
+      "camera_sha256": "1745898de074fc4da95e3e630fce7411e642f48b1bf0943c05975a25c4baf3ee",
+      "engine": {
+        "engine_sha256": "b583b762a80703508c3c8744ccb5f449b11016fbc9a26513bf9ec942812fac6e",
+        "joint_names": [
+          "robot_front_right_wheel_joint",
+          "robot_front_left_wheel_joint",
+          "robot_back_left_wheel_joint",
+          "robot_back_right_wheel_joint",
+          "robot_j2s7s300_joint_1",
+          "robot_j2s7s300_joint_2",
+          "robot_j2s7s300_joint_3",
+          "robot_j2s7s300_joint_4",
+          "robot_j2s7s300_joint_5",
+          "robot_j2s7s300_joint_6",
+          "robot_j2s7s300_joint_7",
+          "robot_j2s7s300_joint_finger_1",
+          "robot_j2s7s300_joint_finger_tip_1",
+          "robot_j2s7s300_joint_finger_2",
+          "robot_j2s7s300_joint_finger_tip_2",
+          "robot_j2s7s300_joint_finger_3",
+          "robot_j2s7s300_joint_finger_tip_3"
+        ],
+        "type": "ready"
+      },
+      "termination": {
+        "parking_step": 6663,
+        "steps": 9688,
+        "termination": "reached",
+        "type": "done"
+      }
+    },
+    {
+      "dot": 254,
+      "passed": true,
+      "renderer": "egl",
+      "frames": 277,
+      "state_max_abs_difference": 4.7509606027063e-07,
+      "max_abs_errors": {
+        "detection": 1.2794830684281777e-05,
+        "arm": 1.2794830684281777e-05,
+        "drive": 1.3728673874835451e-05,
+        "wheel_features": 0.0
+      },
+      "max_vector_error_mm": {
+        "detection": 0.01406480362072774,
+        "arm": 0.01406480362072774
+      },
+      "source_sha256": "aa5b3504076b3f2264662868e310ad4c19dd150720407dbb039e3f612cf5b755",
+      "camera_sha256": "d19755661ce130560c82b6015bad848353812b909b581af4e43f2668a691070b",
+      "engine": {
+        "engine_sha256": "b583b762a80703508c3c8744ccb5f449b11016fbc9a26513bf9ec942812fac6e",
+        "joint_names": [
+          "robot_front_right_wheel_joint",
+          "robot_front_left_wheel_joint",
+          "robot_back_left_wheel_joint",
+          "robot_back_right_wheel_joint",
+          "robot_j2s7s300_joint_1",
+          "robot_j2s7s300_joint_2",
+          "robot_j2s7s300_joint_3",
+          "robot_j2s7s300_joint_4",
+          "robot_j2s7s300_joint_5",
+          "robot_j2s7s300_joint_6",
+          "robot_j2s7s300_joint_7",
+          "robot_j2s7s300_joint_finger_1",
+          "robot_j2s7s300_joint_finger_tip_1",
+          "robot_j2s7s300_joint_finger_2",
+          "robot_j2s7s300_joint_finger_tip_2",
+          "robot_j2s7s300_joint_finger_3",
+          "robot_j2s7s300_joint_finger_tip_3"
+        ],
+        "type": "ready"
+      },
+      "termination": {
+        "parking_step": 6940,
+        "steps": 9201,
+        "termination": "reached",
+        "type": "done"
+      }
+    },
+    {
+      "dot": 341,
+      "passed": true,
+      "renderer": "egl",
+      "frames": 253,
+      "state_max_abs_difference": 4.721649151662177e-07,
+      "max_abs_errors": {
+        "detection": 7.598282146137336e-06,
+        "arm": 7.598282146137336e-06,
+        "drive": 7.497391398159081e-06,
+        "wheel_features": 0.04601942375302315
+      },
+      "max_vector_error_mm": {
+        "detection": 0.007693900926842461,
+        "arm": 0.007693900926842461
+      },
+      "source_sha256": "f479cb00d1d138b46d9f7563893055d8b15ad04cadb1bd560145284f8683c56d",
+      "camera_sha256": "aaad3e88ce6e4efcdcc43f326f4f435989e18775aa6f8908ffe64e8979214a6c",
+      "engine": {
+        "engine_sha256": "b583b762a80703508c3c8744ccb5f449b11016fbc9a26513bf9ec942812fac6e",
+        "joint_names": [
+          "robot_front_right_wheel_joint",
+          "robot_front_left_wheel_joint",
+          "robot_back_left_wheel_joint",
+          "robot_back_right_wheel_joint",
+          "robot_j2s7s300_joint_1",
+          "robot_j2s7s300_joint_2",
+          "robot_j2s7s300_joint_3",
+          "robot_j2s7s300_joint_4",
+          "robot_j2s7s300_joint_5",
+          "robot_j2s7s300_joint_6",
+          "robot_j2s7s300_joint_7",
+          "robot_j2s7s300_joint_finger_1",
+          "robot_j2s7s300_joint_finger_tip_1",
+          "robot_j2s7s300_joint_finger_2",
+          "robot_j2s7s300_joint_finger_tip_2",
+          "robot_j2s7s300_joint_finger_3",
+          "robot_j2s7s300_joint_finger_tip_3"
+        ],
+        "type": "ready"
+      },
+      "termination": {
+        "parking_step": 4847,
+        "steps": 8430,
+        "termination": "reached",
+        "type": "done"
+      }
+    },
+    {
+      "dot": 476,
+      "passed": true,
+      "renderer": "egl",
+      "frames": 249,
+      "state_max_abs_difference": 4.7579253426022206e-07,
+      "max_abs_errors": {
+        "detection": 3.400414862642087e-05,
+        "arm": 3.400414862642087e-05,
+        "drive": 3.390516368440011e-05,
+        "wheel_features": 0.0
+      },
+      "max_vector_error_mm": {
+        "detection": 0.03609348280287867,
+        "arm": 0.03609348280287867
+      },
+      "source_sha256": "26b80fa14390e220ce5d02c4234fc808aa781b453dab6498d60c1b3c9bb9dc98",
+      "camera_sha256": "eb14800be122b4f3acbe6c3755d97c247f573047314d3c043e62e1b2ec49f14c",
+      "engine": {
+        "engine_sha256": "b583b762a80703508c3c8744ccb5f449b11016fbc9a26513bf9ec942812fac6e",
+        "joint_names": [
+          "robot_front_right_wheel_joint",
+          "robot_front_left_wheel_joint",
+          "robot_back_left_wheel_joint",
+          "robot_back_right_wheel_joint",
+          "robot_j2s7s300_joint_1",
+          "robot_j2s7s300_joint_2",
+          "robot_j2s7s300_joint_3",
+          "robot_j2s7s300_joint_4",
+          "robot_j2s7s300_joint_5",
+          "robot_j2s7s300_joint_6",
+          "robot_j2s7s300_joint_7",
+          "robot_j2s7s300_joint_finger_1",
+          "robot_j2s7s300_joint_finger_tip_1",
+          "robot_j2s7s300_joint_finger_2",
+          "robot_j2s7s300_joint_finger_tip_2",
+          "robot_j2s7s300_joint_finger_3",
+          "robot_j2s7s300_joint_finger_tip_3"
+        ],
+        "type": "ready"
+      },
+      "termination": {
+        "parking_step": 6720,
+        "steps": 8293,
+        "termination": "reached",
+        "type": "done"
+      }
+    },
+    {
+      "dot": 584,
+      "passed": true,
+      "renderer": "egl",
+      "frames": 320,
+      "state_max_abs_difference": 4.765019649966007e-07,
+      "max_abs_errors": {
+        "detection": 1.8429410620468545e-05,
+        "arm": 1.8429410620468545e-05,
+        "drive": 1.843442674975826e-05,
+        "wheel_features": 0.0
+      },
+      "max_vector_error_mm": {
+        "detection": 0.0188195198626885,
+        "arm": 0.0188195198626885
+      },
+      "source_sha256": "cd9a158a1721af01b5290718f4017204fa6d4830db8ff223b13dee342057cc66",
+      "camera_sha256": "8269877d1bc5cfa51913db5bf83d3f686165f3bc831c418f897371239f5e451f",
+      "engine": {
+        "engine_sha256": "b583b762a80703508c3c8744ccb5f449b11016fbc9a26513bf9ec942812fac6e",
+        "joint_names": [
+          "robot_front_right_wheel_joint",
+          "robot_front_left_wheel_joint",
+          "robot_back_left_wheel_joint",
+          "robot_back_right_wheel_joint",
+          "robot_j2s7s300_joint_1",
+          "robot_j2s7s300_joint_2",
+          "robot_j2s7s300_joint_3",
+          "robot_j2s7s300_joint_4",
+          "robot_j2s7s300_joint_5",
+          "robot_j2s7s300_joint_6",
+          "robot_j2s7s300_joint_7",
+          "robot_j2s7s300_joint_finger_1",
+          "robot_j2s7s300_joint_finger_tip_1",
+          "robot_j2s7s300_joint_finger_2",
+          "robot_j2s7s300_joint_finger_tip_2",
+          "robot_j2s7s300_joint_finger_3",
+          "robot_j2s7s300_joint_finger_tip_3"
+        ],
+        "type": "ready"
+      },
+      "termination": {
+        "parking_step": 6813,
+        "steps": 10639,
+        "termination": "reached",
+        "type": "done"
+      }
+    },
+    {
+      "dot": 706,
+      "passed": true,
+      "renderer": "egl",
+      "frames": 241,
+      "state_max_abs_difference": 1.1856849235769573e-07,
+      "max_abs_errors": {
+        "detection": 3.948219589267055e-06,
+        "arm": 3.948219589267055e-06,
+        "drive": 3.993451513917279e-06,
+        "wheel_features": 0.0
+      },
+      "max_vector_error_mm": {
+        "detection": 0.004218240164692931,
+        "arm": 0.004218240164692931
+      },
+      "source_sha256": "9f414dba5bcdf5cd22cecf20b16aef1caf53d8e44d20f21c364a8ed8b5406a34",
+      "camera_sha256": "8d2cbfeb1b94330bbc8bdacfdf40058aa9e4a4efcc94d00bc80579001bb7bf74",
+      "engine": {
+        "engine_sha256": "b583b762a80703508c3c8744ccb5f449b11016fbc9a26513bf9ec942812fac6e",
+        "joint_names": [
+          "robot_front_right_wheel_joint",
+          "robot_front_left_wheel_joint",
+          "robot_back_left_wheel_joint",
+          "robot_back_right_wheel_joint",
+          "robot_j2s7s300_joint_1",
+          "robot_j2s7s300_joint_2",
+          "robot_j2s7s300_joint_3",
+          "robot_j2s7s300_joint_4",
+          "robot_j2s7s300_joint_5",
+          "robot_j2s7s300_joint_6",
+          "robot_j2s7s300_joint_7",
+          "robot_j2s7s300_joint_finger_1",
+          "robot_j2s7s300_joint_finger_tip_1",
+          "robot_j2s7s300_joint_finger_2",
+          "robot_j2s7s300_joint_finger_tip_2",
+          "robot_j2s7s300_joint_finger_3",
+          "robot_j2s7s300_joint_finger_tip_3"
+        ],
+        "type": "ready"
+      },
+      "termination": {
+        "parking_step": 2638,
+        "steps": 8001,
+        "termination": "reached",
+        "type": "done"
+      }
+    },
+    {
+      "dot": 976,
+      "passed": true,
+      "renderer": "egl",
+      "frames": 290,
+      "state_max_abs_difference": 4.7596173757824545e-07,
+      "max_abs_errors": {
+        "detection": 1.814201350658351e-05,
+        "arm": 1.814201350658351e-05,
+        "drive": 1.812641032716833e-05,
+        "wheel_features": 0.0
+      },
+      "max_vector_error_mm": {
+        "detection": 0.019796611137567727,
+        "arm": 0.019796611137567727
+      },
+      "source_sha256": "610dff8708e990591305ae97885340558b6842009c03b15f610b8e070315445d",
+      "camera_sha256": "0acb6a65e5f33be6e0fcd2ee326927fd0c4d0971eb73f78e4a92e70d3ef9b044",
+      "engine": {
+        "engine_sha256": "b583b762a80703508c3c8744ccb5f449b11016fbc9a26513bf9ec942812fac6e",
+        "joint_names": [
+          "robot_front_right_wheel_joint",
+          "robot_front_left_wheel_joint",
+          "robot_back_left_wheel_joint",
+          "robot_back_right_wheel_joint",
+          "robot_j2s7s300_joint_1",
+          "robot_j2s7s300_joint_2",
+          "robot_j2s7s300_joint_3",
+          "robot_j2s7s300_joint_4",
+          "robot_j2s7s300_joint_5",
+          "robot_j2s7s300_joint_6",
+          "robot_j2s7s300_joint_7",
+          "robot_j2s7s300_joint_finger_1",
+          "robot_j2s7s300_joint_finger_tip_1",
+          "robot_j2s7s300_joint_finger_2",
+          "robot_j2s7s300_joint_finger_tip_2",
+          "robot_j2s7s300_joint_finger_3",
+          "robot_j2s7s300_joint_finger_tip_3"
+        ],
+        "type": "ready"
+      },
+      "termination": {
+        "parking_step": 7370,
+        "steps": 9645,
+        "termination": "reached",
+        "type": "done"
+      }
+    }
+  ]
+}

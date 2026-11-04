@@ -1,0 +1,12 @@
+{
+  "samples": 40,
+  "jointly_seen": 33,
+  "visibility_mismatches": [],
+  "error_mm": {
+    "median": 0.0031527383504143733,
+    "p95": 0.22951918619848422,
+    "max": 1.2352079109200358
+  },
+  "cpu_false_red_max": 0,
+  "gpu_false_red_max": 0
+}
