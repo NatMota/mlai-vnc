@@ -1,0 +1,17 @@
+{
+  "history_online_offline_exact": true,
+  "frozen_stop_arrays": {
+    "longer": 6,
+    "wider": 6,
+    "history": 6
+  },
+  "park_matches_cached_baseline": true,
+  "longer_first_300_loss_rows_match": true,
+  "source_sha256": {
+    "arm_history.py": "68a8fe128b2750ee547faf474b606433617326fdcb60d326cc6c746599a28d3a",
+    "arm_cumulative.py": "abb1daf48bd99bbe082c1bf06625011a8b52cb13626b1a18f450852e5cf58f00",
+    "train_golden.py": "4db303440f843f0392bec4eac64d00fbd8113dd6213a99e2f54d75f0ad3400ad",
+    "train_arm.py": "c7075c6603d54e3cd60aa9e1820e640f1854c04fc125c34709df500793f3c5e1",
+    "full_run.py": "164382c62486c1170e2428e623460993d18cffc3eb87ae3f5df23ebf79e72110"
+  }
+}

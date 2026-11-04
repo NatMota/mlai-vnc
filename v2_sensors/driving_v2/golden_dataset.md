@@ -8638,3 +8638,1059 @@ Median closest reach changed from **428.8 mm to 142.8 mm**; median distance at S
 This tests the feature-removal intervention, not a definitive causal diagnosis of speed copying. The architecture width, losses, training schedule and reaching weights are unchanged, but input size changes random initialisation under the same seed. One seed and six initially visible validation targets cannot establish generalisation or behaviour before first detection. No search rules, additional sensors, DART, DAgger or reserved-test evaluation were introduced. Encoder speeds are still used by the tracker.
 
 These are development checks. Previous notebook cells and official iterations remain unchanged; no new official MLflow run was created.
+
+
+## Development batch: cumulative arm changes
+
+Freeze the improved 11-input driving model and the existing 17-input STOP-distance network. Train three torque-network variants, seed 7, with the original standardised torque MSE plus auxiliary distance MSE, equal run weighting, Adam 0.01 and FP32:
+
+1. Extend training to 1,200 epochs with 64/64 hidden layers.
+2. Retain the 1,200-epoch budget and widen both hidden layers to 128.
+3. Retain that budget and width, adding joint/camera sensor observations from 50 ms and 100 ms earlier. Inputs are ordered current, -50 ms, -100 ms (51 values). History resets at PARK; before sufficient history exists, repeat the first PARK observation. Training and deployment use the same causal padding. The frozen STOP network receives only the current 17 values.
+
+Each variant starts from scratch. Select its checkpoint by minimum validation loss across its training budget; do not select by simulator results. Save all epoch losses and intermediate PyTorch checkpoints at 300, 600 and 1,200 epochs. Use the same 100 training and 100 validation runs. Six full validation episodes per variant: 673, 506, 830, 720, 16, 333. Compare with the previous six runs of the improved driving model plus original reaching network. Every simulation starts normally; no isolated PARK resets or search rules. The reserved test set is untouched.
+
+Hypotheses: longer training may reduce underfitting; width may improve the state-to-torque mapping; history may resolve ambiguity from a single observation. None is assumed to help. Report all six runs, parking, closest approach, STOP error and drift for each variant. This cumulative design tests successive changes, not independent effects. One seed and six initially visible targets remain a development screen.
+
+
+### Cumulative batch: shared evidence and outcomes
+
+Closest distance covers reaching and the 0.5-second observation after STOP. STOP is a completion signal; learned torques continue during that observation, so a closer pass after STOP is not a successful stop. The distance at STOP is reported separately.
+
+
+
+```python
+from pathlib import Path
+import json
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from IPython.display import display, Markdown
+AB=Path('../arm/results/arm_cumulative')
+AB_BASE=Path('../arm/results/driving_height_no_speed11')
+ab_config=json.loads((AB/'config.json').read_text())
+ab_training=json.loads((AB/'training_summary.json').read_text())
+ab_rows=[dict(r,variant='baseline') for r in json.loads((AB_BASE/'results/summary.json').read_text()) if r['variant']=='height_no_speed']
+ab_rows += json.loads((AB/'results/summary.json').read_text())
+ab_data=pd.DataFrame([dict(variant=r['variant'],dot=r['dot'],parked=r['parked'],park_s=r['park_s'],
+    stopped=r['stop_s'] is not None,park_cm=100*r['park_error_vs_expert_m'] if r['parked'] else np.nan,
+    closest_mm=r['min_mm'],at_stop_mm=r['at_network_stop_mm'],drift_mm=r['post_stop_drift_mm'],success=r['success']) for r in ab_rows])
+assert len(ab_data)==24 and ab_data.groupby('variant').size().eq(6).all()
+ab_score=ab_data.groupby('variant').agg(attempts=('dot','size'),PARK=('parked','sum'),STOP=('stopped','sum'),
+    median_park_cm=('park_cm','median'),median_closest_mm=('closest_mm','median'),
+    median_STOP_mm=('at_stop_mm','median'),success_10mm=('success','sum')).loc[['baseline','longer','wider','history']]
+display(ab_score.round(2))
+print('Total training/loading: %.1f s; 18 full simulations: %.1f s' % (ab_training['elapsed_s'],json.loads((AB/'results/completion.json').read_text())['elapsed_s']))
+print('Fixed seed 7 and six validation targets; frozen driving and STOP networks; no test evaluation.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>baseline</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>142.78</td>
+      <td>242.11</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>longer</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>93.17</td>
+      <td>358.76</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>wider</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>81.03</td>
+      <td>131.66</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>history</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>73.87</td>
+      <td>217.52</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Total training/loading: 239.7 s; 18 full simulations: 62.3 s
+    Fixed seed 7 and six validation targets; frozen driving and STOP networks; no test evaluation.
+
+
+### 1,200 epochs, 64-unit layers
+
+
+```python
+ab_name='longer';ab_parent='baseline'
+ab_meta=next(x for x in ab_training['variants'] if x['variant']==ab_name)
+display(pd.DataFrame([{k:ab_meta[k] for k in ['variant','width','history','selected_epoch','selected_val_loss','elapsed_s','train_rows','val_rows']}]))
+print('Current sensor values only for frozen STOP. Torque history order: current, 50 ms ago, 100 ms ago.' if ab_meta['history'] else 'Torque and frozen STOP use current sensor values.')
+print('Checkpoint chosen by validation loss, not the six simulator results.')
+print('The auxiliary distance head trains with the torque network; the separate frozen STOP network makes the runtime STOP decision.')
+
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variant</th>
+      <th>width</th>
+      <th>history</th>
+      <th>selected_epoch</th>
+      <th>selected_val_loss</th>
+      <th>elapsed_s</th>
+      <th>train_rows</th>
+      <th>val_rows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>longer</td>
+      <td>64</td>
+      <td>False</td>
+      <td>1200</td>
+      <td>0.020776</td>
+      <td>49.111548</td>
+      <td>295084</td>
+      <td>288818</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Torque and frozen STOP use current sensor values.
+    Checkpoint chosen by validation loss, not the six simulator results.
+    The auxiliary distance head trains with the torque network; the separate frozen STOP network makes the runtime STOP decision.
+
+
+#### Training and validation losses
+
+
+```python
+ab_name='longer';ab_parent='baseline'
+fig,axes=plt.subplots(1,2,figsize=(12,3.5))
+for label,directory,colour in [(ab_parent,Path('../arm/models/golden_11109') if ab_parent=='baseline' else AB/'models'/ab_parent,'tab:blue'),(ab_name,AB/'models'/ab_name,'tab:orange')]:
+    h=pd.DataFrame(json.loads((directory/'torque_seed7_history.json').read_text()))
+    for ax,field,title in zip(axes,['command','aux'],['Standardised torque MSE','Auxiliary distance MSE']):
+        ax.plot(h.epoch,h['train_'+field],color=colour,label=label+' training')
+        ax.plot(h.epoch,h['val_'+field],color=colour,linestyle='--',label=label+' validation')
+        ax.set(xlabel='Epoch',ylabel='Equal-run MSE',title=title,yscale='log');ax.grid(alpha=.2)
+axes[0].legend(fontsize=8);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_87_0.png)
+
+
+
+#### Six full validation episodes
+
+
+```python
+ab_name='longer';ab_parent='baseline'
+display(ab_data[ab_data.variant.isin([ab_parent,ab_name])].pivot(index='dot',columns='variant',values=['closest_mm','at_stop_mm','drift_mm']).round(1))
+display(ab_score.loc[[ab_parent,ab_name]].round(2))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">closest_mm</th>
+      <th colspan="2" halign="left">at_stop_mm</th>
+      <th colspan="2" halign="left">drift_mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th>baseline</th>
+      <th>longer</th>
+      <th>baseline</th>
+      <th>longer</th>
+      <th>baseline</th>
+      <th>longer</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>155.2</td>
+      <td>160.5</td>
+      <td>180.3</td>
+      <td>979.1</td>
+      <td>154.6</td>
+      <td>468.0</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>213.5</td>
+      <td>77.4</td>
+      <td>219.3</td>
+      <td>255.9</td>
+      <td>143.5</td>
+      <td>331.0</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>130.4</td>
+      <td>108.9</td>
+      <td>264.9</td>
+      <td>499.1</td>
+      <td>-6.0</td>
+      <td>162.2</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>163.5</td>
+      <td>143.5</td>
+      <td>280.2</td>
+      <td>461.7</td>
+      <td>-0.7</td>
+      <td>392.6</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>24.3</td>
+      <td>10.5</td>
+      <td>67.2</td>
+      <td>67.2</td>
+      <td>-27.7</td>
+      <td>-34.0</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>30.2</td>
+      <td>10.4</td>
+      <td>1134.9</td>
+      <td>48.3</td>
+      <td>-178.5</td>
+      <td>46.1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>baseline</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>142.78</td>
+      <td>242.11</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>longer</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>93.17</td>
+      <td>358.76</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+#### Actual distance and frozen STOP prediction during reaching
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6),sharex=False)
+for ax,dot in zip(axes.flat,ab_config['validation_cases']):
+    r=json.loads((AB/'results'/f'longer_dot{dot}.json').read_text());d=pd.DataFrame(r['log'])
+    if len(d):
+        ax.plot(d.t-r['park_s'],d.ee_mm,label='Actual distance')
+        ax.plot(d.t-r['park_s'],1000*d.ttp_s,label='Predicted STOP distance',alpha=.8)
+        if r['stop_s'] is not None:ax.axvline(r['stop_s']-r['park_s'],color='black',linestyle=':',label='STOP')
+    ax.axhline(10,color='grey',linestyle='--');ax.set(title=f'Target {dot}',xlabel='Seconds after PARK',ylabel='Distance (mm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_91_0.png)
+
+
+
+#### Reading this comparison
+
+
+```python
+ab_name='longer';ab_parent='baseline'
+b=ab_score.loc[ab_parent];c=ab_score.loc[ab_name]
+pairs=ab_data[ab_data.variant.isin([ab_parent,ab_name])].pivot(index='dot',columns='variant',values='closest_mm')
+better=int((pairs[ab_name]<pairs[ab_parent]).sum())
+display(Markdown(f"""Against **{ab_parent}**, **{ab_name}** improved closest approach on **{better}/6** targets. Median closest distance changed from **{b.median_closest_mm:.1f} mm to {c.median_closest_mm:.1f} mm**; median distance at STOP changed from **{b.median_STOP_mm:.1f} mm to {c.median_STOP_mm:.1f} mm**. STOP was issued in **{int(c.STOP)}/6** runs, with **{int(c.success_10mm)}/6** within 10 mm at STOP.
+
+The driving model and separate STOP weights were frozen. STOP predictions can still change because each torque policy creates different sensor observations. Undefined STOP distances are omitted from their median, while all six attempts remain in the counts. The full episode, including the handover, is evaluated from the normal start.
+
+This cumulative, single-seed six-target screen does not establish generalisation or isolate interactions among changes. Selected epochs use offline validation loss only. No official MLflow iteration or reserved-test evaluation was created."""))
+```
+
+
+Against **baseline**, **longer** improved closest approach on **5/6** targets. Median closest distance changed from **142.8 mm to 93.2 mm**; median distance at STOP changed from **242.1 mm to 358.8 mm**. STOP was issued in **6/6** runs, with **0/6** within 10 mm at STOP.
+
+The driving model and separate STOP weights were frozen. STOP predictions can still change because each torque policy creates different sensor observations. Undefined STOP distances are omitted from their median, while all six attempts remain in the counts. The full episode, including the handover, is evaluated from the normal start.
+
+This cumulative, single-seed six-target screen does not establish generalisation or isolate interactions among changes. Selected epochs use offline validation loss only. No official MLflow iteration or reserved-test evaluation was created.
+
+
+### 1,200 epochs, 128-unit layers
+
+
+```python
+ab_name='wider';ab_parent='longer'
+ab_meta=next(x for x in ab_training['variants'] if x['variant']==ab_name)
+display(pd.DataFrame([{k:ab_meta[k] for k in ['variant','width','history','selected_epoch','selected_val_loss','elapsed_s','train_rows','val_rows']}]))
+print('Current sensor values only for frozen STOP. Torque history order: current, 50 ms ago, 100 ms ago.' if ab_meta['history'] else 'Torque and frozen STOP use current sensor values.')
+print('Checkpoint chosen by validation loss, not the six simulator results.')
+print('The auxiliary distance head trains with the torque network; the separate frozen STOP network makes the runtime STOP decision.')
+
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variant</th>
+      <th>width</th>
+      <th>history</th>
+      <th>selected_epoch</th>
+      <th>selected_val_loss</th>
+      <th>elapsed_s</th>
+      <th>train_rows</th>
+      <th>val_rows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>wider</td>
+      <td>128</td>
+      <td>False</td>
+      <td>1171</td>
+      <td>0.015504</td>
+      <td>88.206729</td>
+      <td>295084</td>
+      <td>288818</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Torque and frozen STOP use current sensor values.
+    Checkpoint chosen by validation loss, not the six simulator results.
+    The auxiliary distance head trains with the torque network; the separate frozen STOP network makes the runtime STOP decision.
+
+
+#### Training and validation losses
+
+
+```python
+ab_name='wider';ab_parent='longer'
+fig,axes=plt.subplots(1,2,figsize=(12,3.5))
+for label,directory,colour in [(ab_parent,Path('../arm/models/golden_11109') if ab_parent=='baseline' else AB/'models'/ab_parent,'tab:blue'),(ab_name,AB/'models'/ab_name,'tab:orange')]:
+    h=pd.DataFrame(json.loads((directory/'torque_seed7_history.json').read_text()))
+    for ax,field,title in zip(axes,['command','aux'],['Standardised torque MSE','Auxiliary distance MSE']):
+        ax.plot(h.epoch,h['train_'+field],color=colour,label=label+' training')
+        ax.plot(h.epoch,h['val_'+field],color=colour,linestyle='--',label=label+' validation')
+        ax.set(xlabel='Epoch',ylabel='Equal-run MSE',title=title,yscale='log');ax.grid(alpha=.2)
+axes[0].legend(fontsize=8);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_97_0.png)
+
+
+
+#### Six full validation episodes
+
+
+```python
+ab_name='wider';ab_parent='longer'
+display(ab_data[ab_data.variant.isin([ab_parent,ab_name])].pivot(index='dot',columns='variant',values=['closest_mm','at_stop_mm','drift_mm']).round(1))
+display(ab_score.loc[[ab_parent,ab_name]].round(2))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">closest_mm</th>
+      <th colspan="2" halign="left">at_stop_mm</th>
+      <th colspan="2" halign="left">drift_mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th>longer</th>
+      <th>wider</th>
+      <th>longer</th>
+      <th>wider</th>
+      <th>longer</th>
+      <th>wider</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>160.5</td>
+      <td>84.1</td>
+      <td>979.1</td>
+      <td>91.3</td>
+      <td>468.0</td>
+      <td>29.2</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>77.4</td>
+      <td>77.9</td>
+      <td>255.9</td>
+      <td>172.0</td>
+      <td>331.0</td>
+      <td>-94.3</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>108.9</td>
+      <td>203.4</td>
+      <td>499.1</td>
+      <td>221.1</td>
+      <td>162.2</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>143.5</td>
+      <td>218.1</td>
+      <td>461.7</td>
+      <td>259.3</td>
+      <td>392.6</td>
+      <td>-42.4</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>10.5</td>
+      <td>12.3</td>
+      <td>67.2</td>
+      <td>67.2</td>
+      <td>-34.0</td>
+      <td>-38.2</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>10.4</td>
+      <td>31.3</td>
+      <td>48.3</td>
+      <td>33.6</td>
+      <td>46.1</td>
+      <td>22.5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>longer</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>93.17</td>
+      <td>358.76</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>wider</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>81.03</td>
+      <td>131.66</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+#### Actual distance and frozen STOP prediction during reaching
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6),sharex=False)
+for ax,dot in zip(axes.flat,ab_config['validation_cases']):
+    r=json.loads((AB/'results'/f'wider_dot{dot}.json').read_text());d=pd.DataFrame(r['log'])
+    if len(d):
+        ax.plot(d.t-r['park_s'],d.ee_mm,label='Actual distance')
+        ax.plot(d.t-r['park_s'],1000*d.ttp_s,label='Predicted STOP distance',alpha=.8)
+        if r['stop_s'] is not None:ax.axvline(r['stop_s']-r['park_s'],color='black',linestyle=':',label='STOP')
+    ax.axhline(10,color='grey',linestyle='--');ax.set(title=f'Target {dot}',xlabel='Seconds after PARK',ylabel='Distance (mm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_101_0.png)
+
+
+
+#### Reading this comparison
+
+
+```python
+ab_name='wider';ab_parent='longer'
+b=ab_score.loc[ab_parent];c=ab_score.loc[ab_name]
+pairs=ab_data[ab_data.variant.isin([ab_parent,ab_name])].pivot(index='dot',columns='variant',values='closest_mm')
+better=int((pairs[ab_name]<pairs[ab_parent]).sum())
+display(Markdown(f"""Against **{ab_parent}**, **{ab_name}** improved closest approach on **{better}/6** targets. Median closest distance changed from **{b.median_closest_mm:.1f} mm to {c.median_closest_mm:.1f} mm**; median distance at STOP changed from **{b.median_STOP_mm:.1f} mm to {c.median_STOP_mm:.1f} mm**. STOP was issued in **{int(c.STOP)}/6** runs, with **{int(c.success_10mm)}/6** within 10 mm at STOP.
+
+The driving model and separate STOP weights were frozen. STOP predictions can still change because each torque policy creates different sensor observations. Undefined STOP distances are omitted from their median, while all six attempts remain in the counts. The full episode, including the handover, is evaluated from the normal start.
+
+This cumulative, single-seed six-target screen does not establish generalisation or isolate interactions among changes. Selected epochs use offline validation loss only. No official MLflow iteration or reserved-test evaluation was created."""))
+```
+
+
+Against **longer**, **wider** improved closest approach on **1/6** targets. Median closest distance changed from **93.2 mm to 81.0 mm**; median distance at STOP changed from **358.8 mm to 131.7 mm**. STOP was issued in **6/6** runs, with **0/6** within 10 mm at STOP.
+
+The driving model and separate STOP weights were frozen. STOP predictions can still change because each torque policy creates different sensor observations. Undefined STOP distances are omitted from their median, while all six attempts remain in the counts. The full episode, including the handover, is evaluated from the normal start.
+
+This cumulative, single-seed six-target screen does not establish generalisation or isolate interactions among changes. Selected epochs use offline validation loss only. No official MLflow iteration or reserved-test evaluation was created.
+
+
+### 1,200 epochs, 128-unit layers, short sensor history
+
+
+```python
+ab_name='history';ab_parent='wider'
+ab_meta=next(x for x in ab_training['variants'] if x['variant']==ab_name)
+display(pd.DataFrame([{k:ab_meta[k] for k in ['variant','width','history','selected_epoch','selected_val_loss','elapsed_s','train_rows','val_rows']}]))
+print('Current sensor values only for frozen STOP. Torque history order: current, 50 ms ago, 100 ms ago.' if ab_meta['history'] else 'Torque and frozen STOP use current sensor values.')
+print('Checkpoint chosen by validation loss, not the six simulator results.')
+print('The auxiliary distance head trains with the torque network; the separate frozen STOP network makes the runtime STOP decision.')
+
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variant</th>
+      <th>width</th>
+      <th>history</th>
+      <th>selected_epoch</th>
+      <th>selected_val_loss</th>
+      <th>elapsed_s</th>
+      <th>train_rows</th>
+      <th>val_rows</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>history</td>
+      <td>128</td>
+      <td>True</td>
+      <td>1194</td>
+      <td>0.013163</td>
+      <td>90.837755</td>
+      <td>295084</td>
+      <td>288818</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Current sensor values only for frozen STOP. Torque history order: current, 50 ms ago, 100 ms ago.
+    Checkpoint chosen by validation loss, not the six simulator results.
+    The auxiliary distance head trains with the torque network; the separate frozen STOP network makes the runtime STOP decision.
+
+
+#### Training and validation losses
+
+
+```python
+ab_name='history';ab_parent='wider'
+fig,axes=plt.subplots(1,2,figsize=(12,3.5))
+for label,directory,colour in [(ab_parent,Path('../arm/models/golden_11109') if ab_parent=='baseline' else AB/'models'/ab_parent,'tab:blue'),(ab_name,AB/'models'/ab_name,'tab:orange')]:
+    h=pd.DataFrame(json.loads((directory/'torque_seed7_history.json').read_text()))
+    for ax,field,title in zip(axes,['command','aux'],['Standardised torque MSE','Auxiliary distance MSE']):
+        ax.plot(h.epoch,h['train_'+field],color=colour,label=label+' training')
+        ax.plot(h.epoch,h['val_'+field],color=colour,linestyle='--',label=label+' validation')
+        ax.set(xlabel='Epoch',ylabel='Equal-run MSE',title=title,yscale='log');ax.grid(alpha=.2)
+axes[0].legend(fontsize=8);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_107_0.png)
+
+
+
+#### Six full validation episodes
+
+
+```python
+ab_name='history';ab_parent='wider'
+display(ab_data[ab_data.variant.isin([ab_parent,ab_name])].pivot(index='dot',columns='variant',values=['closest_mm','at_stop_mm','drift_mm']).round(1))
+display(ab_score.loc[[ab_parent,ab_name]].round(2))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">closest_mm</th>
+      <th colspan="2" halign="left">at_stop_mm</th>
+      <th colspan="2" halign="left">drift_mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th>history</th>
+      <th>wider</th>
+      <th>history</th>
+      <th>wider</th>
+      <th>history</th>
+      <th>wider</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>95.3</td>
+      <td>84.1</td>
+      <td>96.6</td>
+      <td>91.3</td>
+      <td>41.5</td>
+      <td>29.2</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>51.9</td>
+      <td>77.9</td>
+      <td>370.7</td>
+      <td>172.0</td>
+      <td>241.6</td>
+      <td>-94.3</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>146.8</td>
+      <td>203.4</td>
+      <td>348.6</td>
+      <td>221.1</td>
+      <td>55.4</td>
+      <td>4.0</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>198.1</td>
+      <td>218.1</td>
+      <td>338.4</td>
+      <td>259.3</td>
+      <td>77.6</td>
+      <td>-42.4</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>15.0</td>
+      <td>12.3</td>
+      <td>67.2</td>
+      <td>67.2</td>
+      <td>-51.7</td>
+      <td>-38.2</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>52.4</td>
+      <td>31.3</td>
+      <td>54.9</td>
+      <td>33.6</td>
+      <td>113.0</td>
+      <td>22.5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>wider</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>81.03</td>
+      <td>131.66</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>history</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>73.87</td>
+      <td>217.52</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+#### Actual distance and frozen STOP prediction during reaching
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6),sharex=False)
+for ax,dot in zip(axes.flat,ab_config['validation_cases']):
+    r=json.loads((AB/'results'/f'history_dot{dot}.json').read_text());d=pd.DataFrame(r['log'])
+    if len(d):
+        ax.plot(d.t-r['park_s'],d.ee_mm,label='Actual distance')
+        ax.plot(d.t-r['park_s'],1000*d.ttp_s,label='Predicted STOP distance',alpha=.8)
+        if r['stop_s'] is not None:ax.axvline(r['stop_s']-r['park_s'],color='black',linestyle=':',label='STOP')
+    ax.axhline(10,color='grey',linestyle='--');ax.set(title=f'Target {dot}',xlabel='Seconds after PARK',ylabel='Distance (mm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_111_0.png)
+
+
+
+#### Reading this comparison
+
+
+```python
+ab_name='history';ab_parent='wider'
+b=ab_score.loc[ab_parent];c=ab_score.loc[ab_name]
+pairs=ab_data[ab_data.variant.isin([ab_parent,ab_name])].pivot(index='dot',columns='variant',values='closest_mm')
+better=int((pairs[ab_name]<pairs[ab_parent]).sum())
+display(Markdown(f"""Against **{ab_parent}**, **{ab_name}** improved closest approach on **{better}/6** targets. Median closest distance changed from **{b.median_closest_mm:.1f} mm to {c.median_closest_mm:.1f} mm**; median distance at STOP changed from **{b.median_STOP_mm:.1f} mm to {c.median_STOP_mm:.1f} mm**. STOP was issued in **{int(c.STOP)}/6** runs, with **{int(c.success_10mm)}/6** within 10 mm at STOP.
+
+The driving model and separate STOP weights were frozen. STOP predictions can still change because each torque policy creates different sensor observations. Undefined STOP distances are omitted from their median, while all six attempts remain in the counts. The full episode, including the handover, is evaluated from the normal start.
+
+This cumulative, single-seed six-target screen does not establish generalisation or isolate interactions among changes. Selected epochs use offline validation loss only. No official MLflow iteration or reserved-test evaluation was created."""))
+```
+
+
+Against **wider**, **history** improved closest approach on **3/6** targets. Median closest distance changed from **81.0 mm to 73.9 mm**; median distance at STOP changed from **131.7 mm to 217.5 mm**. STOP was issued in **6/6** runs, with **0/6** within 10 mm at STOP.
+
+The driving model and separate STOP weights were frozen. STOP predictions can still change because each torque policy creates different sensor observations. Undefined STOP distances are omitted from their median, while all six attempts remain in the counts. The full episode, including the handover, is evaluated from the normal start.
+
+This cumulative, single-seed six-target screen does not establish generalisation or isolate interactions among changes. Selected epochs use offline validation loss only. No official MLflow iteration or reserved-test evaluation was created.

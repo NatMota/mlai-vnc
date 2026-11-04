@@ -197,10 +197,12 @@ def train_one(records, kind, seed, args):
         xs[angle_cols] = np.maximum(x[:, angle_cols].std(0), 1e-6)
         model = Driving(x.shape[1])
     else:
-        xs = physical_scale(False, True, False).astype(np.float32)
+        if x.shape[1] not in (17, 51):
+            raise ValueError('Arm inputs must be current observation or current/50ms/100ms history')
+        xs = np.tile(physical_scale(False, True, False), x.shape[1] // 17).astype(np.float32)
         if kind == 'torque':
             ym, ys = y.mean(0), y.std(0) + 1e-6
-        model = ArmPolicy(17) if kind == 'torque' else stop_net(17)
+        model = ArmPolicy(x.shape[1], hidden=getattr(args, 'arm_hidden', 64)) if kind == 'torque' else stop_net(17)
     scale = (xm, xs, ym, ys)
     model.to(args.device)
     train = tensors(records['train'], kind, scale, args.device)
@@ -228,6 +230,11 @@ def train_one(records, kind, seed, args):
         if best is None or row['val_total'] < best['loss']:
             best = dict(epoch=epoch, loss=row['val_total'], state={k:v.detach().cpu().clone() for k,v in model.state_dict().items()},
                         optimizer=copy.deepcopy(opt.state_dict()))
+        if epoch in getattr(args, 'save_epochs', ()):
+            torch.save(dict(model={k:v.detach().cpu() for k,v in model.state_dict().items()},
+                            optimizer=opt.state_dict(), epoch=epoch, input_mean=xm, input_scale=xs,
+                            output_mean=ym, output_scale=ys),
+                       prefix.with_name(prefix.name + f'_epoch{epoch}.pt'))
         if epoch < 3 or epoch % 25 == 0 or epoch == epochs:
             print(f'{kind} seed {seed} epoch {epoch}/{epochs}: train {row["train_total"]:.6g}, val {row["val_total"]:.6g}, {row["seconds"]:.3f}s', flush=True)
             write_json(prefix.with_name(prefix.name + '_history.json'), history)
@@ -262,7 +269,8 @@ def train_one(records, kind, seed, args):
                 loss_terms=['distance_mse'] if kind=='stop' else ['wheel_mse','time_to_park_mse'] if kind=='driving' else ['standardized_torque_mse','auxiliary_distance_mse'],
                 run_weighting='equal mean per run', checkpoint_rule='minimum validation total, earliest tie',
                 input_mean=xm.tolist(), input_scale=xs.tolist(), output_mean=ym.tolist(), output_scale=ys.tolist())
-    w.update(info_seed=np.int64(seed), info_epochs=np.int64(best['epoch']), info_encoders=np.int64(1),
+    w.update(info_arm_history_ms=np.array([0, 50, 100] if kind == 'torque' and len(xm) == 51 else [0]),
+             info_seed=np.int64(seed), info_epochs=np.int64(best['epoch']), info_encoders=np.int64(1),
              info_time=np.int64(0), info_imu=np.int64(0), info_dot_input='camera_tracker',
              info_inputs=np.int64(len(xm)), info_camera_height=np.int64(kind == 'driving' and len(xm) in (11, 17)), info_wheel_velocity=np.int64(len(xm) != 11), info_target='sample', info_hz=np.int64(30 if kind=='driving' else 1000),
              info_input_mean=xm, info_input_std=xs,

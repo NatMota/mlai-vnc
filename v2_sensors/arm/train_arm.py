@@ -146,11 +146,11 @@ def load_run(bearing, target_mode='sample', hz=30, stop_target='time', imu=False
 
 if nn is not None:
     class ArmPolicy(nn.Module):
-        def __init__(self, n_in, stop_hidden=0):
+        def __init__(self, n_in, stop_hidden=0, hidden=HIDDEN):
             super().__init__()
-            self.shared = nn.Sequential(nn.Linear(n_in, HIDDEN), nn.ReLU(), nn.Linear(HIDDEN, HIDDEN), nn.ReLU())
-            self.arm = nn.Linear(HIDDEN, 7)
-            self.stop = nn.Sequential(nn.Linear(HIDDEN, stop_hidden), nn.ReLU(), nn.Linear(stop_hidden, 1)) if stop_hidden else nn.Linear(HIDDEN, 1)
+            self.shared = nn.Sequential(nn.Linear(n_in, hidden), nn.ReLU(), nn.Linear(hidden, hidden), nn.ReLU())
+            self.arm = nn.Linear(hidden, 7)
+            self.stop = nn.Sequential(nn.Linear(hidden, stop_hidden), nn.ReLU(), nn.Linear(stop_hidden, 1)) if stop_hidden else nn.Linear(hidden, 1)
         def forward(self, x):
             h = self.shared(x); return self.arm(h), self.stop(h).squeeze(1)
 
@@ -164,7 +164,7 @@ def policy(w, x):
     s = np.maximum(x @ w['stop.0.weight'].T + w['stop.0.bias'], 0) @ w['stop.2.weight'].T + w['stop.2.bias'] if 'stop.0.weight' in w \
         else x @ w['stop.weight'].T + w['stop.bias']
     if 'stopnet.0.weight' in w:
-        s = x0
+        s = x0[:w['stopnet.0.weight'].shape[1]]  # frozen STOP network uses the current observation
         for layer in ('stopnet.0', 'stopnet.2'):
             s = np.maximum(s @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
         s = s @ w['stopnet.4.weight'].T + w['stopnet.4.bias']

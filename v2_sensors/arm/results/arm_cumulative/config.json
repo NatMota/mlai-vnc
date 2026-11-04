@@ -1,0 +1,87 @@
+{
+  "seed": 7,
+  "epochs": 1200,
+  "save_epochs": [
+    300,
+    600,
+    1200
+  ],
+  "variants": [
+    [
+      "longer",
+      64,
+      false
+    ],
+    [
+      "wider",
+      128,
+      false
+    ],
+    [
+      "history",
+      128,
+      true
+    ]
+  ],
+  "validation_cases": [
+    673,
+    506,
+    830,
+    720,
+    16,
+    333
+  ],
+  "cases": [
+    {
+      "dot": 673,
+      "range_m": 1.2746534894794994,
+      "height_m": 0.2348753097311087,
+      "initially_visible": true
+    },
+    {
+      "dot": 506,
+      "range_m": 1.7874425114599553,
+      "height_m": 0.25782178195547145,
+      "initially_visible": true
+    },
+    {
+      "dot": 830,
+      "range_m": 1.3522775567422742,
+      "height_m": 0.8960560734670561,
+      "initially_visible": true
+    },
+    {
+      "dot": 720,
+      "range_m": 1.7345368403244252,
+      "height_m": 0.7915375931659664,
+      "initially_visible": true
+    },
+    {
+      "dot": 16,
+      "range_m": 1.1487338924706232,
+      "height_m": 1.1272227094062415,
+      "initially_visible": true
+    },
+    {
+      "dot": 333,
+      "range_m": 1.5516410473905111,
+      "height_m": 1.2117764064657652,
+      "initially_visible": true
+    }
+  ],
+  "split": "val",
+  "lr": 0.01,
+  "chunk": 32768,
+  "history_lags_ms": [
+    0,
+    50,
+    100
+  ],
+  "history_reset": "PARK; first-sample padding",
+  "fixed_models": {
+    "driving_seed7.npz": "458fc825c3d3c1e5d39d3630655eb872bb46f3ddc34e0a850ee4eb5da52a18c3",
+    "reaching_seed7.npz": "cea9ff269766842e9cfb499943fafa4344f7e8c377f3971cbcba3b7b54b00788"
+  },
+  "checkpoint_selection": "minimum total validation loss, earliest tie; no simulation selection",
+  "test_trajectories_opened": 0
+}

@@ -21,6 +21,7 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / 'driving_v2'))
 import sensors
+from arm_history import SensorHistory
 from train_arm import DATA, SPLIT, dot_in_robot, select_inputs, policy as arm_policy
 from test_arm import NATIVE, PIXI                                   # the built simulator, as the arm tests use it
 from camera_loop import MOUNT, Scene, Tracker, see_dot, camera_to_robot, policy as drive_policy, driving_inputs
@@ -67,6 +68,7 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
         n_in = wa['shared.0.weight'].shape[1]
         use_time = bool(wa['info_time']) if 'info_time' in wa else n_in == 19
         cmd = np.zeros(4); parked = False; park_step = None; stop_t = None; stop_mm = None; est = None; seen = None
+        history = SensorHistory() if wa['shared.0.weight'].shape[1] == 51 else None
         next_frame = 0; frames = []; log = []; closest = np.inf; tau = np.zeros(7); ttp = None; never_seen = 0
         while not state['done']:
             f = state['frame']; t = f['time_s']; step = f['step']
@@ -110,6 +112,8 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                 dot_a = est if est is not None else np.zeros(3); never_seen += est is None
                 x = np.r_[(r['arm_angle'], r['arm_speed'], dot_a, t - park_step / 1000, t)].astype(np.float32)
                 x = select_inputs(x, False, True, use_time)
+                if history is not None:
+                    x = history.push(x)
                 tau, ttp = arm_policy(wa, x)
                 if stop_t is None and ttp <= float(wa['ttp_thresh']):
                     stop_t = t

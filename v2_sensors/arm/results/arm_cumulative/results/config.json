@@ -1,0 +1,23 @@
+{
+  "cases": [
+    673,
+    506,
+    830,
+    720,
+    16,
+    333
+  ],
+  "split": "val",
+  "jobs": 3,
+  "driving_sha256": "458fc825c3d3c1e5d39d3630655eb872bb46f3ddc34e0a850ee4eb5da52a18c3",
+  "arm_hashes": {
+    "longer": "992e29723ef573e662eadcf00cbc76f7dbb6e4fe3dd0f1971228c39995d6ef29",
+    "wider": "f348c69f9d4d60bdd42b0702fb78d050dcd5ae6749f7f6792ab1da60f3bbd83a",
+    "history": "1ce7919e83876aef80868d9564fd23ca40f79f651f8c4fe2c57daaeca063ff7a"
+  },
+  "full_run_sha256": "164382c62486c1170e2428e623460993d18cffc3eb87ae3f5df23ebf79e72110",
+  "camera_hz": 30,
+  "driving_hz": 30,
+  "arm_hz": 1000,
+  "full_rendering": true
+}
