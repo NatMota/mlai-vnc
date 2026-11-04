@@ -9694,3 +9694,1679 @@ Against **wider**, **history** improved closest approach on **3/6** targets. Med
 The driving model and separate STOP weights were frozen. STOP predictions can still change because each torque policy creates different sensor observations. Undefined STOP distances are omitted from their median, while all six attempts remain in the counts. The full episode, including the handover, is evaluated from the normal start.
 
 This cumulative, single-seed six-target screen does not establish generalisation or isolate interactions among changes. Selected epochs use offline validation loss only. No official MLflow iteration or reserved-test evaluation was created.
+
+
+## Development batch: distance-based PARK loss
+
+Plan recorded before training. Repeat four cumulative configurations on the same six initially visible validation targets: 673, 506, 830, 720, 16, 333. Train on the same 100 golden training runs and select checkpoints on the same 100 validation runs, seed 7. The test set stays reserved.
+
+Replace time-to-PARK supervision with horizontal Euclidean distance from the current expert base position to its position at the recorded PARK step. Positions are used only for training labels and evaluation, never policy inputs. Use the same numeric cap and divisor of 3, now in metres: target = min(distance_m, 3) / 3. Retain the actual small residual distance in post-PARK rows rather than forcing those labels to zero. Driving loss remains equal-run wheel-command MSE plus PARK-head MSE, weights 1 and 1. The runtime threshold changes from 0.25 seconds to 0.05 metres, fixed before evaluation and not tuned on these six runs. This is supervised distance prediction, not differentiation through the simulation.
+
+The four configurations are: (1) height-enabled 17-input driving and original arm; (2) remove six driving speed inputs, giving 11 inputs, and original arm; (3) retain that driving network and use the longer-trained 64/64 arm; (4) retain that driving network and use the longer-trained 128/128 arm. There is no history variant in this batch. Driving remains 16/16 hidden units and 300 epochs for both new models, FP32, Adam 0.01, unchanged scaling and equal-run weighting. The earlier suggestion of 500 driving epochs is not part of this controlled rerun.
+
+Reuse the existing exact original/longer/wider arm checkpoints, whose inputs, torque loss and separate STOP network are unchanged. This keeps all four comparisons against the preceding time-based PARK results controlled. Arm training budgets and selected checkpoints remain as recorded in the preceding sections; the arm STOP threshold stays 10 mm. Two new driving trainings and 24 new full simulations are needed.
+
+Hypothesis: predicting remaining distance may make the PARK decision more accurate than predicting remaining time. Compare each configuration to its own saved time-based PARK counterpart; lower median parking error supports the hypothesis on this small screen. Report every case including non-parks and non-stops, closest reach and distance at arm STOP. Six initially visible targets and one seed do not establish generalisation or search ability. Full rendering, sensor rates, physics, command clipping and deadlines are unchanged. No validation animations or official MLflow iterations.
+
+
+### Distance-based PARK: four paired comparisons
+
+
+```python
+from pathlib import Path
+import json
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from IPython.display import display, Markdown
+PD=Path('../arm/results/park_distance_four')
+pd_config=json.loads((PD/'config.json').read_text())
+pd_training=json.loads((PD/'training_summary.json').read_text())
+pd_controls={'height':('driving_height17','height'), 'no_speed':('driving_height_no_speed11','height_no_speed'), 'longer_arm':('arm_cumulative','longer'), 'wider_arm':('arm_cumulative','wider')}
+pd_rows=[]
+for variant,(folder,old_name) in pd_controls.items():
+    for r in json.loads((PD.parent/folder/'results/summary.json').read_text()):
+        if r['variant']==old_name:pd_rows.append(dict(r,variant=variant,park_target='time'))
+pd_rows.extend(dict(r,park_target='distance') for r in json.loads((PD/'results/summary.json').read_text()))
+pd_data=pd.DataFrame([dict(variant=r['variant'],park_target=r['park_target'],dot=r['dot'],parked=r['parked'],stopped=r['stop_s'] is not None,
+    park_cm=100*r['park_error_vs_expert_m'] if r['parked'] else np.nan,closest_mm=r['min_mm'],at_stop_mm=r['at_network_stop_mm'],
+    drift_mm=r['post_stop_drift_mm'],park_s=r['park_s'],stop_s=r['stop_s'],success=r['success']) for r in pd_rows])
+assert len(pd_data)==48 and pd_data.groupby(['variant','park_target']).size().eq(6).all()
+pd_score=pd_data.groupby(['variant','park_target'],sort=False).agg(attempts=('dot','size'),PARK=('parked','sum'),STOP=('stopped','sum'),median_park_cm=('park_cm','median'),median_closest_mm=('closest_mm','median'),median_arm_STOP_mm=('at_stop_mm','median'),success_10mm=('success','sum'))
+display(pd_score.round(2))
+print('Two driving trainings including loading: %.1f s; 24 full simulations: %.1f s' % (pd_training['elapsed_s'],json.loads((PD/'results/completion.json').read_text())['elapsed_s']))
+print('Seed 7. Same six initially visible validation targets. No reserved test evaluation or official MLflow run.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_arm_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>variant</th>
+      <th>park_target</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>height</th>
+      <th>time</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>23.31</td>
+      <td>428.82</td>
+      <td>552.86</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>no_speed</th>
+      <th>time</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>142.78</td>
+      <td>242.11</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>longer_arm</th>
+      <th>time</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>93.17</td>
+      <td>358.76</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>wider_arm</th>
+      <th>time</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>81.03</td>
+      <td>131.66</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>height</th>
+      <th>distance</th>
+      <td>6</td>
+      <td>4</td>
+      <td>4</td>
+      <td>11.92</td>
+      <td>66.52</td>
+      <td>387.49</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>no_speed</th>
+      <th>distance</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>8.37</td>
+      <td>125.63</td>
+      <td>273.28</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>longer_arm</th>
+      <th>distance</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>8.37</td>
+      <td>107.57</td>
+      <td>370.48</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>wider_arm</th>
+      <th>distance</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>8.37</td>
+      <td>104.88</td>
+      <td>214.56</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Two driving trainings including loading: 13.8 s; 24 full simulations: 84.6 s
+    Seed 7. Same six initially visible validation targets. No reserved test evaluation or official MLflow run.
+
+
+Parking error is base distance to the expert PARK position. Reach distances are gripper-to-dot distances. Closest reach includes the 0.5-second observation after arm STOP, during which torque control continues. Missing PARK/STOP outcomes remain in counts and have no corresponding distance median.
+
+### Camera height, original arm
+
+
+```python
+pd_name='height';pd_drive='height17'
+pd_meta=next(r for r in pd_training['variants'] if r['variant']==pd_drive)
+display(pd.DataFrame([{k:pd_meta[k] for k in ['variant','selected_epoch','selected_val_loss','train_rows','val_rows','park_distance_scale_m','park_distance_threshold_m']}]))
+print('Driving loss = mean wheel-command squared error + mean normalized PARK-distance squared error; each run weighted equally.')
+print('Same exact arm checkpoint as this configuration’s preceding time-based PARK comparison; no arm or STOP retraining.')
+print('Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert position is used only for the distance label and evaluation.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variant</th>
+      <th>selected_epoch</th>
+      <th>selected_val_loss</th>
+      <th>train_rows</th>
+      <th>val_rows</th>
+      <th>park_distance_scale_m</th>
+      <th>park_distance_threshold_m</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>height17</td>
+      <td>300</td>
+      <td>0.055244</td>
+      <td>25928</td>
+      <td>26428</td>
+      <td>3.0</td>
+      <td>0.05</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Driving loss = mean wheel-command squared error + mean normalized PARK-distance squared error; each run weighted equally.
+    Same exact arm checkpoint as this configuration’s preceding time-based PARK comparison; no arm or STOP retraining.
+    Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert position is used only for the distance label and evaluation.
+
+
+#### Driving training and validation losses
+
+
+```python
+pd_drive='height17'
+pd_h=pd.DataFrame(json.loads((PD/'models'/pd_drive/'driving_seed7_history.json').read_text()))
+pd_old_dir='driving_height17' if pd_drive=='height17' else 'driving_height_no_speed11'
+pd_old_h=pd.DataFrame(json.loads((PD.parent/pd_old_dir/'models/driving_seed7_history.json').read_text()))
+fig,axes=plt.subplots(1,2,figsize=(12,3.4))
+for h,label,col in [(pd_old_h,'time-based PARK','tab:blue'),(pd_h,'distance-based PARK','tab:orange')]:
+    axes[0].plot(h.epoch,h.train_command,label=label+' training',color=col)
+    axes[0].plot(h.epoch,h.val_command,label=label+' validation',color=col,linestyle='--')
+axes[1].plot(pd_h.epoch,pd_h.train_aux,label='training')
+axes[1].plot(pd_h.epoch,pd_h.val_aux,label='validation',linestyle='--')
+axes[0].set(title='Wheel-command MSE',ylabel='(rad/s) squared')
+axes[1].set(title='New PARK-distance MSE',ylabel='Squared error after dividing metres by 3')
+for ax in axes:ax.set(xlabel='Epoch',yscale='log');ax.grid(alpha=.2);ax.legend(fontsize=7)
+fig.tight_layout();plt.show()
+print('The old time-target loss and new distance-target loss measure different quantities; their magnitudes are not directly comparable.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_121_0.png)
+
+
+
+    The old time-target loss and new distance-target loss measure different quantities; their magnitudes are not directly comparable.
+
+
+#### Same six full validation episodes
+
+
+```python
+pd_name='height'
+display(pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values=['parked','stopped','park_cm','closest_mm','at_stop_mm']).round(2))
+display(pd_score.loc[pd_name].round(2))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">parked</th>
+      <th colspan="2" halign="left">stopped</th>
+      <th colspan="2" halign="left">park_cm</th>
+      <th colspan="2" halign="left">closest_mm</th>
+      <th colspan="2" halign="left">at_stop_mm</th>
+    </tr>
+    <tr>
+      <th>park_target</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>14.04218</td>
+      <td>15.949824</td>
+      <td>86.742966</td>
+      <td>337.725323</td>
+      <td>265.994862</td>
+      <td>486.116197</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>49.723723</td>
+      <td>60.048838</td>
+      <td>494.357253</td>
+      <td>577.852506</td>
+      <td>508.994974</td>
+      <td>619.611997</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>49.447182</td>
+      <td>NaN</td>
+      <td>652.031192</td>
+      <td>NaN</td>
+      <td>752.800752</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>False</td>
+      <td>True</td>
+      <td>False</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>12.086373</td>
+      <td>NaN</td>
+      <td>519.915625</td>
+      <td>NaN</td>
+      <td>793.228496</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>5.471026</td>
+      <td>30.662233</td>
+      <td>41.030364</td>
+      <td>299.212443</td>
+      <td>78.861427</td>
+      <td>314.361182</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>9.793112</td>
+      <td>14.207778</td>
+      <td>46.297988</td>
+      <td>249.449948</td>
+      <td>1260.775209</td>
+      <td>279.680645</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_arm_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>park_target</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>time</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>23.31</td>
+      <td>428.82</td>
+      <td>552.86</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>distance</th>
+      <td>6</td>
+      <td>4</td>
+      <td>4</td>
+      <td>11.92</td>
+      <td>66.52</td>
+      <td>387.49</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+#### PARK prediction versus actual distance to the expert parking position
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pd_config['validation_cases']):
+    r=json.loads((PD/'results'/f'height_dot{dot}.json').read_text())
+    frames=[f for f in r['frames'] if f.get('driving_park_distance_m') is not None]
+    if frames:
+        t=[f['time_s'] for f in frames]
+        actual=[100*np.linalg.norm(np.array(f['base'][:2])-r['expert_park_base_xy']) for f in frames]
+        ax.plot(t,actual,label='Actual distance')
+        ax.plot(t,[100*f['driving_park_distance_m'] for f in frames],label='Predicted distance')
+    if r['park_s'] is not None:ax.axvline(r['park_s'],color='black',linestyle=':',label='PARK')
+    ax.axhline(5,color='grey',linestyle='--',label='5 cm threshold')
+    ax.set(title=f'Target {dot}',xlabel='Seconds from start',ylabel='Distance (cm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_125_0.png)
+
+
+
+#### Reaching after the new PARK decision
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pd_config['validation_cases']):
+    r=json.loads((PD/'results'/f'height_dot{dot}.json').read_text());d=pd.DataFrame(r['log'])
+    if len(d):
+        ax.plot(d.t-r['park_s'],d.ee_mm,label='Actual gripper-to-dot distance')
+        ax.plot(d.t-r['park_s'],1000*d.ttp_s,label='Frozen arm STOP prediction')
+        if r['stop_s'] is not None:ax.axvline(r['stop_s']-r['park_s'],color='black',linestyle=':',label='Arm STOP')
+    else:
+        ax.text(.5,.5,'No PARK / no reaching',ha='center',transform=ax.transAxes)
+        ax.set_title(f'Target {dot}');ax.set_axis_off();continue
+    ax.axhline(10,color='grey',linestyle='--');ax.set(title=f'Target {dot}',xlabel='Seconds after PARK',ylabel='Distance (mm)');ax.grid(alpha=.2)
+axes.flat[2].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_127_0.png)
+
+
+
+#### What changed
+
+
+```python
+pd_name='height';before=pd_score.loc[(pd_name,'time')];after=pd_score.loc[(pd_name,'distance')]
+pairs=pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values='park_cm')
+valid=pairs.dropna();improved=int((valid['distance']<valid['time']).sum())
+display(Markdown(f"""Changing PARK supervision improved parking error on **{improved}/{len(valid)}** targets with PARK in both conditions. Median parking error changed from **{before.median_park_cm:.1f} to {after.median_park_cm:.1f} cm**; median closest reach from **{before.median_closest_mm:.1f} to {after.median_closest_mm:.1f} mm**; median distance at arm STOP from **{before.median_arm_STOP_mm:.1f} to {after.median_arm_STOP_mm:.1f} mm**.
+
+The distance-based configuration issued PARK on **{int(after.PARK)}/6** and arm STOP on **{int(after.STOP)}/6**, with **{int(after.success_10mm)}/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
+
+The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows."""))
+```
+
+
+Changing PARK supervision improved parking error on **4/4** targets with PARK in both conditions. Median parking error changed from **23.3 to 11.9 cm**; median closest reach from **428.8 to 66.5 mm**; median distance at arm STOP from **552.9 to 387.5 mm**.
+
+The distance-based configuration issued PARK on **4/6** and arm STOP on **4/6**, with **0/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
+
+The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows.
+
+
+### Remove driving speed inputs, original arm
+
+
+```python
+pd_name='no_speed';pd_drive='no_speed11'
+pd_meta=next(r for r in pd_training['variants'] if r['variant']==pd_drive)
+display(pd.DataFrame([{k:pd_meta[k] for k in ['variant','selected_epoch','selected_val_loss','train_rows','val_rows','park_distance_scale_m','park_distance_threshold_m']}]))
+print('Driving loss = mean wheel-command squared error + mean normalized PARK-distance squared error; each run weighted equally.')
+print('Same exact arm checkpoint as this configuration’s preceding time-based PARK comparison; no arm or STOP retraining.')
+print('Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert position is used only for the distance label and evaluation.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variant</th>
+      <th>selected_epoch</th>
+      <th>selected_val_loss</th>
+      <th>train_rows</th>
+      <th>val_rows</th>
+      <th>park_distance_scale_m</th>
+      <th>park_distance_threshold_m</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>no_speed11</td>
+      <td>297</td>
+      <td>0.389133</td>
+      <td>25928</td>
+      <td>26428</td>
+      <td>3.0</td>
+      <td>0.05</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Driving loss = mean wheel-command squared error + mean normalized PARK-distance squared error; each run weighted equally.
+    Same exact arm checkpoint as this configuration’s preceding time-based PARK comparison; no arm or STOP retraining.
+    Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert position is used only for the distance label and evaluation.
+
+
+#### Driving training and validation losses
+
+
+```python
+pd_drive='no_speed11'
+pd_h=pd.DataFrame(json.loads((PD/'models'/pd_drive/'driving_seed7_history.json').read_text()))
+pd_old_dir='driving_height17' if pd_drive=='height17' else 'driving_height_no_speed11'
+pd_old_h=pd.DataFrame(json.loads((PD.parent/pd_old_dir/'models/driving_seed7_history.json').read_text()))
+fig,axes=plt.subplots(1,2,figsize=(12,3.4))
+for h,label,col in [(pd_old_h,'time-based PARK','tab:blue'),(pd_h,'distance-based PARK','tab:orange')]:
+    axes[0].plot(h.epoch,h.train_command,label=label+' training',color=col)
+    axes[0].plot(h.epoch,h.val_command,label=label+' validation',color=col,linestyle='--')
+axes[1].plot(pd_h.epoch,pd_h.train_aux,label='training')
+axes[1].plot(pd_h.epoch,pd_h.val_aux,label='validation',linestyle='--')
+axes[0].set(title='Wheel-command MSE',ylabel='(rad/s) squared')
+axes[1].set(title='New PARK-distance MSE',ylabel='Squared error after dividing metres by 3')
+for ax in axes:ax.set(xlabel='Epoch',yscale='log');ax.grid(alpha=.2);ax.legend(fontsize=7)
+fig.tight_layout();plt.show()
+print('The old time-target loss and new distance-target loss measure different quantities; their magnitudes are not directly comparable.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_133_0.png)
+
+
+
+    The old time-target loss and new distance-target loss measure different quantities; their magnitudes are not directly comparable.
+
+
+#### Same six full validation episodes
+
+
+```python
+pd_name='no_speed'
+display(pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values=['parked','stopped','park_cm','closest_mm','at_stop_mm']).round(2))
+display(pd_score.loc[pd_name].round(2))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">parked</th>
+      <th colspan="2" halign="left">stopped</th>
+      <th colspan="2" halign="left">park_cm</th>
+      <th colspan="2" halign="left">closest_mm</th>
+      <th colspan="2" halign="left">at_stop_mm</th>
+    </tr>
+    <tr>
+      <th>park_target</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>9.770025</td>
+      <td>8.625313</td>
+      <td>213.089919</td>
+      <td>155.195436</td>
+      <td>238.513562</td>
+      <td>180.319776</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>27.263601</td>
+      <td>19.349422</td>
+      <td>288.317551</td>
+      <td>213.524927</td>
+      <td>292.085977</td>
+      <td>219.279844</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>5.486256</td>
+      <td>3.794478</td>
+      <td>59.839473</td>
+      <td>130.372783</td>
+      <td>283.981263</td>
+      <td>264.934603</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>1.216561</td>
+      <td>3.829892</td>
+      <td>133.725155</td>
+      <td>163.53819</td>
+      <td>262.575916</td>
+      <td>280.200084</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>12.539656</td>
+      <td>4.053917</td>
+      <td>117.530617</td>
+      <td>24.286698</td>
+      <td>145.765168</td>
+      <td>67.248003</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>6.962757</td>
+      <td>4.773166</td>
+      <td>74.807087</td>
+      <td>30.15105</td>
+      <td>1138.855675</td>
+      <td>1134.908278</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_arm_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>park_target</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>time</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>142.78</td>
+      <td>242.11</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>distance</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>8.37</td>
+      <td>125.63</td>
+      <td>273.28</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+#### PARK prediction versus actual distance to the expert parking position
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pd_config['validation_cases']):
+    r=json.loads((PD/'results'/f'no_speed_dot{dot}.json').read_text())
+    frames=[f for f in r['frames'] if f.get('driving_park_distance_m') is not None]
+    if frames:
+        t=[f['time_s'] for f in frames]
+        actual=[100*np.linalg.norm(np.array(f['base'][:2])-r['expert_park_base_xy']) for f in frames]
+        ax.plot(t,actual,label='Actual distance')
+        ax.plot(t,[100*f['driving_park_distance_m'] for f in frames],label='Predicted distance')
+    if r['park_s'] is not None:ax.axvline(r['park_s'],color='black',linestyle=':',label='PARK')
+    ax.axhline(5,color='grey',linestyle='--',label='5 cm threshold')
+    ax.set(title=f'Target {dot}',xlabel='Seconds from start',ylabel='Distance (cm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_137_0.png)
+
+
+
+#### Reaching after the new PARK decision
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pd_config['validation_cases']):
+    r=json.loads((PD/'results'/f'no_speed_dot{dot}.json').read_text());d=pd.DataFrame(r['log'])
+    if len(d):
+        ax.plot(d.t-r['park_s'],d.ee_mm,label='Actual gripper-to-dot distance')
+        ax.plot(d.t-r['park_s'],1000*d.ttp_s,label='Frozen arm STOP prediction')
+        if r['stop_s'] is not None:ax.axvline(r['stop_s']-r['park_s'],color='black',linestyle=':',label='Arm STOP')
+    else:ax.text(.5,.5,'No PARK / no reaching',ha='center',transform=ax.transAxes)
+    ax.axhline(10,color='grey',linestyle='--');ax.set(title=f'Target {dot}',xlabel='Seconds after PARK',ylabel='Distance (mm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_139_0.png)
+
+
+
+#### What changed
+
+
+```python
+pd_name='no_speed';before=pd_score.loc[(pd_name,'time')];after=pd_score.loc[(pd_name,'distance')]
+pairs=pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values='park_cm')
+valid=pairs.dropna();improved=int((valid['distance']<valid['time']).sum())
+display(Markdown(f"""Changing PARK supervision improved parking error on **{improved}/{len(valid)}** targets with PARK in both conditions. Median parking error changed from **{before.median_park_cm:.1f} to {after.median_park_cm:.1f} cm**; median closest reach from **{before.median_closest_mm:.1f} to {after.median_closest_mm:.1f} mm**; median distance at arm STOP from **{before.median_arm_STOP_mm:.1f} to {after.median_arm_STOP_mm:.1f} mm**.
+
+The distance-based configuration issued PARK on **{int(after.PARK)}/6** and arm STOP on **{int(after.STOP)}/6**, with **{int(after.success_10mm)}/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
+
+The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows."""))
+```
+
+
+Changing PARK supervision improved parking error on **1/6** targets with PARK in both conditions. Median parking error changed from **4.4 to 8.4 cm**; median closest reach from **142.8 to 125.6 mm**; median distance at arm STOP from **242.1 to 273.3 mm**.
+
+The distance-based configuration issued PARK on **6/6** and arm STOP on **6/6**, with **0/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
+
+The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows.
+
+
+### Retain those changes, longer-trained arm
+
+
+```python
+pd_name='longer_arm';pd_drive='no_speed11'
+pd_meta=next(r for r in pd_training['variants'] if r['variant']==pd_drive)
+display(pd.DataFrame([{k:pd_meta[k] for k in ['variant','selected_epoch','selected_val_loss','train_rows','val_rows','park_distance_scale_m','park_distance_threshold_m']}]))
+print('Driving loss = mean wheel-command squared error + mean normalized PARK-distance squared error; each run weighted equally.')
+print('Same exact arm checkpoint as this configuration’s preceding time-based PARK comparison; no arm or STOP retraining.')
+print('Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert position is used only for the distance label and evaluation.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variant</th>
+      <th>selected_epoch</th>
+      <th>selected_val_loss</th>
+      <th>train_rows</th>
+      <th>val_rows</th>
+      <th>park_distance_scale_m</th>
+      <th>park_distance_threshold_m</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>no_speed11</td>
+      <td>297</td>
+      <td>0.389133</td>
+      <td>25928</td>
+      <td>26428</td>
+      <td>3.0</td>
+      <td>0.05</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Driving loss = mean wheel-command squared error + mean normalized PARK-distance squared error; each run weighted equally.
+    Same exact arm checkpoint as this configuration’s preceding time-based PARK comparison; no arm or STOP retraining.
+    Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert position is used only for the distance label and evaluation.
+
+
+#### Driving training and validation losses
+
+
+```python
+pd_drive='no_speed11'
+pd_h=pd.DataFrame(json.loads((PD/'models'/pd_drive/'driving_seed7_history.json').read_text()))
+pd_old_dir='driving_height17' if pd_drive=='height17' else 'driving_height_no_speed11'
+pd_old_h=pd.DataFrame(json.loads((PD.parent/pd_old_dir/'models/driving_seed7_history.json').read_text()))
+fig,axes=plt.subplots(1,2,figsize=(12,3.4))
+for h,label,col in [(pd_old_h,'time-based PARK','tab:blue'),(pd_h,'distance-based PARK','tab:orange')]:
+    axes[0].plot(h.epoch,h.train_command,label=label+' training',color=col)
+    axes[0].plot(h.epoch,h.val_command,label=label+' validation',color=col,linestyle='--')
+axes[1].plot(pd_h.epoch,pd_h.train_aux,label='training')
+axes[1].plot(pd_h.epoch,pd_h.val_aux,label='validation',linestyle='--')
+axes[0].set(title='Wheel-command MSE',ylabel='(rad/s) squared')
+axes[1].set(title='New PARK-distance MSE',ylabel='Squared error after dividing metres by 3')
+for ax in axes:ax.set(xlabel='Epoch',yscale='log');ax.grid(alpha=.2);ax.legend(fontsize=7)
+fig.tight_layout();plt.show()
+print('The old time-target loss and new distance-target loss measure different quantities; their magnitudes are not directly comparable.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_145_0.png)
+
+
+
+    The old time-target loss and new distance-target loss measure different quantities; their magnitudes are not directly comparable.
+
+
+#### Same six full validation episodes
+
+
+```python
+pd_name='longer_arm'
+display(pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values=['parked','stopped','park_cm','closest_mm','at_stop_mm']).round(2))
+display(pd_score.loc[pd_name].round(2))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">parked</th>
+      <th colspan="2" halign="left">stopped</th>
+      <th colspan="2" halign="left">park_cm</th>
+      <th colspan="2" halign="left">closest_mm</th>
+      <th colspan="2" halign="left">at_stop_mm</th>
+    </tr>
+    <tr>
+      <th>park_target</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>9.770025</td>
+      <td>8.625313</td>
+      <td>63.73113</td>
+      <td>160.513323</td>
+      <td>234.625192</td>
+      <td>979.123115</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>27.263601</td>
+      <td>19.349422</td>
+      <td>171.606921</td>
+      <td>77.435024</td>
+      <td>341.692854</td>
+      <td>255.861795</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>5.486256</td>
+      <td>3.794478</td>
+      <td>91.638974</td>
+      <td>108.908609</td>
+      <td>547.62502</td>
+      <td>499.126193</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>1.216561</td>
+      <td>3.829892</td>
+      <td>132.003623</td>
+      <td>143.458251</td>
+      <td>399.258634</td>
+      <td>461.657281</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>12.539656</td>
+      <td>4.053917</td>
+      <td>123.49814</td>
+      <td>10.527163</td>
+      <td>145.763484</td>
+      <td>67.248003</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>6.962757</td>
+      <td>4.773166</td>
+      <td>36.881058</td>
+      <td>10.447678</td>
+      <td>772.67333</td>
+      <td>48.27908</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_arm_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>park_target</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>time</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>93.17</td>
+      <td>358.76</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>distance</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>8.37</td>
+      <td>107.57</td>
+      <td>370.48</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+#### PARK prediction versus actual distance to the expert parking position
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pd_config['validation_cases']):
+    r=json.loads((PD/'results'/f'longer_arm_dot{dot}.json').read_text())
+    frames=[f for f in r['frames'] if f.get('driving_park_distance_m') is not None]
+    if frames:
+        t=[f['time_s'] for f in frames]
+        actual=[100*np.linalg.norm(np.array(f['base'][:2])-r['expert_park_base_xy']) for f in frames]
+        ax.plot(t,actual,label='Actual distance')
+        ax.plot(t,[100*f['driving_park_distance_m'] for f in frames],label='Predicted distance')
+    if r['park_s'] is not None:ax.axvline(r['park_s'],color='black',linestyle=':',label='PARK')
+    ax.axhline(5,color='grey',linestyle='--',label='5 cm threshold')
+    ax.set(title=f'Target {dot}',xlabel='Seconds from start',ylabel='Distance (cm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_149_0.png)
+
+
+
+#### Reaching after the new PARK decision
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pd_config['validation_cases']):
+    r=json.loads((PD/'results'/f'longer_arm_dot{dot}.json').read_text());d=pd.DataFrame(r['log'])
+    if len(d):
+        ax.plot(d.t-r['park_s'],d.ee_mm,label='Actual gripper-to-dot distance')
+        ax.plot(d.t-r['park_s'],1000*d.ttp_s,label='Frozen arm STOP prediction')
+        if r['stop_s'] is not None:ax.axvline(r['stop_s']-r['park_s'],color='black',linestyle=':',label='Arm STOP')
+    else:ax.text(.5,.5,'No PARK / no reaching',ha='center',transform=ax.transAxes)
+    ax.axhline(10,color='grey',linestyle='--');ax.set(title=f'Target {dot}',xlabel='Seconds after PARK',ylabel='Distance (mm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_151_0.png)
+
+
+
+#### What changed
+
+
+```python
+pd_name='longer_arm';before=pd_score.loc[(pd_name,'time')];after=pd_score.loc[(pd_name,'distance')]
+pairs=pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values='park_cm')
+valid=pairs.dropna();improved=int((valid['distance']<valid['time']).sum())
+display(Markdown(f"""Changing PARK supervision improved parking error on **{improved}/{len(valid)}** targets with PARK in both conditions. Median parking error changed from **{before.median_park_cm:.1f} to {after.median_park_cm:.1f} cm**; median closest reach from **{before.median_closest_mm:.1f} to {after.median_closest_mm:.1f} mm**; median distance at arm STOP from **{before.median_arm_STOP_mm:.1f} to {after.median_arm_STOP_mm:.1f} mm**.
+
+The distance-based configuration issued PARK on **{int(after.PARK)}/6** and arm STOP on **{int(after.STOP)}/6**, with **{int(after.success_10mm)}/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
+
+The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows."""))
+```
+
+
+Changing PARK supervision improved parking error on **1/6** targets with PARK in both conditions. Median parking error changed from **4.4 to 8.4 cm**; median closest reach from **93.2 to 107.6 mm**; median distance at arm STOP from **358.8 to 370.5 mm**.
+
+The distance-based configuration issued PARK on **6/6** and arm STOP on **6/6**, with **0/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
+
+The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows.
+
+
+### Retain those changes, wider arm
+
+
+```python
+pd_name='wider_arm';pd_drive='no_speed11'
+pd_meta=next(r for r in pd_training['variants'] if r['variant']==pd_drive)
+display(pd.DataFrame([{k:pd_meta[k] for k in ['variant','selected_epoch','selected_val_loss','train_rows','val_rows','park_distance_scale_m','park_distance_threshold_m']}]))
+print('Driving loss = mean wheel-command squared error + mean normalized PARK-distance squared error; each run weighted equally.')
+print('Same exact arm checkpoint as this configuration’s preceding time-based PARK comparison; no arm or STOP retraining.')
+print('Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert position is used only for the distance label and evaluation.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variant</th>
+      <th>selected_epoch</th>
+      <th>selected_val_loss</th>
+      <th>train_rows</th>
+      <th>val_rows</th>
+      <th>park_distance_scale_m</th>
+      <th>park_distance_threshold_m</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>no_speed11</td>
+      <td>297</td>
+      <td>0.389133</td>
+      <td>25928</td>
+      <td>26428</td>
+      <td>3.0</td>
+      <td>0.05</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Driving loss = mean wheel-command squared error + mean normalized PARK-distance squared error; each run weighted equally.
+    Same exact arm checkpoint as this configuration’s preceding time-based PARK comparison; no arm or STOP retraining.
+    Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert position is used only for the distance label and evaluation.
+
+
+#### Driving training and validation losses
+
+
+```python
+pd_drive='no_speed11'
+pd_h=pd.DataFrame(json.loads((PD/'models'/pd_drive/'driving_seed7_history.json').read_text()))
+pd_old_dir='driving_height17' if pd_drive=='height17' else 'driving_height_no_speed11'
+pd_old_h=pd.DataFrame(json.loads((PD.parent/pd_old_dir/'models/driving_seed7_history.json').read_text()))
+fig,axes=plt.subplots(1,2,figsize=(12,3.4))
+for h,label,col in [(pd_old_h,'time-based PARK','tab:blue'),(pd_h,'distance-based PARK','tab:orange')]:
+    axes[0].plot(h.epoch,h.train_command,label=label+' training',color=col)
+    axes[0].plot(h.epoch,h.val_command,label=label+' validation',color=col,linestyle='--')
+axes[1].plot(pd_h.epoch,pd_h.train_aux,label='training')
+axes[1].plot(pd_h.epoch,pd_h.val_aux,label='validation',linestyle='--')
+axes[0].set(title='Wheel-command MSE',ylabel='(rad/s) squared')
+axes[1].set(title='New PARK-distance MSE',ylabel='Squared error after dividing metres by 3')
+for ax in axes:ax.set(xlabel='Epoch',yscale='log');ax.grid(alpha=.2);ax.legend(fontsize=7)
+fig.tight_layout();plt.show()
+print('The old time-target loss and new distance-target loss measure different quantities; their magnitudes are not directly comparable.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_157_0.png)
+
+
+
+    The old time-target loss and new distance-target loss measure different quantities; their magnitudes are not directly comparable.
+
+
+#### Same six full validation episodes
+
+
+```python
+pd_name='wider_arm'
+display(pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values=['parked','stopped','park_cm','closest_mm','at_stop_mm']).round(2))
+display(pd_score.loc[pd_name].round(2))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead tr th {
+        text-align: left;
+    }
+
+    .dataframe thead tr:last-of-type th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">parked</th>
+      <th colspan="2" halign="left">stopped</th>
+      <th colspan="2" halign="left">park_cm</th>
+      <th colspan="2" halign="left">closest_mm</th>
+      <th colspan="2" halign="left">at_stop_mm</th>
+    </tr>
+    <tr>
+      <th>park_target</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+      <th>distance</th>
+      <th>time</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>16</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>9.770025</td>
+      <td>8.625313</td>
+      <td>101.775705</td>
+      <td>84.106477</td>
+      <td>304.212378</td>
+      <td>91.293351</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>27.263601</td>
+      <td>19.349422</td>
+      <td>29.0385</td>
+      <td>77.947934</td>
+      <td>37.603724</td>
+      <td>172.030713</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>5.486256</td>
+      <td>3.794478</td>
+      <td>218.439542</td>
+      <td>203.376576</td>
+      <td>283.366232</td>
+      <td>221.054577</td>
+    </tr>
+    <tr>
+      <th>673</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>1.216561</td>
+      <td>3.829892</td>
+      <td>386.214906</td>
+      <td>218.119402</td>
+      <td>391.789289</td>
+      <td>259.266139</td>
+    </tr>
+    <tr>
+      <th>720</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>12.539656</td>
+      <td>4.053917</td>
+      <td>107.976842</td>
+      <td>12.345657</td>
+      <td>145.76135</td>
+      <td>67.248003</td>
+    </tr>
+    <tr>
+      <th>830</th>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>True</td>
+      <td>6.962757</td>
+      <td>4.773166</td>
+      <td>46.782024</td>
+      <td>31.331838</td>
+      <td>55.240336</td>
+      <td>33.567181</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>median_park_cm</th>
+      <th>median_closest_mm</th>
+      <th>median_arm_STOP_mm</th>
+      <th>success_10mm</th>
+    </tr>
+    <tr>
+      <th>park_target</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>time</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>4.41</td>
+      <td>81.03</td>
+      <td>131.66</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>distance</th>
+      <td>6</td>
+      <td>6</td>
+      <td>6</td>
+      <td>8.37</td>
+      <td>104.88</td>
+      <td>214.56</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+#### PARK prediction versus actual distance to the expert parking position
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pd_config['validation_cases']):
+    r=json.loads((PD/'results'/f'wider_arm_dot{dot}.json').read_text())
+    frames=[f for f in r['frames'] if f.get('driving_park_distance_m') is not None]
+    if frames:
+        t=[f['time_s'] for f in frames]
+        actual=[100*np.linalg.norm(np.array(f['base'][:2])-r['expert_park_base_xy']) for f in frames]
+        ax.plot(t,actual,label='Actual distance')
+        ax.plot(t,[100*f['driving_park_distance_m'] for f in frames],label='Predicted distance')
+    if r['park_s'] is not None:ax.axvline(r['park_s'],color='black',linestyle=':',label='PARK')
+    ax.axhline(5,color='grey',linestyle='--',label='5 cm threshold')
+    ax.set(title=f'Target {dot}',xlabel='Seconds from start',ylabel='Distance (cm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_161_0.png)
+
+
+
+#### Reaching after the new PARK decision
+
+
+```python
+fig,axes=plt.subplots(2,3,figsize=(12,6))
+for ax,dot in zip(axes.flat,pd_config['validation_cases']):
+    r=json.loads((PD/'results'/f'wider_arm_dot{dot}.json').read_text());d=pd.DataFrame(r['log'])
+    if len(d):
+        ax.plot(d.t-r['park_s'],d.ee_mm,label='Actual gripper-to-dot distance')
+        ax.plot(d.t-r['park_s'],1000*d.ttp_s,label='Frozen arm STOP prediction')
+        if r['stop_s'] is not None:ax.axvline(r['stop_s']-r['park_s'],color='black',linestyle=':',label='Arm STOP')
+    else:ax.text(.5,.5,'No PARK / no reaching',ha='center',transform=ax.transAxes)
+    ax.axhline(10,color='grey',linestyle='--');ax.set(title=f'Target {dot}',xlabel='Seconds after PARK',ylabel='Distance (mm)');ax.grid(alpha=.2)
+axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_163_0.png)
+
+
+
+#### What changed
+
+
+```python
+pd_name='wider_arm';before=pd_score.loc[(pd_name,'time')];after=pd_score.loc[(pd_name,'distance')]
+pairs=pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values='park_cm')
+valid=pairs.dropna();improved=int((valid['distance']<valid['time']).sum())
+display(Markdown(f"""Changing PARK supervision improved parking error on **{improved}/{len(valid)}** targets with PARK in both conditions. Median parking error changed from **{before.median_park_cm:.1f} to {after.median_park_cm:.1f} cm**; median closest reach from **{before.median_closest_mm:.1f} to {after.median_closest_mm:.1f} mm**; median distance at arm STOP from **{before.median_arm_STOP_mm:.1f} to {after.median_arm_STOP_mm:.1f} mm**.
+
+The distance-based configuration issued PARK on **{int(after.PARK)}/6** and arm STOP on **{int(after.STOP)}/6**, with **{int(after.success_10mm)}/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
+
+The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows."""))
+```
+
+
+Changing PARK supervision improved parking error on **1/6** targets with PARK in both conditions. Median parking error changed from **4.4 to 8.4 cm**; median closest reach from **81.0 to 104.9 mm**; median distance at arm STOP from **131.7 to 214.6 mm**.
+
+The distance-based configuration issued PARK on **6/6** and arm STOP on **6/6**, with **0/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
+
+The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows.

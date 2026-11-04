@@ -20,6 +20,7 @@ from torch import nn
 from render_golden import camera_inputs, frame_steps
 from train_arm import ArmPolicy, physical_scale, policy, sensors
 from train_stop import stop_net
+from parking_target import parking_distance, DISTANCE_SCALE_M, PARK_THRESHOLD_M
 
 HERE = Path(__file__).resolve().parent
 ANGLE_COLS = [0, 1, 2, 3, 8, 9]
@@ -45,7 +46,9 @@ def arm_readings(q):
     return angles, speed
 
 
-def load_data(root, driving_height=False):
+def load_data(root, driving_height=False, park_target='time'):
+    if park_target not in ('time', 'distance'):
+        raise ValueError('PARK target must be time or distance')
     splits = json.loads((root / 'split.json').read_text())
     manifest = json.loads((root / 'manifest.json').read_text())
     files = {v['path']: v['sha256'] for v in manifest['files']}
@@ -101,6 +104,10 @@ def load_data(root, driving_height=False):
                     raise ValueError(f'Nonzero recorded wheel command after PARK: {split}/{dot}')
                 wheel[parked] = 0
                 ttp = np.clip((park - drive_steps) / 1000, 0, 3) / 3
+                if park_target == 'distance':
+                    ttp = parking_distance(a['base_position'], park, drive_steps)
+                    row.update(park_distance_max_m=float(ttp.max() * DISTANCE_SCALE_M),
+                               parked_distance_max_m=float(ttp[parked].max(initial=0) * DISTANCE_SCALE_M))
                 astep = np.arange(park, n)
                 angles, speed = arm_readings(a['q'][:, 4:11])
                 acam = camera_inputs(split, dot, astep, root=root / 'camera')
@@ -126,6 +133,7 @@ def load_data(root, driving_height=False):
         raise ValueError('Empty training/validation set')
     return records, dict(split_sha256=sha(root / 'split.json'), manifest_sha256=sha(root / 'manifest.json'),
                          source_revision=manifest['code_revision'], rows=audit,
+                         park_target=park_target,
                          distance_label='hand_distance_expert: aligned pre-step kinematics',
                          wheel_speed_dt_s=sensors.DT,
                          wheel_timing_note='Saved sensor features use the runtime 1/30 s denominator at rounded frame steps; no rescaling.',
@@ -187,6 +195,7 @@ def infer_export(w, x, kind):
 
 
 def train_one(records, kind, seed, args):
+    distance_park = kind == 'driving' and getattr(args, 'park_target', 'time') == 'distance'
     torch.manual_seed(seed)
     x, y, _, _ = arrays(records['train'], kind)
     xm, xs = np.zeros(x.shape[1], np.float32), np.ones(x.shape[1], np.float32)
@@ -266,7 +275,7 @@ def train_one(records, kind, seed, args):
         checks.append(dict(split=split, max_abs_difference=diff, atol=1e-4, rtol=1e-5))
     meta = dict(kind=kind, seed=seed, selected_epoch=best['epoch'], selected_val_loss=best['loss'],
                 elapsed_s=time.monotonic()-started, export_checks=checks, train_rows=len(train[0]), val_rows=len(val[0]),
-                loss_terms=['distance_mse'] if kind=='stop' else ['wheel_mse','time_to_park_mse'] if kind=='driving' else ['standardized_torque_mse','auxiliary_distance_mse'],
+                loss_terms=['distance_mse'] if kind=='stop' else ['wheel_mse', 'park_distance_mse' if distance_park else 'time_to_park_mse'] if kind=='driving' else ['standardized_torque_mse','auxiliary_distance_mse'],
                 run_weighting='equal mean per run', checkpoint_rule='minimum validation total, earliest tie',
                 input_mean=xm.tolist(), input_scale=xs.tolist(), output_mean=ym.tolist(), output_scale=ys.tolist())
     w.update(info_arm_history_ms=np.array([0, 50, 100] if kind == 'torque' and len(xm) == 51 else [0]),
@@ -277,6 +286,13 @@ def train_one(records, kind, seed, args):
              info_scaling='standardised_angles' if kind=='driving' else 'physical_inputs',
              info_stop_target='time' if kind=='driving' else 'distance',
              ttp_clip=np.float32(3 if kind=='driving' else .25), ttp_thresh=np.float32(.25 if kind=='driving' else .01))
+    if distance_park:
+        w.pop('ttp_clip'); w.pop('ttp_thresh')
+        w.update(info_stop_target='distance', park_distance_scale_m=np.float32(DISTANCE_SCALE_M),
+                 park_distance_threshold_m=np.float32(PARK_THRESHOLD_M))
+        meta.update(park_target='distance', park_distance_scale_m=DISTANCE_SCALE_M,
+                    park_distance_threshold_m=PARK_THRESHOLD_M,
+                    label='horizontal Euclidean distance to recorded expert PARK base position')
     np.savez(prefix.with_suffix('.npz'), **w)
     torch.save(dict(model=best['state'], optimizer=best['optimizer'], config=meta, epoch=best['epoch']), prefix.with_suffix('.pt'))
     write_json(prefix.with_name(prefix.name+'_summary.json'), meta)

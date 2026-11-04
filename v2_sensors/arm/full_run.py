@@ -88,7 +88,7 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                 wheel_x, wheel_speed = sensors.wheel_features(reading['wheel_angle'], reading['wheel_speed'])[0], reading['wheel_speed']
                 point = camera_to_robot(seen) if seen is not None else None
                 dot = drive_tracker.update(point, wheel_speed); est = arm_tracker.update(point, wheel_speed)
-                driving_x, driving_ttp = None, None
+                driving_x, driving_ttp, driving_distance = None, None, None
                 if not parked:
                     if dot is None:
                         dot_in = [0.0, 0.0, 0.0]
@@ -97,6 +97,7 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                     x = driving_inputs(wd, wheel_x, dot, seen is not None, est[2] if est is not None else None)
                     cmd, prob = drive_policy(wd, x.astype(np.float32))
                     driving_x, driving_ttp = x.tolist(), getattr(drive_policy, 'ttp', None)
+                    driving_distance = getattr(drive_policy, 'park_distance_m', None)
                     if prob >= 0.5:
                         parked = True; park_step = step; cmd = np.zeros(4)
                 dx, dy = target[0] - f['base'][0], target[1] - f['base'][1]
@@ -104,7 +105,8 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                                    parked=parked, stopped=stop_t is not None, ttp_s=ttp, tau=np.round(tau, 3).tolist(),
                                    ee_mm=1000 * state['ee_distance_m'], visible=seen is not None, true_dist=float(np.hypot(dx, dy)),
                                    est_dist=dot_in[0] if not parked else None, wheel=np.round(cmd, 3).tolist(), camera_src=camera_src,
-                                   driving_input=driving_x, driving_ttp_s=driving_ttp))
+                                   driving_input=driving_x, driving_ttp_s=driving_ttp,
+                                   driving_park_distance_m=driving_distance))
                 next_frame = round(len(frames) * 1000 / 30)
             req = dict(op='step', wheel=cmd.tolist(), park=parked, ms=1)
             if parked:

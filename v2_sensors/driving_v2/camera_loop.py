@@ -84,9 +84,14 @@ def driving_inputs(w, wheel, dot, visible, height=None):
 
 
 def policy(w, x):
+    policy.ttp = None
+    policy.park_distance_m = None
     for layer in ('shared.0', 'shared.2'):
         x = np.maximum(x @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
     head = float((x @ w['park.weight'].T + w['park.bias'])[0])
+    if 'park_distance_scale_m' in w:
+        policy.park_distance_m = head * float(w['park_distance_scale_m'])
+        return np.clip(x @ w['wheels.weight'].T + w['wheels.bias'], -3, 3), float(policy.park_distance_m <= float(w['park_distance_threshold_m']))
     if 'ttp_clip' in w:      # time-to-park head: report a 0/1 'probability' from the fixed threshold, keep the seconds too
         policy.ttp = head * float(w['ttp_clip'])
         return np.clip(x @ w['wheels.weight'].T + w['wheels.bias'], -3, 3), float(policy.ttp <= float(w['ttp_thresh']))

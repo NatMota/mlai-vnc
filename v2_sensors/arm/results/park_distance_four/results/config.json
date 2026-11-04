@@ -1,0 +1,25 @@
+{
+  "validation_cases": [
+    673,
+    506,
+    830,
+    720,
+    16,
+    333
+  ],
+  "jobs": 3,
+  "driving_hashes": {
+    "height17": "19590a4ae1163fa319b90b39601f2589991896c10892e4154d971e6dfe152a52",
+    "no_speed11": "9c9d17dd62f3dc49e82318e2b23d13c7e2359e78b2ee8ef40ed7beb35db22c19"
+  },
+  "arm_hashes": {
+    "original": "cea9ff269766842e9cfb499943fafa4344f7e8c377f3971cbcba3b7b54b00788",
+    "longer": "992e29723ef573e662eadcf00cbc76f7dbb6e4fe3dd0f1971228c39995d6ef29",
+    "wider": "f348c69f9d4d60bdd42b0702fb78d050dcd5ae6749f7f6792ab1da60f3bbd83a"
+  },
+  "full_rendering": true,
+  "camera_hz": 30,
+  "driving_hz": 30,
+  "arm_hz": 1000,
+  "park_distance_threshold_m": 0.05
+}

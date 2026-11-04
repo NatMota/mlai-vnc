@@ -1,0 +1,15 @@
+{
+  "distance_label_geometry_and_scaling": "passed",
+  "label_translation_rotation_invariance": "passed",
+  "retained_post_park_drift": "passed",
+  "runtime_distance_trigger_and_legacy_time_path": "passed",
+  "equal_run_weighting_and_chunk_gradient_check": "passed",
+  "arm_checkpoints_exact": {
+    "original": "cea9ff269766842e9cfb499943fafa4344f7e8c377f3971cbcba3b7b54b00788",
+    "longer": "992e29723ef573e662eadcf00cbc76f7dbb6e4fe3dd0f1971228c39995d6ef29",
+    "wider": "f348c69f9d4d60bdd42b0702fb78d050dcd5ae6749f7f6792ab1da60f3bbd83a"
+  },
+  "full_simulations": 24,
+  "test_trajectories_opened": 0,
+  "same_driving_model_gives_identical_parking_across_arm_variants": true
+}
