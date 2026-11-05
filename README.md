@@ -3,6 +3,20 @@
 Private COMP0245 team workspace for robot learning and reproducible experiments.
 Train models in PyTorch; use MLflow to compare runs and GitHub to review code.
 
+## Robot policies
+
+This branch keeps the complete original two-phase model and adds a fused policy
+with separate arm velocity and torque networks. The original Python files from
+`b35c559` are unchanged. Use [HOW_TO_USE.md](HOW_TO_USE.md) for the original
+model and [docs/REPRODUCE.md](docs/REPRODUCE.md) for the fused model.
+
+The collection entry points are separate: `collect.py normal/dart COUNT` keeps
+the original `.npy` workflow; `collect_memory.py --runs COUNT` records reference
+memory in `.npz` files for the new arm. See
+[docs/merge_validation.md](docs/merge_validation.md) for compatibility and checks.
+The historical [memory policy v5 guide](docs/memory_policy.md) remains available.
+Weights, data and evaluation outputs are shared outside Git.
+
 ## Use the shared tracker
 
 Install [Pixi](https://pixi.sh) and clone this private repository:
