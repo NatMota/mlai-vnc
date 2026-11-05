@@ -1,0 +1,51 @@
+{
+  "cells": 398,
+  "active_iterations": [
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57
+  ],
+  "excluded_original_iteration": 51,
+  "excluded_original_run_id": "8434867d5e084720b2ecc2cfd1f72f01",
+  "original_code_cells_unchanged_including_outputs": 262,
+  "publication_summary_cells_refreshed": 3,
+  "new_validation_result_cells": 5,
+  "old_notebook_cells": 361,
+  "old_notebook_sha256": "2a35ae5dcd0187268cd9a610813a1ee3fdc8f458b5bb26b89bfe1224deed94bd",
+  "validation_ids": [
+    6,
+    16,
+    23,
+    45,
+    55,
+    80
+  ],
+  "pilot_seed": 7,
+  "pilot_new_mlflow_runs": 0,
+  "pilot_animations": 0,
+  "pilot_new_test_evaluations": 0,
+  "viewer_regeneration": "17 active saved viewers verified; raw records/models unchanged",
+  "checks": [
+    "camera regression passed",
+    "lazy loading regression passed",
+    "replay identity regression passed",
+    "descriptive labels regression passed",
+    "new validation cells executed without errors",
+    "loss figure visually inspected",
+    "git diff --check passed"
+  ]
+}

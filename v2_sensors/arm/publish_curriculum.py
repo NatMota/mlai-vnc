@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import report_curriculum as report
+from experiment_labels import ITERATIONS, LABELS, display_title
 
 # Numbering follows completed official MLflow iterations 41 and 42.
 RUNS = {
@@ -33,10 +34,18 @@ RUNS = {
 }
 
 
+# Keep excluded evidence addressable without displaying it as an active experiment.
+ARCHIVED_RUNS = {'imperfect_park': RUNS.pop('imperfect_park')}
+RUNS = {name: (ITERATIONS[name], *values[1:]) for name, values in RUNS.items()}
+
+
 def manifest(refresh=False):
     cached=report.ROOT/'publication_scores.csv'
     if cached.exists() and not refresh:
-        return pd.read_csv(cached)
+        data = pd.read_csv(cached)
+        data = data[data['name'].isin(RUNS)].copy()
+        data['iteration'] = data['name'].map(ITERATIONS).astype(int)
+        return data.sort_values(['iteration', 'split']).reset_index(drop=True)
     rows=[]
     reference_ids={}
     for name,(iteration,parent,role,change) in RUNS.items():
@@ -92,7 +101,7 @@ def detail(name):
 
 def overview_plot():
     data=manifest();test=data[data.split=='test'].sort_values('iteration')
-    labels=[f'{r.iteration} {r.name}' for r in test.itertuples()]
+    labels=[f'{r.iteration} {LABELS[r.name]}' for r in test.itertuples()]
     fig,axes=plt.subplots(1,3,figsize=(18,10),sharey=True)
     y=np.arange(len(test))
     axes[0].barh(y,test.parked,color='#4c78a8',label='PARK')
@@ -145,7 +154,7 @@ def publish(notebook):
         name=next((name for name in RUNS if c.get('id') in (f'pending-full-{name}-heading',f'full-{RUNS[name][0]}-heading')),None)
         if name:
             iteration=RUNS[name][0]
-            c.source=f'### Iteration {iteration}: full-episode {name.replace("_"," ")}\n\n'+detail(name)
+            c.source=f'### {display_title(name)}\n\n'+detail(name)
             (report.ROOT/name/'analysis.md').write_text(c.source+'\n')
         new.append(c)
     assert [c for c in new if c.cell_type=='code']==originals
@@ -155,7 +164,7 @@ def publish(notebook):
     def code(id,s):
         c=nbformat.v4.new_code_cell(s);c.id=id;return c
     n.cells.extend([
-      md('overnight-publication-overview','### Overnight comparisons: publication and interpretation\n\nIterations 41–58 are completed 100-test-target evaluations. Each also has a separate completed 100-target validation evaluation. No additional validation simulation is needed for publication. Six-case recovery checks remain development records only.\n\nThe noise ladder starts from iteration 41, not the standardised iteration 43. The stack includes encoder noise, damping, elasticity, inertia, 3 ms delay and random starts. It does not include bursty packets or occlusion. Iteration 51 is outside the agreed scope. Recovery models were trained with added recovery data, then tested separately on clean conditions and on the full stack.\n\nAll results use seed 7. Test targets have been reused; subsequent design decisions cannot be presented as blind final-test selection.'),
+      md('overnight-publication-overview','### Training and frozen-network evaluations: comparison and interpretation\n\nIterations 41–57 are completed 100-test-target evaluations. Each also has a separate completed 100-target validation evaluation. No additional validation simulation is needed for publication. Six-case recovery checks remain development records only.\n\nThe noise ladder starts from iteration 41, not the standardised iteration 43. The stack includes encoder noise, damping, elasticity, inertia, 3 ms delay and random starts. It does not include bursty packets or occlusion. Recovery models were trained with added recovery data, then tested separately on clean conditions and on the full stack.\n\nAll results use seed 7. Test targets have been reused; subsequent design decisions cannot be presented as blind final-test selection.'),
       code('overnight-publication-table',"import publish_curriculum as publication\npublication_data=publication.manifest()\ndisplay(publication_data[['iteration','name','role','split','attempts','parked','stopped','success_10mm','median_park_error_cm','median_closest_mm','median_stop_mm','execution_failures']].round(2))"),
       code('overnight-publication-comparison',"publication.overview_plot();plt.show()"),
       code('overnight-publication-thresholds',"publication.threshold_plot();plt.show()"),

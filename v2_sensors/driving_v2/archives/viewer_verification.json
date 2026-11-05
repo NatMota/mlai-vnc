@@ -1,0 +1,138 @@
+[
+  {
+    "iteration": 41,
+    "name": "baseline",
+    "title": "Iteration 41: Train arm torque control from reset with physical input scales \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152214,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 42,
+    "name": "encoder_noise",
+    "title": "Iteration 42: Frozen networks: add encoder noise \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152158,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 43,
+    "name": "basics_standard",
+    "title": "Iteration 43: Retrain arm networks with standardised inputs \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152180,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 44,
+    "name": "damping",
+    "title": "Iteration 44: Frozen networks: encoder noise plus damping \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152176,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 45,
+    "name": "elasticity",
+    "title": "Iteration 45: Frozen networks: add elasticity to noise and damping \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152194,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 46,
+    "name": "inertia",
+    "title": "Iteration 46: Frozen networks: add motor inertia to noise, damping and elasticity \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152224,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 47,
+    "name": "delay",
+    "title": "Iteration 47: Frozen networks: add 3 ms observation delay to the cumulative disturbances \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152238,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 48,
+    "name": "random_start_fixed",
+    "title": "Iteration 48: Frozen networks unchanged: random starts with all five disturbances \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152224,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 49,
+    "name": "random_start_retrained",
+    "title": "Iteration 49: Retrain driving and reaching on random starts; evaluate with all five disturbances \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152254,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 50,
+    "name": "random_start_retention",
+    "title": "Iteration 50: Frozen random-start-retrained networks: clean retention at original starts \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152238,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 51,
+    "name": "standard_stack",
+    "title": "Iteration 51: Frozen standardised networks: all five disturbances and random starts \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152228,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 52,
+    "name": "dart",
+    "title": "Iteration 52: DART-inspired recovery training; clean evaluation \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152188,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 53,
+    "name": "dart_stack",
+    "title": "Iteration 53: Frozen DART-trained networks: all five disturbances and random starts \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152228,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 54,
+    "name": "dagger",
+    "title": "Iteration 54: Three-round DAgger recovery training; clean evaluation \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152198,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 55,
+    "name": "dagger_stack",
+    "title": "Iteration 55: Frozen DAgger-trained networks: all five disturbances and random starts \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152232,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 56,
+    "name": "dart_dagger",
+    "title": "Iteration 56: DART-inspired training followed by three-round DAgger; clean evaluation \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152232,
+    "lazy_runs": 100,
+    "zip_verified": true
+  },
+  {
+    "iteration": 57,
+    "name": "dart_dagger_stack",
+    "title": "Iteration 57: Frozen DART+DAgger networks: all five disturbances and random starts \u00b7 seed 7 \u00b7 test",
+    "html_bytes": 5152226,
+    "lazy_runs": 100,
+    "zip_verified": true
+  }
+]

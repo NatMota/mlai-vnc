@@ -1,0 +1,6 @@
+{
+  "samples": 512,
+  "torque_bit_equal": true,
+  "stop_bit_equal": true,
+  "baseline_sha256": "59d511132e0699c4e48e802f0013f6dc26794a2ecf9b301d425edadade472f34"
+}

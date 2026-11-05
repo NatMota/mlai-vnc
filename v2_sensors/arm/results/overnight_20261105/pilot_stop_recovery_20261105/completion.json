@@ -1,0 +1,28 @@
+{
+  "status": "complete validation-only pilot; recovery STOP did not improve six-case result",
+  "training_epochs": 600,
+  "history_records": 601,
+  "train_rows": 3936632,
+  "val_rows": 897417,
+  "selected_epoch": 600,
+  "stop_threshold_m": 0.01,
+  "threshold_tuned": false,
+  "new_collection": false,
+  "test_files_opened": 0,
+  "mlflow_runs_created": 0,
+  "invalid_startup_attempts": "val_failed_adapter: KeyError before first physics tick, excluded from model performance",
+  "comparison": "same torque-only checkpoint, driving, simulator, inputs and runtime; only independent STOP weights and own scaler replaced",
+  "composition": {
+    "torque_input": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/pilot_torque_only_20261105/models/reaching_seed7.npz",
+    "torque_input_sha256": "87e6811d50233de78d206188e0fb05d34cba30417c309f75b049c1aca5ee6206",
+    "stop_input": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/pilot_stop_recovery_20261105/models/stop_seed7.npz",
+    "stop_input_sha256": "af91afec2d34e2dde1dabc479aefe8554280cf373ff9fbaa18edfeba9e0569ec",
+    "model_hashes": {
+      "driving_seed7.npz": "ac5142423c51af0503a05a01db73f46a20f1c7d546e7a6f9debaa62a992fa389",
+      "reaching_seed7.npz": "2fb795fbe0721aad52f4e76db757c08b707a6d3fa50f42d6789cedf4d81960f9"
+    },
+    "preserved_non_stop_arrays": 32,
+    "stop_owns_normalisation": true,
+    "threshold_changed": false
+  }
+}

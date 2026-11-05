@@ -151,10 +151,11 @@ def build_viewer(seed):
 
 
 def package_replay(seed,viewer=None):
-    viewer=build_viewer(seed) if viewer is None else viewer;out=RESULTS/f'replay_test_seed{seed}.zip'
+    viewer=Path(build_viewer(seed) if viewer is None else viewer);root=viewer.parent;out=root/f'replay_test_seed{seed}.zip'
     with zipfile.ZipFile(out,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=4) as z:
         z.write(viewer,viewer.name)
-        for folder in sorted(RESULTS.glob(f'seed{seed}_dot*_camera')):
-            for image in sorted(folder.glob('*.png')):z.write(image,image.relative_to(RESULTS))
-        z.writestr('READ_ME.txt','Extract the entire archive and open '+viewer.name+'. Keep its camera folders beside it. All trajectories are recorded; no simulator is required. Images are loaded as needed, not embedded as a large browser allocation.\n')
+        for folder in sorted(root.glob(f'seed{seed}_dot*_camera')):
+            for image in sorted(folder.glob('*.png')):z.write(image,image.relative_to(root))
+        for data in sorted((root/f'viewer_seed{seed}_runs').glob('*.json')):z.write(data,data.relative_to(root))
+        z.writestr('READ_ME.txt','Extract the entire archive. Keep the camera and run folders beside '+viewer.name+'. Serve the extracted folder with python -m http.server 8000 and visit http://localhost:8000/'+viewer.name+'. All trajectories are recorded; no simulator is required. Only the selected trajectory is loaded.\n')
     return out

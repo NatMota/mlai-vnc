@@ -1,9 +1,12 @@
 """Read saved golden-data results and build analysis without rerunning training."""
-import base64
 import json
 import gzip
 from pathlib import Path
 import sys
+
+from report_camera import camera_frame, wire_camera
+from report_loading import lazy_replay
+from replay_identity import apply_replay_identity
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -106,9 +109,7 @@ def build_viewer(seed, results=RESULTS, split='validation', embed_camera=True):
     ghosts = read(results / f'expert_{split}.json'); runs=[]
     def frame(f):
         out = dict(f, command=f.get('wheel',[0]*4), park_probability=float(f['parked']), speed_m_s=0., tau=f.get('tau',[0]*7))
-        if embed_camera and f.get('camera_src'):
-            out['camera_src'] = 'data:image/png;base64,' + base64.b64encode((results/f['camera_src']).read_bytes()).decode('ascii')
-        return out
+        return camera_frame(out, results, embed_camera)
     for r in read(results/f'seed{seed}.json'):
         if not r['frames']: continue  # Failed attempts remain in the score table; there is no motion to replay.
         e=ghosts[str(r['dot'])]
@@ -122,8 +123,7 @@ def build_viewer(seed, results=RESULTS, split='validation', embed_camera=True):
     payload=dict(joint_names=names,runs=runs,geometry=replay.geometry(replay.native_root(),names),
                  recording_description=f'Seed {seed}; {len(runs)} recorded {split} targets. Learned driving and reaching. Ghost: recorded expert. No trajectory truncation. Camera inset: actual recorded frames, 128 px preview of the 256 px sensor.')
     page=(OLD/'replay_template.html').read_text()
-    page=page.replace('<aside>','<aside><section><img id="sensorImage" alt="Recorded front camera" style="width:100%;image-rendering:auto"><p class="note">Actual camera at the displayed robot state</p></section>')
-    page=page.replace('function text(m,e){','function text(m,e){if(m.camera_src){$("sensorImage").src=m.camera_src;}')
+    page=wire_camera(page)
     page=page.replace("${m.parked?'PARK':", "${m.stopped?'STOP':m.parked?'PARK':")
     page=page.replace('${r.bearing_deg}°','target ${r.bearing_deg}')
     page=page.replace('Select train or test run',f'Select {split} run')
@@ -154,5 +154,7 @@ def build_viewer(seed, results=RESULTS, split='validation', embed_camera=True):
         '\\nGripper distance: model ${m.ee_mm.toFixed(1)} mm / expert ${e.ee_mm.toFixed(1)} mm')
     page=page.replace('Heading difference ${fmt(m.park_yaw_error_deg,1)}°','Heading difference ${fmt(m.park_yaw_error_deg,1)}°<br>Distance at STOP ${fmt(m.stop_mm,1)} mm; closest ${fmt(m.closest_mm,1)} mm')
     page=page.replace('__PLOTLY__',(OLD/'replay_assets/plotly.min.js').read_text())
+    page=apply_replay_identity(page, results, seed, split)
+    page=lazy_replay(page, payload, results, seed)
     page=page.replace('__DATA__',json.dumps(payload,separators=(',',':')).replace('</','<\\/'))
     out=results/f'viewer_golden_seed{seed}.html';out.write_text(page);return out

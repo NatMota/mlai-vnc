@@ -75,6 +75,7 @@ def build(name):
     outputs=[ROOT/name/'scores.csv',out/'seed7_metrics.csv',out/'holding_metrics.csv',out/'viewer_golden_seed7.html',out/'replay_test_seed7.zip']
     sources=[ROOT/name/s/f for s in ('val','test') for f in ('seed7.json','expert_test.json','config.json','completion.json')]
     sources.extend([Path(plots.__file__),Path(testing.__file__),plots.OLD/'replay_template.html'])
+    sources.extend(Path(plots.__file__).parent/name for name in ('report_loading.py','report_camera.py','replay_identity.py','experiment_labels.py'))
     if os.environ.get('CURRICULUM_REUSE_REPORTS')=='1' and all(p.exists() for p in outputs+sources):
         if min(p.stat().st_mtime for p in outputs)>=max(p.stat().st_mtime for p in sources):
             return scores(name)

@@ -1,0 +1,72 @@
+{
+  "excluded": {
+    "name": "imperfect_park",
+    "original_iteration": 51,
+    "display_iteration": null,
+    "status": "archived_excluded",
+    "immutable_run_id": "8434867d5e084720b2ecc2cfd1f72f01"
+  },
+  "active": [
+    {
+      "name": "standard_stack",
+      "original_iteration": 52,
+      "display_iteration": 51,
+      "status": "active",
+      "immutable_run_id": "504dc22f4b9b4ca8b2409dd2e056cd5b"
+    },
+    {
+      "name": "dart",
+      "original_iteration": 53,
+      "display_iteration": 52,
+      "status": "active",
+      "immutable_run_id": "040d3fcfb9e34bdea083d8a481402cd5"
+    },
+    {
+      "name": "dart_stack",
+      "original_iteration": 54,
+      "display_iteration": 53,
+      "status": "active",
+      "immutable_run_id": "ebb7c113c1d04ababdc635e8f97f9923"
+    },
+    {
+      "name": "dagger",
+      "original_iteration": 55,
+      "display_iteration": 54,
+      "status": "active",
+      "immutable_run_id": "c9c156228d1c490d8b93ccdacb0ea099"
+    },
+    {
+      "name": "dagger_stack",
+      "original_iteration": 56,
+      "display_iteration": 55,
+      "status": "active",
+      "immutable_run_id": "141dd2beeb674b399d74c4eefe3807de"
+    },
+    {
+      "name": "dart_dagger",
+      "original_iteration": 57,
+      "display_iteration": 56,
+      "status": "active",
+      "immutable_run_id": "6a7e8192b7204825a0972a8d5c485b21"
+    },
+    {
+      "name": "dart_dagger_stack",
+      "original_iteration": 58,
+      "display_iteration": 57,
+      "status": "active",
+      "immutable_run_id": "b9278aa6679e4225a933dccb2207c81a"
+    }
+  ],
+  "source": "Existing Mint per-run mlflow.json records read 2026-11-05; no remote state mutated.",
+  "migration_plan": [
+    "Archive original51 run first: set runName archived-excluded-original-iteration51-imperfect-park; remove active iteration tag or replace with archived_original_iteration; mark publication_status archived_excluded and original_iteration 51. Preserve run ID, metrics, artifacts and lifecycle.",
+    "Rename active original52..58 in ascending original order to new51..57, updating active iteration tag and runName only after prior slot freed. Preserve original_iteration provenance and all immutable run IDs.",
+    "Update descriptions and notebook links to final descriptive anchors at published commit; preserve execution commit/hash metadata.",
+    "Verify active iteration tags 41..57 have exactly one run each, original51 absent from active listings, and metrics/artifacts unchanged. Save before/after tags locally."
+  ],
+  "migration_status": "verified: original51 archived, active41..57 unique, immutable IDs and metrics/params/status/artifacts unchanged",
+  "migration_evidence": [
+    "comp0245_mlflow_before_renumber.json",
+    "comp0245_mlflow_after_renumber.json"
+  ]
+}

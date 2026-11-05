@@ -1,0 +1,38 @@
+{
+  "driving_retrained": false,
+  "stop_retrained": false,
+  "source_hashes": {
+    "pilot_torque_only.py": "1d6a65e0d72d3278d72fc75e20bdd3f9b36a4cc439b550fb9c074087b07156fc",
+    "pilot_torque_runtime.py": "3872598e940be841ae8c360bff9e68b6fdc96e5476ccae66020a78469a67a80c",
+    "evaluate_torque_pilot.py": "543836a7963fa0f87fb260c05be6e9e036f87a6d6b94aa119cd1bc479f5742b7",
+    "train_golden.py": "9f41d7b68527381e32abe68238efe6b65115730edbf072854ee761af31d55bb6",
+    "train_full_episode.py": "03fae4cc7c5b9feab5aad6212a087dbb400a48ffc1d6eaba2cf7d60409ab65d0",
+    "train_arm.py": "cb9557928ae92ceccdcd6ebf355e0a3f41385d13377ccb7cb38292a8658fe83a",
+    "full_run.py": "a099cabfe4479cf25bd59665e16717b8634a7feeb1b647f1dc39df9bf674514d",
+    "evaluate_curriculum.py": "7fa3b64db19e7a39b0cb3a598945fee4695e3a0dce7d037d1eee1e73a85f132c",
+    "render_golden.py": "68e19b9ef1a552864da65f66266db71b3273c08e49d203d13ef7bfc4b0182c59",
+    "curriculum_sensors.py": "8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520"
+  },
+  "baseline_models": {
+    "driving_seed7.npz": "ac5142423c51af0503a05a01db73f46a20f1c7d546e7a6f9debaa62a992fa389",
+    "reaching_seed7.npz": "59d511132e0699c4e48e802f0013f6dc26794a2ecf9b301d425edadade472f34",
+    "stop_seed7.npz": "1c7a15bcae23dbc460f476409980fcf4dce3ae2c9b1f297cffe21780109d2fc1",
+    "torque_seed7.npz": "91dcb57ac58a7873ab4cff69ab2ee86cf87772094b57ef14e489f41070c154e1"
+  },
+  "new_models": {
+    "deletion_only_reaching_seed7.npz": "9adf4def67e060a4e00976108394578852033756a23a17ec55d09a22e6d0566d",
+    "driving_seed7.npz": "ac5142423c51af0503a05a01db73f46a20f1c7d546e7a6f9debaa62a992fa389",
+    "reaching_seed7.npz": "87e6811d50233de78d206188e0fb05d34cba30417c309f75b049c1aca5ee6206",
+    "stop_seed7.npz": "1c7a15bcae23dbc460f476409980fcf4dce3ae2c9b1f297cffe21780109d2fc1",
+    "torque_seed7.npz": "4217264b524f775ec0c070c0ce441c5cdc87f710104d07f7e3b08751a7853523"
+  },
+  "data_audit_sha256": "f1542c5ef2bef32efc11356927f5900f6f5af852b52bce631f2c59031d5e0347",
+  "training_config_sha256": "f0699afac82eb0749a7f7696bba16f9b02ed5ee1c842e728a8bb2afe6116c358",
+  "deletion_parity": {
+    "samples": 512,
+    "torque_bit_equal": true,
+    "stop_bit_equal": true,
+    "baseline_sha256": "59d511132e0699c4e48e802f0013f6dc26794a2ecf9b301d425edadade472f34"
+  },
+  "test_files_opened": 0
+}

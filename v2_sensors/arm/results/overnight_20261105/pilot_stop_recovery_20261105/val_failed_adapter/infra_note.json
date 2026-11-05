@@ -1,0 +1,7 @@
+{
+  "status": "invalid execution attempt; excluded from model performance",
+  "reason": "Python3.14 forkserver child did not execute adapter assignment under __main__; original policy accessed removed auxiliary stop.weight before first physics step",
+  "fix": "assign adapter at import scope in evaluate_torque_pilot.py; identical frozen models and six target IDs rerun",
+  "model_changed": false,
+  "training_repeated": false
+}

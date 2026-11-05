@@ -14900,7 +14900,7 @@ All 100 bearings, ranges and heights are included, including initially invisible
 This is one seed per configuration. These test targets had already been evaluated in iterations 34 to 36, so the results should be described as a subsequent frozen comparison. Do not treat them as a fresh untouched test or use them to choose epochs. The distance-PARK experiments remain separate and unchanged.
 
 
-### Full-episode arm training and cumulative robustness: plan
+### Train arm torque control from reset and evaluate cumulative disturbances: plan
 
 We are replacing the native pre-PARK holding controller with learned arm torque control from reset. Mint hosts execution, notebook, camera recordings and MLflow. No Powerglide availability is assumed.
 
@@ -14934,7 +14934,35 @@ Preparation in progress. No new training or evaluation has completed yet. Access
 
 
 
-### Iteration 41: full-episode baseline
+### Recovery programme: frozen plan before training
+
+## Validation decision and recovery branch
+
+Standardisation is the next candidate, selected before reading its test results. The complete validation set confirms the initial six-case signal: 100 parked, 92 issued STOP, median STOP error 183 mm and closest distance 92 mm. The physical-scale baseline has 100 parked, 90 STOP, 363 mm at STOP and 211 mm closest. This is an improvement in this validation set, not a claim about unseen targets or seeds.
+
+Encoder noise alone increased validation median STOP error to 740 mm and closest distance to 586 mm. The existing wheel-speed removal, scaling comparison and epoch comparison have now been checked. Nat authorised an earlier recovery branch after those basics. Keep the entire fixed-weight cumulative ladder; branch DART and DAgger from the more usable clean, standardised setup. Evaluate each resulting pair on both clean and cumulative random-start conditions. Do not weaken the stress stack to make its test score look better.
+
+The action-noise pilot rejected the first action-noise setting: wheel standard deviation 0.1 rad/s and arm 0.5 N m, held for 33 ms, caused one of ten training pilot targets to hit the navigation timeout. At 0.025 rad/s and the same arm disturbance, all ten finished. Freeze the latter for 100 training targets with each of two seeds. Retain the failed pilot and all later failures. The existing loader excludes timeouts/caps because no valid terminal demonstration exists; the audit records those exclusions. This is DART-inspired fixed-noise augmentation, not adaptive DART.
+
+The stateful DAgger label path reproduces all 9,549 steps of golden train target 0: maximum torque difference below 0.000001 N m, within float32 storage precision. It rejects skipped or duplicate queries. On student paths its arm phase follows the student's PARK signal; its base phase retains the supplied expert's state machine. This is a declared oracle adaptation. The oracle's reference angles and phase are saved for audit, never passed to the network. Latched PARK still prevents base recovery after parking.
+
+Each DAgger branch has three rounds on all 100 training targets. Keep all prior rounds and the original demonstrations; the combined branch also keeps both DART collections. New rows supervise commands only. PARK and STOP objectives retain original demonstration supervision. Choose the round on the same six validation targets, using median STOP error, or final error plus 1 m for missing PARK/STOP. This is a small reused development set; report that limitation, then run all 100 validation and test cases for the frozen choice.
+
+The narrow 200-row export check exposed float32 cancellation when nearly constant inputs are standardised and folded into the first layer. A complete real DAgger trajectory passed all exports. Full training still checks folded inference against PyTorch and stops on mismatch. If it recurs, use explicit input normalisation rather than weakening the numerical check.
+
+
+### Export and plotting repair before resuming recovery
+
+The first DART+DAgger round 2 attempt stopped after training because folded FP32 scaling exceeded the unchanged export tolerance (absolute 0.0001, relative 0.00001). Its selected epoch was 1198, but only epochs 300, 600 and 1200 were saved before export; epoch 1200 is not substituted for the selected checkpoint. The failed attempt and its logs remain intact.
+
+The retry retains explicit input scaling and torque output scaling, in the same order as training. Arm and STOP scalers are separate. Old folded archives remain supported. A saved epoch-1200 diagnostic on 10,529 training states reduced maximum error from 0.0002327 Nm (one failing value) to 0.00003815 Nm (no failures); this is an implementation check, not a new model result. Selected raw checkpoints are now saved before export validation.
+
+Round 2 is retrained in a new models_exportfix1 directory with the same data, seed, architecture, losses, epochs and validation selection. The new recovery_runtime_exportfix1 snapshot preserves the original runtime. The remaining round and previously planned full validation/test comparisons then continue. No test result selects checkpoints or settings.
+
+Distance plots now label attempts without PARK as seconds since reset, retaining every failure. Earlier cells and results are unchanged.
+
+
+### Iteration 41: Train arm torque control from reset with physical input scales
 
 **What changed:** Learn arm torques from reset, including while driving. Removes the expert holding controller. Physical input scales; frozen iteration-40 driving.
 
@@ -15215,7 +15243,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_234_0.png)
+![png](golden_dataset_files/golden_dataset_236_0.png)
 
 
 
@@ -15231,7 +15259,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_235_0.png)
+![png](golden_dataset_files/golden_dataset_237_0.png)
 
 
 
@@ -15542,7 +15570,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_236_0.png)
+![png](golden_dataset_files/golden_dataset_238_0.png)
 
 
 
@@ -15688,13 +15716,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_237_0.png)
+![png](golden_dataset_files/golden_dataset_239_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_237_1.png)
+![png](golden_dataset_files/golden_dataset_239_1.png)
 
 
 
@@ -15729,24 +15757,7 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 100/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 84/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 5.5 cm; median distance at STOP among stopped attempts was 272.7 mm. Median maximum pre-PARK joint deviation was 0.131 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Recovery programme: frozen plan before training
-
-## Validation decision and recovery branch
-
-Standardisation is the next candidate, selected before reading its test results. The complete validation set confirms the initial six-case signal: 100 parked, 92 issued STOP, median STOP error 183 mm and closest distance 92 mm. The physical-scale baseline has 100 parked, 90 STOP, 363 mm at STOP and 211 mm closest. This is an improvement in this validation set, not a claim about unseen targets or seeds.
-
-Encoder noise alone increased validation median STOP error to 740 mm and closest distance to 586 mm. The existing wheel-speed removal, scaling comparison and epoch comparison have now been checked. Nat authorised an earlier recovery branch after those basics. Keep the entire fixed-weight cumulative ladder; branch DART and DAgger from the more usable clean, standardised setup. Evaluate each resulting pair on both clean and cumulative random-start conditions. Do not weaken the stress stack to make its test score look better.
-
-The action-noise pilot rejected the first action-noise setting: wheel standard deviation 0.1 rad/s and arm 0.5 N m, held for 33 ms, caused one of ten training pilot targets to hit the navigation timeout. At 0.025 rad/s and the same arm disturbance, all ten finished. Freeze the latter for 100 training targets with each of two seeds. Retain the failed pilot and all later failures. The existing loader excludes timeouts/caps because no valid terminal demonstration exists; the audit records those exclusions. This is DART-inspired fixed-noise augmentation, not adaptive DART.
-
-The stateful DAgger label path reproduces all 9,549 steps of golden train target 0: maximum torque difference below 0.000001 N m, within float32 storage precision. It rejects skipped or duplicate queries. On student paths its arm phase follows the student's PARK signal; its base phase retains the supplied expert's state machine. This is a declared oracle adaptation. The oracle's reference angles and phase are saved for audit, never passed to the network. Latched PARK still prevents base recovery after parking.
-
-Each DAgger branch has three rounds on all 100 training targets. Keep all prior rounds and the original demonstrations; the combined branch also keeps both DART collections. New rows supervise commands only. PARK and STOP objectives retain original demonstration supervision. Choose the round on the same six validation targets, using median STOP error, or final error plus 1 m for missing PARK/STOP. This is a small reused development set; report that limitation, then run all 100 validation and test cases for the frozen choice.
-
-The narrow 200-row export check exposed float32 cancellation when nearly constant inputs are standardised and folded into the first layer. A complete real DAgger trajectory passed all exports. Full training still checks folded inference against PyTorch and stops on mismatch. If it recurs, use explicit input normalisation rather than weakening the numerical check.
-
-
-### Iteration 42: full-episode encoder noise
+### Iteration 42: Frozen networks: add encoder noise
 
 **What changed:** Add Gaussian encoder-angle noise, standard deviation 0.0001 rad, before quantisation and velocity estimation. Networks unchanged.
 
@@ -16118,13 +16129,13 @@ plt.show()
 
 
 
-![png](golden_dataset_files/golden_dataset_243_5.png)
+![png](golden_dataset_files/golden_dataset_244_5.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_243_6.png)
+![png](golden_dataset_files/golden_dataset_244_6.png)
 
 
 
@@ -16136,7 +16147,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_244_0.png)
+![png](golden_dataset_files/golden_dataset_245_0.png)
 
 
 
@@ -16152,7 +16163,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_245_0.png)
+![png](golden_dataset_files/golden_dataset_246_0.png)
 
 
 
@@ -16463,7 +16474,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_246_0.png)
+![png](golden_dataset_files/golden_dataset_247_0.png)
 
 
 
@@ -16609,13 +16620,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_247_0.png)
+![png](golden_dataset_files/golden_dataset_248_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_247_1.png)
+![png](golden_dataset_files/golden_dataset_248_1.png)
 
 
 
@@ -16650,808 +16661,7 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 99/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 99/100 parked, 91/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 6.2 cm; median distance at STOP among stopped attempts was 755.0 mm. Median maximum pre-PARK joint deviation was 1.719 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 44: full-episode damping
-
-**What changed:** Retain encoder noise and add the course motor damping term, c=1. Networks unchanged.
-
-**Type:** Frozen-model stress test. Seed 7 only; 100 validation and 100 test targets, with both learned networks controlling the complete episode. No conventional arm holding controller or extra gravity compensation is active.
-
-**Result:** test PARK 100/100, STOP 88/100, full success 0/100; validation full success 0/100. Median parking error is 6.25 cm among 100 parked attempts. Median STOP distance is 707.5 mm among 88 stopped attempts. 0 attempts did not PARK; 12 parked without STOP. Neither is silently discarded from success.
-
-**Comparison with iteration 42 (encoder_noise):** PARK count changes by +1; STOP by -3; successes by +0. On the same 99 targets parked by both, the median paired change in parking error is +0.01 cm. On the same 84 targets stopped by both, the median paired change at STOP is -5.9 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
-
-**Training provenance:** selected epochs: driving 299, torque 1198, STOP 593. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
-
-**Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
-
-**Interpretation:** this measures cumulative sensitivity of the original physical-scale model. It does not isolate the same effect on the standardised model. Differencing noisy angle readings can amplify velocity noise; this is a plausible mechanism, not a demonstrated sole cause.
-
-
-
-```python
-from pathlib import Path
-import sys,json,uuid
-import matplotlib.pyplot as plt
-from IPython.display import display,Markdown,HTML
-sys.path.insert(0,str(Path('../arm').resolve()))
-import report_curriculum as overnight
-def lazy_player(url,height=850):
-    k=uuid.uuid4().hex[:8]
-    return HTML(f"<div><button onclick=\"var f=document.getElementById('player{k}');f.src='{url}';f.style.display='block';this.style.display='none'\" style=\"padding:8px 14px\">Load the 3D player</button><iframe id=\"player{k}\" style=\"display:none;width:100%;height:{height}px;border:0\"></iframe></div>")
-
-full_name='damping'
-display(overnight.build(full_name).round(3))
-print('Validation and test are distinct. No fitting occurs in these analysis cells.')
-```
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>seed</th>
-      <th>attempts</th>
-      <th>parked</th>
-      <th>stopped</th>
-      <th>success_10mm</th>
-      <th>success_percent</th>
-      <th>wilson95_low_percent</th>
-      <th>wilson95_high_percent</th>
-      <th>median_park_error_cm</th>
-      <th>median_abs_heading_error_deg</th>
-      <th>median_closest_mm</th>
-      <th>median_stop_mm</th>
-      <th>median_park_s</th>
-      <th>median_stop_s</th>
-      <th>timeouts</th>
-      <th>execution_failures</th>
-      <th>sum_case_wall_s</th>
-      <th>median_case_wall_s</th>
-    </tr>
-    <tr>
-      <th>split</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>val</th>
-      <td>7</td>
-      <td>100</td>
-      <td>98</td>
-      <td>81</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>3.699</td>
-      <td>6.658</td>
-      <td>4.519</td>
-      <td>536.344</td>
-      <td>783.107</td>
-      <td>7.950</td>
-      <td>7.233</td>
-      <td>19</td>
-      <td>0</td>
-      <td>2350.567</td>
-      <td>22.481</td>
-    </tr>
-    <tr>
-      <th>test</th>
-      <td>7</td>
-      <td>100</td>
-      <td>100</td>
-      <td>88</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>3.699</td>
-      <td>6.252</td>
-      <td>3.677</td>
-      <td>556.158</td>
-      <td>707.463</td>
-      <td>7.216</td>
-      <td>7.034</td>
-      <td>12</td>
-      <td>0</td>
-      <td>2058.742</td>
-      <td>20.273</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-    Validation and test are distinct. No fitting occurs in these analysis cells.
-
-
-
-```python
-full_config=json.loads((overnight.ROOT/full_name/'test/config.json').read_text())
-display(full_config)
-for kind in ('driving','torque','stop'):
-    chosen=json.loads((overnight.models(full_name)/f'{kind}_seed7_summary.json').read_text())
-    print(kind, 'selected epoch',chosen['selected_epoch'],'validation loss',chosen['selected_val_loss'])
-```
-
-
-    {'cases': [11,
-      17,
-      33,
-      35,
-      40,
-      43,
-      44,
-      48,
-      52,
-      56,
-      65,
-      83,
-      92,
-      97,
-      98,
-      113,
-      136,
-      147,
-      148,
-      154,
-      162,
-      196,
-      221,
-      229,
-      232,
-      239,
-      248,
-      260,
-      271,
-      274,
-      277,
-      281,
-      285,
-      302,
-      306,
-      311,
-      315,
-      316,
-      317,
-      361,
-      413,
-      427,
-      432,
-      463,
-      478,
-      479,
-      492,
-      502,
-      534,
-      545,
-      554,
-      571,
-      585,
-      586,
-      592,
-      599,
-      600,
-      605,
-      628,
-      632,
-      642,
-      646,
-      652,
-      653,
-      664,
-      669,
-      671,
-      683,
-      693,
-      700,
-      707,
-      708,
-      722,
-      729,
-      730,
-      738,
-      741,
-      750,
-      770,
-      779,
-      806,
-      834,
-      845,
-      846,
-      848,
-      854,
-      857,
-      859,
-      872,
-      883,
-      898,
-      903,
-      905,
-      945,
-      952,
-      958,
-      981,
-      985,
-      986,
-      989],
-     'split': 'test',
-     'seed': 7,
-     'jobs': 4,
-     'models': '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/baseline/models',
-     'condition': {'encoder_noise_sd': 0.0001, 'sensor_seed': 7, 'damping': 1.0},
-     'model_hashes': {'driving_seed7.npz': '458fc825c3d3c1e5d39d3630655eb872bb46f3ddc34e0a850ee4eb5da52a18c3',
-      'reaching_seed7.npz': '774c961608ec707c4ec9124ea13a66c180dd06be777481c0434a3a6f152287da'},
-     'native_hashes': {'/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/ladder_runtime/native/sensor_curriculum.cpp': '8d4cc91c5a97aa7f31195187896d2d94ad570cffc5c5a30671de5e14aa7bb167',
-      '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/ladder_runtime/native/sensor_curriculum': '4ae5363bac9b2f93164fb65f6bd81c2811aff8400986ff0a83e474ca1ce0eece'},
-     'source_hashes': {'full_run.py': 'c6da49f6cf9e934d24903222036f0d4d42c5a8a2c38de641f8e04612fc43b1e4',
-      'evaluate_curriculum.py': '7fa3b64db19e7a39b0cb3a598945fee4695e3a0dce7d037d1eee1e73a85f132c',
-      'curriculum_sensors.py': '8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520'},
-     'split_sha256': '286f578aec7e3ab0953592466e63014cc1dde7f467106fadf273b30762ac1abf',
-     'renderer': 'egl',
-     'arm_control': 'learned from reset, 1 kHz, no PD hold or gravity addition',
-     'selection': 'checkpoints frozen on offline validation; no fitting in evaluator',
-     'test_reuse': 'existing targets previously evaluated; not a fresh blind test'}
-
-
-    driving selected epoch 299 validation loss 0.38417819142341614
-    torque selected epoch 1198 validation loss 0.02170979417860508
-    stop selected epoch 593 validation loss 0.0030433654319494963
-
-
-
-```python
-overnight.losses(full_name);plt.show()
-print('All training and validation epochs. Test scores are not training losses.')
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_253_0.png)
-
-
-
-    All training and validation epochs. Test scores are not training losses.
-
-
-
-```python
-full_report=overnight.select(full_name)
-full_report.outcomes(7);plt.show()
-display(full_report.table(7).round(3))
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_254_0.png)
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>status</th>
-      <th>success</th>
-      <th>parked</th>
-      <th>park_s</th>
-      <th>stop_s</th>
-      <th>park_error_cm</th>
-      <th>park_heading_error_deg</th>
-      <th>at_stop_mm</th>
-      <th>closest_mm</th>
-      <th>end_mm</th>
-      <th>post_stop_drift_mm</th>
-      <th>post_park_base_drift_cm</th>
-      <th>timed_out</th>
-      <th>elapsed_s</th>
-      <th>camera_visible_fraction</th>
-      <th>target_bearing_deg</th>
-      <th>target_range_m</th>
-      <th>target_height_m</th>
-    </tr>
-    <tr>
-      <th>dot</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>11</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>2.367</td>
-      <td>8.478</td>
-      <td>4.657</td>
-      <td>5.680</td>
-      <td>194.610</td>
-      <td>114.879</td>
-      <td>773.751</td>
-      <td>579.141</td>
-      <td>2.738</td>
-      <td>False</td>
-      <td>22.554</td>
-      <td>0.989</td>
-      <td>0.986</td>
-      <td>1.042</td>
-      <td>0.178</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>7.667</td>
-      <td>7.806</td>
-      <td>8.482</td>
-      <td>-1.876</td>
-      <td>1127.098</td>
-      <td>950.257</td>
-      <td>950.248</td>
-      <td>-176.850</td>
-      <td>0.418</td>
-      <td>False</td>
-      <td>22.952</td>
-      <td>0.632</td>
-      <td>194.926</td>
-      <td>1.095</td>
-      <td>1.028</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>7.833</td>
-      <td>7.833</td>
-      <td>1.331</td>
-      <td>-6.420</td>
-      <td>975.760</td>
-      <td>800.622</td>
-      <td>800.898</td>
-      <td>-174.862</td>
-      <td>0.526</td>
-      <td>False</td>
-      <td>23.085</td>
-      <td>0.592</td>
-      <td>259.736</td>
-      <td>1.504</td>
-      <td>0.422</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>8.867</td>
-      <td>8.870</td>
-      <td>3.628</td>
-      <td>-10.179</td>
-      <td>791.955</td>
-      <td>663.170</td>
-      <td>663.094</td>
-      <td>-128.861</td>
-      <td>0.153</td>
-      <td>False</td>
-      <td>24.323</td>
-      <td>0.504</td>
-      <td>111.687</td>
-      <td>1.257</td>
-      <td>0.589</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.900</td>
-      <td>6.969</td>
-      <td>5.800</td>
-      <td>-7.839</td>
-      <td>637.712</td>
-      <td>599.381</td>
-      <td>599.358</td>
-      <td>-38.354</td>
-      <td>0.440</td>
-      <td>False</td>
-      <td>17.585</td>
-      <td>0.516</td>
-      <td>205.751</td>
-      <td>1.041</td>
-      <td>0.328</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>958</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>3.067</td>
-      <td>3.344</td>
-      <td>7.763</td>
-      <td>-0.684</td>
-      <td>226.212</td>
-      <td>215.886</td>
-      <td>248.247</td>
-      <td>22.035</td>
-      <td>0.138</td>
-      <td>False</td>
-      <td>12.658</td>
-      <td>0.974</td>
-      <td>347.116</td>
-      <td>1.181</td>
-      <td>0.493</td>
-    </tr>
-    <tr>
-      <th>981</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>5.933</td>
-      <td>5.933</td>
-      <td>5.826</td>
-      <td>-1.269</td>
-      <td>461.573</td>
-      <td>461.573</td>
-      <td>523.007</td>
-      <td>61.433</td>
-      <td>0.210</td>
-      <td>False</td>
-      <td>19.109</td>
-      <td>0.917</td>
-      <td>297.945</td>
-      <td>1.569</td>
-      <td>0.564</td>
-    </tr>
-    <tr>
-      <th>985</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.300</td>
-      <td>6.300</td>
-      <td>16.321</td>
-      <td>-1.338</td>
-      <td>997.919</td>
-      <td>997.919</td>
-      <td>1054.756</td>
-      <td>56.837</td>
-      <td>0.186</td>
-      <td>False</td>
-      <td>19.545</td>
-      <td>0.775</td>
-      <td>284.446</td>
-      <td>1.417</td>
-      <td>1.210</td>
-    </tr>
-    <tr>
-      <th>986</th>
-      <td>no_stop_timeout</td>
-      <td>False</td>
-      <td>True</td>
-      <td>9.633</td>
-      <td>NaN</td>
-      <td>23.569</td>
-      <td>-12.121</td>
-      <td>NaN</td>
-      <td>434.339</td>
-      <td>434.006</td>
-      <td>NaN</td>
-      <td>1.818</td>
-      <td>True</td>
-      <td>27.891</td>
-      <td>0.606</td>
-      <td>98.931</td>
-      <td>1.279</td>
-      <td>0.179</td>
-    </tr>
-    <tr>
-      <th>989</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>7.233</td>
-      <td>7.233</td>
-      <td>13.578</td>
-      <td>0.289</td>
-      <td>1205.625</td>
-      <td>1205.625</td>
-      <td>1310.235</td>
-      <td>104.610</td>
-      <td>0.200</td>
-      <td>False</td>
-      <td>20.820</td>
-      <td>0.866</td>
-      <td>287.737</td>
-      <td>1.749</td>
-      <td>1.193</td>
-    </tr>
-  </tbody>
-</table>
-<p>100 rows × 18 columns</p>
-</div>
-
-
-
-```python
-overnight.holding(full_name);plt.show()
-display(overnight.hold_table(full_name).round(4))
-print('Learned torques are applied from reset. No expert holding or added gravity term.')
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_255_0.png)
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>status</th>
-      <th>prepark_frames</th>
-      <th>max_arm_deviation_rad</th>
-      <th>maximum_command_Nm</th>
-      <th>torque_clipped_fraction</th>
-    </tr>
-    <tr>
-      <th>dot</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>11</th>
-      <td>stop_outside_10mm</td>
-      <td>71</td>
-      <td>0.1154</td>
-      <td>24.3113</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>stop_outside_10mm</td>
-      <td>230</td>
-      <td>1.9589</td>
-      <td>30.0000</td>
-      <td>0.1640</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>stop_outside_10mm</td>
-      <td>235</td>
-      <td>2.3009</td>
-      <td>30.0000</td>
-      <td>0.0954</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>stop_outside_10mm</td>
-      <td>266</td>
-      <td>2.7182</td>
-      <td>30.0000</td>
-      <td>0.1466</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>stop_outside_10mm</td>
-      <td>207</td>
-      <td>2.0586</td>
-      <td>30.0000</td>
-      <td>0.1670</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>958</th>
-      <td>stop_outside_10mm</td>
-      <td>92</td>
-      <td>0.1043</td>
-      <td>25.8326</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>981</th>
-      <td>stop_outside_10mm</td>
-      <td>178</td>
-      <td>1.3004</td>
-      <td>30.0000</td>
-      <td>0.0201</td>
-    </tr>
-    <tr>
-      <th>985</th>
-      <td>stop_outside_10mm</td>
-      <td>189</td>
-      <td>1.0129</td>
-      <td>30.0000</td>
-      <td>0.0030</td>
-    </tr>
-    <tr>
-      <th>986</th>
-      <td>no_stop_timeout</td>
-      <td>289</td>
-      <td>2.6727</td>
-      <td>30.0000</td>
-      <td>0.1429</td>
-    </tr>
-    <tr>
-      <th>989</th>
-      <td>stop_outside_10mm</td>
-      <td>217</td>
-      <td>1.4333</td>
-      <td>30.0000</td>
-      <td>0.0316</td>
-    </tr>
-  </tbody>
-</table>
-<p>100 rows × 5 columns</p>
-</div>
-
-
-    Learned torques are applied from reset. No expert holding or added gravity term.
-
-
-
-```python
-full_report=overnight.select(full_name)
-full_report.stopping(7);plt.show()
-full_report.distances(7);plt.show()
-print('Closest approach, exact STOP, and 0.5-second drift are different measurements.')
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_256_0.png)
-
-
-
-
-
-![png](golden_dataset_files/golden_dataset_256_1.png)
-
-
-
-    Closest approach, exact STOP, and 0.5-second drift are different measurements.
-
-
-
-```python
-full_url=overnight.player_url(full_name)
-display(lazy_player(full_url))
-display(HTML(f'<a href="{full_url}" target="_blank">Open all 100 test replays</a>'))
-print('Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.')
-```
-
-
-<div><button onclick="var f=document.getElementById('player507315af');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/damping/test/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px">Load the 3D player</button><iframe id="player507315af" style="display:none;width:100%;height:850px;border:0"></iframe></div>
-
-
-
-<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/damping/test/viewer_golden_seed7.html" target="_blank">Open all 100 test replays</a>
-
-
-    Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.
-
-
-
-```python
-display(Markdown(overnight.reading(full_name)))
-```
-
-
-Both networks controlled the complete run, including learned arm torques before PARK. On validation, 98/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 88/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 6.3 cm; median distance at STOP among stopped attempts was 707.5 mm. Median maximum pre-PARK joint deviation was 1.826 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
-
-
-### Iteration 43: full-episode basics standard
+### Iteration 43: Retrain arm networks with standardised inputs
 
 **What changed:** Standardise arm inputs using training-set means and standard deviations. Keep the driving checkpoint and training budgets unchanged.
 
@@ -17736,7 +16946,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_262_0.png)
+![png](golden_dataset_files/golden_dataset_254_0.png)
 
 
 
@@ -17752,7 +16962,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_263_0.png)
+![png](golden_dataset_files/golden_dataset_255_0.png)
 
 
 
@@ -18063,7 +17273,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_264_0.png)
+![png](golden_dataset_files/golden_dataset_256_0.png)
 
 
 
@@ -18209,13 +17419,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_265_0.png)
+![png](golden_dataset_files/golden_dataset_257_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_265_1.png)
+![png](golden_dataset_files/golden_dataset_257_1.png)
 
 
 
@@ -18250,7 +17460,808 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 100/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 91/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 5.3 cm; median distance at STOP among stopped attempts was 168.8 mm. Median maximum pre-PARK joint deviation was 0.059 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 45: full-episode elasticity
+### Iteration 44: Frozen networks: encoder noise plus damping
+
+**What changed:** Retain encoder noise and add the course motor damping term, c=1. Networks unchanged.
+
+**Type:** Frozen-model stress test. Seed 7 only; 100 validation and 100 test targets, with both learned networks controlling the complete episode. No conventional arm holding controller or extra gravity compensation is active.
+
+**Result:** test PARK 100/100, STOP 88/100, full success 0/100; validation full success 0/100. Median parking error is 6.25 cm among 100 parked attempts. Median STOP distance is 707.5 mm among 88 stopped attempts. 0 attempts did not PARK; 12 parked without STOP. Neither is silently discarded from success.
+
+**Comparison with iteration 42 (encoder_noise):** PARK count changes by +1; STOP by -3; successes by +0. On the same 99 targets parked by both, the median paired change in parking error is +0.01 cm. On the same 84 targets stopped by both, the median paired change at STOP is -5.9 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
+
+**Training provenance:** selected epochs: driving 299, torque 1198, STOP 593. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
+
+**Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
+**Interpretation:** this measures cumulative sensitivity of the original physical-scale model. It does not isolate the same effect on the standardised model. Differencing noisy angle readings can amplify velocity noise; this is a plausible mechanism, not a demonstrated sole cause.
+
+
+
+```python
+from pathlib import Path
+import sys,json,uuid
+import matplotlib.pyplot as plt
+from IPython.display import display,Markdown,HTML
+sys.path.insert(0,str(Path('../arm').resolve()))
+import report_curriculum as overnight
+def lazy_player(url,height=850):
+    k=uuid.uuid4().hex[:8]
+    return HTML(f"<div><button onclick=\"var f=document.getElementById('player{k}');f.src='{url}';f.style.display='block';this.style.display='none'\" style=\"padding:8px 14px\">Load the 3D player</button><iframe id=\"player{k}\" style=\"display:none;width:100%;height:{height}px;border:0\"></iframe></div>")
+
+full_name='damping'
+display(overnight.build(full_name).round(3))
+print('Validation and test are distinct. No fitting occurs in these analysis cells.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>seed</th>
+      <th>attempts</th>
+      <th>parked</th>
+      <th>stopped</th>
+      <th>success_10mm</th>
+      <th>success_percent</th>
+      <th>wilson95_low_percent</th>
+      <th>wilson95_high_percent</th>
+      <th>median_park_error_cm</th>
+      <th>median_abs_heading_error_deg</th>
+      <th>median_closest_mm</th>
+      <th>median_stop_mm</th>
+      <th>median_park_s</th>
+      <th>median_stop_s</th>
+      <th>timeouts</th>
+      <th>execution_failures</th>
+      <th>sum_case_wall_s</th>
+      <th>median_case_wall_s</th>
+    </tr>
+    <tr>
+      <th>split</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>val</th>
+      <td>7</td>
+      <td>100</td>
+      <td>98</td>
+      <td>81</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3.699</td>
+      <td>6.658</td>
+      <td>4.519</td>
+      <td>536.344</td>
+      <td>783.107</td>
+      <td>7.950</td>
+      <td>7.233</td>
+      <td>19</td>
+      <td>0</td>
+      <td>2350.567</td>
+      <td>22.481</td>
+    </tr>
+    <tr>
+      <th>test</th>
+      <td>7</td>
+      <td>100</td>
+      <td>100</td>
+      <td>88</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3.699</td>
+      <td>6.252</td>
+      <td>3.677</td>
+      <td>556.158</td>
+      <td>707.463</td>
+      <td>7.216</td>
+      <td>7.034</td>
+      <td>12</td>
+      <td>0</td>
+      <td>2058.742</td>
+      <td>20.273</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Validation and test are distinct. No fitting occurs in these analysis cells.
+
+
+
+```python
+full_config=json.loads((overnight.ROOT/full_name/'test/config.json').read_text())
+display(full_config)
+for kind in ('driving','torque','stop'):
+    chosen=json.loads((overnight.models(full_name)/f'{kind}_seed7_summary.json').read_text())
+    print(kind, 'selected epoch',chosen['selected_epoch'],'validation loss',chosen['selected_val_loss'])
+```
+
+
+    {'cases': [11,
+      17,
+      33,
+      35,
+      40,
+      43,
+      44,
+      48,
+      52,
+      56,
+      65,
+      83,
+      92,
+      97,
+      98,
+      113,
+      136,
+      147,
+      148,
+      154,
+      162,
+      196,
+      221,
+      229,
+      232,
+      239,
+      248,
+      260,
+      271,
+      274,
+      277,
+      281,
+      285,
+      302,
+      306,
+      311,
+      315,
+      316,
+      317,
+      361,
+      413,
+      427,
+      432,
+      463,
+      478,
+      479,
+      492,
+      502,
+      534,
+      545,
+      554,
+      571,
+      585,
+      586,
+      592,
+      599,
+      600,
+      605,
+      628,
+      632,
+      642,
+      646,
+      652,
+      653,
+      664,
+      669,
+      671,
+      683,
+      693,
+      700,
+      707,
+      708,
+      722,
+      729,
+      730,
+      738,
+      741,
+      750,
+      770,
+      779,
+      806,
+      834,
+      845,
+      846,
+      848,
+      854,
+      857,
+      859,
+      872,
+      883,
+      898,
+      903,
+      905,
+      945,
+      952,
+      958,
+      981,
+      985,
+      986,
+      989],
+     'split': 'test',
+     'seed': 7,
+     'jobs': 4,
+     'models': '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/baseline/models',
+     'condition': {'encoder_noise_sd': 0.0001, 'sensor_seed': 7, 'damping': 1.0},
+     'model_hashes': {'driving_seed7.npz': '458fc825c3d3c1e5d39d3630655eb872bb46f3ddc34e0a850ee4eb5da52a18c3',
+      'reaching_seed7.npz': '774c961608ec707c4ec9124ea13a66c180dd06be777481c0434a3a6f152287da'},
+     'native_hashes': {'/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/ladder_runtime/native/sensor_curriculum.cpp': '8d4cc91c5a97aa7f31195187896d2d94ad570cffc5c5a30671de5e14aa7bb167',
+      '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/ladder_runtime/native/sensor_curriculum': '4ae5363bac9b2f93164fb65f6bd81c2811aff8400986ff0a83e474ca1ce0eece'},
+     'source_hashes': {'full_run.py': 'c6da49f6cf9e934d24903222036f0d4d42c5a8a2c38de641f8e04612fc43b1e4',
+      'evaluate_curriculum.py': '7fa3b64db19e7a39b0cb3a598945fee4695e3a0dce7d037d1eee1e73a85f132c',
+      'curriculum_sensors.py': '8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520'},
+     'split_sha256': '286f578aec7e3ab0953592466e63014cc1dde7f467106fadf273b30762ac1abf',
+     'renderer': 'egl',
+     'arm_control': 'learned from reset, 1 kHz, no PD hold or gravity addition',
+     'selection': 'checkpoints frozen on offline validation; no fitting in evaluator',
+     'test_reuse': 'existing targets previously evaluated; not a fresh blind test'}
+
+
+    driving selected epoch 299 validation loss 0.38417819142341614
+    torque selected epoch 1198 validation loss 0.02170979417860508
+    stop selected epoch 593 validation loss 0.0030433654319494963
+
+
+
+```python
+overnight.losses(full_name);plt.show()
+print('All training and validation epochs. Test scores are not training losses.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_263_0.png)
+
+
+
+    All training and validation epochs. Test scores are not training losses.
+
+
+
+```python
+full_report=overnight.select(full_name)
+full_report.outcomes(7);plt.show()
+display(full_report.table(7).round(3))
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_264_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>status</th>
+      <th>success</th>
+      <th>parked</th>
+      <th>park_s</th>
+      <th>stop_s</th>
+      <th>park_error_cm</th>
+      <th>park_heading_error_deg</th>
+      <th>at_stop_mm</th>
+      <th>closest_mm</th>
+      <th>end_mm</th>
+      <th>post_stop_drift_mm</th>
+      <th>post_park_base_drift_cm</th>
+      <th>timed_out</th>
+      <th>elapsed_s</th>
+      <th>camera_visible_fraction</th>
+      <th>target_bearing_deg</th>
+      <th>target_range_m</th>
+      <th>target_height_m</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>2.367</td>
+      <td>8.478</td>
+      <td>4.657</td>
+      <td>5.680</td>
+      <td>194.610</td>
+      <td>114.879</td>
+      <td>773.751</td>
+      <td>579.141</td>
+      <td>2.738</td>
+      <td>False</td>
+      <td>22.554</td>
+      <td>0.989</td>
+      <td>0.986</td>
+      <td>1.042</td>
+      <td>0.178</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.667</td>
+      <td>7.806</td>
+      <td>8.482</td>
+      <td>-1.876</td>
+      <td>1127.098</td>
+      <td>950.257</td>
+      <td>950.248</td>
+      <td>-176.850</td>
+      <td>0.418</td>
+      <td>False</td>
+      <td>22.952</td>
+      <td>0.632</td>
+      <td>194.926</td>
+      <td>1.095</td>
+      <td>1.028</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.833</td>
+      <td>7.833</td>
+      <td>1.331</td>
+      <td>-6.420</td>
+      <td>975.760</td>
+      <td>800.622</td>
+      <td>800.898</td>
+      <td>-174.862</td>
+      <td>0.526</td>
+      <td>False</td>
+      <td>23.085</td>
+      <td>0.592</td>
+      <td>259.736</td>
+      <td>1.504</td>
+      <td>0.422</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.867</td>
+      <td>8.870</td>
+      <td>3.628</td>
+      <td>-10.179</td>
+      <td>791.955</td>
+      <td>663.170</td>
+      <td>663.094</td>
+      <td>-128.861</td>
+      <td>0.153</td>
+      <td>False</td>
+      <td>24.323</td>
+      <td>0.504</td>
+      <td>111.687</td>
+      <td>1.257</td>
+      <td>0.589</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.900</td>
+      <td>6.969</td>
+      <td>5.800</td>
+      <td>-7.839</td>
+      <td>637.712</td>
+      <td>599.381</td>
+      <td>599.358</td>
+      <td>-38.354</td>
+      <td>0.440</td>
+      <td>False</td>
+      <td>17.585</td>
+      <td>0.516</td>
+      <td>205.751</td>
+      <td>1.041</td>
+      <td>0.328</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>3.067</td>
+      <td>3.344</td>
+      <td>7.763</td>
+      <td>-0.684</td>
+      <td>226.212</td>
+      <td>215.886</td>
+      <td>248.247</td>
+      <td>22.035</td>
+      <td>0.138</td>
+      <td>False</td>
+      <td>12.658</td>
+      <td>0.974</td>
+      <td>347.116</td>
+      <td>1.181</td>
+      <td>0.493</td>
+    </tr>
+    <tr>
+      <th>981</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>5.933</td>
+      <td>5.933</td>
+      <td>5.826</td>
+      <td>-1.269</td>
+      <td>461.573</td>
+      <td>461.573</td>
+      <td>523.007</td>
+      <td>61.433</td>
+      <td>0.210</td>
+      <td>False</td>
+      <td>19.109</td>
+      <td>0.917</td>
+      <td>297.945</td>
+      <td>1.569</td>
+      <td>0.564</td>
+    </tr>
+    <tr>
+      <th>985</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.300</td>
+      <td>6.300</td>
+      <td>16.321</td>
+      <td>-1.338</td>
+      <td>997.919</td>
+      <td>997.919</td>
+      <td>1054.756</td>
+      <td>56.837</td>
+      <td>0.186</td>
+      <td>False</td>
+      <td>19.545</td>
+      <td>0.775</td>
+      <td>284.446</td>
+      <td>1.417</td>
+      <td>1.210</td>
+    </tr>
+    <tr>
+      <th>986</th>
+      <td>no_stop_timeout</td>
+      <td>False</td>
+      <td>True</td>
+      <td>9.633</td>
+      <td>NaN</td>
+      <td>23.569</td>
+      <td>-12.121</td>
+      <td>NaN</td>
+      <td>434.339</td>
+      <td>434.006</td>
+      <td>NaN</td>
+      <td>1.818</td>
+      <td>True</td>
+      <td>27.891</td>
+      <td>0.606</td>
+      <td>98.931</td>
+      <td>1.279</td>
+      <td>0.179</td>
+    </tr>
+    <tr>
+      <th>989</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.233</td>
+      <td>7.233</td>
+      <td>13.578</td>
+      <td>0.289</td>
+      <td>1205.625</td>
+      <td>1205.625</td>
+      <td>1310.235</td>
+      <td>104.610</td>
+      <td>0.200</td>
+      <td>False</td>
+      <td>20.820</td>
+      <td>0.866</td>
+      <td>287.737</td>
+      <td>1.749</td>
+      <td>1.193</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 18 columns</p>
+</div>
+
+
+
+```python
+overnight.holding(full_name);plt.show()
+display(overnight.hold_table(full_name).round(4))
+print('Learned torques are applied from reset. No expert holding or added gravity term.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_265_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>status</th>
+      <th>prepark_frames</th>
+      <th>max_arm_deviation_rad</th>
+      <th>maximum_command_Nm</th>
+      <th>torque_clipped_fraction</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>stop_outside_10mm</td>
+      <td>71</td>
+      <td>0.1154</td>
+      <td>24.3113</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>stop_outside_10mm</td>
+      <td>230</td>
+      <td>1.9589</td>
+      <td>30.0000</td>
+      <td>0.1640</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>stop_outside_10mm</td>
+      <td>235</td>
+      <td>2.3009</td>
+      <td>30.0000</td>
+      <td>0.0954</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>stop_outside_10mm</td>
+      <td>266</td>
+      <td>2.7182</td>
+      <td>30.0000</td>
+      <td>0.1466</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>stop_outside_10mm</td>
+      <td>207</td>
+      <td>2.0586</td>
+      <td>30.0000</td>
+      <td>0.1670</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>stop_outside_10mm</td>
+      <td>92</td>
+      <td>0.1043</td>
+      <td>25.8326</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>981</th>
+      <td>stop_outside_10mm</td>
+      <td>178</td>
+      <td>1.3004</td>
+      <td>30.0000</td>
+      <td>0.0201</td>
+    </tr>
+    <tr>
+      <th>985</th>
+      <td>stop_outside_10mm</td>
+      <td>189</td>
+      <td>1.0129</td>
+      <td>30.0000</td>
+      <td>0.0030</td>
+    </tr>
+    <tr>
+      <th>986</th>
+      <td>no_stop_timeout</td>
+      <td>289</td>
+      <td>2.6727</td>
+      <td>30.0000</td>
+      <td>0.1429</td>
+    </tr>
+    <tr>
+      <th>989</th>
+      <td>stop_outside_10mm</td>
+      <td>217</td>
+      <td>1.4333</td>
+      <td>30.0000</td>
+      <td>0.0316</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 5 columns</p>
+</div>
+
+
+    Learned torques are applied from reset. No expert holding or added gravity term.
+
+
+
+```python
+full_report=overnight.select(full_name)
+full_report.stopping(7);plt.show()
+full_report.distances(7);plt.show()
+print('Closest approach, exact STOP, and 0.5-second drift are different measurements.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_266_0.png)
+
+
+
+
+
+![png](golden_dataset_files/golden_dataset_266_1.png)
+
+
+
+    Closest approach, exact STOP, and 0.5-second drift are different measurements.
+
+
+
+```python
+full_url=overnight.player_url(full_name)
+display(lazy_player(full_url))
+display(HTML(f'<a href="{full_url}" target="_blank">Open all 100 test replays</a>'))
+print('Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.')
+```
+
+
+<div><button onclick="var f=document.getElementById('player507315af');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/damping/test/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px">Load the 3D player</button><iframe id="player507315af" style="display:none;width:100%;height:850px;border:0"></iframe></div>
+
+
+
+<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/damping/test/viewer_golden_seed7.html" target="_blank">Open all 100 test replays</a>
+
+
+    Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.
+
+
+
+```python
+display(Markdown(overnight.reading(full_name)))
+```
+
+
+Both networks controlled the complete run, including learned arm torques before PARK. On validation, 98/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 88/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 6.3 cm; median distance at STOP among stopped attempts was 707.5 mm. Median maximum pre-PARK joint deviation was 1.826 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
+### Iteration 45: Frozen networks: add elasticity to noise and damping
 
 **What changed:** Retain noise and damping; add the course elasticity term, k=1, towards zero joint angle. Networks unchanged.
 
@@ -18540,7 +18551,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_271_0.png)
+![png](golden_dataset_files/golden_dataset_272_0.png)
 
 
 
@@ -18556,7 +18567,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_272_0.png)
+![png](golden_dataset_files/golden_dataset_273_0.png)
 
 
 
@@ -18867,7 +18878,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_273_0.png)
+![png](golden_dataset_files/golden_dataset_274_0.png)
 
 
 
@@ -19013,13 +19024,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_274_0.png)
+![png](golden_dataset_files/golden_dataset_275_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_274_1.png)
+![png](golden_dataset_files/golden_dataset_275_1.png)
 
 
 
@@ -19054,7 +19065,7 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 97/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 99/100 parked, 93/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 6.0 cm; median distance at STOP among stopped attempts was 790.5 mm. Median maximum pre-PARK joint deviation was 1.902 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 46: full-episode inertia
+### Iteration 46: Frozen networks: add motor inertia to noise, damping and elasticity
 
 **What changed:** Retain previous effects; add motor inertia J=0.001 kg m² using the previous acceleration. Networks unchanged.
 
@@ -19345,7 +19356,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_280_0.png)
+![png](golden_dataset_files/golden_dataset_281_0.png)
 
 
 
@@ -19361,7 +19372,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_281_0.png)
+![png](golden_dataset_files/golden_dataset_282_0.png)
 
 
 
@@ -19672,7 +19683,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_282_0.png)
+![png](golden_dataset_files/golden_dataset_283_0.png)
 
 
 
@@ -19818,13 +19829,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_283_0.png)
+![png](golden_dataset_files/golden_dataset_284_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_283_1.png)
+![png](golden_dataset_files/golden_dataset_284_1.png)
 
 
 
@@ -19859,1621 +19870,7 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 96/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 94/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 7.2 cm; median distance at STOP among stopped attempts was 779.3 mm. Median maximum pre-PARK joint deviation was 2.046 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 48: full-episode random start fixed
-
-**What changed:** Retain all five disturbances and randomise starting x/y within ±0.15 m and heading within ±30 degrees. Networks unchanged.
-
-**Type:** Frozen-model stress test. Seed 7 only; 100 validation and 100 test targets, with both learned networks controlling the complete episode. No conventional arm holding controller or extra gravity compensation is active.
-
-**Result:** test PARK 89/100, STOP 89/100, full success 0/100; validation full success 0/100. Median parking error is 7.80 cm among 89 parked attempts. Median STOP distance is 899.3 mm among 89 stopped attempts. 11 attempts did not PARK; 0 parked without STOP. Neither is silently discarded from success.
-
-**Comparison with iteration 47 (delay):** PARK count changes by -2; STOP by -2; successes by +0. On the same 81 targets parked by both, the median paired change in parking error is +0.22 cm. On the same 81 targets stopped by both, the median paired change at STOP is -4.1 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
-
-**Training provenance:** selected epochs: driving 299, torque 1198, STOP 593. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
-
-**Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
-
-
-
-```python
-from pathlib import Path
-import sys,json,uuid
-import matplotlib.pyplot as plt
-from IPython.display import display,Markdown,HTML
-sys.path.insert(0,str(Path('../arm').resolve()))
-import report_curriculum as overnight
-def lazy_player(url,height=850):
-    k=uuid.uuid4().hex[:8]
-    return HTML(f"<div><button onclick=\"var f=document.getElementById('player{k}');f.src='{url}';f.style.display='block';this.style.display='none'\" style=\"padding:8px 14px\">Load the 3D player</button><iframe id=\"player{k}\" style=\"display:none;width:100%;height:{height}px;border:0\"></iframe></div>")
-
-full_name='random_start_fixed'
-display(overnight.build(full_name).round(3))
-print('Validation and test are distinct. No fitting occurs in these analysis cells.')
-```
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>seed</th>
-      <th>attempts</th>
-      <th>parked</th>
-      <th>stopped</th>
-      <th>success_10mm</th>
-      <th>success_percent</th>
-      <th>wilson95_low_percent</th>
-      <th>wilson95_high_percent</th>
-      <th>median_park_error_cm</th>
-      <th>median_abs_heading_error_deg</th>
-      <th>median_closest_mm</th>
-      <th>median_stop_mm</th>
-      <th>median_park_s</th>
-      <th>median_stop_s</th>
-      <th>timeouts</th>
-      <th>execution_failures</th>
-      <th>sum_case_wall_s</th>
-      <th>median_case_wall_s</th>
-    </tr>
-    <tr>
-      <th>split</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>val</th>
-      <td>7</td>
-      <td>100</td>
-      <td>88</td>
-      <td>88</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>3.699</td>
-      <td>8.133</td>
-      <td>5.436</td>
-      <td>902.168</td>
-      <td>943.167</td>
-      <td>7.350</td>
-      <td>7.517</td>
-      <td>12</td>
-      <td>0</td>
-      <td>1743.807</td>
-      <td>17.345</td>
-    </tr>
-    <tr>
-      <th>test</th>
-      <td>7</td>
-      <td>100</td>
-      <td>89</td>
-      <td>89</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>3.699</td>
-      <td>7.802</td>
-      <td>4.998</td>
-      <td>860.135</td>
-      <td>899.348</td>
-      <td>7.133</td>
-      <td>7.233</td>
-      <td>11</td>
-      <td>0</td>
-      <td>1699.217</td>
-      <td>17.154</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-    Validation and test are distinct. No fitting occurs in these analysis cells.
-
-
-
-```python
-full_config=json.loads((overnight.ROOT/full_name/'test/config.json').read_text())
-display(full_config)
-for kind in ('driving','torque','stop'):
-    chosen=json.loads((overnight.models(full_name)/f'{kind}_seed7_summary.json').read_text())
-    print(kind, 'selected epoch',chosen['selected_epoch'],'validation loss',chosen['selected_val_loss'])
-```
-
-
-    {'cases': [11,
-      17,
-      33,
-      35,
-      40,
-      43,
-      44,
-      48,
-      52,
-      56,
-      65,
-      83,
-      92,
-      97,
-      98,
-      113,
-      136,
-      147,
-      148,
-      154,
-      162,
-      196,
-      221,
-      229,
-      232,
-      239,
-      248,
-      260,
-      271,
-      274,
-      277,
-      281,
-      285,
-      302,
-      306,
-      311,
-      315,
-      316,
-      317,
-      361,
-      413,
-      427,
-      432,
-      463,
-      478,
-      479,
-      492,
-      502,
-      534,
-      545,
-      554,
-      571,
-      585,
-      586,
-      592,
-      599,
-      600,
-      605,
-      628,
-      632,
-      642,
-      646,
-      652,
-      653,
-      664,
-      669,
-      671,
-      683,
-      693,
-      700,
-      707,
-      708,
-      722,
-      729,
-      730,
-      738,
-      741,
-      750,
-      770,
-      779,
-      806,
-      834,
-      845,
-      846,
-      848,
-      854,
-      857,
-      859,
-      872,
-      883,
-      898,
-      903,
-      905,
-      945,
-      952,
-      958,
-      981,
-      985,
-      986,
-      989],
-     'split': 'test',
-     'seed': 7,
-     'jobs': 4,
-     'models': '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/baseline/models',
-     'condition': {'encoder_noise_sd': 0.0001,
-      'sensor_seed': 7,
-      'damping': 1.0,
-      'elasticity': 1.0,
-      'inertia': 0.001,
-      'delay_ms': 3},
-     'model_hashes': {'driving_seed7.npz': '458fc825c3d3c1e5d39d3630655eb872bb46f3ddc34e0a850ee4eb5da52a18c3',
-      'reaching_seed7.npz': '774c961608ec707c4ec9124ea13a66c180dd06be777481c0434a3a6f152287da'},
-     'native_hashes': {'/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/recovery_runtime/native/sensor_curriculum.cpp': '85a6236a4d1fdc0c9dc2d0e991e460cc150e12abb2e153c596f3c8b247ed60d6',
-      '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/recovery_runtime/native/sensor_curriculum': 'd589e24b3ac57a056801059812d64271bc83cc2d350c6a487509b6555b6ecf8d'},
-     'source_hashes': {'full_run.py': 'a099cabfe4479cf25bd59665e16717b8634a7feeb1b647f1dc39df9bf674514d',
-      'evaluate_curriculum.py': '7fa3b64db19e7a39b0cb3a598945fee4695e3a0dce7d037d1eee1e73a85f132c',
-      'curriculum_sensors.py': '8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520'},
-     'split_sha256': '286f578aec7e3ab0953592466e63014cc1dde7f467106fadf273b30762ac1abf',
-     'renderer': 'egl',
-     'arm_control': 'learned from reset, 1 kHz, no PD hold or gravity addition',
-     'selection': 'checkpoints frozen on offline validation; no fitting in evaluator',
-     'test_reuse': 'existing targets previously evaluated; not a fresh blind test'}
-
-
-    driving selected epoch 299 validation loss 0.38417819142341614
-    torque selected epoch 1198 validation loss 0.02170979417860508
-    stop selected epoch 593 validation loss 0.0030433654319494963
-
-
-
-```python
-overnight.losses(full_name);plt.show()
-print('All training and validation epochs. Test scores are not training losses.')
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_289_0.png)
-
-
-
-    All training and validation epochs. Test scores are not training losses.
-
-
-
-```python
-full_report=overnight.select(full_name)
-full_report.outcomes(7);plt.show()
-display(full_report.table(7).round(3))
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_290_0.png)
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>status</th>
-      <th>success</th>
-      <th>parked</th>
-      <th>park_s</th>
-      <th>stop_s</th>
-      <th>park_error_cm</th>
-      <th>park_heading_error_deg</th>
-      <th>at_stop_mm</th>
-      <th>closest_mm</th>
-      <th>end_mm</th>
-      <th>post_stop_drift_mm</th>
-      <th>post_park_base_drift_cm</th>
-      <th>timed_out</th>
-      <th>elapsed_s</th>
-      <th>camera_visible_fraction</th>
-      <th>target_bearing_deg</th>
-      <th>target_range_m</th>
-      <th>target_height_m</th>
-    </tr>
-    <tr>
-      <th>dot</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>11</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>2.667</td>
-      <td>2.670</td>
-      <td>9.423</td>
-      <td>3.331</td>
-      <td>83.839</td>
-      <td>64.928</td>
-      <td>163.196</td>
-      <td>79.356</td>
-      <td>0.176</td>
-      <td>False</td>
-      <td>7.864</td>
-      <td>0.958</td>
-      <td>0.986</td>
-      <td>1.042</td>
-      <td>0.178</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>7.233</td>
-      <td>7.233</td>
-      <td>7.920</td>
-      <td>1.520</td>
-      <td>1128.853</td>
-      <td>1128.853</td>
-      <td>1235.051</td>
-      <td>106.197</td>
-      <td>1.210</td>
-      <td>False</td>
-      <td>16.187</td>
-      <td>0.565</td>
-      <td>194.926</td>
-      <td>1.095</td>
-      <td>1.028</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>8.200</td>
-      <td>8.200</td>
-      <td>5.052</td>
-      <td>-2.888</td>
-      <td>948.115</td>
-      <td>919.029</td>
-      <td>918.840</td>
-      <td>-29.276</td>
-      <td>0.850</td>
-      <td>False</td>
-      <td>17.918</td>
-      <td>0.636</td>
-      <td>259.736</td>
-      <td>1.504</td>
-      <td>0.422</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>10.500</td>
-      <td>10.502</td>
-      <td>29.935</td>
-      <td>-18.010</td>
-      <td>1053.418</td>
-      <td>742.640</td>
-      <td>741.610</td>
-      <td>-311.807</td>
-      <td>2.978</td>
-      <td>False</td>
-      <td>20.879</td>
-      <td>0.553</td>
-      <td>111.687</td>
-      <td>1.257</td>
-      <td>0.589</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.867</td>
-      <td>6.867</td>
-      <td>10.306</td>
-      <td>-12.952</td>
-      <td>820.610</td>
-      <td>820.610</td>
-      <td>944.449</td>
-      <td>123.840</td>
-      <td>1.508</td>
-      <td>False</td>
-      <td>15.088</td>
-      <td>0.579</td>
-      <td>205.751</td>
-      <td>1.041</td>
-      <td>0.328</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>958</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>4.500</td>
-      <td>4.500</td>
-      <td>4.084</td>
-      <td>-8.216</td>
-      <td>817.961</td>
-      <td>817.948</td>
-      <td>845.684</td>
-      <td>27.724</td>
-      <td>0.234</td>
-      <td>False</td>
-      <td>11.119</td>
-      <td>0.873</td>
-      <td>347.116</td>
-      <td>1.181</td>
-      <td>0.493</td>
-    </tr>
-    <tr>
-      <th>981</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.367</td>
-      <td>6.985</td>
-      <td>9.673</td>
-      <td>0.350</td>
-      <td>725.233</td>
-      <td>470.191</td>
-      <td>866.586</td>
-      <td>141.353</td>
-      <td>0.513</td>
-      <td>False</td>
-      <td>15.730</td>
-      <td>0.996</td>
-      <td>297.945</td>
-      <td>1.569</td>
-      <td>0.564</td>
-    </tr>
-    <tr>
-      <th>985</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.800</td>
-      <td>6.800</td>
-      <td>12.109</td>
-      <td>-0.642</td>
-      <td>1251.472</td>
-      <td>1249.535</td>
-      <td>1408.945</td>
-      <td>157.474</td>
-      <td>0.151</td>
-      <td>False</td>
-      <td>14.865</td>
-      <td>0.589</td>
-      <td>284.446</td>
-      <td>1.417</td>
-      <td>1.210</td>
-    </tr>
-    <tr>
-      <th>986</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>9.100</td>
-      <td>9.100</td>
-      <td>6.817</td>
-      <td>-17.175</td>
-      <td>1028.843</td>
-      <td>995.294</td>
-      <td>994.647</td>
-      <td>-34.196</td>
-      <td>0.133</td>
-      <td>False</td>
-      <td>17.408</td>
-      <td>0.465</td>
-      <td>98.931</td>
-      <td>1.279</td>
-      <td>0.179</td>
-    </tr>
-    <tr>
-      <th>989</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.933</td>
-      <td>6.933</td>
-      <td>11.202</td>
-      <td>1.951</td>
-      <td>515.071</td>
-      <td>488.372</td>
-      <td>569.645</td>
-      <td>54.574</td>
-      <td>0.048</td>
-      <td>False</td>
-      <td>15.233</td>
-      <td>0.767</td>
-      <td>287.737</td>
-      <td>1.749</td>
-      <td>1.193</td>
-    </tr>
-  </tbody>
-</table>
-<p>100 rows × 18 columns</p>
-</div>
-
-
-
-```python
-overnight.holding(full_name);plt.show()
-display(overnight.hold_table(full_name).round(4))
-print('Learned torques are applied from reset. No expert holding or added gravity term.')
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_291_0.png)
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>status</th>
-      <th>prepark_frames</th>
-      <th>max_arm_deviation_rad</th>
-      <th>maximum_command_Nm</th>
-      <th>torque_clipped_fraction</th>
-    </tr>
-    <tr>
-      <th>dot</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>11</th>
-      <td>stop_outside_10mm</td>
-      <td>80</td>
-      <td>1.8559</td>
-      <td>30.0</td>
-      <td>0.3429</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>stop_outside_10mm</td>
-      <td>217</td>
-      <td>3.7390</td>
-      <td>30.0</td>
-      <td>0.3246</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>stop_outside_10mm</td>
-      <td>246</td>
-      <td>3.6985</td>
-      <td>30.0</td>
-      <td>0.3333</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>stop_outside_10mm</td>
-      <td>315</td>
-      <td>8.7945</td>
-      <td>30.0</td>
-      <td>0.3134</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>stop_outside_10mm</td>
-      <td>206</td>
-      <td>3.6533</td>
-      <td>30.0</td>
-      <td>0.3280</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>958</th>
-      <td>stop_outside_10mm</td>
-      <td>135</td>
-      <td>3.0450</td>
-      <td>30.0</td>
-      <td>0.3058</td>
-    </tr>
-    <tr>
-      <th>981</th>
-      <td>stop_outside_10mm</td>
-      <td>191</td>
-      <td>2.2247</td>
-      <td>30.0</td>
-      <td>0.2618</td>
-    </tr>
-    <tr>
-      <th>985</th>
-      <td>stop_outside_10mm</td>
-      <td>204</td>
-      <td>4.1781</td>
-      <td>30.0</td>
-      <td>0.2675</td>
-    </tr>
-    <tr>
-      <th>986</th>
-      <td>stop_outside_10mm</td>
-      <td>273</td>
-      <td>4.1152</td>
-      <td>30.0</td>
-      <td>0.4087</td>
-    </tr>
-    <tr>
-      <th>989</th>
-      <td>stop_outside_10mm</td>
-      <td>208</td>
-      <td>2.7147</td>
-      <td>30.0</td>
-      <td>0.2603</td>
-    </tr>
-  </tbody>
-</table>
-<p>100 rows × 5 columns</p>
-</div>
-
-
-    Learned torques are applied from reset. No expert holding or added gravity term.
-
-
-
-```python
-full_report=overnight.select(full_name)
-full_report.stopping(7);plt.show()
-full_report.distances(7);plt.show()
-print('Closest approach, exact STOP, and 0.5-second drift are different measurements.')
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_292_0.png)
-
-
-
-
-
-![png](golden_dataset_files/golden_dataset_292_1.png)
-
-
-
-    Closest approach, exact STOP, and 0.5-second drift are different measurements.
-
-
-
-```python
-full_url=overnight.player_url(full_name)
-display(lazy_player(full_url))
-display(HTML(f'<a href="{full_url}" target="_blank">Open all 100 test replays</a>'))
-print('Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.')
-```
-
-
-<div><button onclick="var f=document.getElementById('player50b67b71');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/random_start_fixed/test/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px">Load the 3D player</button><iframe id="player50b67b71" style="display:none;width:100%;height:850px;border:0"></iframe></div>
-
-
-
-<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/random_start_fixed/test/viewer_golden_seed7.html" target="_blank">Open all 100 test replays</a>
-
-
-    Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.
-
-
-
-```python
-display(Markdown(overnight.reading(full_name)))
-```
-
-
-Both networks controlled the complete run, including learned arm torques before PARK. On validation, 88/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 89/100 parked, 89/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 7.8 cm; median distance at STOP among stopped attempts was 899.3 mm. Median maximum pre-PARK joint deviation was 4.059 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
-
-
-### Iteration 50: full-episode random start retention
-
-**What changed:** Use exactly the random-start-retrained networks, but restore original starts and clean physics. This changes the evaluation condition, not the weights.
-
-**Type:** Retention test. Seed 7 only; 100 validation and 100 test targets, with both learned networks controlling the complete episode. No conventional arm holding controller or extra gravity compensation is active.
-
-**Result:** test PARK 100/100, STOP 93/100, full success 0/100; validation full success 0/100. Median parking error is 5.86 cm among 100 parked attempts. Median STOP distance is 806.5 mm among 93 stopped attempts. 0 attempts did not PARK; 7 parked without STOP. Neither is silently discarded from success.
-
-**Comparison with iteration 49 (random_start_retrained):** PARK count changes by +15; STOP by +8; successes by +0. On the same 85 targets parked by both, the median paired change in parking error is -22.60 cm. On the same 80 targets stopped by both, the median paired change at STOP is -131.5 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
-
-**Training provenance:** selected epochs: driving 300, torque 1174, STOP 599. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
-
-**Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
-
-
-
-```python
-from pathlib import Path
-import sys,json,uuid
-import matplotlib.pyplot as plt
-from IPython.display import display,Markdown,HTML
-sys.path.insert(0,str(Path('../arm').resolve()))
-import report_curriculum as overnight
-def lazy_player(url,height=850):
-    k=uuid.uuid4().hex[:8]
-    return HTML(f"<div><button onclick=\"var f=document.getElementById('player{k}');f.src='{url}';f.style.display='block';this.style.display='none'\" style=\"padding:8px 14px\">Load the 3D player</button><iframe id=\"player{k}\" style=\"display:none;width:100%;height:{height}px;border:0\"></iframe></div>")
-
-full_name='random_start_retention'
-display(overnight.build(full_name).round(3))
-print('Validation and test are distinct. No fitting occurs in these analysis cells.')
-```
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>seed</th>
-      <th>attempts</th>
-      <th>parked</th>
-      <th>stopped</th>
-      <th>success_10mm</th>
-      <th>success_percent</th>
-      <th>wilson95_low_percent</th>
-      <th>wilson95_high_percent</th>
-      <th>median_park_error_cm</th>
-      <th>median_abs_heading_error_deg</th>
-      <th>median_closest_mm</th>
-      <th>median_stop_mm</th>
-      <th>median_park_s</th>
-      <th>median_stop_s</th>
-      <th>timeouts</th>
-      <th>execution_failures</th>
-      <th>sum_case_wall_s</th>
-      <th>median_case_wall_s</th>
-    </tr>
-    <tr>
-      <th>split</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>val</th>
-      <td>7</td>
-      <td>100</td>
-      <td>100</td>
-      <td>89</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>3.699</td>
-      <td>5.791</td>
-      <td>3.962</td>
-      <td>192.346</td>
-      <td>811.110</td>
-      <td>7.100</td>
-      <td>10.399</td>
-      <td>11</td>
-      <td>0</td>
-      <td>2036.738</td>
-      <td>20.541</td>
-    </tr>
-    <tr>
-      <th>test</th>
-      <td>7</td>
-      <td>100</td>
-      <td>100</td>
-      <td>93</td>
-      <td>0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>3.699</td>
-      <td>5.863</td>
-      <td>3.659</td>
-      <td>158.465</td>
-      <td>806.548</td>
-      <td>6.383</td>
-      <td>9.733</td>
-      <td>7</td>
-      <td>0</td>
-      <td>1861.097</td>
-      <td>18.995</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-    Validation and test are distinct. No fitting occurs in these analysis cells.
-
-
-
-```python
-full_config=json.loads((overnight.ROOT/full_name/'test/config.json').read_text())
-display(full_config)
-for kind in ('driving','torque','stop'):
-    chosen=json.loads((overnight.models(full_name)/f'{kind}_seed7_summary.json').read_text())
-    print(kind, 'selected epoch',chosen['selected_epoch'],'validation loss',chosen['selected_val_loss'])
-```
-
-
-    {'cases': [11,
-      17,
-      33,
-      35,
-      40,
-      43,
-      44,
-      48,
-      52,
-      56,
-      65,
-      83,
-      92,
-      97,
-      98,
-      113,
-      136,
-      147,
-      148,
-      154,
-      162,
-      196,
-      221,
-      229,
-      232,
-      239,
-      248,
-      260,
-      271,
-      274,
-      277,
-      281,
-      285,
-      302,
-      306,
-      311,
-      315,
-      316,
-      317,
-      361,
-      413,
-      427,
-      432,
-      463,
-      478,
-      479,
-      492,
-      502,
-      534,
-      545,
-      554,
-      571,
-      585,
-      586,
-      592,
-      599,
-      600,
-      605,
-      628,
-      632,
-      642,
-      646,
-      652,
-      653,
-      664,
-      669,
-      671,
-      683,
-      693,
-      700,
-      707,
-      708,
-      722,
-      729,
-      730,
-      738,
-      741,
-      750,
-      770,
-      779,
-      806,
-      834,
-      845,
-      846,
-      848,
-      854,
-      857,
-      859,
-      872,
-      883,
-      898,
-      903,
-      905,
-      945,
-      952,
-      958,
-      981,
-      985,
-      986,
-      989],
-     'split': 'test',
-     'seed': 7,
-     'jobs': 4,
-     'models': '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_retrained/models',
-     'condition': {},
-     'model_hashes': {'driving_seed7.npz': 'ed9013ef41e693f38d066efa5af9bff74b9e7d5860d7800b9b7b5c8aa7717f3a',
-      'reaching_seed7.npz': '675d534a224a4540c2ebbdf51ba250dcb053244465dfc505db502623488fbfcb'},
-     'native_hashes': {'/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/recovery_runtime/native/sensor_curriculum.cpp': '85a6236a4d1fdc0c9dc2d0e991e460cc150e12abb2e153c596f3c8b247ed60d6',
-      '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/recovery_runtime/native/sensor_curriculum': 'd589e24b3ac57a056801059812d64271bc83cc2d350c6a487509b6555b6ecf8d'},
-     'source_hashes': {'full_run.py': 'a099cabfe4479cf25bd59665e16717b8634a7feeb1b647f1dc39df9bf674514d',
-      'evaluate_curriculum.py': '7fa3b64db19e7a39b0cb3a598945fee4695e3a0dce7d037d1eee1e73a85f132c',
-      'curriculum_sensors.py': '8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520'},
-     'split_sha256': '286f578aec7e3ab0953592466e63014cc1dde7f467106fadf273b30762ac1abf',
-     'renderer': 'egl',
-     'arm_control': 'learned from reset, 1 kHz, no PD hold or gravity addition',
-     'selection': 'checkpoints frozen on offline validation; no fitting in evaluator',
-     'test_reuse': 'existing targets previously evaluated; not a fresh blind test'}
-
-
-    driving selected epoch 300 validation loss 0.3958594799041748
-    torque selected epoch 1174 validation loss 0.02058526501059532
-    stop selected epoch 599 validation loss 0.0036304721143096685
-
-
-
-```python
-overnight.losses(full_name);plt.show()
-print('All training and validation epochs. Test scores are not training losses.')
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_298_0.png)
-
-
-
-    All training and validation epochs. Test scores are not training losses.
-
-
-
-```python
-full_report=overnight.select(full_name)
-full_report.outcomes(7);plt.show()
-display(full_report.table(7).round(3))
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_299_0.png)
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>status</th>
-      <th>success</th>
-      <th>parked</th>
-      <th>park_s</th>
-      <th>stop_s</th>
-      <th>park_error_cm</th>
-      <th>park_heading_error_deg</th>
-      <th>at_stop_mm</th>
-      <th>closest_mm</th>
-      <th>end_mm</th>
-      <th>post_stop_drift_mm</th>
-      <th>post_park_base_drift_cm</th>
-      <th>timed_out</th>
-      <th>elapsed_s</th>
-      <th>camera_visible_fraction</th>
-      <th>target_bearing_deg</th>
-      <th>target_range_m</th>
-      <th>target_height_m</th>
-    </tr>
-    <tr>
-      <th>dot</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>11</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>4.400</td>
-      <td>11.592</td>
-      <td>5.410</td>
-      <td>-1.222</td>
-      <td>630.116</td>
-      <td>264.357</td>
-      <td>1100.814</td>
-      <td>470.698</td>
-      <td>0.332</td>
-      <td>False</td>
-      <td>20.036</td>
-      <td>0.950</td>
-      <td>0.986</td>
-      <td>1.042</td>
-      <td>0.178</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.733</td>
-      <td>9.730</td>
-      <td>8.030</td>
-      <td>5.081</td>
-      <td>946.638</td>
-      <td>161.840</td>
-      <td>1020.886</td>
-      <td>74.249</td>
-      <td>1.637</td>
-      <td>False</td>
-      <td>18.552</td>
-      <td>0.704</td>
-      <td>194.926</td>
-      <td>1.095</td>
-      <td>1.028</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>no_stop_timeout</td>
-      <td>False</td>
-      <td>True</td>
-      <td>8.833</td>
-      <td>NaN</td>
-      <td>8.794</td>
-      <td>9.761</td>
-      <td>NaN</td>
-      <td>228.787</td>
-      <td>398.917</td>
-      <td>NaN</td>
-      <td>0.993</td>
-      <td>True</td>
-      <td>22.519</td>
-      <td>0.635</td>
-      <td>259.736</td>
-      <td>1.504</td>
-      <td>0.422</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.000</td>
-      <td>7.117</td>
-      <td>8.753</td>
-      <td>4.026</td>
-      <td>132.545</td>
-      <td>128.161</td>
-      <td>152.371</td>
-      <td>19.826</td>
-      <td>0.381</td>
-      <td>False</td>
-      <td>15.087</td>
-      <td>0.795</td>
-      <td>111.687</td>
-      <td>1.257</td>
-      <td>0.589</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>no_stop_timeout</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.333</td>
-      <td>NaN</td>
-      <td>11.180</td>
-      <td>3.915</td>
-      <td>NaN</td>
-      <td>133.467</td>
-      <td>277.611</td>
-      <td>NaN</td>
-      <td>1.413</td>
-      <td>True</td>
-      <td>21.928</td>
-      <td>0.815</td>
-      <td>205.751</td>
-      <td>1.041</td>
-      <td>0.328</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>958</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>4.333</td>
-      <td>5.359</td>
-      <td>8.686</td>
-      <td>-0.059</td>
-      <td>147.059</td>
-      <td>110.696</td>
-      <td>110.628</td>
-      <td>-36.431</td>
-      <td>0.112</td>
-      <td>False</td>
-      <td>11.592</td>
-      <td>0.949</td>
-      <td>347.116</td>
-      <td>1.181</td>
-      <td>0.493</td>
-    </tr>
-    <tr>
-      <th>981</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.100</td>
-      <td>8.170</td>
-      <td>4.776</td>
-      <td>-1.348</td>
-      <td>122.149</td>
-      <td>95.459</td>
-      <td>141.354</td>
-      <td>19.206</td>
-      <td>0.341</td>
-      <td>False</td>
-      <td>16.549</td>
-      <td>0.789</td>
-      <td>297.945</td>
-      <td>1.569</td>
-      <td>0.564</td>
-    </tr>
-    <tr>
-      <th>985</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>6.167</td>
-      <td>10.232</td>
-      <td>16.705</td>
-      <td>-3.113</td>
-      <td>1096.628</td>
-      <td>310.650</td>
-      <td>1067.705</td>
-      <td>-28.923</td>
-      <td>0.978</td>
-      <td>False</td>
-      <td>19.220</td>
-      <td>0.888</td>
-      <td>284.446</td>
-      <td>1.417</td>
-      <td>1.210</td>
-    </tr>
-    <tr>
-      <th>986</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>5.600</td>
-      <td>8.943</td>
-      <td>4.783</td>
-      <td>3.699</td>
-      <td>523.398</td>
-      <td>280.479</td>
-      <td>890.961</td>
-      <td>367.563</td>
-      <td>2.898</td>
-      <td>False</td>
-      <td>16.446</td>
-      <td>0.901</td>
-      <td>98.931</td>
-      <td>1.279</td>
-      <td>0.179</td>
-    </tr>
-    <tr>
-      <th>989</th>
-      <td>stop_outside_10mm</td>
-      <td>False</td>
-      <td>True</td>
-      <td>7.133</td>
-      <td>11.064</td>
-      <td>13.553</td>
-      <td>-3.707</td>
-      <td>786.733</td>
-      <td>149.926</td>
-      <td>1168.258</td>
-      <td>381.525</td>
-      <td>1.507</td>
-      <td>False</td>
-      <td>21.039</td>
-      <td>0.896</td>
-      <td>287.737</td>
-      <td>1.749</td>
-      <td>1.193</td>
-    </tr>
-  </tbody>
-</table>
-<p>100 rows × 18 columns</p>
-</div>
-
-
-
-```python
-overnight.holding(full_name);plt.show()
-display(overnight.hold_table(full_name).round(4))
-print('Learned torques are applied from reset. No expert holding or added gravity term.')
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_300_0.png)
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>status</th>
-      <th>prepark_frames</th>
-      <th>max_arm_deviation_rad</th>
-      <th>maximum_command_Nm</th>
-      <th>torque_clipped_fraction</th>
-    </tr>
-    <tr>
-      <th>dot</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>11</th>
-      <td>stop_outside_10mm</td>
-      <td>132</td>
-      <td>0.1086</td>
-      <td>18.7070</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>stop_outside_10mm</td>
-      <td>202</td>
-      <td>0.0696</td>
-      <td>20.3866</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>33</th>
-      <td>no_stop_timeout</td>
-      <td>265</td>
-      <td>0.1579</td>
-      <td>20.3866</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>stop_outside_10mm</td>
-      <td>180</td>
-      <td>0.0919</td>
-      <td>20.5393</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>40</th>
-      <td>no_stop_timeout</td>
-      <td>190</td>
-      <td>0.0495</td>
-      <td>20.3866</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>958</th>
-      <td>stop_outside_10mm</td>
-      <td>130</td>
-      <td>0.0711</td>
-      <td>19.6246</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>981</th>
-      <td>stop_outside_10mm</td>
-      <td>183</td>
-      <td>0.0497</td>
-      <td>20.1613</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>985</th>
-      <td>stop_outside_10mm</td>
-      <td>185</td>
-      <td>0.1227</td>
-      <td>19.7177</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>986</th>
-      <td>stop_outside_10mm</td>
-      <td>168</td>
-      <td>0.0661</td>
-      <td>20.6192</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>989</th>
-      <td>stop_outside_10mm</td>
-      <td>214</td>
-      <td>0.1419</td>
-      <td>19.9300</td>
-      <td>0.0</td>
-    </tr>
-  </tbody>
-</table>
-<p>100 rows × 5 columns</p>
-</div>
-
-
-    Learned torques are applied from reset. No expert holding or added gravity term.
-
-
-
-```python
-full_report=overnight.select(full_name)
-full_report.stopping(7);plt.show()
-full_report.distances(7);plt.show()
-print('Closest approach, exact STOP, and 0.5-second drift are different measurements.')
-```
-
-
-
-![png](golden_dataset_files/golden_dataset_301_0.png)
-
-
-
-
-
-![png](golden_dataset_files/golden_dataset_301_1.png)
-
-
-
-    Closest approach, exact STOP, and 0.5-second drift are different measurements.
-
-
-
-```python
-full_url=overnight.player_url(full_name)
-display(lazy_player(full_url))
-display(HTML(f'<a href="{full_url}" target="_blank">Open all 100 test replays</a>'))
-print('Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.')
-```
-
-
-<div><button onclick="var f=document.getElementById('player6dc988d7');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/random_start_retention/test/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px">Load the 3D player</button><iframe id="player6dc988d7" style="display:none;width:100%;height:850px;border:0"></iframe></div>
-
-
-
-<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/random_start_retention/test/viewer_golden_seed7.html" target="_blank">Open all 100 test replays</a>
-
-
-    Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.
-
-
-
-```python
-display(Markdown(overnight.reading(full_name)))
-```
-
-
-Both networks controlled the complete run, including learned arm torques before PARK. On validation, 100/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 93/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 5.9 cm; median distance at STOP among stopped attempts was 806.5 mm. Median maximum pre-PARK joint deviation was 0.093 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
-
-
-### Export and plotting repair before resuming recovery
-
-The first DART+DAgger round 2 attempt stopped after training because folded FP32 scaling exceeded the unchanged export tolerance (absolute 0.0001, relative 0.00001). Its selected epoch was 1198, but only epochs 300, 600 and 1200 were saved before export; epoch 1200 is not substituted for the selected checkpoint. The failed attempt and its logs remain intact.
-
-The retry retains explicit input scaling and torque output scaling, in the same order as training. Arm and STOP scalers are separate. Old folded archives remain supported. A saved epoch-1200 diagnostic on 10,529 training states reduced maximum error from 0.0002327 Nm (one failing value) to 0.00003815 Nm (no failures); this is an implementation check, not a new model result. Selected raw checkpoints are now saved before export validation.
-
-Round 2 is retrained in a new models_exportfix1 directory with the same data, seed, architecture, losses, epochs and validation selection. The new recovery_runtime_exportfix1 snapshot preserves the original runtime. The remaining round and previously planned full validation/test comparisons then continue. No test result selects checkpoints or settings.
-
-Distance plots now label attempts without PARK as seconds since reset, retaining every failure. Earlier cells and results are unchanged. Recovered sections remain pending review and publication, not new official iterations.
-
-
-### Iteration 47: full-episode delay
+### Iteration 47: Frozen networks: add 3 ms observation delay to the cumulative disturbances
 
 **What changed:** Add a causal 3 ms observation delay to noise, damping, elasticity and inertia. Networks unchanged.
 
@@ -21765,7 +20162,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_308_0.png)
+![png](golden_dataset_files/golden_dataset_290_0.png)
 
 
 
@@ -21781,7 +20178,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_309_0.png)
+![png](golden_dataset_files/golden_dataset_291_0.png)
 
 
 
@@ -22092,7 +20489,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_310_0.png)
+![png](golden_dataset_files/golden_dataset_292_0.png)
 
 
 
@@ -22238,13 +20635,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_311_0.png)
+![png](golden_dataset_files/golden_dataset_293_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_311_1.png)
+![png](golden_dataset_files/golden_dataset_293_1.png)
 
 
 
@@ -22279,21 +20676,19 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 89/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 91/100 parked, 91/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 7.2 cm; median distance at STOP among stopped attempts was 825.9 mm. Median maximum pre-PARK joint deviation was 4.235 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 51: full-episode imperfect park
+### Iteration 48: Frozen networks unchanged: random starts with all five disturbances
 
-**What changed:** Retrain after omitting prepared training rows within ±0.25 s of PARK. This was an unapproved substitution for bursty packet loss. Preserve it as exploratory evidence only; it does not complete the requested packet-loss experiment.
+**What changed:** Retain all five disturbances and randomise starting x/y within ±0.15 m and heading within ±30 degrees. Networks unchanged.
 
-**Type:** Outside agreed scope. Seed 7 only; 100 validation and 100 test targets, with both learned networks controlling the complete episode. No conventional arm holding controller or extra gravity compensation is active.
+**Type:** Frozen-model stress test. Seed 7 only; 100 validation and 100 test targets, with both learned networks controlling the complete episode. No conventional arm holding controller or extra gravity compensation is active.
 
-**Result:** test PARK 97/100, STOP 97/100, full success 0/100; validation full success 0/100. Median parking error is 8.99 cm among 97 parked attempts. Median STOP distance is 945.0 mm among 97 stopped attempts. 3 attempts did not PARK; 0 parked without STOP. Neither is silently discarded from success.
+**Result:** test PARK 89/100, STOP 89/100, full success 0/100; validation full success 0/100. Median parking error is 7.80 cm among 89 parked attempts. Median STOP distance is 899.3 mm among 89 stopped attempts. 11 attempts did not PARK; 0 parked without STOP. Neither is silently discarded from success.
 
-**Comparison with iteration 49 (random_start_retrained):** PARK count changes by +12; STOP by +12; successes by +0. On the same 82 targets parked by both, the median paired change in parking error is -17.03 cm. On the same 82 targets stopped by both, the median paired change at STOP is +153.8 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
+**Comparison with iteration 47 (delay):** PARK count changes by -2; STOP by -2; successes by +0. On the same 81 targets parked by both, the median paired change in parking error is +0.22 cm. On the same 81 targets stopped by both, the median paired change at STOP is -4.1 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
 
-**Training provenance:** selected epochs: driving 299, torque 1194, STOP 599. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
+**Training provenance:** selected epochs: driving 299, torque 1198, STOP 593. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
-
-**Scope correction:** bursty packets remain untested. Do not describe this row deletion as packet loss or mark that roadmap task complete.
 
 
 
@@ -22308,7 +20703,7 @@ def lazy_player(url,height=850):
     k=uuid.uuid4().hex[:8]
     return HTML(f"<div><button onclick=\"var f=document.getElementById('player{k}');f.src='{url}';f.style.display='block';this.style.display='none'\" style=\"padding:8px 14px\">Load the 3D player</button><iframe id=\"player{k}\" style=\"display:none;width:100%;height:{height}px;border:0\"></iframe></div>")
 
-full_name='imperfect_park'
+full_name='random_start_fixed'
 display(overnight.build(full_name).round(3))
 print('Validation and test are distinct. No fitting occurs in these analysis cells.')
 ```
@@ -22378,43 +20773,43 @@ print('Validation and test are distinct. No fitting occurs in these analysis cel
       <th>val</th>
       <td>7</td>
       <td>100</td>
-      <td>99</td>
-      <td>98</td>
+      <td>88</td>
+      <td>88</td>
       <td>0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>3.699</td>
-      <td>8.561</td>
-      <td>5.932</td>
-      <td>884.712</td>
-      <td>930.705</td>
-      <td>7.2</td>
-      <td>7.241</td>
-      <td>2</td>
+      <td>8.133</td>
+      <td>5.436</td>
+      <td>902.168</td>
+      <td>943.167</td>
+      <td>7.350</td>
+      <td>7.517</td>
+      <td>12</td>
       <td>0</td>
-      <td>1663.993</td>
-      <td>16.243</td>
+      <td>1743.807</td>
+      <td>17.345</td>
     </tr>
     <tr>
       <th>test</th>
       <td>7</td>
       <td>100</td>
-      <td>97</td>
-      <td>97</td>
+      <td>89</td>
+      <td>89</td>
       <td>0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>3.699</td>
-      <td>8.994</td>
-      <td>6.484</td>
-      <td>894.544</td>
-      <td>945.007</td>
-      <td>6.5</td>
-      <td>6.504</td>
-      <td>3</td>
+      <td>7.802</td>
+      <td>4.998</td>
+      <td>860.135</td>
+      <td>899.348</td>
+      <td>7.133</td>
+      <td>7.233</td>
+      <td>11</td>
       <td>0</td>
-      <td>1649.266</td>
-      <td>15.112</td>
+      <td>1699.217</td>
+      <td>17.154</td>
     </tr>
   </tbody>
 </table>
@@ -22537,15 +20932,15 @@ for kind in ('driving','torque','stop'):
      'split': 'test',
      'seed': 7,
      'jobs': 4,
-     'models': '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/imperfect_park/models',
+     'models': '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/baseline/models',
      'condition': {'encoder_noise_sd': 0.0001,
       'sensor_seed': 7,
       'damping': 1.0,
       'elasticity': 1.0,
       'inertia': 0.001,
       'delay_ms': 3},
-     'model_hashes': {'driving_seed7.npz': '5a52543c8b326d0930079cb61d3967d11bcd6bfc0e6b049a99487c74d4cc4d15',
-      'reaching_seed7.npz': '241540f7cc0c55110951fa9076c87478370c528a0716c6e1c6e63e247f63f705'},
+     'model_hashes': {'driving_seed7.npz': '458fc825c3d3c1e5d39d3630655eb872bb46f3ddc34e0a850ee4eb5da52a18c3',
+      'reaching_seed7.npz': '774c961608ec707c4ec9124ea13a66c180dd06be777481c0434a3a6f152287da'},
      'native_hashes': {'/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/recovery_runtime/native/sensor_curriculum.cpp': '85a6236a4d1fdc0c9dc2d0e991e460cc150e12abb2e153c596f3c8b247ed60d6',
       '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/recovery_runtime/native/sensor_curriculum': 'd589e24b3ac57a056801059812d64271bc83cc2d350c6a487509b6555b6ecf8d'},
      'source_hashes': {'full_run.py': 'a099cabfe4479cf25bd59665e16717b8634a7feeb1b647f1dc39df9bf674514d',
@@ -22558,9 +20953,9 @@ for kind in ('driving','torque','stop'):
      'test_reuse': 'existing targets previously evaluated; not a fresh blind test'}
 
 
-    driving selected epoch 299 validation loss 0.3996012210845947
-    torque selected epoch 1194 validation loss 0.08523980528116226
-    stop selected epoch 599 validation loss 0.0031310394406318665
+    driving selected epoch 299 validation loss 0.38417819142341614
+    torque selected epoch 1198 validation loss 0.02170979417860508
+    stop selected epoch 593 validation loss 0.0030433654319494963
 
 
 
@@ -22571,7 +20966,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_317_0.png)
+![png](golden_dataset_files/golden_dataset_299_0.png)
 
 
 
@@ -22587,7 +20982,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_318_0.png)
+![png](golden_dataset_files/golden_dataset_300_0.png)
 
 
 
@@ -22657,18 +21052,18 @@ display(full_report.table(7).round(3))
       <td>stop_outside_10mm</td>
       <td>False</td>
       <td>True</td>
-      <td>5.467</td>
-      <td>5.472</td>
-      <td>10.528</td>
-      <td>2.848</td>
-      <td>849.938</td>
-      <td>816.019</td>
-      <td>815.905</td>
-      <td>-34.033</td>
-      <td>0.136</td>
+      <td>2.667</td>
+      <td>2.670</td>
+      <td>9.423</td>
+      <td>3.331</td>
+      <td>83.839</td>
+      <td>64.928</td>
+      <td>163.196</td>
+      <td>79.356</td>
+      <td>0.176</td>
       <td>False</td>
-      <td>12.728</td>
-      <td>0.994</td>
+      <td>7.864</td>
+      <td>0.958</td>
       <td>0.986</td>
       <td>1.042</td>
       <td>0.178</td>
@@ -22678,18 +21073,18 @@ display(full_report.table(7).round(3))
       <td>stop_outside_10mm</td>
       <td>False</td>
       <td>True</td>
-      <td>7.200</td>
-      <td>7.200</td>
-      <td>9.711</td>
-      <td>15.068</td>
-      <td>1186.711</td>
-      <td>1152.799</td>
-      <td>1152.727</td>
-      <td>-33.984</td>
-      <td>0.266</td>
+      <td>7.233</td>
+      <td>7.233</td>
+      <td>7.920</td>
+      <td>1.520</td>
+      <td>1128.853</td>
+      <td>1128.853</td>
+      <td>1235.051</td>
+      <td>106.197</td>
+      <td>1.210</td>
       <td>False</td>
-      <td>16.505</td>
-      <td>0.658</td>
+      <td>16.187</td>
+      <td>0.565</td>
       <td>194.926</td>
       <td>1.095</td>
       <td>1.028</td>
@@ -22699,18 +21094,18 @@ display(full_report.table(7).round(3))
       <td>stop_outside_10mm</td>
       <td>False</td>
       <td>True</td>
-      <td>9.400</td>
-      <td>9.400</td>
-      <td>14.100</td>
-      <td>13.650</td>
-      <td>774.569</td>
-      <td>701.306</td>
-      <td>701.138</td>
-      <td>-73.432</td>
-      <td>0.091</td>
+      <td>8.200</td>
+      <td>8.200</td>
+      <td>5.052</td>
+      <td>-2.888</td>
+      <td>948.115</td>
+      <td>919.029</td>
+      <td>918.840</td>
+      <td>-29.276</td>
+      <td>0.850</td>
       <td>False</td>
-      <td>19.826</td>
-      <td>0.700</td>
+      <td>17.918</td>
+      <td>0.636</td>
       <td>259.736</td>
       <td>1.504</td>
       <td>0.422</td>
@@ -22720,18 +21115,18 @@ display(full_report.table(7).round(3))
       <td>stop_outside_10mm</td>
       <td>False</td>
       <td>True</td>
-      <td>6.233</td>
-      <td>6.235</td>
-      <td>5.978</td>
-      <td>4.267</td>
-      <td>953.628</td>
-      <td>887.621</td>
-      <td>887.492</td>
-      <td>-66.136</td>
-      <td>0.091</td>
+      <td>10.500</td>
+      <td>10.502</td>
+      <td>29.935</td>
+      <td>-18.010</td>
+      <td>1053.418</td>
+      <td>742.640</td>
+      <td>741.610</td>
+      <td>-311.807</td>
+      <td>2.978</td>
       <td>False</td>
-      <td>14.808</td>
-      <td>0.852</td>
+      <td>20.879</td>
+      <td>0.553</td>
       <td>111.687</td>
       <td>1.257</td>
       <td>0.589</td>
@@ -22741,18 +21136,18 @@ display(full_report.table(7).round(3))
       <td>stop_outside_10mm</td>
       <td>False</td>
       <td>True</td>
-      <td>7.233</td>
-      <td>7.241</td>
-      <td>8.640</td>
-      <td>8.671</td>
-      <td>943.452</td>
-      <td>869.067</td>
-      <td>868.856</td>
-      <td>-74.597</td>
-      <td>0.152</td>
+      <td>6.867</td>
+      <td>6.867</td>
+      <td>10.306</td>
+      <td>-12.952</td>
+      <td>820.610</td>
+      <td>820.610</td>
+      <td>944.449</td>
+      <td>123.840</td>
+      <td>1.508</td>
       <td>False</td>
-      <td>15.795</td>
-      <td>0.639</td>
+      <td>15.088</td>
+      <td>0.579</td>
       <td>205.751</td>
       <td>1.041</td>
       <td>0.328</td>
@@ -22783,18 +21178,18 @@ display(full_report.table(7).round(3))
       <td>stop_outside_10mm</td>
       <td>False</td>
       <td>True</td>
-      <td>5.100</td>
-      <td>5.100</td>
-      <td>8.498</td>
-      <td>-4.923</td>
-      <td>918.728</td>
-      <td>875.169</td>
-      <td>875.149</td>
-      <td>-43.579</td>
-      <td>0.351</td>
+      <td>4.500</td>
+      <td>4.500</td>
+      <td>4.084</td>
+      <td>-8.216</td>
+      <td>817.961</td>
+      <td>817.948</td>
+      <td>845.684</td>
+      <td>27.724</td>
+      <td>0.234</td>
       <td>False</td>
-      <td>12.129</td>
-      <td>0.982</td>
+      <td>11.119</td>
+      <td>0.873</td>
       <td>347.116</td>
       <td>1.181</td>
       <td>0.493</td>
@@ -22804,39 +21199,39 @@ display(full_report.table(7).round(3))
       <td>stop_outside_10mm</td>
       <td>False</td>
       <td>True</td>
-      <td>6.000</td>
-      <td>6.005</td>
-      <td>14.172</td>
-      <td>0.369</td>
-      <td>983.498</td>
-      <td>840.156</td>
-      <td>840.027</td>
-      <td>-143.470</td>
-      <td>0.203</td>
+      <td>6.367</td>
+      <td>6.985</td>
+      <td>9.673</td>
+      <td>0.350</td>
+      <td>725.233</td>
+      <td>470.191</td>
+      <td>866.586</td>
+      <td>141.353</td>
+      <td>0.513</td>
       <td>False</td>
-      <td>14.155</td>
-      <td>0.995</td>
+      <td>15.730</td>
+      <td>0.996</td>
       <td>297.945</td>
       <td>1.569</td>
       <td>0.564</td>
     </tr>
     <tr>
       <th>985</th>
-      <td>no_park_timeout</td>
+      <td>stop_outside_10mm</td>
       <td>False</td>
-      <td>False</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>2647.354</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>True</td>
-      <td>22.879</td>
-      <td>0.933</td>
+      <td>6.800</td>
+      <td>6.800</td>
+      <td>12.109</td>
+      <td>-0.642</td>
+      <td>1251.472</td>
+      <td>1249.535</td>
+      <td>1408.945</td>
+      <td>157.474</td>
+      <td>0.151</td>
+      <td>False</td>
+      <td>14.865</td>
+      <td>0.589</td>
       <td>284.446</td>
       <td>1.417</td>
       <td>1.210</td>
@@ -22846,39 +21241,39 @@ display(full_report.table(7).round(3))
       <td>stop_outside_10mm</td>
       <td>False</td>
       <td>True</td>
-      <td>6.700</td>
-      <td>6.706</td>
-      <td>2.956</td>
-      <td>10.829</td>
-      <td>878.416</td>
-      <td>795.482</td>
-      <td>795.302</td>
-      <td>-83.114</td>
-      <td>0.070</td>
+      <td>9.100</td>
+      <td>9.100</td>
+      <td>6.817</td>
+      <td>-17.175</td>
+      <td>1028.843</td>
+      <td>995.294</td>
+      <td>994.647</td>
+      <td>-34.196</td>
+      <td>0.133</td>
       <td>False</td>
-      <td>14.656</td>
-      <td>0.816</td>
+      <td>17.408</td>
+      <td>0.465</td>
       <td>98.931</td>
       <td>1.279</td>
       <td>0.179</td>
     </tr>
     <tr>
       <th>989</th>
-      <td>no_park_timeout</td>
+      <td>stop_outside_10mm</td>
       <td>False</td>
-      <td>False</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>1546.987</td>
-      <td>NaN</td>
-      <td>NaN</td>
       <td>True</td>
-      <td>23.105</td>
-      <td>0.598</td>
+      <td>6.933</td>
+      <td>6.933</td>
+      <td>11.202</td>
+      <td>1.951</td>
+      <td>515.071</td>
+      <td>488.372</td>
+      <td>569.645</td>
+      <td>54.574</td>
+      <td>0.048</td>
+      <td>False</td>
+      <td>15.233</td>
+      <td>0.767</td>
       <td>287.737</td>
       <td>1.749</td>
       <td>1.193</td>
@@ -22898,7 +21293,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_319_0.png)
+![png](golden_dataset_files/golden_dataset_301_0.png)
 
 
 
@@ -22940,42 +21335,42 @@ print('Learned torques are applied from reset. No expert holding or added gravit
     <tr>
       <th>11</th>
       <td>stop_outside_10mm</td>
-      <td>164</td>
-      <td>3.4714</td>
+      <td>80</td>
+      <td>1.8559</td>
       <td>30.0</td>
-      <td>0.2012</td>
+      <td>0.3429</td>
     </tr>
     <tr>
       <th>17</th>
       <td>stop_outside_10mm</td>
-      <td>216</td>
-      <td>3.6500</td>
+      <td>217</td>
+      <td>3.7390</td>
       <td>30.0</td>
-      <td>0.1263</td>
+      <td>0.3246</td>
     </tr>
     <tr>
       <th>33</th>
       <td>stop_outside_10mm</td>
-      <td>282</td>
-      <td>3.6680</td>
+      <td>246</td>
+      <td>3.6985</td>
       <td>30.0</td>
-      <td>0.1226</td>
+      <td>0.3333</td>
     </tr>
     <tr>
       <th>35</th>
       <td>stop_outside_10mm</td>
-      <td>187</td>
-      <td>3.6342</td>
+      <td>315</td>
+      <td>8.7945</td>
       <td>30.0</td>
-      <td>0.1543</td>
+      <td>0.3134</td>
     </tr>
     <tr>
       <th>40</th>
       <td>stop_outside_10mm</td>
-      <td>217</td>
-      <td>3.6650</td>
+      <td>206</td>
+      <td>3.6533</td>
       <td>30.0</td>
-      <td>0.1606</td>
+      <td>0.3280</td>
     </tr>
     <tr>
       <th>...</th>
@@ -22988,42 +21383,42 @@ print('Learned torques are applied from reset. No expert holding or added gravit
     <tr>
       <th>958</th>
       <td>stop_outside_10mm</td>
-      <td>153</td>
-      <td>3.4548</td>
+      <td>135</td>
+      <td>3.0450</td>
       <td>30.0</td>
-      <td>0.2297</td>
+      <td>0.3058</td>
     </tr>
     <tr>
       <th>981</th>
       <td>stop_outside_10mm</td>
-      <td>180</td>
-      <td>3.7874</td>
+      <td>191</td>
+      <td>2.2247</td>
       <td>30.0</td>
-      <td>0.2476</td>
+      <td>0.2618</td>
     </tr>
     <tr>
       <th>985</th>
-      <td>no_park_timeout</td>
-      <td>387</td>
-      <td>36.0118</td>
+      <td>stop_outside_10mm</td>
+      <td>204</td>
+      <td>4.1781</td>
       <td>30.0</td>
-      <td>0.5079</td>
+      <td>0.2675</td>
     </tr>
     <tr>
       <th>986</th>
       <td>stop_outside_10mm</td>
-      <td>201</td>
-      <td>3.5123</td>
+      <td>273</td>
+      <td>4.1152</td>
       <td>30.0</td>
-      <td>0.1528</td>
+      <td>0.4087</td>
     </tr>
     <tr>
       <th>989</th>
-      <td>no_park_timeout</td>
-      <td>415</td>
-      <td>26.2985</td>
+      <td>stop_outside_10mm</td>
+      <td>208</td>
+      <td>2.7147</td>
       <td>30.0</td>
-      <td>0.6000</td>
+      <td>0.2603</td>
     </tr>
   </tbody>
 </table>
@@ -23044,13 +21439,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_320_0.png)
+![png](golden_dataset_files/golden_dataset_302_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_320_1.png)
+![png](golden_dataset_files/golden_dataset_302_1.png)
 
 
 
@@ -23066,11 +21461,11 @@ print('Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm t
 ```
 
 
-<div><button onclick="var f=document.getElementById('playerbf1db69c');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/imperfect_park/test/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px">Load the 3D player</button><iframe id="playerbf1db69c" style="display:none;width:100%;height:850px;border:0"></iframe></div>
+<div><button onclick="var f=document.getElementById('player50b67b71');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/random_start_fixed/test/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px">Load the 3D player</button><iframe id="player50b67b71" style="display:none;width:100%;height:850px;border:0"></iframe></div>
 
 
 
-<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/imperfect_park/test/viewer_golden_seed7.html" target="_blank">Open all 100 test replays</a>
+<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/random_start_fixed/test/viewer_golden_seed7.html" target="_blank">Open all 100 test replays</a>
 
 
     Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.
@@ -23082,10 +21477,10 @@ display(Markdown(overnight.reading(full_name)))
 ```
 
 
-Both networks controlled the complete run, including learned arm torques before PARK. On validation, 99/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 97/100 parked, 97/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 9.0 cm; median distance at STOP among stopped attempts was 945.0 mm. Median maximum pre-PARK joint deviation was 3.630 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+Both networks controlled the complete run, including learned arm torques before PARK. On validation, 88/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 89/100 parked, 89/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 7.8 cm; median distance at STOP among stopped attempts was 899.3 mm. Median maximum pre-PARK joint deviation was 4.059 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 49: full-episode random start retrained
+### Iteration 49: Retrain driving and reaching on random starts; evaluate with all five disturbances
 
 **What changed:** Retrain driving and reaching on random-start expert data with physical input scales. Evaluate with random starts and all five disturbances. The expert retains its original world-origin parking convention.
 
@@ -23375,7 +21770,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_326_0.png)
+![png](golden_dataset_files/golden_dataset_308_0.png)
 
 
 
@@ -23391,7 +21786,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_327_0.png)
+![png](golden_dataset_files/golden_dataset_309_0.png)
 
 
 
@@ -23702,7 +22097,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_328_0.png)
+![png](golden_dataset_files/golden_dataset_310_0.png)
 
 
 
@@ -23848,13 +22243,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_329_0.png)
+![png](golden_dataset_files/golden_dataset_311_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_329_1.png)
+![png](golden_dataset_files/golden_dataset_311_1.png)
 
 
 
@@ -23889,7 +22284,806 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 84/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 85/100 parked, 85/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 29.5 cm; median distance at STOP among stopped attempts was 801.3 mm. Median maximum pre-PARK joint deviation was 2.477 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 52: full-episode standard stack
+### Iteration 50: Frozen random-start-retrained networks: clean retention at original starts
+
+**What changed:** Use exactly the random-start-retrained networks, but restore original starts and clean physics. This changes the evaluation condition, not the weights.
+
+**Type:** Retention test. Seed 7 only; 100 validation and 100 test targets, with both learned networks controlling the complete episode. No conventional arm holding controller or extra gravity compensation is active.
+
+**Result:** test PARK 100/100, STOP 93/100, full success 0/100; validation full success 0/100. Median parking error is 5.86 cm among 100 parked attempts. Median STOP distance is 806.5 mm among 93 stopped attempts. 0 attempts did not PARK; 7 parked without STOP. Neither is silently discarded from success.
+
+**Comparison with iteration 49 (random_start_retrained):** PARK count changes by +15; STOP by +8; successes by +0. On the same 85 targets parked by both, the median paired change in parking error is -22.60 cm. On the same 80 targets stopped by both, the median paired change at STOP is -131.5 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
+
+**Training provenance:** selected epochs: driving 300, torque 1174, STOP 599. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
+
+**Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
+
+
+```python
+from pathlib import Path
+import sys,json,uuid
+import matplotlib.pyplot as plt
+from IPython.display import display,Markdown,HTML
+sys.path.insert(0,str(Path('../arm').resolve()))
+import report_curriculum as overnight
+def lazy_player(url,height=850):
+    k=uuid.uuid4().hex[:8]
+    return HTML(f"<div><button onclick=\"var f=document.getElementById('player{k}');f.src='{url}';f.style.display='block';this.style.display='none'\" style=\"padding:8px 14px\">Load the 3D player</button><iframe id=\"player{k}\" style=\"display:none;width:100%;height:{height}px;border:0\"></iframe></div>")
+
+full_name='random_start_retention'
+display(overnight.build(full_name).round(3))
+print('Validation and test are distinct. No fitting occurs in these analysis cells.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>seed</th>
+      <th>attempts</th>
+      <th>parked</th>
+      <th>stopped</th>
+      <th>success_10mm</th>
+      <th>success_percent</th>
+      <th>wilson95_low_percent</th>
+      <th>wilson95_high_percent</th>
+      <th>median_park_error_cm</th>
+      <th>median_abs_heading_error_deg</th>
+      <th>median_closest_mm</th>
+      <th>median_stop_mm</th>
+      <th>median_park_s</th>
+      <th>median_stop_s</th>
+      <th>timeouts</th>
+      <th>execution_failures</th>
+      <th>sum_case_wall_s</th>
+      <th>median_case_wall_s</th>
+    </tr>
+    <tr>
+      <th>split</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>val</th>
+      <td>7</td>
+      <td>100</td>
+      <td>100</td>
+      <td>89</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3.699</td>
+      <td>5.791</td>
+      <td>3.962</td>
+      <td>192.346</td>
+      <td>811.110</td>
+      <td>7.100</td>
+      <td>10.399</td>
+      <td>11</td>
+      <td>0</td>
+      <td>2036.738</td>
+      <td>20.541</td>
+    </tr>
+    <tr>
+      <th>test</th>
+      <td>7</td>
+      <td>100</td>
+      <td>100</td>
+      <td>93</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3.699</td>
+      <td>5.863</td>
+      <td>3.659</td>
+      <td>158.465</td>
+      <td>806.548</td>
+      <td>6.383</td>
+      <td>9.733</td>
+      <td>7</td>
+      <td>0</td>
+      <td>1861.097</td>
+      <td>18.995</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Validation and test are distinct. No fitting occurs in these analysis cells.
+
+
+
+```python
+full_config=json.loads((overnight.ROOT/full_name/'test/config.json').read_text())
+display(full_config)
+for kind in ('driving','torque','stop'):
+    chosen=json.loads((overnight.models(full_name)/f'{kind}_seed7_summary.json').read_text())
+    print(kind, 'selected epoch',chosen['selected_epoch'],'validation loss',chosen['selected_val_loss'])
+```
+
+
+    {'cases': [11,
+      17,
+      33,
+      35,
+      40,
+      43,
+      44,
+      48,
+      52,
+      56,
+      65,
+      83,
+      92,
+      97,
+      98,
+      113,
+      136,
+      147,
+      148,
+      154,
+      162,
+      196,
+      221,
+      229,
+      232,
+      239,
+      248,
+      260,
+      271,
+      274,
+      277,
+      281,
+      285,
+      302,
+      306,
+      311,
+      315,
+      316,
+      317,
+      361,
+      413,
+      427,
+      432,
+      463,
+      478,
+      479,
+      492,
+      502,
+      534,
+      545,
+      554,
+      571,
+      585,
+      586,
+      592,
+      599,
+      600,
+      605,
+      628,
+      632,
+      642,
+      646,
+      652,
+      653,
+      664,
+      669,
+      671,
+      683,
+      693,
+      700,
+      707,
+      708,
+      722,
+      729,
+      730,
+      738,
+      741,
+      750,
+      770,
+      779,
+      806,
+      834,
+      845,
+      846,
+      848,
+      854,
+      857,
+      859,
+      872,
+      883,
+      898,
+      903,
+      905,
+      945,
+      952,
+      958,
+      981,
+      985,
+      986,
+      989],
+     'split': 'test',
+     'seed': 7,
+     'jobs': 4,
+     'models': '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_retrained/models',
+     'condition': {},
+     'model_hashes': {'driving_seed7.npz': 'ed9013ef41e693f38d066efa5af9bff74b9e7d5860d7800b9b7b5c8aa7717f3a',
+      'reaching_seed7.npz': '675d534a224a4540c2ebbdf51ba250dcb053244465dfc505db502623488fbfcb'},
+     'native_hashes': {'/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/recovery_runtime/native/sensor_curriculum.cpp': '85a6236a4d1fdc0c9dc2d0e991e460cc150e12abb2e153c596f3c8b247ed60d6',
+      '/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/recovery_runtime/native/sensor_curriculum': 'd589e24b3ac57a056801059812d64271bc83cc2d350c6a487509b6555b6ecf8d'},
+     'source_hashes': {'full_run.py': 'a099cabfe4479cf25bd59665e16717b8634a7feeb1b647f1dc39df9bf674514d',
+      'evaluate_curriculum.py': '7fa3b64db19e7a39b0cb3a598945fee4695e3a0dce7d037d1eee1e73a85f132c',
+      'curriculum_sensors.py': '8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520'},
+     'split_sha256': '286f578aec7e3ab0953592466e63014cc1dde7f467106fadf273b30762ac1abf',
+     'renderer': 'egl',
+     'arm_control': 'learned from reset, 1 kHz, no PD hold or gravity addition',
+     'selection': 'checkpoints frozen on offline validation; no fitting in evaluator',
+     'test_reuse': 'existing targets previously evaluated; not a fresh blind test'}
+
+
+    driving selected epoch 300 validation loss 0.3958594799041748
+    torque selected epoch 1174 validation loss 0.02058526501059532
+    stop selected epoch 599 validation loss 0.0036304721143096685
+
+
+
+```python
+overnight.losses(full_name);plt.show()
+print('All training and validation epochs. Test scores are not training losses.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_317_0.png)
+
+
+
+    All training and validation epochs. Test scores are not training losses.
+
+
+
+```python
+full_report=overnight.select(full_name)
+full_report.outcomes(7);plt.show()
+display(full_report.table(7).round(3))
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_318_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>status</th>
+      <th>success</th>
+      <th>parked</th>
+      <th>park_s</th>
+      <th>stop_s</th>
+      <th>park_error_cm</th>
+      <th>park_heading_error_deg</th>
+      <th>at_stop_mm</th>
+      <th>closest_mm</th>
+      <th>end_mm</th>
+      <th>post_stop_drift_mm</th>
+      <th>post_park_base_drift_cm</th>
+      <th>timed_out</th>
+      <th>elapsed_s</th>
+      <th>camera_visible_fraction</th>
+      <th>target_bearing_deg</th>
+      <th>target_range_m</th>
+      <th>target_height_m</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>4.400</td>
+      <td>11.592</td>
+      <td>5.410</td>
+      <td>-1.222</td>
+      <td>630.116</td>
+      <td>264.357</td>
+      <td>1100.814</td>
+      <td>470.698</td>
+      <td>0.332</td>
+      <td>False</td>
+      <td>20.036</td>
+      <td>0.950</td>
+      <td>0.986</td>
+      <td>1.042</td>
+      <td>0.178</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.733</td>
+      <td>9.730</td>
+      <td>8.030</td>
+      <td>5.081</td>
+      <td>946.638</td>
+      <td>161.840</td>
+      <td>1020.886</td>
+      <td>74.249</td>
+      <td>1.637</td>
+      <td>False</td>
+      <td>18.552</td>
+      <td>0.704</td>
+      <td>194.926</td>
+      <td>1.095</td>
+      <td>1.028</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>no_stop_timeout</td>
+      <td>False</td>
+      <td>True</td>
+      <td>8.833</td>
+      <td>NaN</td>
+      <td>8.794</td>
+      <td>9.761</td>
+      <td>NaN</td>
+      <td>228.787</td>
+      <td>398.917</td>
+      <td>NaN</td>
+      <td>0.993</td>
+      <td>True</td>
+      <td>22.519</td>
+      <td>0.635</td>
+      <td>259.736</td>
+      <td>1.504</td>
+      <td>0.422</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.000</td>
+      <td>7.117</td>
+      <td>8.753</td>
+      <td>4.026</td>
+      <td>132.545</td>
+      <td>128.161</td>
+      <td>152.371</td>
+      <td>19.826</td>
+      <td>0.381</td>
+      <td>False</td>
+      <td>15.087</td>
+      <td>0.795</td>
+      <td>111.687</td>
+      <td>1.257</td>
+      <td>0.589</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>no_stop_timeout</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.333</td>
+      <td>NaN</td>
+      <td>11.180</td>
+      <td>3.915</td>
+      <td>NaN</td>
+      <td>133.467</td>
+      <td>277.611</td>
+      <td>NaN</td>
+      <td>1.413</td>
+      <td>True</td>
+      <td>21.928</td>
+      <td>0.815</td>
+      <td>205.751</td>
+      <td>1.041</td>
+      <td>0.328</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>4.333</td>
+      <td>5.359</td>
+      <td>8.686</td>
+      <td>-0.059</td>
+      <td>147.059</td>
+      <td>110.696</td>
+      <td>110.628</td>
+      <td>-36.431</td>
+      <td>0.112</td>
+      <td>False</td>
+      <td>11.592</td>
+      <td>0.949</td>
+      <td>347.116</td>
+      <td>1.181</td>
+      <td>0.493</td>
+    </tr>
+    <tr>
+      <th>981</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.100</td>
+      <td>8.170</td>
+      <td>4.776</td>
+      <td>-1.348</td>
+      <td>122.149</td>
+      <td>95.459</td>
+      <td>141.354</td>
+      <td>19.206</td>
+      <td>0.341</td>
+      <td>False</td>
+      <td>16.549</td>
+      <td>0.789</td>
+      <td>297.945</td>
+      <td>1.569</td>
+      <td>0.564</td>
+    </tr>
+    <tr>
+      <th>985</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>6.167</td>
+      <td>10.232</td>
+      <td>16.705</td>
+      <td>-3.113</td>
+      <td>1096.628</td>
+      <td>310.650</td>
+      <td>1067.705</td>
+      <td>-28.923</td>
+      <td>0.978</td>
+      <td>False</td>
+      <td>19.220</td>
+      <td>0.888</td>
+      <td>284.446</td>
+      <td>1.417</td>
+      <td>1.210</td>
+    </tr>
+    <tr>
+      <th>986</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>5.600</td>
+      <td>8.943</td>
+      <td>4.783</td>
+      <td>3.699</td>
+      <td>523.398</td>
+      <td>280.479</td>
+      <td>890.961</td>
+      <td>367.563</td>
+      <td>2.898</td>
+      <td>False</td>
+      <td>16.446</td>
+      <td>0.901</td>
+      <td>98.931</td>
+      <td>1.279</td>
+      <td>0.179</td>
+    </tr>
+    <tr>
+      <th>989</th>
+      <td>stop_outside_10mm</td>
+      <td>False</td>
+      <td>True</td>
+      <td>7.133</td>
+      <td>11.064</td>
+      <td>13.553</td>
+      <td>-3.707</td>
+      <td>786.733</td>
+      <td>149.926</td>
+      <td>1168.258</td>
+      <td>381.525</td>
+      <td>1.507</td>
+      <td>False</td>
+      <td>21.039</td>
+      <td>0.896</td>
+      <td>287.737</td>
+      <td>1.749</td>
+      <td>1.193</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 18 columns</p>
+</div>
+
+
+
+```python
+overnight.holding(full_name);plt.show()
+display(overnight.hold_table(full_name).round(4))
+print('Learned torques are applied from reset. No expert holding or added gravity term.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_319_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>status</th>
+      <th>prepark_frames</th>
+      <th>max_arm_deviation_rad</th>
+      <th>maximum_command_Nm</th>
+      <th>torque_clipped_fraction</th>
+    </tr>
+    <tr>
+      <th>dot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>stop_outside_10mm</td>
+      <td>132</td>
+      <td>0.1086</td>
+      <td>18.7070</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>stop_outside_10mm</td>
+      <td>202</td>
+      <td>0.0696</td>
+      <td>20.3866</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>no_stop_timeout</td>
+      <td>265</td>
+      <td>0.1579</td>
+      <td>20.3866</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>stop_outside_10mm</td>
+      <td>180</td>
+      <td>0.0919</td>
+      <td>20.5393</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>no_stop_timeout</td>
+      <td>190</td>
+      <td>0.0495</td>
+      <td>20.3866</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>958</th>
+      <td>stop_outside_10mm</td>
+      <td>130</td>
+      <td>0.0711</td>
+      <td>19.6246</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>981</th>
+      <td>stop_outside_10mm</td>
+      <td>183</td>
+      <td>0.0497</td>
+      <td>20.1613</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>985</th>
+      <td>stop_outside_10mm</td>
+      <td>185</td>
+      <td>0.1227</td>
+      <td>19.7177</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>986</th>
+      <td>stop_outside_10mm</td>
+      <td>168</td>
+      <td>0.0661</td>
+      <td>20.6192</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>989</th>
+      <td>stop_outside_10mm</td>
+      <td>214</td>
+      <td>0.1419</td>
+      <td>19.9300</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>100 rows × 5 columns</p>
+</div>
+
+
+    Learned torques are applied from reset. No expert holding or added gravity term.
+
+
+
+```python
+full_report=overnight.select(full_name)
+full_report.stopping(7);plt.show()
+full_report.distances(7);plt.show()
+print('Closest approach, exact STOP, and 0.5-second drift are different measurements.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_320_0.png)
+
+
+
+
+
+![png](golden_dataset_files/golden_dataset_320_1.png)
+
+
+
+    Closest approach, exact STOP, and 0.5-second drift are different measurements.
+
+
+
+```python
+full_url=overnight.player_url(full_name)
+display(lazy_player(full_url))
+display(HTML(f'<a href="{full_url}" target="_blank">Open all 100 test replays</a>'))
+print('Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.')
+```
+
+
+<div><button onclick="var f=document.getElementById('player6dc988d7');f.src='https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/random_start_retention/test/viewer_golden_seed7.html';f.style.display='block';this.style.display='none'" style="padding:8px 14px">Load the 3D player</button><iframe id="player6dc988d7" style="display:none;width:100%;height:850px;border:0"></iframe></div>
+
+
+
+<a href="https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/overnight_20261105/random_start_retention/test/viewer_golden_seed7.html" target="_blank">Open all 100 test replays</a>
+
+
+    Wheel encoder speeds, wheel commands, PARK and STOP values, applied arm torques, camera and ghost.
+
+
+
+```python
+display(Markdown(overnight.reading(full_name)))
+```
+
+
+Both networks controlled the complete run, including learned arm torques before PARK. On validation, 100/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 93/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 5.9 cm; median distance at STOP among stopped attempts was 806.5 mm. Median maximum pre-PARK joint deviation was 0.093 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
+### Iteration 51: Frozen standardised networks: all five disturbances and random starts
 
 **What changed:** Test the clean-trained standardised model under all five disturbances and random starts. This is a separate comparison: the preceding noise ladder used the physical-scale baseline.
 
@@ -24179,7 +23373,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_335_0.png)
+![png](golden_dataset_files/golden_dataset_326_0.png)
 
 
 
@@ -24195,7 +23389,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_336_0.png)
+![png](golden_dataset_files/golden_dataset_327_0.png)
 
 
 
@@ -24506,7 +23700,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_337_0.png)
+![png](golden_dataset_files/golden_dataset_328_0.png)
 
 
 
@@ -24652,13 +23846,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_338_0.png)
+![png](golden_dataset_files/golden_dataset_329_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_338_1.png)
+![png](golden_dataset_files/golden_dataset_329_1.png)
 
 
 
@@ -24693,7 +23887,7 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 47/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 48/100 parked, 19/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 34.0 cm; median distance at STOP among stopped attempts was 1143.1 mm. Median maximum pre-PARK joint deviation was 108.828 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 53: full-episode dart
+### Iteration 52: DART-inspired recovery training; clean evaluation
 
 **What changed:** Add two batches of 100 perturbed expert episodes to the original data; 199 reached successfully and contributed training rows. Fixed action-noise standard deviations: wheels 0.025 rad/s, arm 0.5 N m, held for 33 ms. Labels are clean expert commands at visited states. DART-inspired fixed noise, not the full adaptive DART algorithm.
 
@@ -24980,7 +24174,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_344_0.png)
+![png](golden_dataset_files/golden_dataset_335_0.png)
 
 
 
@@ -24996,7 +24190,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_345_0.png)
+![png](golden_dataset_files/golden_dataset_336_0.png)
 
 
 
@@ -25307,7 +24501,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_346_0.png)
+![png](golden_dataset_files/golden_dataset_337_0.png)
 
 
 
@@ -25453,13 +24647,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_347_0.png)
+![png](golden_dataset_files/golden_dataset_338_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_347_1.png)
+![png](golden_dataset_files/golden_dataset_338_1.png)
 
 
 
@@ -25494,7 +24688,7 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 100/100 parked and 2/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 78/100 issued STOP, and 1/100 were within 10 mm at STOP. Median parking error among parked attempts was 5.5 cm; median distance at STOP among stopped attempts was 60.9 mm. Median maximum pre-PARK joint deviation was 0.062 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 54: full-episode dart stack
+### Iteration 53: Frozen DART-trained networks: all five disturbances and random starts
 
 **What changed:** Test the DART-trained model under all five disturbances and random starts. Training used action perturbations, not the full evaluation disturbance stack.
 
@@ -25502,7 +24696,7 @@ Both networks controlled the complete run, including learned arm torques before 
 
 **Result:** test PARK 65/100, STOP 64/100, full success 0/100; validation full success 0/100. Median parking error is 19.06 cm among 65 parked attempts. Median STOP distance is 655.6 mm among 64 stopped attempts. 35 attempts did not PARK; 1 parked without STOP. Neither is silently discarded from success.
 
-**Comparison with iteration 53 (dart):** PARK count changes by -35; STOP by -14; successes by -1. On the same 65 targets parked by both, the median paired change in parking error is +8.04 cm. On the same 51 targets stopped by both, the median paired change at STOP is +508.9 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
+**Comparison with iteration 52 (dart):** PARK count changes by -35; STOP by -14; successes by -1. On the same 65 targets parked by both, the median paired change in parking error is +8.04 cm. On the same 51 targets stopped by both, the median paired change at STOP is +508.9 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
 
 **Training provenance:** selected epochs: driving 300, torque 1168, STOP 582. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
@@ -25784,7 +24978,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_353_0.png)
+![png](golden_dataset_files/golden_dataset_344_0.png)
 
 
 
@@ -25800,7 +24994,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_354_0.png)
+![png](golden_dataset_files/golden_dataset_345_0.png)
 
 
 
@@ -26111,7 +25305,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_355_0.png)
+![png](golden_dataset_files/golden_dataset_346_0.png)
 
 
 
@@ -26257,13 +25451,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_356_0.png)
+![png](golden_dataset_files/golden_dataset_347_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_356_1.png)
+![png](golden_dataset_files/golden_dataset_347_1.png)
 
 
 
@@ -26298,7 +25492,7 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 68/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 65/100 parked, 64/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 19.1 cm; median distance at STOP among stopped attempts was 655.6 mm. Median maximum pre-PARK joint deviation was 7.014 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 55: full-episode dagger
+### Iteration 54: Three-round DAgger recovery training; clean evaluation
 
 **What changed:** Three rounds of 100 student rollouts with stateful shadow-expert labels, retaining the original data and all earlier rounds. Round 3 was selected on six fixed validation cases before full testing. New DAgger rows train command outputs only; they do not train PARK, auxiliary distance or STOP targets.
 
@@ -26585,7 +25779,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_362_0.png)
+![png](golden_dataset_files/golden_dataset_353_0.png)
 
 
 
@@ -26601,7 +25795,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_363_0.png)
+![png](golden_dataset_files/golden_dataset_354_0.png)
 
 
 
@@ -26912,7 +26106,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_364_0.png)
+![png](golden_dataset_files/golden_dataset_355_0.png)
 
 
 
@@ -27058,13 +26252,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_365_0.png)
+![png](golden_dataset_files/golden_dataset_356_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_365_1.png)
+![png](golden_dataset_files/golden_dataset_356_1.png)
 
 
 
@@ -27099,7 +26293,7 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 89/100 parked and 4/100 met the full task criterion. On the frozen test comparison, 84/100 parked, 69/100 issued STOP, and 2/100 were within 10 mm at STOP. Median parking error among parked attempts was 4.2 cm; median distance at STOP among stopped attempts was 37.0 mm. Median maximum pre-PARK joint deviation was 0.061 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 56: full-episode dagger stack
+### Iteration 55: Frozen DAgger-trained networks: all five disturbances and random starts
 
 **What changed:** Test the selected DAgger model under all five disturbances and random starts. This is the same checkpoint as its clean test.
 
@@ -27107,7 +26301,7 @@ Both networks controlled the complete run, including learned arm torques before 
 
 **Result:** test PARK 64/100, STOP 61/100, full success 0/100; validation full success 0/100. Median parking error is 19.64 cm among 64 parked attempts. Median STOP distance is 495.6 mm among 61 stopped attempts. 36 attempts did not PARK; 3 parked without STOP. Neither is silently discarded from success.
 
-**Comparison with iteration 55 (dagger):** PARK count changes by -20; STOP by -8; successes by -2. On the same 61 targets parked by both, the median paired change in parking error is +12.14 cm. On the same 50 targets stopped by both, the median paired change at STOP is +439.7 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
+**Comparison with iteration 54 (dagger):** PARK count changes by -20; STOP by -8; successes by -2. On the same 61 targets parked by both, the median paired change in parking error is +12.14 cm. On the same 50 targets stopped by both, the median paired change at STOP is +439.7 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
 
 **Training provenance:** selected epochs: driving 292, torque 1186, STOP 600. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
@@ -27389,7 +26583,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_371_0.png)
+![png](golden_dataset_files/golden_dataset_362_0.png)
 
 
 
@@ -27405,7 +26599,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_372_0.png)
+![png](golden_dataset_files/golden_dataset_363_0.png)
 
 
 
@@ -27716,7 +26910,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_373_0.png)
+![png](golden_dataset_files/golden_dataset_364_0.png)
 
 
 
@@ -27862,13 +27056,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_374_0.png)
+![png](golden_dataset_files/golden_dataset_365_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_374_1.png)
+![png](golden_dataset_files/golden_dataset_365_1.png)
 
 
 
@@ -27903,7 +27097,7 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 66/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 64/100 parked, 61/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 19.6 cm; median distance at STOP among stopped attempts was 495.6 mm. Median maximum pre-PARK joint deviation was 5.256 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 57: full-episode dart dagger
+### Iteration 56: DART-inspired training followed by three-round DAgger; clean evaluation
 
 **What changed:** Retain original and both DART datasets, then aggregate three rounds of 100 student rollouts with shadow-expert command labels. Round 3 was selected on the six validation cases. New DAgger rows do not train PARK or STOP. Round 2 export was repaired and rerun without loosening the numerical tolerance; the selected model is round 3.
 
@@ -27911,7 +27105,7 @@ Both networks controlled the complete run, including learned arm torques before 
 
 **Result:** test PARK 87/100, STOP 66/100, full success 4/100; validation full success 1/100. Median parking error is 4.87 cm among 87 parked attempts. Median STOP distance is 34.5 mm among 66 stopped attempts. 13 attempts did not PARK; 21 parked without STOP. Neither is silently discarded from success.
 
-**Comparison with iteration 53 (dart):** PARK count changes by -13; STOP by -12; successes by +3. On the same 87 targets parked by both, the median paired change in parking error is -0.38 cm. On the same 59 targets stopped by both, the median paired change at STOP is -41.3 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
+**Comparison with iteration 52 (dart):** PARK count changes by -13; STOP by -12; successes by +3. On the same 87 targets parked by both, the median paired change in parking error is -0.38 cm. On the same 59 targets stopped by both, the median paired change at STOP is -41.3 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
 
 **Training provenance:** selected epochs: driving 300, torque 1187, STOP 582. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
@@ -28190,7 +27384,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_380_0.png)
+![png](golden_dataset_files/golden_dataset_371_0.png)
 
 
 
@@ -28206,7 +27400,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_381_0.png)
+![png](golden_dataset_files/golden_dataset_372_0.png)
 
 
 
@@ -28517,7 +27711,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_382_0.png)
+![png](golden_dataset_files/golden_dataset_373_0.png)
 
 
 
@@ -28663,13 +27857,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_383_0.png)
+![png](golden_dataset_files/golden_dataset_374_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_383_1.png)
+![png](golden_dataset_files/golden_dataset_374_1.png)
 
 
 
@@ -28704,7 +27898,7 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 93/100 parked and 1/100 met the full task criterion. On the frozen test comparison, 87/100 parked, 66/100 issued STOP, and 4/100 were within 10 mm at STOP. Median parking error among parked attempts was 4.9 cm; median distance at STOP among stopped attempts was 34.5 mm. Median maximum pre-PARK joint deviation was 0.059 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Iteration 58: full-episode dart dagger stack
+### Iteration 57: Frozen DART+DAgger networks: all five disturbances and random starts
 
 **What changed:** Test the selected combined model under all five disturbances and random starts. No bursty-packet loss, occlusion or direct weight perturbation is included.
 
@@ -28712,7 +27906,7 @@ Both networks controlled the complete run, including learned arm torques before 
 
 **Result:** test PARK 87/100, STOP 86/100, full success 0/100; validation full success 0/100. Median parking error is 19.59 cm among 87 parked attempts. Median STOP distance is 321.9 mm among 86 stopped attempts. 13 attempts did not PARK; 1 parked without STOP. Neither is silently discarded from success.
 
-**Comparison with iteration 57 (dart_dagger):** PARK count changes by +0; STOP by +20; successes by -4. On the same 80 targets parked by both, the median paired change in parking error is +12.43 cm. On the same 61 targets stopped by both, the median paired change at STOP is +289.9 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
+**Comparison with iteration 56 (dart_dagger):** PARK count changes by +0; STOP by +20; successes by -4. On the same 80 targets parked by both, the median paired change in parking error is +12.43 cm. On the same 61 targets stopped by both, the median paired change at STOP is +289.9 mm. Negative changes mean smaller errors. These paired subsets exclude failures, so read them alongside the counts, not as overall success rates.
 
 **Training provenance:** selected epochs: driving 300, torque 1187, STOP 582. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
@@ -28994,7 +28188,7 @@ print('All training and validation epochs. Test scores are not training losses.'
 
 
 
-![png](golden_dataset_files/golden_dataset_389_0.png)
+![png](golden_dataset_files/golden_dataset_380_0.png)
 
 
 
@@ -29010,7 +28204,7 @@ display(full_report.table(7).round(3))
 
 
 
-![png](golden_dataset_files/golden_dataset_390_0.png)
+![png](golden_dataset_files/golden_dataset_381_0.png)
 
 
 
@@ -29321,7 +28515,7 @@ print('Learned torques are applied from reset. No expert holding or added gravit
 
 
 
-![png](golden_dataset_files/golden_dataset_391_0.png)
+![png](golden_dataset_files/golden_dataset_382_0.png)
 
 
 
@@ -29467,13 +28661,13 @@ print('Closest approach, exact STOP, and 0.5-second drift are different measurem
 
 
 
-![png](golden_dataset_files/golden_dataset_392_0.png)
+![png](golden_dataset_files/golden_dataset_383_0.png)
 
 
 
 
 
-![png](golden_dataset_files/golden_dataset_392_1.png)
+![png](golden_dataset_files/golden_dataset_383_1.png)
 
 
 
@@ -29508,11 +28702,11 @@ display(Markdown(overnight.reading(full_name)))
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 88/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 87/100 parked, 86/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 19.6 cm; median distance at STOP among stopped attempts was 321.9 mm. Median maximum pre-PARK joint deviation was 1.755 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
 
 
-### Overnight comparisons: publication and interpretation
+### Training and frozen-network evaluations: comparison and interpretation
 
-Iterations 41–58 are completed 100-test-target evaluations. Each also has a separate completed 100-target validation evaluation. No additional validation simulation is needed for publication. Six-case recovery checks remain development records only.
+Iterations 41–57 are completed 100-test-target evaluations. Each also has a separate completed 100-target validation evaluation. No additional validation simulation is needed for publication. Six-case recovery checks remain development records only.
 
-The noise ladder starts from iteration 41, not the standardised iteration 43. The stack includes encoder noise, damping, elasticity, inertia, 3 ms delay and random starts. It does not include bursty packets or occlusion. Iteration 51 is outside the agreed scope. Recovery models were trained with added recovery data, then tested separately on clean conditions and on the full stack.
+The noise ladder starts from iteration 41, not the standardised iteration 43. The stack includes encoder noise, damping, elasticity, inertia, 3 ms delay and random starts. It does not include bursty packets or occlusion. Recovery models were trained with added recovery data, then tested separately on clean conditions and on the full stack.
 
 All results use seed 7. Test targets have been reused; subsequent design decisions cannot be presented as blind final-test selection.
 
@@ -29563,21 +28757,6 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>41</td>
       <td>baseline</td>
       <td>New training</td>
-      <td>val</td>
-      <td>100</td>
-      <td>100</td>
-      <td>90</td>
-      <td>0</td>
-      <td>5.54</td>
-      <td>210.97</td>
-      <td>363.32</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>41</td>
-      <td>baseline</td>
-      <td>New training</td>
       <td>test</td>
       <td>100</td>
       <td>100</td>
@@ -29589,22 +28768,22 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>42</td>
-      <td>encoder_noise</td>
-      <td>Frozen-model stress test</td>
+      <th>1</th>
+      <td>41</td>
+      <td>baseline</td>
+      <td>New training</td>
       <td>val</td>
       <td>100</td>
-      <td>99</td>
+      <td>100</td>
       <td>90</td>
       <td>0</td>
-      <td>6.50</td>
-      <td>585.95</td>
-      <td>739.56</td>
+      <td>5.54</td>
+      <td>210.97</td>
+      <td>363.32</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>3</th>
+      <th>2</th>
       <td>42</td>
       <td>encoder_noise</td>
       <td>Frozen-model stress test</td>
@@ -29619,22 +28798,22 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>43</td>
-      <td>basics_standard</td>
-      <td>New training</td>
+      <th>3</th>
+      <td>42</td>
+      <td>encoder_noise</td>
+      <td>Frozen-model stress test</td>
       <td>val</td>
       <td>100</td>
-      <td>100</td>
-      <td>92</td>
+      <td>99</td>
+      <td>90</td>
       <td>0</td>
-      <td>5.54</td>
-      <td>92.04</td>
-      <td>183.00</td>
+      <td>6.50</td>
+      <td>585.95</td>
+      <td>739.56</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>5</th>
+      <th>4</th>
       <td>43</td>
       <td>basics_standard</td>
       <td>New training</td>
@@ -29649,22 +28828,22 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>44</td>
-      <td>damping</td>
-      <td>Frozen-model stress test</td>
+      <th>5</th>
+      <td>43</td>
+      <td>basics_standard</td>
+      <td>New training</td>
       <td>val</td>
       <td>100</td>
-      <td>98</td>
-      <td>81</td>
+      <td>100</td>
+      <td>92</td>
       <td>0</td>
-      <td>6.66</td>
-      <td>536.34</td>
-      <td>783.11</td>
+      <td>5.54</td>
+      <td>92.04</td>
+      <td>183.00</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>7</th>
+      <th>6</th>
       <td>44</td>
       <td>damping</td>
       <td>Frozen-model stress test</td>
@@ -29679,22 +28858,22 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>8</th>
-      <td>45</td>
-      <td>elasticity</td>
+      <th>7</th>
+      <td>44</td>
+      <td>damping</td>
       <td>Frozen-model stress test</td>
       <td>val</td>
       <td>100</td>
-      <td>97</td>
-      <td>93</td>
+      <td>98</td>
+      <td>81</td>
       <td>0</td>
-      <td>5.82</td>
-      <td>656.22</td>
-      <td>811.28</td>
+      <td>6.66</td>
+      <td>536.34</td>
+      <td>783.11</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>9</th>
+      <th>8</th>
       <td>45</td>
       <td>elasticity</td>
       <td>Frozen-model stress test</td>
@@ -29709,22 +28888,22 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>10</th>
-      <td>46</td>
-      <td>inertia</td>
+      <th>9</th>
+      <td>45</td>
+      <td>elasticity</td>
       <td>Frozen-model stress test</td>
       <td>val</td>
       <td>100</td>
-      <td>96</td>
-      <td>95</td>
+      <td>97</td>
+      <td>93</td>
       <td>0</td>
-      <td>7.09</td>
-      <td>687.51</td>
-      <td>758.51</td>
+      <td>5.82</td>
+      <td>656.22</td>
+      <td>811.28</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>11</th>
+      <th>10</th>
       <td>46</td>
       <td>inertia</td>
       <td>Frozen-model stress test</td>
@@ -29739,22 +28918,22 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>12</th>
-      <td>47</td>
-      <td>delay</td>
+      <th>11</th>
+      <td>46</td>
+      <td>inertia</td>
       <td>Frozen-model stress test</td>
       <td>val</td>
       <td>100</td>
-      <td>89</td>
-      <td>89</td>
+      <td>96</td>
+      <td>95</td>
       <td>0</td>
-      <td>6.04</td>
-      <td>761.87</td>
-      <td>855.07</td>
+      <td>7.09</td>
+      <td>687.51</td>
+      <td>758.51</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>13</th>
+      <th>12</th>
       <td>47</td>
       <td>delay</td>
       <td>Frozen-model stress test</td>
@@ -29769,22 +28948,22 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>14</th>
-      <td>48</td>
-      <td>random_start_fixed</td>
+      <th>13</th>
+      <td>47</td>
+      <td>delay</td>
       <td>Frozen-model stress test</td>
       <td>val</td>
       <td>100</td>
-      <td>88</td>
-      <td>88</td>
+      <td>89</td>
+      <td>89</td>
       <td>0</td>
-      <td>8.13</td>
-      <td>902.17</td>
-      <td>943.17</td>
+      <td>6.04</td>
+      <td>761.87</td>
+      <td>855.07</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>15</th>
+      <th>14</th>
       <td>48</td>
       <td>random_start_fixed</td>
       <td>Frozen-model stress test</td>
@@ -29799,22 +28978,22 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>16</th>
-      <td>49</td>
-      <td>random_start_retrained</td>
-      <td>New training</td>
+      <th>15</th>
+      <td>48</td>
+      <td>random_start_fixed</td>
+      <td>Frozen-model stress test</td>
       <td>val</td>
       <td>100</td>
-      <td>84</td>
-      <td>84</td>
+      <td>88</td>
+      <td>88</td>
       <td>0</td>
-      <td>28.24</td>
-      <td>784.27</td>
-      <td>791.14</td>
+      <td>8.13</td>
+      <td>902.17</td>
+      <td>943.17</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>17</th>
+      <th>16</th>
       <td>49</td>
       <td>random_start_retrained</td>
       <td>New training</td>
@@ -29829,22 +29008,22 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>18</th>
-      <td>50</td>
-      <td>random_start_retention</td>
-      <td>Retention test</td>
+      <th>17</th>
+      <td>49</td>
+      <td>random_start_retrained</td>
+      <td>New training</td>
       <td>val</td>
       <td>100</td>
-      <td>100</td>
-      <td>89</td>
+      <td>84</td>
+      <td>84</td>
       <td>0</td>
-      <td>5.79</td>
-      <td>192.35</td>
-      <td>811.11</td>
+      <td>28.24</td>
+      <td>784.27</td>
+      <td>791.14</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>19</th>
+      <th>18</th>
       <td>50</td>
       <td>random_start_retention</td>
       <td>Retention test</td>
@@ -29859,53 +29038,23 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
+      <th>19</th>
+      <td>50</td>
+      <td>random_start_retention</td>
+      <td>Retention test</td>
+      <td>val</td>
+      <td>100</td>
+      <td>100</td>
+      <td>89</td>
+      <td>0</td>
+      <td>5.79</td>
+      <td>192.35</td>
+      <td>811.11</td>
+      <td>0</td>
+    </tr>
+    <tr>
       <th>20</th>
       <td>51</td>
-      <td>imperfect_park</td>
-      <td>Outside agreed scope</td>
-      <td>val</td>
-      <td>100</td>
-      <td>99</td>
-      <td>98</td>
-      <td>0</td>
-      <td>8.56</td>
-      <td>884.71</td>
-      <td>930.71</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>51</td>
-      <td>imperfect_park</td>
-      <td>Outside agreed scope</td>
-      <td>test</td>
-      <td>100</td>
-      <td>97</td>
-      <td>97</td>
-      <td>0</td>
-      <td>8.99</td>
-      <td>894.54</td>
-      <td>945.01</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>22</th>
-      <td>52</td>
-      <td>standard_stack</td>
-      <td>Frozen-model stress test</td>
-      <td>val</td>
-      <td>100</td>
-      <td>47</td>
-      <td>8</td>
-      <td>0</td>
-      <td>41.95</td>
-      <td>389.00</td>
-      <td>1147.20</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>23</th>
-      <td>52</td>
       <td>standard_stack</td>
       <td>Frozen-model stress test</td>
       <td>test</td>
@@ -29919,23 +29068,23 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>24</th>
-      <td>53</td>
-      <td>dart</td>
-      <td>Recovery training</td>
+      <th>21</th>
+      <td>51</td>
+      <td>standard_stack</td>
+      <td>Frozen-model stress test</td>
       <td>val</td>
       <td>100</td>
-      <td>100</td>
-      <td>77</td>
-      <td>2</td>
-      <td>5.92</td>
-      <td>54.34</td>
-      <td>81.45</td>
+      <td>47</td>
+      <td>8</td>
+      <td>0</td>
+      <td>41.95</td>
+      <td>389.00</td>
+      <td>1147.20</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>25</th>
-      <td>53</td>
+      <th>22</th>
+      <td>52</td>
       <td>dart</td>
       <td>Recovery training</td>
       <td>test</td>
@@ -29949,23 +29098,23 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>26</th>
-      <td>54</td>
-      <td>dart_stack</td>
-      <td>Frozen-model stress test</td>
+      <th>23</th>
+      <td>52</td>
+      <td>dart</td>
+      <td>Recovery training</td>
       <td>val</td>
       <td>100</td>
-      <td>68</td>
-      <td>65</td>
-      <td>0</td>
-      <td>23.55</td>
-      <td>441.13</td>
-      <td>665.02</td>
+      <td>100</td>
+      <td>77</td>
+      <td>2</td>
+      <td>5.92</td>
+      <td>54.34</td>
+      <td>81.45</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>27</th>
-      <td>54</td>
+      <th>24</th>
+      <td>53</td>
       <td>dart_stack</td>
       <td>Frozen-model stress test</td>
       <td>test</td>
@@ -29979,23 +29128,23 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>28</th>
-      <td>55</td>
-      <td>dagger</td>
-      <td>Recovery training</td>
+      <th>25</th>
+      <td>53</td>
+      <td>dart_stack</td>
+      <td>Frozen-model stress test</td>
       <td>val</td>
       <td>100</td>
-      <td>89</td>
-      <td>66</td>
-      <td>4</td>
-      <td>3.81</td>
-      <td>25.34</td>
-      <td>35.56</td>
+      <td>68</td>
+      <td>65</td>
+      <td>0</td>
+      <td>23.55</td>
+      <td>441.13</td>
+      <td>665.02</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>29</th>
-      <td>55</td>
+      <th>26</th>
+      <td>54</td>
       <td>dagger</td>
       <td>Recovery training</td>
       <td>test</td>
@@ -30009,23 +29158,23 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>30</th>
-      <td>56</td>
-      <td>dagger_stack</td>
-      <td>Frozen-model stress test</td>
+      <th>27</th>
+      <td>54</td>
+      <td>dagger</td>
+      <td>Recovery training</td>
       <td>val</td>
       <td>100</td>
+      <td>89</td>
       <td>66</td>
-      <td>60</td>
-      <td>0</td>
-      <td>33.21</td>
-      <td>310.72</td>
-      <td>516.02</td>
+      <td>4</td>
+      <td>3.81</td>
+      <td>25.34</td>
+      <td>35.56</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>31</th>
-      <td>56</td>
+      <th>28</th>
+      <td>55</td>
       <td>dagger_stack</td>
       <td>Frozen-model stress test</td>
       <td>test</td>
@@ -30039,23 +29188,23 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>32</th>
-      <td>57</td>
-      <td>dart_dagger</td>
-      <td>Recovery training</td>
+      <th>29</th>
+      <td>55</td>
+      <td>dagger_stack</td>
+      <td>Frozen-model stress test</td>
       <td>val</td>
       <td>100</td>
-      <td>93</td>
-      <td>68</td>
-      <td>1</td>
-      <td>4.48</td>
-      <td>28.59</td>
-      <td>27.77</td>
+      <td>66</td>
+      <td>60</td>
+      <td>0</td>
+      <td>33.21</td>
+      <td>310.72</td>
+      <td>516.02</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>33</th>
-      <td>57</td>
+      <th>30</th>
+      <td>56</td>
       <td>dart_dagger</td>
       <td>Recovery training</td>
       <td>test</td>
@@ -30069,23 +29218,23 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>0</td>
     </tr>
     <tr>
-      <th>34</th>
-      <td>58</td>
-      <td>dart_dagger_stack</td>
-      <td>Frozen-model stress test</td>
+      <th>31</th>
+      <td>56</td>
+      <td>dart_dagger</td>
+      <td>Recovery training</td>
       <td>val</td>
       <td>100</td>
-      <td>88</td>
-      <td>85</td>
-      <td>0</td>
-      <td>23.89</td>
-      <td>242.81</td>
-      <td>335.55</td>
+      <td>93</td>
+      <td>68</td>
+      <td>1</td>
+      <td>4.48</td>
+      <td>28.59</td>
+      <td>27.77</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>35</th>
-      <td>58</td>
+      <th>32</th>
+      <td>57</td>
       <td>dart_dagger_stack</td>
       <td>Frozen-model stress test</td>
       <td>test</td>
@@ -30096,6 +29245,21 @@ display(publication_data[['iteration','name','role','split','attempts','parked',
       <td>19.59</td>
       <td>240.91</td>
       <td>321.95</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>57</td>
+      <td>dart_dagger_stack</td>
+      <td>Frozen-model stress test</td>
+      <td>val</td>
+      <td>100</td>
+      <td>88</td>
+      <td>85</td>
+      <td>0</td>
+      <td>23.89</td>
+      <td>242.81</td>
+      <td>335.55</td>
       <td>0</td>
     </tr>
   </tbody>
@@ -30110,7 +29274,7 @@ publication.overview_plot();plt.show()
 
 
 
-![png](golden_dataset_files/golden_dataset_397_0.png)
+![png](golden_dataset_files/golden_dataset_388_0.png)
 
 
 
@@ -30121,7 +29285,7 @@ publication.threshold_plot();plt.show()
 
 
 
-![png](golden_dataset_files/golden_dataset_398_0.png)
+![png](golden_dataset_files/golden_dataset_389_0.png)
 
 
 
@@ -30243,4 +29407,553 @@ print('Six fixed validation targets only. No official iteration or MLflow run. S
 **Challenge:** could the lower median simply come from dropping hard cases? The plots above retain every attempt in the success denominator, and each run reports paired comparisons and completion counts. **Decision:** publish the completed comparisons with these limits; do not call the system solved. Keep bursty-packet collection outstanding.
 
 **Next questions, not new experiments authorised by this publication:** which failures are missed transitions versus poor reaching; how much of noise sensitivity comes from finite-difference joint velocity; whether recovery labels should also cover PARK and STOP; and whether a new seed preserves the gain. Keep original recordings and failed exports for provenance.
+
+
+### Validation pilots: torque-only output and STOP recovery labels
+
+These two preliminary comparisons use seed 7 and validation targets 6, 16, 23, 45, 55 and 80. Each episode starts from reset and tests learned driving and reaching together. The arm network acts at 1 kHz; driving and camera updates run at 30 Hz. STOP is actionable only after PARK and remains latched, with the existing post-STOP behaviour preserved. No new data or reserved test targets are used. These are validation checks, without official iteration numbers, MLflow runs or animations.
+
+**Pilot A: remove the auxiliary distance output.** Start from the selected DAgger-only reference. Train a torque-only 18 → 128 → 128 → 7 ReLU FP32 network on the same original and DAgger training rows, using the reference training settings (1,200 epochs, seed 7, training-fitted input scaling and validation epoch selection). Remove both the auxiliary output and its objective. First verify deletion-only export parity. Freeze the existing driving network and independent STOP network. This checks whether removing the redundant objective changes torque learning and validation behaviour; no numerical gain is assumed. Compare saved losses and the same six episodes with the exact reference when its model, harness and physics match.
+
+**Pilot B: train STOP on existing recovery distance labels.** Keep Pilot A torque weights and the existing driving network fixed. Audit alignment of the existing `arm_distance_m` labels before training the independent 18 → 32 → 16 → 1 STOP network (ReLU FP32, 600 epochs, seed 7). Use valid original and DAgger recovery-distance training rows, fit STOP scaling on training rows and choose the epoch on validation. Exclude PARK labels where counterfactual timing is unknown; do not enable every auxiliary mask. Preserve the STOP input contract and export metadata. Compare A plus existing STOP against A plus retrained STOP on the same six validation targets. This checks whether existing recovery labels improve STOP behaviour; unchanged or worse distances and success would refute that expectation.
+
+Both pilots retain local configurations, source and data hashes, scaling, selected epochs and complete training/validation loss histories. Results will distinguish sensor-driven behaviour from diagnostic simulator state.
+
+
+### Validation pilots: saved results
+
+These are six fixed validation targets with seed 7, starting from reset with learned driving and reaching. The comparison keeps the original driving network fixed. Pilot A changes only torque learning by removing the distance head and its objective; Pilot B adds a retrained independent STOP network using existing recovery-distance labels. The 10 mm threshold is unchanged. No test evaluation, new data, official iteration, MLflow run or animation was created.
+
+The table retains all six targets per model, including missing STOP. Medians at STOP describe only attempts that stopped; success retains all six in its denominator. The simulation outcomes are sensor-driven; simulator distances and pre-PARK joint deviation are outcome diagnostics.
+
+
+```python
+import json
+from pathlib import Path
+import pandas as pd
+import numpy as np
+import report_curriculum as validation_report
+pilot_root=validation_report.ROOT
+pilot_a=pilot_root/'pilot_torque_only_20261105'
+pilot_b=pilot_root/'pilot_stop_recovery_20261105'
+a_rows=pd.read_csv(pilot_a/'comparison.csv')
+b_record=json.loads((pilot_b/'validation_comparison.json').read_text())
+b_rows=pd.DataFrame(b_record['rows'])
+b_new=b_rows[b_rows.model=='recovery_stop'].rename(columns={'at_network_stop_mm':'stop_mm','min_mm':'closest_mm','end_mm':'final_mm'})
+comparison=pd.concat([a_rows,b_new],ignore_index=True)
+comparison['model']=comparison['model'].replace({'reference':'Reference: DAgger torque + existing STOP','torque_only':'A: torque only + existing STOP','recovery_stop':'B: torque only + recovery-trained STOP'})
+expected={6,16,23,45,55,80}
+metrics=[]
+for label,rows in comparison.groupby('model',sort=False):
+    assert len(rows)==6 and set(rows["dot"])==expected
+    assert not (rows.status=='execution_failure').any()
+    stopped=rows.stop_mm.dropna()
+    metrics.append(dict(model=label,attempts=6,PARK=int(rows.parked.sum()),STOP=len(stopped),success_10mm=int(rows.success.sum()),median_STOP_mm=stopped.median(),median_closest_mm=rows.closest_mm.median()))
+display(pd.DataFrame(metrics).set_index('model').round(3))
+display(comparison[['model','dot','status','parked','stop_s','stop_mm','closest_mm','final_mm','success']].round(3))
+print('Six validation targets only; no test results. Missing STOP remains in the success denominator.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>success_10mm</th>
+      <th>median_STOP_mm</th>
+      <th>median_closest_mm</th>
+    </tr>
+    <tr>
+      <th>model</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Reference: DAgger torque + existing STOP</th>
+      <td>6</td>
+      <td>6</td>
+      <td>5</td>
+      <td>1</td>
+      <td>29.272</td>
+      <td>30.858</td>
+    </tr>
+    <tr>
+      <th>A: torque only + existing STOP</th>
+      <td>6</td>
+      <td>6</td>
+      <td>5</td>
+      <td>1</td>
+      <td>20.397</td>
+      <td>20.800</td>
+    </tr>
+    <tr>
+      <th>B: torque only + recovery-trained STOP</th>
+      <td>6</td>
+      <td>6</td>
+      <td>2</td>
+      <td>0</td>
+      <td>27.759</td>
+      <td>20.695</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>model</th>
+      <th>dot</th>
+      <th>status</th>
+      <th>parked</th>
+      <th>stop_s</th>
+      <th>stop_mm</th>
+      <th>closest_mm</th>
+      <th>final_mm</th>
+      <th>success</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Reference: DAgger torque + existing STOP</td>
+      <td>6</td>
+      <td>stop_outside_10mm</td>
+      <td>True</td>
+      <td>11.211</td>
+      <td>15.573</td>
+      <td>15.568</td>
+      <td>21.246</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Reference: DAgger torque + existing STOP</td>
+      <td>16</td>
+      <td>stop_outside_10mm</td>
+      <td>True</td>
+      <td>6.893</td>
+      <td>29.272</td>
+      <td>23.637</td>
+      <td>32.789</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Reference: DAgger torque + existing STOP</td>
+      <td>23</td>
+      <td>stop_outside_10mm</td>
+      <td>True</td>
+      <td>13.091</td>
+      <td>77.518</td>
+      <td>68.865</td>
+      <td>99.137</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Reference: DAgger torque + existing STOP</td>
+      <td>45</td>
+      <td>stop_outside_10mm</td>
+      <td>True</td>
+      <td>8.074</td>
+      <td>46.357</td>
+      <td>38.078</td>
+      <td>62.779</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Reference: DAgger torque + existing STOP</td>
+      <td>55</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>48.663</td>
+      <td>59.816</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Reference: DAgger torque + existing STOP</td>
+      <td>80</td>
+      <td>success</td>
+      <td>True</td>
+      <td>8.755</td>
+      <td>7.230</td>
+      <td>7.113</td>
+      <td>8.922</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>A: torque only + existing STOP</td>
+      <td>6</td>
+      <td>success</td>
+      <td>True</td>
+      <td>11.530</td>
+      <td>9.711</td>
+      <td>7.687</td>
+      <td>18.759</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>A: torque only + existing STOP</td>
+      <td>16</td>
+      <td>stop_outside_10mm</td>
+      <td>True</td>
+      <td>7.879</td>
+      <td>38.661</td>
+      <td>22.722</td>
+      <td>40.372</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>A: torque only + existing STOP</td>
+      <td>23</td>
+      <td>stop_outside_10mm</td>
+      <td>True</td>
+      <td>13.415</td>
+      <td>40.271</td>
+      <td>39.926</td>
+      <td>46.668</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>A: torque only + existing STOP</td>
+      <td>45</td>
+      <td>stop_outside_10mm</td>
+      <td>True</td>
+      <td>8.616</td>
+      <td>17.821</td>
+      <td>16.060</td>
+      <td>41.541</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>A: torque only + existing STOP</td>
+      <td>55</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>56.042</td>
+      <td>71.893</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>A: torque only + existing STOP</td>
+      <td>80</td>
+      <td>stop_outside_10mm</td>
+      <td>True</td>
+      <td>8.316</td>
+      <td>20.397</td>
+      <td>18.878</td>
+      <td>18.876</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>B: torque only + recovery-trained STOP</td>
+      <td>6</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>7.687</td>
+      <td>24.877</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>B: torque only + recovery-trained STOP</td>
+      <td>16</td>
+      <td>stop_outside_10mm</td>
+      <td>True</td>
+      <td>7.577</td>
+      <td>29.384</td>
+      <td>22.722</td>
+      <td>40.695</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>B: torque only + recovery-trained STOP</td>
+      <td>23</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>30.656</td>
+      <td>62.831</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>B: torque only + recovery-trained STOP</td>
+      <td>45</td>
+      <td>stop_outside_10mm</td>
+      <td>True</td>
+      <td>8.528</td>
+      <td>26.134</td>
+      <td>16.060</td>
+      <td>38.469</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>B: torque only + recovery-trained STOP</td>
+      <td>55</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>56.042</td>
+      <td>71.893</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>B: torque only + recovery-trained STOP</td>
+      <td>80</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>18.667</td>
+      <td>22.992</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Six validation targets only; no test results. Missing STOP remains in the success denominator.
+
+
+
+```python
+import matplotlib.pyplot as plt
+reference_history=pd.DataFrame(json.loads((pilot_a/'reference_torque_seed7_history.json').read_text()))
+a_history=pd.DataFrame(json.loads((pilot_a/'models/torque_seed7_history.json').read_text()))
+b_history=pd.DataFrame(json.loads((pilot_b/'models/stop_seed7_history.json').read_text()))
+assert len(reference_history)==len(a_history)==1201 and len(b_history)==601
+assert (a_history[['train_aux','val_aux']]==0).all().all()
+fig,axes=plt.subplots(1,3,figsize=(15,4))
+for label,history,colour in [('Reference',reference_history,'C0'),('A torque only',a_history,'C1')]:
+    axes[0].plot(history.epoch,history.train_command,label=label+' train',color=colour)
+    axes[0].plot(history.epoch,history.val_command,label=label+' validation',color=colour,linestyle='--')
+axes[0].set(title='Torque command MSE',xlabel='Epoch',ylabel='Saved scaled MSE')
+for key,style in [('train_aux','-'),('val_aux','--')]:axes[1].plot(reference_history.epoch,reference_history[key],style,label=key)
+axes[1].set(title='Reference distance auxiliary MSE',xlabel='Epoch',ylabel='Saved scaled MSE')
+for key,style in [('train_command','-'),('val_command','--')]:axes[2].plot(b_history.epoch,b_history[key],style,label=key)
+axes[2].set(title='B independent STOP distance MSE',xlabel='Epoch',ylabel='Saved scaled MSE')
+for ax in axes:ax.set_yscale('log');ax.grid(alpha=.2);ax.legend(fontsize=8)
+fig.tight_layout();plt.show()
+a_selection=json.loads((pilot_a/'models/torque_seed7_summary.json').read_text())
+b_selection=json.loads((pilot_b/'models/stop_seed7_summary.json').read_text())
+display(pd.DataFrame([dict(network='A torque only',selected_epoch=a_selection['selected_epoch'],selected_validation_MSE=a_selection['selected_val_loss']),dict(network='B independent STOP',selected_epoch=b_selection['selected_epoch'],selected_validation_MSE=b_selection['selected_val_loss'])]))
+print('Command loss is compared with command loss. The reference auxiliary objective is shown separately; removing it changes total loss.')
+```
+
+
+
+![png](golden_dataset_files/golden_dataset_395_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>network</th>
+      <th>selected_epoch</th>
+      <th>selected_validation_MSE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>A torque only</td>
+      <td>1030</td>
+      <td>0.040848</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>B independent STOP</td>
+      <td>600</td>
+      <td>0.002079</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Command loss is compared with command loss. The reference auxiliary objective is shown separately; removing it changes total loss.
+
+
+
+```python
+offline=json.loads((pilot_b/'models/offline_summary.json').read_text())
+audit_rows=[]
+for version in ('before','after'):
+    for group,label in [('recovery_train','Recovery training states'),('validation','Original validation states')]:
+        values=offline[version][group]
+        audit_rows.append(dict(STOP=version,states=label,runs=values['runs'],rows=values['rows'],equal_episode_clipped_MAE_mm=values['equal_run_clipped_label_mae_mm'],near20mm_MAE_mm=values['near20_equal_run_mae_mm'],first_crossings=values['first_crossings'],median_true_mm_at_first_crossing=values['median_true_mm_at_first_crossing']))
+display(pd.DataFrame(audit_rows).round(3))
+alignment=offline['distance_alignment']
+print('Distance-label alignment:',alignment['events'],'independently logged STOP events; maximum difference',alignment['max_difference_m'],'m.')
+print('Offline rows are labelled states, not additional live validation episodes. No threshold was tuned.')
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>STOP</th>
+      <th>states</th>
+      <th>runs</th>
+      <th>rows</th>
+      <th>equal_episode_clipped_MAE_mm</th>
+      <th>near20mm_MAE_mm</th>
+      <th>first_crossings</th>
+      <th>median_true_mm_at_first_crossing</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>before</td>
+      <td>Recovery training states</td>
+      <td>300</td>
+      <td>3051720</td>
+      <td>22.049</td>
+      <td>35.718</td>
+      <td>244</td>
+      <td>65.185</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>before</td>
+      <td>Original validation states</td>
+      <td>100</td>
+      <td>897417</td>
+      <td>4.527</td>
+      <td>3.163</td>
+      <td>49</td>
+      <td>10.532</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>after</td>
+      <td>Recovery training states</td>
+      <td>300</td>
+      <td>3051720</td>
+      <td>7.080</td>
+      <td>14.491</td>
+      <td>26</td>
+      <td>23.907</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>after</td>
+      <td>Original validation states</td>
+      <td>100</td>
+      <td>897417</td>
+      <td>7.156</td>
+      <td>9.782</td>
+      <td>38</td>
+      <td>12.985</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Distance-label alignment: 244 independently logged STOP events; maximum difference 2.814507749082651e-08 m.
+    Offline rows are labelled states, not additional live validation episodes. No threshold was tuned.
+
+
+**Reading the validation results.** Removing the auxiliary torque-network distance head changes where the model succeeds, without increasing completion: the reference and A both PARK on 6/6 targets, STOP on 5/6 and succeed on 1/6. Target 6 becomes a success and target 80 loses success. The median distance among stopped attempts decreases from 29.272 to 20.397 mm, while selected validation torque-command MSE is slightly higher (0.040848 versus 0.040762). The largest sampled pre-PARK joint deviation decreases from 0.06963 to 0.05741 rad. These six targets support a mixed result, not a general improvement claim.
+
+Adding recovery-trained STOP makes this six-target comparison worse: B still PARKs on 6/6, but issues STOP on 2/6 rather than 5/6 and succeeds on 0/6 rather than 1/6. Its STOP median is 27.759 mm among those two stopped attempts. The offline fit improves on recovery training states while worsening on original validation states. Better recovery-label fit therefore does not establish better episode behaviour. The independent STOP training does not support replacing the existing STOP model on this evidence.
+
+A selects epoch 1030 from 1,200 torque-training epochs; B selects epoch 600 from 600 STOP-training epochs. Training and validation scaling, selected checkpoints, source/data hashes, export parity and the complete per-target records are retained with the saved pilot records. Both completed comparisons have zero execution failures. No further experiment or model promotion follows from these checks.
 
