@@ -83,7 +83,7 @@ def load_data(root, driving_height=False, park_target='time', park_scale_m=DISTA
                 if not 0 <= park < n:
                     row.update(excluded='no valid PARK'); audit.append(row); continue
                 # Do not relabel a timeout as a successful terminal demonstration.
-                if 'timeout' in str(m['termination']).lower() or 'limit' in str(m['termination']).lower():
+                if any(word in str(m['termination']).lower() for word in ('timeout','limit','cap')):
                     row.update(excluded='expert timeout'); audit.append(row); continue
                 nav = np.asarray(a['navigation_done']).astype(bool)
                 active = np.asarray(a['reach_active']).astype(bool)
@@ -154,6 +154,7 @@ class Driving(nn.Module):
 
 
 def arrays(runs, kind):
+    if kind=='stop':runs=[r for r in runs if not r.get('dagger',False)]
     data = [r['drive' if kind == 'driving' else 'arm'] for r in runs]
     x, y, p = (np.concatenate([r[i] for r in data]) for i in range(3))
     w = np.concatenate([np.full(len(r[0]), 1 / len(r[0]) / len(data), np.float32) for r in data])
@@ -163,20 +164,29 @@ def arrays(runs, kind):
 def tensors(runs, kind, scale, device):
     x, y, p, w = arrays(runs, kind)
     xm, xs, ym, ys = scale
-    return [torch.as_tensor(a, dtype=torch.float32, device=device) for a in ((x - xm) / xs, (y - ym) / ys, p, w)]
+    data=[torch.as_tensor(a, dtype=torch.float32, device=device) for a in ((x - xm) / xs, (y - ym) / ys, p, w)]
+    key='drive' if kind=='driving' else 'arm'
+    mask_key=key+'_aux_mask'
+    if kind!='stop' and any(mask_key in r for r in runs):
+        mask=np.concatenate([r.get(mask_key,np.ones(len(r[key][0]),np.float32)) for r in runs])
+        aux=w*mask
+        if not aux.sum()>0:raise ValueError('DAgger needs original demonstrations for PARK supervision')
+        data.append(torch.as_tensor(aux/aux.sum(),dtype=torch.float32,device=device))
+    return data
 
 
 def objective(model, data, kind, chunk, backward=False, aux_weight=1.):
     totals = torch.zeros(2, device=data[0].device)
     for begin in range(0, len(data[0]), chunk):
-        x, y, p, w = [a[begin:begin + chunk] for a in data]
+        x, y, p, w = [a[begin:begin + chunk] for a in data[:4]]
+        aux_w=data[4][begin:begin+chunk] if len(data)==5 else w
         if kind == 'stop':
             first = (w * (model(x).squeeze(1) - p).square()).sum()
             second = first * 0
         else:
             commands, auxiliary = model(x)
             first = (w * (commands - y).square().mean(1)).sum()
-            second = (w * (auxiliary - p).square()).sum()
+            second = (aux_w * (auxiliary - p).square()).sum()
         if backward:
             (first + aux_weight * second).backward()
         totals += torch.stack([first.detach(), second.detach()])

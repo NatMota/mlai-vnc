@@ -1,6 +1,7 @@
 """Read saved golden-data results and build analysis without rerunning training."""
 import base64
 import json
+import gzip
 from pathlib import Path
 import sys
 
@@ -15,14 +16,16 @@ OLD = HERE.parent / 'driving_30'
 
 
 def read(path):
-    return json.loads(Path(path).read_text())
+    path=Path(path)
+    if path.exists():return json.loads(path.read_text())
+    with gzip.open(str(path)+'.gz','rt') as f:return json.load(f)
 
 
 def table(seed):
     rows = []
     for r in read(RESULTS / f'seed{seed}.json'):
         rows.append(dict(dot=r['dot'], parked=r['parked'], park_s=r['park_s'],
-            park_error_cm=100*r['park_error_vs_expert_m'] if r['parked'] else np.nan,
+            park_error_cm=100*r['park_error_vs_expert_m'] if r['parked'] and r.get('park_error_vs_expert_m') is not None else np.nan,
             stop_s=r['stop_s'], at_stop_mm=r['at_network_stop_mm'], closest_mm=r['min_mm'],
             end_mm=r['end_mm'], success=bool(r['parked'] and r['stop_s'] is not None and r['at_network_stop_mm'] <= 10),
             camera_visible_fraction=np.mean([f['visible'] for f in r['frames']]),

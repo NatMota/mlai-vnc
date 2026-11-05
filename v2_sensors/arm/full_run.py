@@ -30,7 +30,7 @@ DRIVING = HERE.parent / 'driving_v2'
 EXPERT = json.loads((DRIVING / 'expert_reference.json').read_text())['bearings']
 
 
-def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driving=False, condition=None):
+def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driving=False, condition=None, dagger_out=None):
     import pybullet as p
     if camera_dir is not None:
         from render_golden import png
@@ -44,6 +44,9 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
     target, expert_stop = m['target_position_world_m'], (m['steps'] - 1) / 1000
     limit = ref['park_time_s'] + 3.0 + (expert_stop - ref['park_time_s']) + 1.0      # the expert's time plus 3 s to park and 1 s to reach
     full_episode = bool(wa.get('info_full_episode', False))
+    if dagger_out is not None and (not full_episode or split!='train'):
+        raise ValueError('DAgger records require training targets and full-episode control')
+    dagger_arm=[];dagger_drive=[]
     from curriculum_sensors import Delivery, EncoderNoise
     condition = condition or {}
     if condition and not full_episode: raise ValueError('Curriculum conditions require full-episode arm control')
@@ -73,7 +76,7 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                 return out
     try:
         names = call()['joint_names']
-        reset=dict(op='reset', target=target, max_duration_s=limit, arm=True, arm_from_reset=full_episode,
+        reset=dict(op='reset', target=target, max_duration_s=limit, arm=True, arm_from_reset=full_episode,collect_oracle=dagger_out is not None,
                           damping=condition.get('damping',0),elasticity=condition.get('elasticity',0),inertia=condition.get('inertia',0),
                           delay_ms=delay,motor_measurement_sd=condition.get('encoder_noise_sd',0),
                           sensor_seed=int(noise_seed.generate_state(1)[0]))
@@ -94,7 +97,7 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
         wheel_speed = np.zeros(4); driving_x = None; driving_ttp = None; driving_distance = None
         while not state['done']:
             f = state['frame']; t = f['time_s']; step = f['step']
-            frame_added = False
+            frame_added = False;drive_sample=False
             if not np.isfinite(np.r_[f['base'], f['quaternion'], f['joints'], state['ee_distance_m']]).all():
                 raise FloatingPointError('Nonfinite simulator state')
             if step >= next_frame:                                   # a camera frame and a driving decision, every 1/30 s
@@ -117,6 +120,7 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                 point = camera_to_robot(seen) if seen is not None else None
                 dot = drive_tracker.update(point, wheel_speed); est = arm_tracker.update(point, wheel_speed)
                 if not parked:
+                    drive_sample=True
                     if dot is None:
                         dot_in = [0.0, 0.0, 0.0]
                     else:
@@ -170,7 +174,13 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                     # The native hold controller still runs every 1 ms. Stop one tick before
                     # the next camera decision so the arm encoder has the exact previous sample at PARK.
                     req['ms'] = max(1, next_frame - step - 1)
+            if dagger_out is not None:
+                teacher=call(dict(op='teacher',park=parked))
+                assert teacher['step']==step
             state = call(req)
+            if dagger_out is not None:
+                dagger_arm.append((step,x.copy(),teacher['arm'],teacher['distance_m'],teacher['q_des'],req['arm'],state['sent_arm_torque'],teacher['expert_phase'],teacher['expert_done']))
+                if drive_sample:dagger_drive.append((step,driving_x.copy(),teacher['wheel'],np.clip(cmd,-3,3).tolist()))
             if full_episode:
                 np.testing.assert_allclose(state['applied_arm_torque'], req['arm'], atol=1e-9, rtol=0)
                 if frame_added:
@@ -184,7 +194,7 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
         park_frame = next((fr for fr in frames if fr['parked']), None)
         park_xy = frames[-1]['base'][:2] if park_frame is None else park_frame['base'][:2]
         heading_error = None
-        if park_frame is not None and 'park_base_quaternion' in ref:
+        if park_frame is not None and ref.get('park_base_quaternion') is not None:
             yaw = p.getEulerFromQuaternion(park_frame['quaternion'])[2]
             expert_yaw = p.getEulerFromQuaternion(ref['park_base_quaternion'])[2]
             heading_error = float(np.arctan2(np.sin(yaw-expert_yaw), np.cos(yaw-expert_yaw)))
@@ -193,12 +203,29 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
         success = bool(parked and stop_mm is not None and stop_mm <= 10 and not early)
         reason = ('early_native_termination' if early else 'success' if success else
                   'no_park_timeout' if not parked else 'no_stop_timeout' if stop_t is None else 'stop_outside_10mm')
+        if dagger_out is not None:
+            path=Path(dagger_out);path.parent.mkdir(parents=True,exist_ok=True)
+            if path.exists():raise FileExistsError(path)
+            np.savez_compressed(path,arm_step=np.array([r[0] for r in dagger_arm]),
+                arm_x=np.array([r[1] for r in dagger_arm],np.float32),arm_y=np.array([r[2] for r in dagger_arm],np.float32),
+                arm_distance_m=np.array([r[3] for r in dagger_arm],np.float32),oracle_q_des=np.array([r[4] for r in dagger_arm],np.float32),
+                arm_applied_command=np.array([r[5] for r in dagger_arm],np.float32),arm_sent_torque=np.array([r[6] for r in dagger_arm],np.float32),
+                oracle_phase=np.array([r[7] for r in dagger_arm]),oracle_done=np.array([r[8] for r in dagger_arm]),
+                drive_step=np.array([r[0] for r in dagger_drive]),drive_x=np.array([r[1] for r in dagger_drive],np.float32),
+                drive_y=np.array([r[2] for r in dagger_drive],np.float32),
+                drive_applied_command=np.array([r[3] for r in dagger_drive],np.float32),
+                provenance=json.dumps(dict(dot=int(bearing),split=split,condition=condition,
+                    oracle='stateful supplied expert; arm phase follows student PARK; original base phase retained',
+                    alignment='actual pre-step sensor inputs and clean oracle commands',
+                    park_labels='absent; retain original demonstration PARK supervision',
+                    oracle_internal_inputs_used_by_student=False)))
         return dict(bearing=bearing, split=split, parked=parked, success=success, status=reason,condition=condition,
                     park_heading_error_rad=heading_error, timed_out=stop_t is None and not early,
                     final_time_s=f['time_s'], final_step=f['step'],
                     post_stop_drift_mm=None if stop_mm is None else 1000 * state['ee_distance_m'] - stop_mm,
                     post_park_base_drift_m=None if park_frame is None else float(np.linalg.norm(np.array(f['base'][:2])-park_xy)), park_s=None if park_step is None else park_step / 1000,
-                    expert_park_s=ref['park_time_s'], park_error_vs_expert_m=float(np.hypot(*(np.array(park_xy) - np.array(ref['park_base_xy'])))),
+                    expert_reference_valid=ref.get('valid',True),expert_park_s=ref['park_time_s'] if ref.get('valid',True) else None,
+                    park_error_vs_expert_m=float(np.hypot(*(np.array(park_xy) - np.array(ref['park_base_xy'])))) if ref.get('valid',True) else None,
                     final_base_error_vs_expert_m=float(np.hypot(*(np.array(f['base'][:2]) - np.array(ref['final_base_xy'])))),
                     stop_s=stop_t, expert_stop_s=expert_stop, expert_stop_mm=1000 * m['final_pre_step_ee_error_m'],
                     min_mm=float(closest) if np.isfinite(closest) else None, end_mm=1000 * state['ee_distance_m'],

@@ -6,7 +6,7 @@
 int main(int argc,char**argv){try{
     if(argc!=2)throw std::runtime_error("Usage: sensor_parking ASSETS");
     std::string assets=argv[1];Physics physics(assets);std::map<std::string,Reference> refs;
-    std::unique_ptr<Expert> expert;State s;V3 target;V7 hold;Reference* ref=nullptr;
+    std::unique_ptr<Expert> expert,oracle;int oracle_step=-1;State s;V3 target;V7 hold;Reference* ref=nullptr;
     Eigen::Vector4d applied=Eigen::Vector4d::Zero();
     int step=0,decisions=0,park_step=-1,stable_steps=0,stop_step=-1;double limit=60;bool done=false,arm_mode=false,expert_drive=false;int expert_arm_hz=0,arm_updates=0;bool arm_live=false,arm_from_reset=false;
     V7 arm_tau=V7::Zero(),last_arm=V7::Zero();
@@ -37,6 +37,8 @@ int main(int argc,char**argv){try{
             limit=r.value("max_duration_s",60.);if(limit<=0||limit>600)throw std::runtime_error("Invalid duration");
             if(r.contains("start_pose")){auto pose=r.at("start_pose");physics.reset_pose(pose[0],pose[1],pose[2]);}else physics.reset();
             s=physics.state();expert=std::make_unique<Expert>(assets,physics,s,target);
+            oracle.reset();oracle_step=-1;
+            if(r.value("collect_oracle",false))oracle=std::make_unique<Expert>(assets,physics,s,target);
             hold=s.q.segment<7>(4);step=decisions=stable_steps=0;park_step=stop_step=-1;done=false;applied.setZero();
             // Arm mode: after PARK the client's arm torques drive the arm (no hold controller) and "stop" ends the run
             // 0.5 s later. expert_drive: the expert drives and parks itself, so the arm can be tested on its own.
@@ -44,9 +46,16 @@ int main(int argc,char**argv){try{
             // expert_arm_hz (smoke test): after PARK the expert's own arm controller runs closed loop, but its torque is
             // only sampled at this rate and held in between, like a network deciding at that rate.
             expert_arm_hz=r.value("expert_arm_hz",0);arm_updates=0;arm_live=false;
+        }else if(op=="teacher"){
+            if(!oracle||done||step!=oracle_step+1)throw std::runtime_error("Oracle requires exactly one query per successive tick");
+            auto a=oracle->act(s,step*dt,false,r.at("park").get<bool>()?1:0);oracle_step=step;
+            std::cout<<json({{"type","teacher"},{"step",step},{"wheel",arr(a.wheel)},{"arm",arr(a.tau)},
+                {"distance_m",a.distance},{"expert_phase",a.phase},{"expert_done",a.done},{"q_des",arr(a.qdes)}}).dump()<<std::endl;
+            continue;
         }else if(op=="step"){
             if(!expert||done)throw std::runtime_error("Reset before stepping a finished episode");
             if(arm_from_reset&&(!r.contains("arm")||r.value("ms",1)!=1))throw std::runtime_error("Full episode needs arm torque each 1 ms tick");
+            if(oracle&&oracle_step!=step)throw std::runtime_error("Missing pre-step oracle query");
             Eigen::Vector4d wheels;for(int i=0;i<4;i++)wheels[i]=std::clamp(r.at("wheel")[i].get<double>(),-3.,3.);
             if(r.value("park",false)&&park_step<0&&!expert_drive)park_step=step;
             if(arm_mode&&r.contains("arm"))for(int j=0;j<7;j++)arm_tau[j]=std::clamp(r.at("arm")[j].get<double>(),-30.,30.);

@@ -1,0 +1,72 @@
+[
+  {
+    "dot": 0,
+    "steps": 28155,
+    "termination": "stalled",
+    "final_mm": 1563.9494840144864,
+    "noise_rms_Nm": 0.4983897805213928
+  },
+  {
+    "dot": 1,
+    "steps": 10545,
+    "termination": "reached",
+    "final_mm": 9.979712632557025,
+    "noise_rms_Nm": 0.5012965202331543
+  },
+  {
+    "dot": 10,
+    "steps": 8001,
+    "termination": "reached",
+    "final_mm": 2.145778709208685,
+    "noise_rms_Nm": 0.5013195872306824
+  },
+  {
+    "dot": 12,
+    "steps": 8001,
+    "termination": "reached",
+    "final_mm": 3.4510930325185645,
+    "noise_rms_Nm": 0.49422162771224976
+  },
+  {
+    "dot": 13,
+    "steps": 8001,
+    "termination": "reached",
+    "final_mm": 1.2825583249017807,
+    "noise_rms_Nm": 0.4947306215763092
+  },
+  {
+    "dot": 15,
+    "steps": 8834,
+    "termination": "reached",
+    "final_mm": 9.986123942201957,
+    "noise_rms_Nm": 0.49482759833335876
+  },
+  {
+    "dot": 19,
+    "steps": 11026,
+    "termination": "reached",
+    "final_mm": 9.984336128048382,
+    "noise_rms_Nm": 0.48334547877311707
+  },
+  {
+    "dot": 3,
+    "steps": 8001,
+    "termination": "reached",
+    "final_mm": 2.36318882082997,
+    "noise_rms_Nm": 0.49863201379776
+  },
+  {
+    "dot": 5,
+    "steps": 8001,
+    "termination": "reached",
+    "final_mm": 2.460345432669198,
+    "noise_rms_Nm": 0.5181558728218079
+  },
+  {
+    "dot": 7,
+    "steps": 8001,
+    "termination": "reached",
+    "final_mm": 4.496516533568288,
+    "noise_rms_Nm": 0.5048712491989136
+  }
+]

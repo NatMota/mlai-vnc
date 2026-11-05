@@ -22,6 +22,9 @@ def freeze(source,out,native):
         target=out/'v2_sensors'/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source/rel,target)
     target=out/'native';target.mkdir()
     for p in (native/'src/sensor_curriculum.cpp',native/'build-clang19/sensor_curriculum'):shutil.copy2(p,target/p.name)
+    shutil.copytree(native/'src',target/'src')
+    for name in ('CMakeLists.txt','pixi.toml','pixi.lock'):
+        shutil.copy2(native/name,target/name)
     save(out/'hashes.json',{str(p.relative_to(out)):hashlib.sha256(p.read_bytes()).hexdigest() for p in out.rglob('*') if p.is_file()})
 
 

@@ -17,21 +17,22 @@ def write_json(path, data):
 
 
 def case_for(root, dot, split='val'):
-    if split not in ('val', 'test'): raise ValueError(split)
+    if split not in ('train','val', 'test'): raise ValueError(split)
     with np.load(root/'expert'/split/f'run_{dot}.npz',allow_pickle=False) as packed:
         # Load each compressed array once, rather than decompressing it for every replay frame.
         a={key:packed[key] for key in ('manifest','base_position','base_quaternion','time_s','q','hand_position','arm_torque_command','hand_distance')}
         m=json.loads(str(a['manifest'])); park=int(m['parking_step'])
-        reference=dict(park_time_s=park/1000,park_base_xy=a['base_position'][park,:2].tolist(),
+        valid=0<=park<m['steps'] and 'timeout' not in m['termination'] and 'cap' not in m['termination']
+        reference=dict(valid=valid,park_time_s=park/1000 if valid else 0,park_base_xy=a['base_position'][park,:2].tolist() if valid else None,
                        final_base_xy=a['base_position'][-1,:2].tolist(),
-                       park_base_quaternion=a['base_quaternion'][park].tolist())
+                       park_base_quaternion=a['base_quaternion'][park].tolist() if valid else None)
         frames=[]
         for k in frame_steps(m['steps']):
             frames.append(dict(time_s=float(a['time_s'][k]),base=a['base_position'][k].tolist(),
                  quaternion=a['base_quaternion'][k].tolist(),joints=a['q'][k].tolist(),
-                 ee=a['hand_position'][k].tolist(),parked=bool(k>=park),
+                 ee=a['hand_position'][k].tolist(),parked=bool(valid and k>=park),
                  tau=a['arm_torque_command'][k].tolist(),ee_mm=float(1000*a['hand_distance'][k])))
-        ghost=dict(target=m['target_position_world_m'],park_s=park/1000,stop_s=(m['steps']-1)/1000,
+        ghost=dict(target=m['target_position_world_m'],park_s=park/1000 if valid else None,reference_valid=valid,stop_s=(m['steps']-1)/1000,
                    stop_mm=float(1000*a['hand_distance'][-1]),frames=frames)
         return dict(manifest=m,reference=reference,split=split),ghost
 

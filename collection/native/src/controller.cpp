@@ -32,7 +32,7 @@ Expert::Expert(const std::string& assets,const Physics& physics,const State& s,V
     goal=target.head<2>()-standoff*Eigen::Vector2d(std::cos(bearing),std::sin(bearing));
 }
 Expert::~Expert()=default;
-Action Expert::act(const State& s,double t,bool hold_only){
+Action Expert::act(const State& s,double t,bool hold_only,int reach_override){
     Action a;auto& m=p->model;auto& d=*p->data;
     a.qpin=Eigen::VectorXd::Zero(m.nq);a.qpin.head<3>()=s.pos;a.qpin.segment<4>(3)=s.quat;
     for(int i=0;i<17;i++) a.qpin[p->idx[i]]=s.q[i];
@@ -60,7 +60,10 @@ Action Expert::act(const State& s,double t,bool hold_only){
     }
     a.phase=p->phase;a.done=p->done;
     V7 q=s.q.segment<7>(4),qd=s.qd.segment<7>(4);
-    if(!p->done)p->desired=p->hold;
+    // DAgger oracle only: condition the arm teacher on the student's latched
+    // PARK flag. Default -1 preserves the supplied expert exactly.
+    bool reaching=reach_override<0?p->done:reach_override!=0;
+    if(!reaching)p->desired=p->hold;
     else{
         Eigen::Matrix<double,6,Eigen::Dynamic> J(6,m.nv);J.setZero();
         // computeFrameJacobian already computes the joint Jacobians it needs.

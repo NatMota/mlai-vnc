@@ -1,0 +1,18 @@
+{
+  "val/seed7.json": {
+    "sha256": "5367a1513ae1d04b8c0f5a0b8a727a9e74667337e8bf8d0f4f301857f608f2ff",
+    "compressed_bytes": 23699846
+  },
+  "val/expert_test.json": {
+    "sha256": "11d0b4da2fee075fd77b7799e80e2fceb7a3dccb00f75d998220b97c4a4b163e",
+    "compressed_bytes": 9562315
+  },
+  "test/seed7.json": {
+    "sha256": "1436c9d02b379b7509ab6f519710665e66cf2d6f844be4e5b4b764fede2e4505",
+    "compressed_bytes": 22694760
+  },
+  "test/expert_test.json": {
+    "sha256": "57088d36c606f32e395a692edda23e3892d09fbf525edea8691ec458e0c1dcc3",
+    "compressed_bytes": 9412232
+  }
+}

@@ -24,6 +24,12 @@ def main():
     for split in ('val','test'):
         c=read(a.run/split/'completion.json');assert c['attempts']==100 and c['all_accounted']
     client=mlflow.MlflowClient();record=a.run/'mlflow.json'
+    audit=read(model/'data_audit.json')
+    train_runs=sum(r['split']=='train' and 'excluded' not in r for r in audit['rows'])
+    if (model/'extra_training_audits.json').exists():
+        train_runs+=sum(r['split']=='train' and 'excluded' not in r for x in read(model/'extra_training_audits.json') for r in x['audit']['rows'])
+    stop_training_runs=train_runs;train_runs+=len(audit.get('dagger',[]))
+    training=read(model/'config.json')
     if record.exists():
         saved=read(record)
         if saved.get('verified'):print(saved);return
@@ -36,14 +42,15 @@ def main():
     url=f'https://github.com/NatMota/mlai-vnc/blob/{a.commit}/v2_sensors/driving_v2/golden_dataset.md#{anchor}'
     s=scores.loc['test']
     description=(f'Learned arm torque from reset with own PARK flag. No conventional arm hold or added gravity compensation. '
-        f'Frozen iteration-40 driving checkpoint. Seed 7; 100 training runs, 100 validation runs, all 100 test targets. '
+        f'{"Retrained driving and reaching" if training.get("train_driving") else "Frozen iteration-40 driving checkpoint"}. '
+        f'Seed 7; {train_runs} command-training runs, 100 validation targets, all 100 test targets. '
         f'{int(s.parked)}/100 PARK, {int(s.stopped)}/100 STOP, {int(s.success_10mm)}/100 within 10 mm at STOP. '
         f'Condition: {cfg.get("condition",{})}. Previous test exposure disclosed; no fitting in evaluator. '
         f'[Notebook and complete replay]({url}).')
     with mlflow.start_run(run_id=run_id):
         mlflow.set_tags({'git.commit':a.commit,'mlflow.source.git.commit':a.commit,'mlflow.note.content':description,
             'evaluation_split':'test','run_role':'official_test_iteration','test_reuse':cfg['test_reuse']})
-        mlflow.log_params(dict(seed=7,train_runs=100,val_runs=100,test_runs=100,arm_control='learned from reset',
+        mlflow.log_params(dict(seed=7,train_runs=train_runs,stop_training_runs=stop_training_runs,val_runs=100,test_runs=100,arm_control='learned from reset',
             arm_inputs=18,driving_inputs=11,arm_hidden='128,128',driving_hidden='16,16',stop_hidden='32,16',
             camera_hz=30,driving_hz=30,arm_hz=1000,park_target='time',park_threshold_s=.25,
             stop_target='distance',stop_threshold_m=.01,condition=json.dumps(cfg.get('condition',{})),
@@ -66,7 +73,9 @@ def main():
         for name in ('full_run.py','train_golden.py','train_full_episode.py','evaluate_curriculum.py','curriculum_sensors.py','report_curriculum.py'):
             mlflow.log_artifact(str(Path(__file__).with_name(name)),'source')
         snapshot=a.run/'runtime'
-        if not snapshot.exists():snapshot=a.run.parent/'ladder_runtime'
+        if not snapshot.exists():
+            roots=[Path(p).parent.parent for p in cfg['native_hashes'] if 'runtime' in str(Path(p).parent.parent)]
+            snapshot=roots[0] if roots else a.run.parent/'ladder_runtime'
         if snapshot.exists():mlflow.log_artifacts(str(snapshot),'execution_snapshot')
         if (a.run/'native').exists():mlflow.log_artifacts(str(a.run/'native'),'execution_native')
         mlflow.set_tag('source_provenance','git commit is publication state; execution_snapshot and config hashes identify the executed evaluator')

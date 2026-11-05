@@ -48,7 +48,7 @@ def table(seed):
         target=refs[str(r['dot'])]['target']
         rows.append(dict(dot=r['dot'],status=r['status'],success=r['success'],parked=r['parked'],
             park_s=r.get('park_s'),stop_s=r.get('stop_s'),
-            park_error_cm=None if not r['parked'] else 100*r['park_error_vs_expert_m'],
+            park_error_cm=None if not r['parked'] or r.get('park_error_vs_expert_m') is None else 100*r['park_error_vs_expert_m'],
             park_heading_error_deg=None if r.get('park_heading_error_rad') is None else np.degrees(r['park_heading_error_rad']),
             at_stop_mm=r.get('at_network_stop_mm'),closest_mm=r.get('min_mm'),end_mm=r.get('end_mm'),
             post_stop_drift_mm=r.get('post_stop_drift_mm'),post_park_base_drift_cm=None if r.get('post_park_base_drift_m') is None else 100*r['post_park_base_drift_m'],

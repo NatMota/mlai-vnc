@@ -54,6 +54,6 @@ public:
     double bearing, standoff;
     Expert(const std::string& assets, const Physics&, const State&, V3 target);
     ~Expert();
-    Action act(const State&, double t, bool hold_only=false);
+    Action act(const State&, double t, bool hold_only=false, int reach_override=-1);
     std::string stop(const Action&, double t, int cap);
 };

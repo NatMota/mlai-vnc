@@ -1,0 +1,13 @@
+{
+  "steps": 9549,
+  "maximum_errors": {
+    "q": 4.767687507012397e-07,
+    "arm_torque": 9.536268166243644e-07,
+    "wheels": 1.1919856790498784e-07,
+    "q_des": 1.192008607375783e-07
+  },
+  "duplicate_query_rejected": true,
+  "missing_query_rejected": true,
+  "oracle_phase": "matched recorded PARK",
+  "limitation": "Parity on the expert path; corrective policy quality is assessed separately"
+}

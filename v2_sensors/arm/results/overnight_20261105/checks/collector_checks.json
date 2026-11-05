@@ -1,0 +1,13 @@
+{
+  "zero_noise_origin_matches_golden": true,
+  "fields": [
+    "q",
+    "qd",
+    "base_position",
+    "base_quaternion",
+    "wheel_command",
+    "arm_torque_command",
+    "hand_position",
+    "time_s"
+  ]
+}

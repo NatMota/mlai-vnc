@@ -25,6 +25,7 @@ def main():
     p.add_argument('--allowed-conditions',nargs='+',default=['baseline'])
     p.add_argument('--extra-training',type=Path,nargs='*',default=[])
     p.add_argument('--train-driving',action='store_true')
+    p.add_argument('--dagger',type=Path,nargs='*',default=[])
     p.add_argument('--driving-epochs',type=int,default=300)
     a=p.parse_args();a.out.mkdir(parents=True,exist_ok=False);torch.set_num_threads(4)
     a.save_epochs=(300,600,1200)
@@ -51,6 +52,23 @@ def main():
     if a.train_driving:
         for r in records['train']+records['val']:
             x,y,z=r['drive'];r['drive']=(x[:,sensors.DRIVING_NO_SPEED_COLS],y,z)
+    if a.dagger:
+        if not a.train_driving:raise ValueError('DAgger here updates wheel, arm and STOP networks together')
+        train_ids=set(json.loads((a.data/'split.json').read_text())['train']);dagger_audit=[]
+        for path in sorted(p for root in a.dagger for p in root.glob('dot*.npz')):
+            with np.load(path,allow_pickle=False) as z:
+                prov=json.loads(str(z['provenance']));dot=int(prov['dot'])
+                assert prov['split']=='train' and dot in train_ids
+                dx,dy=z['drive_x'],z['drive_y'];ax,ay=z['arm_x'],z['arm_y']
+                assert dx.shape[1]==11 and ax.shape[1]==18 and len(ax)>0 and len(dx)>0
+                distance=np.clip(z['arm_distance_m'],0,.25)/.25
+                for v in (dx,dy,ax,ay,distance):assert np.isfinite(v).all()
+                records['train'].append(dict(dot=dot,dagger=True,drive=(dx,dy,np.zeros(len(dx),np.float32)),
+                    drive_aux_mask=np.zeros(len(dx),np.float32),arm_aux_mask=np.zeros(len(ax),np.float32),arm=(ax,ay,distance)))
+                dagger_audit.append(dict(dot=dot,path=str(path),sha256=sha(path),arm_rows=len(ax),drive_rows=len(dx),
+                    park_supervision=False,stop_supervision=False,oracle_internal_inputs=False))
+        if not dagger_audit:raise ValueError('No DAgger records found')
+        audit['dagger']=dagger_audit
     cfg=vars(a).copy();cfg={k:str(v) if isinstance(v,Path) else [str(x) if isinstance(x,Path) else x for x in v] if isinstance(v,list) else v for k,v in cfg.items()}
     cfg.update(driving_sha256=sha(a.driving),input_names=[f'arm_q_{j}' for j in range(7)]+[f'arm_qd_{j}' for j in range(7)]+['camera_x','camera_y','camera_z','own_park'],
         execution='learned arm every 1 ms from reset; no PD or gravity term; STOP only after own PARK',

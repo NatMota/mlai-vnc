@@ -39,7 +39,7 @@ def losses(name):
 
 def hold_table(name,split='test'):
     select(name,split)
-    rows=json.loads((ROOT/name/split/'seed7.json').read_text());out=[]
+    rows=plots.read(ROOT/name/split/'seed7.json');out=[]
     for r in rows:
         pre=[f for f in r['frames'] if not f['parked']]
         if not pre:
