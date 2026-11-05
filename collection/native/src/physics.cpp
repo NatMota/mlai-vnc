@@ -90,6 +90,13 @@ void Physics::isolate(){
     }
 }
 void Physics::reset(){auto cmd=b3LoadStateCommandInit(p->c);b3LoadStateSetStateId(cmd,p->saved);p->send(cmd);p->prev.setZero();p->fingers_configured=false;}
+void Physics::reset_pose(double x,double y,double heading){
+    if(!std::isfinite(x+y+heading))throw std::runtime_error("Nonfinite reset pose");
+    reset();auto cmd=b3CreatePoseCommandInit(p->c,p->robot);double zero[3]={0,0,0};
+    b3CreatePoseCommandSetBasePosition(cmd,x,y,0);
+    b3CreatePoseCommandSetBaseOrientation(cmd,0,0,std::sin(heading/2),std::cos(heading/2));
+    b3CreatePoseCommandSetBaseLinearVelocity(cmd,zero);b3CreatePoseCommandSetBaseAngularVelocity(cmd,zero);p->send(cmd);
+}
 State Physics::state(){
     State s;
     auto status=p->send(b3RequestActualStateCommandInit(p->c,p->robot));

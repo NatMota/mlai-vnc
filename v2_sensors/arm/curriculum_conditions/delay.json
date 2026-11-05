@@ -1,0 +1,8 @@
+{
+  "encoder_noise_sd": 0.0001,
+  "sensor_seed": 7,
+  "damping": 1.0,
+  "elasticity": 1.0,
+  "inertia": 0.001,
+  "delay_ms": 3
+}

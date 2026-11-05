@@ -30,7 +30,7 @@ DRIVING = HERE.parent / 'driving_v2'
 EXPERT = json.loads((DRIVING / 'expert_reference.json').read_text())['bearings']
 
 
-def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driving=False):
+def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driving=False, condition=None):
     import pybullet as p
     if camera_dir is not None:
         from render_golden import png
@@ -43,7 +43,20 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
         m, ref, split = case['manifest'], case['reference'], case['split']
     target, expert_stop = m['target_position_world_m'], (m['steps'] - 1) / 1000
     limit = ref['park_time_s'] + 3.0 + (expert_stop - ref['park_time_s']) + 1.0      # the expert's time plus 3 s to park and 1 s to reach
-    sim = subprocess.Popen([str(PIXI), 'run', 'build-clang19/sensor_parking', str(NATIVE / 'assets')], cwd=NATIVE,
+    full_episode = bool(wa.get('info_full_episode', False))
+    from curriculum_sensors import Delivery, EncoderNoise
+    condition = condition or {}
+    if condition and not full_episode: raise ValueError('Curriculum conditions require full-episode arm control')
+    allowed = {'encoder_noise_sd','damping','elasticity','inertia','delay_ms','sensor_seed'}
+    if set(condition)-allowed: raise ValueError('Unknown condition keys')
+    delay = int(condition.get('delay_ms',0))
+    noise_seed = np.random.SeedSequence([int(condition.get('sensor_seed',7)),int(bearing)])
+    noise_arm, noise_wheel = [EncoderNoise(condition.get('encoder_noise_sd',0),s) for s in noise_seed.spawn(2)]
+    arm_delivery, wheel_delivery, camera_delivery = Delivery(delay), Delivery(delay), Delivery(delay)
+    if full_episode and (wa['shared.0.weight'].shape[1] != 18 or not bool(wa.get('info_park_input', False))):
+        raise ValueError('Full-episode model needs 18 inputs including its own PARK flag')
+    executable = os.environ.get('CURRICULUM_BINARY', str(NATIVE/'build-clang19/sensor_curriculum')) if full_episode else 'build-clang19/sensor_parking'
+    sim = subprocess.Popen([str(PIXI), 'run', executable, str(NATIVE / 'assets')], cwd=NATIVE,
                            stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True,
                            env=dict(os.environ, EXPERT_SKIP_VISUALS='1', OMP_NUM_THREADS='1', OPENBLAS_NUM_THREADS='1'))
     def call(msg=None):
@@ -60,18 +73,28 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                 return out
     try:
         names = call()['joint_names']
-        state = call(dict(op='reset', target=target, max_duration_s=limit, arm=True))
+        reset=dict(op='reset', target=target, max_duration_s=limit, arm=True, arm_from_reset=full_episode,
+                          damping=condition.get('damping',0),elasticity=condition.get('elasticity',0),inertia=condition.get('inertia',0),
+                          delay_ms=delay,motor_measurement_sd=condition.get('encoder_noise_sd',0),
+                          sensor_seed=int(noise_seed.generate_state(1)[0]))
+        if 'start_pose' in m: reset['start_pose']=m['start_pose']
+        state = call(reset)
         f = state['frame']
         scene = Scene(); drive_tracker, arm_tracker = Tracker(), Tracker(keep_height=True)
         wheels = sensors.Sensors(); wheels.reset(f)
         enc = sensors.ArmEncoders(1e-3); enc.reset(np.array(f['joints'][sensors.ARM]))
+        # Indexed encoders are available at reset; camera has no synthetic initial observation.
+        initial_arm = dict(arm_angle=enc.last.copy(),arm_speed=np.zeros(7))
+        initial_wheel = dict(wheel_angle=np.zeros(4),wheel_speed=np.zeros(4))
         n_in = wa['shared.0.weight'].shape[1]
         use_time = bool(wa['info_time']) if 'info_time' in wa else n_in == 19
         cmd = np.zeros(4); parked = False; park_step = None; stop_t = None; stop_mm = None; est = None; seen = None
         history = SensorHistory() if wa['shared.0.weight'].shape[1] == 51 else None
         next_frame = 0; frames = []; log = []; closest = np.inf; tau = np.zeros(7); ttp = None; never_seen = 0
+        wheel_speed = np.zeros(4); driving_x = None; driving_ttp = None; driving_distance = None
         while not state['done']:
             f = state['frame']; t = f['time_s']; step = f['step']
+            frame_added = False
             if not np.isfinite(np.r_[f['base'], f['quaternion'], f['joints'], state['ee_distance_m']]).all():
                 raise FloatingPointError('Nonfinite simulator state')
             if step >= next_frame:                                   # a camera frame and a driving decision, every 1/30 s
@@ -83,12 +106,16 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                     image_path = camera_dir / f'{step:06d}.png'
                     png(image_path, rgb[::2, ::2])  # 128 px replay preview; detector still sees the original 256 px image.
                     camera_src = f'{camera_dir.name}/{image_path.name}'
-                seen = see_dot(rgb, depth)
-                reading = wheels.read(f)
+                captured = see_dot(rgb, depth)
+                camera_delivery.capture(step, captured)
+                seen = camera_delivery.read(step)
+                observed = dict(f,joints=list(noise_wheel(np.asarray(f['joints']))))
+                wheel_delivery.capture(step, wheels.read(observed))
+                reading = wheel_delivery.read(step)
+                if reading is None: reading = initial_wheel
                 wheel_x, wheel_speed = sensors.wheel_features(reading['wheel_angle'], reading['wheel_speed'])[0], reading['wheel_speed']
                 point = camera_to_robot(seen) if seen is not None else None
                 dot = drive_tracker.update(point, wheel_speed); est = arm_tracker.update(point, wheel_speed)
-                driving_x, driving_ttp, driving_distance = None, None, None
                 if not parked:
                     if dot is None:
                         dot_in = [0.0, 0.0, 0.0]
@@ -106,22 +133,33 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                                    ee_mm=1000 * state['ee_distance_m'], visible=seen is not None, true_dist=float(np.hypot(dx, dy)),
                                    est_dist=dot_in[0] if not parked else None, wheel=np.round(cmd, 3).tolist(), camera_src=camera_src,
                                    driving_input=driving_x, driving_ttp_s=driving_ttp,
-                                   driving_park_distance_m=driving_distance))
+                                   driving_park_distance_m=driving_distance,
+                                   park_threshold=float(wd['ttp_thresh']), stop_threshold=float(wa['ttp_thresh']),
+                                   wheel_speed_input=wheel_speed.tolist(),
+                                   applied_arm_torque=state.get('applied_arm_torque'),
+                                   camera_capture_step=camera_delivery.capture_step, wheel_capture_step=wheel_delivery.capture_step,
+                                   arm_control='learned-from-reset' if full_episode else 'learned-after-PARK'))
+                frame_added = True
                 next_frame = round(len(frames) * 1000 / 30)
             req = dict(op='step', wheel=cmd.tolist(), park=parked, ms=1)
-            if parked:
-                r = enc.read(np.array(f['joints'][sensors.ARM]))
+            if parked or full_episode:
+                arm_delivery.capture(step,enc.read(noise_arm(np.array(f['joints'][sensors.ARM]))))
+                r = arm_delivery.read(step)
+                if r is None: r = initial_arm
                 dot_a = est if est is not None else np.zeros(3); never_seen += est is None
-                x = np.r_[(r['arm_angle'], r['arm_speed'], dot_a, t - park_step / 1000, t)].astype(np.float32)
-                x = select_inputs(x, False, True, use_time)
+                if full_episode:
+                    x = np.r_[r['arm_angle'], r['arm_speed'], dot_a, float(parked)].astype(np.float32)
+                else:
+                    x = np.r_[(r['arm_angle'], r['arm_speed'], dot_a, t - park_step / 1000, t)].astype(np.float32)
+                    x = select_inputs(x, False, True, use_time)
                 if history is not None:
                     x = history.push(x)
                 tau, ttp = arm_policy(wa, x)
-                if stop_t is None and ttp <= float(wa['ttp_thresh']):
+                if parked and stop_t is None and ttp <= float(wa['ttp_thresh']):
                     stop_t = t
                     stop_mm = 1000 * state['ee_distance_m']
                 req.update(arm=np.clip(tau, -30, 30).tolist(), stop=stop_t is not None)
-                closest = min(closest, 1000 * state['ee_distance_m'])
+                if parked: closest = min(closest, 1000 * state['ee_distance_m'])
                 if step % 10 == 0:
                     true_dot = dot_in_robot(target, np.array(f['base']), f['yaw'])
                     log.append(dict(t=t, ee_mm=1000 * state['ee_distance_m'], ttp_s=ttp, tau=np.round(tau, 3).tolist(),
@@ -133,6 +171,15 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
                     # the next camera decision so the arm encoder has the exact previous sample at PARK.
                     req['ms'] = max(1, next_frame - step - 1)
             state = call(req)
+            if full_episode:
+                np.testing.assert_allclose(state['applied_arm_torque'], req['arm'], atol=1e-9, rtol=0)
+                if frame_added:
+                    frames[-1].update(tau=state['applied_arm_torque'], applied_arm_torque=state['applied_arm_torque'],
+                                      sent_arm_torque=state.get('sent_arm_torque',state['applied_arm_torque']),
+                                      motor_extra_torque=state.get('motor_extra_torque',[0.]*11),
+                                      arm_capture_step=arm_delivery.capture_step,
+                                      ttp_s=ttp, stopped=stop_t is not None,
+                                      torque_timing='command applied from this pre-step state for next 1 ms')
         f = state['frame']
         park_frame = next((fr for fr in frames if fr['parked']), None)
         park_xy = frames[-1]['base'][:2] if park_frame is None else park_frame['base'][:2]
@@ -146,7 +193,7 @@ def one(wd, wa, bearing, tag_frames=True, case=None, camera_dir=None, batch_driv
         success = bool(parked and stop_mm is not None and stop_mm <= 10 and not early)
         reason = ('early_native_termination' if early else 'success' if success else
                   'no_park_timeout' if not parked else 'no_stop_timeout' if stop_t is None else 'stop_outside_10mm')
-        return dict(bearing=bearing, split=split, parked=parked, success=success, status=reason,
+        return dict(bearing=bearing, split=split, parked=parked, success=success, status=reason,condition=condition,
                     park_heading_error_rad=heading_error, timed_out=stop_t is None and not early,
                     final_time_s=f['time_s'], final_step=f['step'],
                     post_stop_drift_mm=None if stop_mm is None else 1000 * state['ee_distance_m'] - stop_mm,

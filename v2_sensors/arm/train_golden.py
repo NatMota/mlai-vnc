@@ -46,7 +46,7 @@ def arm_readings(q):
     return angles, speed
 
 
-def load_data(root, driving_height=False, park_target='time', park_scale_m=DISTANCE_SCALE_M):
+def load_data(root, driving_height=False, park_target='time', park_scale_m=DISTANCE_SCALE_M, full_arm=False, allowed_conditions=('baseline',)):
     if park_target not in ('time', 'distance'):
         raise ValueError('PARK target must be time or distance')
     splits = json.loads((root / 'split.json').read_text())
@@ -71,7 +71,7 @@ def load_data(root, driving_height=False, park_target='time', park_scale_m=DISTA
                 prov = json.loads(str(c['provenance']))
                 if prov['source_sha256'] != source_hash or int(c['dot']) != dot or int(c['n_steps']) != n:
                     raise ValueError(f'Camera pairing failed: {split}/{dot}')
-                if int(c['parking_step']) != park or m['condition'] != 'baseline' or m['dt_s'] != .001:
+                if int(c['parking_step']) != park or m['condition'] not in allowed_conditions or m['dt_s'] != .001:
                     raise ValueError(f'Phase/condition mismatch: {split}/{dot}')
                 np.testing.assert_array_equal(c['step'], frame_steps(n))
                 np.testing.assert_allclose(a['time_s'], np.arange(n) * .001, atol=1e-8, rtol=0)
@@ -108,10 +108,12 @@ def load_data(root, driving_height=False, park_target='time', park_scale_m=DISTA
                     ttp = parking_distance(a['base_position'], park, drive_steps, park_scale_m)
                     row.update(park_distance_max_m=float(ttp.max() * park_scale_m),
                                parked_distance_max_m=float(ttp[parked].max(initial=0) * park_scale_m))
-                astep = np.arange(park, n)
+                astep = np.arange(0 if full_arm else park, n)
                 angles, speed = arm_readings(a['q'][:, 4:11])
                 acam = camera_inputs(split, dot, astep, root=root / 'camera')
                 xarm = np.c_[angles[astep], speed[astep], acam['arm']].astype(np.float32)
+                if full_arm:
+                    xarm = np.c_[xarm, (astep >= park).astype(np.float32)]
                 torque = a['arm_torque_command'][astep].copy()
                 distance = np.clip(a['hand_distance_expert'][astep], 0, .25) / .25
                 for x in (xdrive, wheel, ttp, xarm, torque, distance):
@@ -121,12 +123,12 @@ def load_data(root, driving_height=False, park_target='time', park_scale_m=DISTA
                 check_a, check_v = sensors.ArmEncoders.readings_for_run(a['q'][:40, 4:11].astype(float), .001)
                 np.testing.assert_array_equal(angles[:40], check_a)
                 np.testing.assert_array_equal(speed[:40], check_v)
-                row.update(drive_rows=len(drive_steps), parked_rows=len(after), arm_rows=len(astep),
+                row.update(drive_rows=len(drive_steps), parked_rows=len(after), arm_rows=len(astep), arm_prepark_rows=int(np.sum(astep < park)),
                            first_seen_step=int(c['step'][np.flatnonzero(c['seen'])[0]]) if c['seen'].any() else None,
                            final_expert_mm=float(1000 * a['hand_distance_expert'][-1]),
                            max_hand_distance_array_difference_m=float(np.max(np.abs(a['hand_distance'] - a['hand_distance_expert']))))
                 audit.append(row)
-                records[split].append(dict(dot=dot, drive=(xdrive, wheel, ttp.astype(np.float32)),
+                records[split].append(dict(dot=dot,drive_steps=drive_steps,arm_steps=astep,parking_step=park, drive=(xdrive, wheel, ttp.astype(np.float32)),
                                            arm=(xarm, torque, distance.astype(np.float32))))
         print(f'Loaded {split}: {len(records[split])} runs', flush=True)
     if any(not v for v in records.values()):
@@ -212,17 +214,20 @@ def train_one(records, kind, seed, args):
         xs[angle_cols] = np.maximum(x[:, angle_cols].std(0), 1e-6)
         model = Driving(x.shape[1])
     else:
-        if x.shape[1] not in (17, 51):
+        if x.shape[1] not in (17, 18, 51):
             raise ValueError('Arm inputs must be current observation or current/50ms/100ms history')
-        xs = np.tile(physical_scale(False, True, False), x.shape[1] // 17).astype(np.float32)
+        xs = np.r_[physical_scale(False, True, False), 1.].astype(np.float32) if x.shape[1] == 18 else np.tile(physical_scale(False, True, False), x.shape[1] // 17).astype(np.float32)
+        if getattr(args, 'arm_scaling', 'physical') == 'standard':
+            xm, xs = x.mean(0), np.maximum(x.std(0), 1e-6)
+            if x.shape[1] == 18: xm[-1], xs[-1] = 0., 1.
         if kind == 'torque':
             ym, ys = y.mean(0), y.std(0) + 1e-6
-        model = ArmPolicy(x.shape[1], hidden=getattr(args, 'arm_hidden', 64)) if kind == 'torque' else stop_net(17)
+        model = ArmPolicy(x.shape[1], hidden=getattr(args, 'arm_hidden', 64)) if kind == 'torque' else stop_net(x.shape[1])
     scale = (xm, xs, ym, ys)
     model.to(args.device)
     train = tensors(records['train'], kind, scale, args.device)
     val = tensors(records['val'], kind, scale, args.device)
-    opt = torch.optim.Adam(model.parameters(), lr=.01)
+    opt = torch.optim.Adam(model.parameters(), lr=getattr(args, 'lr', .01))
     epochs = args.stop_epochs if kind == 'stop' else args.epochs
     history, best, started = [], None, time.monotonic()
     prefix = args.out / f'{kind}_seed{seed}'
@@ -287,10 +292,11 @@ def train_one(records, kind, seed, args):
                 input_mean=xm.tolist(), input_scale=xs.tolist(), output_mean=ym.tolist(), output_scale=ys.tolist())
     w.update(info_arm_history_ms=np.array([0, 50, 100] if kind == 'torque' and len(xm) == 51 else [0]),
              info_seed=np.int64(seed), info_epochs=np.int64(best['epoch']), info_encoders=np.int64(1), info_auxiliary_loss_weight=np.float32(aux_weight),
-             info_time=np.int64(0), info_imu=np.int64(0), info_dot_input='camera_tracker',
+             info_time=np.int64(0), info_imu=np.int64(0), info_dot_input='camera_tracker', info_full_episode=np.int64(len(xm)==18 and kind!='driving'),
+             info_park_input=np.int64(len(xm)==18 and kind!='driving'),
              info_inputs=np.int64(len(xm)), info_camera_height=np.int64(kind == 'driving' and len(xm) in (11, 17)), info_wheel_velocity=np.int64(len(xm) != 11), info_target='sample', info_hz=np.int64(30 if kind=='driving' else 1000),
              info_input_mean=xm, info_input_std=xs,
-             info_scaling='standardised_angles' if kind=='driving' else 'physical_inputs',
+             info_scaling='standardised_angles' if kind=='driving' else ('standardised_training_inputs' if getattr(args,'arm_scaling','physical')=='standard' else 'physical_inputs'),
              info_stop_target='time' if kind=='driving' else 'distance',
              ttp_clip=np.float32(3 if kind=='driving' else .25), ttp_thresh=np.float32(.25 if kind=='driving' else .01))
     if distance_park:

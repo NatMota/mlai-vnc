@@ -42,6 +42,7 @@ public:
     void advance();
     void isolate();
     void reset();
+    void reset_pose(double x, double y, double yaw);
     Eigen::MatrixXd mass(const State&);
 };
 class Expert {

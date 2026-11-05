@@ -61,3 +61,18 @@ target_include_directories(golden_camera_stream PRIVATE ${BULLET_SOURCE}/example
 target_compile_definitions(golden_camera_stream PRIVATE REFERENCE_ENGINE DEFAULT_LIBPYTHON="${PYTHON_LIBRARY}" DEFAULT_PYBULLET="${PYBULLET_BINARY}" ENGINE_SHA="${ENGINE_SHA}")
 target_link_libraries(golden_camera_stream PRIVATE pinocchio::pinocchio nlohmann_json::nlohmann_json ${BLAS_LIBRARY} ${LAPACK_LIBRARY} ${CMAKE_DL_LIBS})
 target_compile_options(golden_camera_stream PRIVATE -O3 -ffp-contract=off)
+
+# Isolated full-episode evaluator; earlier sensor_parking binary stays reproducible.
+add_executable(sensor_curriculum src/sensor_curriculum.cpp src/physics.cpp src/controller.cpp)
+target_include_directories(sensor_curriculum PRIVATE ${BULLET_SOURCE}/examples ${BULLET_SOURCE}/src)
+target_compile_definitions(sensor_curriculum PRIVATE REFERENCE_ENGINE DEFAULT_LIBPYTHON="${PYTHON_LIBRARY}" DEFAULT_PYBULLET="${PYBULLET_BINARY}" ENGINE_SHA="${ENGINE_SHA}")
+target_link_libraries(sensor_curriculum PRIVATE pinocchio::pinocchio nlohmann_json::nlohmann_json ${BLAS_LIBRARY} ${LAPACK_LIBRARY} ${CMAKE_DL_LIBS})
+target_compile_options(sensor_curriculum PRIVATE -O3 -ffp-contract=off)
+
+# Fresh expert data for random starts and action-noise recovery experiments.
+add_executable(collect_curriculum src/collect_curriculum.cpp src/physics.cpp src/controller.cpp)
+target_include_directories(collect_curriculum PRIVATE ${BULLET_SOURCE}/examples ${BULLET_SOURCE}/src)
+file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/src/collect_curriculum.cpp" CURRICULUM_SHA)
+target_compile_definitions(collect_curriculum PRIVATE REFERENCE_ENGINE DEFAULT_LIBPYTHON="${PYTHON_LIBRARY}" DEFAULT_PYBULLET="${PYBULLET_BINARY}" ENGINE_SHA="${ENGINE_SHA}" COLLECTOR_SHA="${CURRICULUM_SHA}" COMPILER_VERSION="${CMAKE_CXX_COMPILER_ID}-${CMAKE_CXX_COMPILER_VERSION}")
+target_link_libraries(collect_curriculum PRIVATE pinocchio::pinocchio nlohmann_json::nlohmann_json ${BLAS_LIBRARY} ${LAPACK_LIBRARY} ${CMAKE_DL_LIBS})
+target_compile_options(collect_curriculum PRIVATE -O3 -ffp-contract=off)

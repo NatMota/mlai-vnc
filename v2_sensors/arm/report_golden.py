@@ -112,6 +112,7 @@ def build_viewer(seed, results=RESULTS, split='validation', embed_camera=True):
             model=dict(frames=[frame(f) for f in r['frames']],final=dict(time_s=r['frames'][-1]['time_s'])),
             expert=dict(frames=[frame(f) for f in e['frames']],final=dict(time_s=e['frames'][-1]['time_s']))))
     names=read(HERE.parent/'driving_v2/closed_loop_native/result_wheels_live_dot.json')['joint_names']
+    full_episode=any(f.get('arm_control')=='learned-from-reset' for r in runs for f in r['model']['frames'][:1])
     payload=dict(joint_names=names,runs=runs,geometry=replay.geometry(replay.native_root(),names),
                  recording_description=f'Seed {seed}; {len(runs)} recorded {split} targets. Learned driving and reaching. Ghost: recorded expert. No trajectory truncation. Camera inset: actual recorded frames, 128 px preview of the 256 px sensor.')
     page=(OLD/'replay_template.html').read_text()
@@ -127,6 +128,22 @@ def build_viewer(seed, results=RESULTS, split='validation', embed_camera=True):
     page=page.replace("for(const name of ['Front right','Front left','Back left','Back right'])", "for(const name of ['Joint 1','Joint 2','Joint 3','Joint 4','Joint 5','Joint 6','Joint 7'])")
     page=page.replace('m.command[i].toFixed(2)',"(m.parked?m.tau[i].toFixed(2):'n/a')").replace('e.command[i].toFixed(2)','e.tau[i].toFixed(2)')
     page=page.replace('Command · rad/s','Torque · N m')
+    if full_episode:
+        page=page.replace('Actual camera at the displayed robot state','Rendered camera. Delayed policies may use an earlier frame.')
+        page=page.replace("(m.parked?m.tau[i].toFixed(2):'n/a')", "((m.sent_arm_torque||m.tau)[i].toFixed(2))")
+        page=page.replace('Before PARK, native arm-hold torques are not logged here (n/a).',
+                          'Learned arm torque from reset; no added PD hold or gravity compensation. Torque table shows final applied arm torque.')
+        page=page.replace('</p></section>','</p></section><section id="policyTelemetry"></section>',1)
+        page=page.replace('</style>','.view{grid-template-columns:minmax(0,1fr) 280px}aside{max-height:510px;overflow:auto;font-size:12px}#sensorImage{height:130px;object-fit:contain}#policyTelemetry p{margin:4px 0}#policyTelemetry td,#policyTelemetry th{padding:2px} @media(max-width:900px){.view{grid-template-columns:1fr}aside{max-height:none}} </style>')
+        page=page.replace('function text(m,e){', '''function text(m,e){
+          const number=(x,d=3)=>x==null?'n/a':Number(x).toFixed(d);
+          const ws=m.wheel_speed_input||[], wc=m.wheel||[];
+          $('policyTelemetry').innerHTML='<b>Wheel speeds · rad/s</b><table><tr><th>Wheel</th><th>Encoder</th><th>Command</th></tr>'+['FR','FL','BL','BR'].map((n,i)=>'<tr><td>'+n+'</td><td>'+number(ws[i])+'</td><td>'+number(wc[i])+'</td></tr>').join('')+'</table>'+
+          '<p>PARK prediction: '+number(m.driving_ttp_s)+' s; threshold '+number(m.park_threshold??0.25)+' s; latched '+Boolean(m.parked)+'</p>'+
+          '<p>STOP prediction: '+number(m.ttp_s==null?null:m.ttp_s*1000,1)+' mm; threshold '+number((m.stop_threshold??0.01)*1000,1)+' mm; latched '+Boolean(m.stopped)+'</p>'+
+          '<details><summary>Requested arm torques and capture timing</summary><p>Arm command · N m: '+(m.applied_arm_torque||m.tau).map(x=>number(x,2)).join(', ')+'</p>'+
+          '<p>Camera capture step: '+number(m.camera_capture_step,0)+'; encoder capture step: '+number(m.arm_capture_step,0)+'</p></details>';
+        ''')
     page=page.replace('\\nPark probability ${m.park_probability.toFixed(3)} · Speed ${m.speed_m_s.toFixed(2)} / ${e.speed_m_s.toFixed(2)} m/s',
         '\\nGripper distance: model ${m.ee_mm.toFixed(1)} mm / expert ${e.ee_mm.toFixed(1)} mm')
     page=page.replace('Heading difference ${fmt(m.park_yaw_error_deg,1)}°','Heading difference ${fmt(m.park_yaw_error_deg,1)}°<br>Distance at STOP ${fmt(m.stop_mm,1)} mm; closest ${fmt(m.closest_mm,1)} mm')

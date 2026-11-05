@@ -77,6 +77,10 @@ def pack(run, out, pose, condition):
         arrays.update(hand_position=hp, hand_rotation=hr, hand_distance=np.linalg.norm(hp - target, axis=1))
     else:                                    # the expert measured the true state: its hand pose is the true one
         arrays.update(hand_position=arrays['hand_position_expert'], hand_rotation=arrays['hand_rotation_expert'], hand_distance=arrays['hand_distance_expert'])
+    if (run / 'applied_command.npy').exists():
+        applied=np.load(run/'applied_command.npy',allow_pickle=False)
+        if applied.shape!=(len(arrays['time_s']),11):raise ValueError('Applied command alignment mismatch')
+        arrays.update(applied_wheel_command=applied[:,:4],applied_arm_torque_command=applied[:,4:])
     columns = {k: (list(v.shape[1:]) if v.ndim > 1 else []) for k, v in arrays.items()}
     store = {k: (v.astype(np.float64) if k == 'time_s' else v.astype(np.float32)) for k, v in arrays.items()}
     m.update(condition=condition, measured_state_saved=measured, packed_from=run.name)

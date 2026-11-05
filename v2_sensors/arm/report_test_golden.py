@@ -147,8 +147,8 @@ def build_viewer(seed):
     return original_viewer(seed,results=RESULTS,split='test',embed_camera=False)
 
 
-def package_replay(seed):
-    viewer=build_viewer(seed);out=RESULTS/f'replay_test_seed{seed}.zip'
+def package_replay(seed,viewer=None):
+    viewer=build_viewer(seed) if viewer is None else viewer;out=RESULTS/f'replay_test_seed{seed}.zip'
     with zipfile.ZipFile(out,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=4) as z:
         z.write(viewer,viewer.name)
         for folder in sorted(RESULTS.glob(f'seed{seed}_dot*_camera')):
