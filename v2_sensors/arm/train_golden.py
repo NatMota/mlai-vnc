@@ -195,6 +195,8 @@ def objective(model, data, kind, chunk, backward=False, aux_weight=1.):
 
 def infer_export(w, x, kind):
     x = np.asarray(x, np.float32)
+    if 'export_input_mean' in w:
+        x = (x - w['export_input_mean']) / w['export_input_scale']
     if kind == 'stop':
         for layer in ('0', '2'):
             x = np.maximum(x @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
@@ -203,7 +205,10 @@ def infer_export(w, x, kind):
         x = np.maximum(x @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
     head = 'wheels' if kind == 'driving' else 'arm'
     aux = 'park' if kind == 'driving' else 'stop'
-    return x @ w[head + '.weight'].T + w[head + '.bias'], (x @ w[aux + '.weight'].T + w[aux + '.bias']).squeeze(1)
+    command = x @ w[head + '.weight'].T + w[head + '.bias']
+    if 'export_output_scale' in w:
+        command = command * w['export_output_scale'] + w['export_output_mean']
+    return command, (x @ w[aux + '.weight'].T + w[aux + '.bias']).squeeze(1)
 
 
 def train_one(records, kind, seed, args):
@@ -269,14 +274,16 @@ def train_one(records, kind, seed, args):
             print(f'{kind} seed {seed} epoch {epoch}/{epochs}: train {row["train_total"]:.6g}, val {row["val_total"]:.6g}, {row["seconds"]:.3f}s', flush=True)
             write_json(prefix.with_name(prefix.name + '_history.json'), history)
     model.load_state_dict(best['state'])
-    w = {k:v.numpy().astype(np.float64) for k,v in best['state'].items()}
-    first = '0' if kind == 'stop' else 'shared.0'
-    w[first + '.bias'] -= w[first + '.weight'] @ (xm / xs)
-    w[first + '.weight'] /= xs
+    # Preserve the selected checkpoint even if export validation fails.
+    torch.save(dict(model=best['state'], optimizer=best['optimizer'], epoch=best['epoch'],
+                    input_mean=xm, input_scale=xs, output_mean=ym, output_scale=ys),
+               prefix.with_name(prefix.name + '_selected.pt'))
+    # Keep the same FP32 operation order as training. Folding a large mean/scale
+    # into the first layer can lose precision through cancellation.
+    w = {k:v.numpy().astype(np.float32) for k,v in best['state'].items()}
+    w.update(export_input_mean=xm, export_input_scale=xs)
     if kind == 'torque':
-        w['arm.weight'] *= ys[:, None]
-        w['arm.bias'] = w['arm.bias'] * ys + ym
-    w = {k:v.astype(np.float32) for k,v in w.items()}
+        w.update(export_output_mean=ym, export_output_scale=ys)
     checks = []
     for split in ('train', 'val'):
         raw, _, _, _ = arrays(records[split], kind)
@@ -295,6 +302,7 @@ def train_one(records, kind, seed, args):
             diff = max(float(np.max(np.abs(a-b))) for a,b in zip(saved, expected))
         checks.append(dict(split=split, max_abs_difference=diff, atol=1e-4, rtol=1e-5))
     meta = dict(kind=kind, seed=seed, selected_epoch=best['epoch'], selected_val_loss=best['loss'],
+                export_format='explicit_fp32_scaling_v1',
                 auxiliary_loss_weight=aux_weight,
                 elapsed_s=time.monotonic()-started, export_checks=checks, train_rows=len(train[0]), val_rows=len(val[0]),
                 loss_terms=['distance_mse'] if kind=='stop' else ['wheel_mse', 'park_distance_mse' if distance_park else 'time_to_park_mse'] if kind=='driving' else ['standardized_torque_mse','auxiliary_distance_mse'],
@@ -359,7 +367,7 @@ def main():
         torque, a = train_one(records,'torque',seed,args)
         stop, s = train_one(records,'stop',seed,args)
         combined=dict(torque)
-        combined.update({'stopnet.'+k:v for k,v in stop.items() if k.endswith(('.weight','.bias'))})
+        combined.update({'stopnet.'+k:v for k,v in stop.items() if k.endswith(('.weight','.bias')) or k.startswith('export_')})
         combined.update(info_stopnet='17->32->16->1 relu',info_stopnet_epochs=np.int64(s['selected_epoch']))
         np.savez(args.out/f'reaching_seed{seed}.npz',**combined)
         summaries.append(dict(seed=seed,driving=d,torque=a,stop=s,

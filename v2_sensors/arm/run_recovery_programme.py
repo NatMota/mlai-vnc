@@ -17,8 +17,11 @@ from render_golden import sha
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for key in ('root','golden','native','cuda'):p.add_argument('--'+key,type=Path,required=True)
-    p.add_argument('--jobs',type=int,default=4);a=p.parse_args()
-    frozen=a.root/'recovery_runtime'
+    p.add_argument('--jobs',type=int,default=4)
+    p.add_argument('--retry-tag',default='',help='New runtime, model and log suffix; retains a failed attempt unchanged')
+    a=p.parse_args()
+    if a.retry_tag and not a.retry_tag.isalnum():p.error('Retry tag must be alphanumeric')
+    frozen=a.root/('recovery_runtime'+('_'+a.retry_tag if a.retry_tag else ''))
     if not frozen.exists():freeze(Path(__file__).resolve().parent.parent,frozen,a.native)
     arm=frozen/'v2_sensors/arm';py=a.native/'.pixi/envs/default/bin/python'
     env=dict(os.environ,NATIVE_ROOT=str(a.native),CURRICULUM_BINARY=str(frozen/'native/sensor_curriculum'),
@@ -37,11 +40,14 @@ def main():
             if time.monotonic()>deadline:raise TimeoutError(str(path))
             time.sleep(15)
     def command(name,args):
-        status(name);log=a.root/(name+'.log')
-        with log.open('w') as f:subprocess.run([str(v) for v in args],env=env,cwd=arm,stdout=f,stderr=subprocess.STDOUT,check=True)
+        status(name);log=a.root/(name+('_'+a.retry_tag if a.retry_tag else '')+'.log')
+        with log.open('x') as f:subprocess.run([str(v) for v in args],env=env,cwd=arm,stdout=f,stderr=subprocess.STDOUT,check=True)
     def train(name,data,extras=(),daggers=(),scaling='standard',mask=0):
         out=a.root/name/'models'
         if (out/'summary.json').exists():return out
+        if out.exists() and a.retry_tag:
+            out=out.with_name('models_'+a.retry_tag)
+            if (out/'summary.json').exists():return out
         command(name+'_train',[a.cuda,arm/'train_full_episode.py','--data',data,'--out',out,'--driving',standard/'driving_seed7.npz',
             '--train-driving','--driving-epochs','300','--epochs','1200','--stop-epochs','600','--arm-scaling',scaling,
             '--mask-park-seconds',str(mask),'--allowed-conditions','baseline','random_start','dart',

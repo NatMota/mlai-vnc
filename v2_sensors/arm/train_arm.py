@@ -159,16 +159,23 @@ def policy(w, x):
     """NumPy forward pass of saved weights: raw inputs -> (torques in N m, time to stop in s).
     A model with a separate stop network (stopnet.*, train_stop.py) takes the stop from it, on the same raw inputs."""
     x0 = x
+    if 'export_input_mean' in w:
+        x = (x - w['export_input_mean']) / w['export_input_scale']
     for layer in ('shared.0', 'shared.2'):
         x = np.maximum(x @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
     s = np.maximum(x @ w['stop.0.weight'].T + w['stop.0.bias'], 0) @ w['stop.2.weight'].T + w['stop.2.bias'] if 'stop.0.weight' in w \
         else x @ w['stop.weight'].T + w['stop.bias']
     if 'stopnet.0.weight' in w:
         s = x0[:w['stopnet.0.weight'].shape[1]]  # frozen STOP network uses the current observation
+        if 'stopnet.export_input_mean' in w:
+            s = (s - w['stopnet.export_input_mean']) / w['stopnet.export_input_scale']
         for layer in ('stopnet.0', 'stopnet.2'):
             s = np.maximum(s @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
         s = s @ w['stopnet.4.weight'].T + w['stopnet.4.bias']
-    return x @ w['arm.weight'].T + w['arm.bias'], float(s[0]) * float(w['ttp_clip'])
+    torque = x @ w['arm.weight'].T + w['arm.bias']
+    if 'export_output_scale' in w:
+        torque = torque * w['export_output_scale'] + w['export_output_mean']
+    return torque, float(s[0]) * float(w['ttp_clip'])
 
 
 if __name__ == '__main__':

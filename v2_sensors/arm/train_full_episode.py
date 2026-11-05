@@ -86,7 +86,7 @@ def main():
     torque,tm=train_one(records,'torque',a.seed,a)
     stop,sm=train_one(records,'stop',a.seed,a)
     combined=dict(torque)
-    combined.update({'stopnet.'+k:v for k,v in stop.items() if k.endswith(('.weight','.bias'))})
+    combined.update({'stopnet.'+k:v for k,v in stop.items() if k.endswith(('.weight','.bias')) or k.startswith('export_')})
     combined.update(info_stopnet='18->32->16->1 relu',info_stopnet_epochs=np.int64(sm['selected_epoch']))
     np.savez(a.out/f'reaching_seed{a.seed}.npz',**combined)
     write_json(a.out/'summary.json',dict(seed=a.seed,torque=tm,stop=sm,elapsed_s=time.monotonic()-started,status='trained; full simulation pending'))

@@ -21,12 +21,14 @@ def main():
             if not all((directory/s/'completion.json').exists() for s in ('val','test')):continue
             if any(json.loads((directory/s/'completion.json').read_text())['attempts']!=100 for s in ('val','test')):continue
             try:
-                with (directory/'notebook_append.log').open('w') as log:
+                with (directory/'notebook_append.log').open('a') as log:
                     subprocess.run([sys.executable,str(script),'--name',name,'--pending','--notebook',str(a.notebook)],stdout=log,stderr=subprocess.STDOUT,check=True)
                     for kind in ('markdown','html'):
                         subprocess.run([sys.executable,'-m','jupyter','nbconvert','--to',kind,str(a.notebook)],stdout=log,stderr=subprocess.STDOUT,check=True)
                     subprocess.run([sys.executable,'-m','jupyter','trust',str(a.notebook)],stdout=log,stderr=subprocess.STDOUT,check=True)
                 (directory/'notebook_ready.json').write_text(json.dumps(dict(status='analysis appended; visual review and Git/MLflow publication pending',notebook=str(a.notebook))))
+                if (directory/'notebook_error.json').exists():
+                    (directory/'notebook_error_resolved.json').write_text(json.dumps(dict(status='resolved on retry; original error and log retained',at=time.time())))
             except Exception as e:
                 failed.add(name);(directory/'notebook_error.json').write_text(json.dumps(dict(error=repr(e))))
         time.sleep(20)

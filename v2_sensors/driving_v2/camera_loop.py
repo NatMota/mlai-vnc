@@ -86,6 +86,8 @@ def driving_inputs(w, wheel, dot, visible, height=None):
 def policy(w, x):
     policy.ttp = None
     policy.park_distance_m = None
+    if 'export_input_mean' in w:
+        x = (x - w['export_input_mean']) / w['export_input_scale']
     for layer in ('shared.0', 'shared.2'):
         x = np.maximum(x @ w[layer + '.weight'].T + w[layer + '.bias'], 0)
     head = float((x @ w['park.weight'].T + w['park.bias'])[0])

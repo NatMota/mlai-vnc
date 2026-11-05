@@ -69,15 +69,18 @@ def distances(seed):
     fig, axes = plt.subplots(2, 5, figsize=(16, 5.5))
     for ax, r in zip(axes.flat, read(RESULTS / f'seed{seed}.json')):
         ax.set_title(f'Dot {r["dot"]}', fontsize=10)
+        parked = r['park_s'] is not None
+        origin = r['park_s'] if parked else 0.
         if not r['log']:
             ax.text(.5,.5,'No PARK',ha='center',transform=ax.transAxes)
         else:
-            log = pd.DataFrame(r['log']); t = log.t-r['park_s']
+            log = pd.DataFrame(r['log']); t = log.t-origin
             ax.plot(t,log.ee_mm,label='True distance (scoring only)')
             ax.plot(t,1000*log.ttp_s,'--',label='Predicted STOP distance')
             ax.axhline(10,color='grey',ls=':')
-            if r['stop_s'] is not None: ax.axvline(r['stop_s']-r['park_s'],color='black',lw=.7)
-        ax.set(xlabel='Seconds after PARK',ylabel='mm')
+            if r['stop_s'] is not None: ax.axvline(r['stop_s']-origin,color='black',lw=.7)
+            if not parked: ax.text(.5,.95,'No PARK',ha='center',va='top',transform=ax.transAxes)
+        ax.set(xlabel='Seconds after PARK' if parked else 'Seconds since reset',ylabel='mm')
     handles, labels = next((ax.get_legend_handles_labels() for ax in axes.flat if ax.lines),([],[]))
     if handles: fig.legend(handles,labels,loc='upper center',ncol=2,fontsize=8)
     fig.tight_layout(rect=(0,0,1,.94)); return fig

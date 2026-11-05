@@ -22,7 +22,7 @@ def select(name,split='test'):
 def models(name):
     cfg=json.loads((ROOT/name/'test/config.json').read_text())
     own=ROOT/name/'models'
-    return own if own.exists() else Path(cfg['models'])
+    return own if (own/'summary.json').exists() else Path(cfg['models'])
 
 
 def scores(name):
