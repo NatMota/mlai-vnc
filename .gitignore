@@ -16,7 +16,7 @@ data/
 outputs/
 .DS_Store
 
-# Locally generated simulation data (large, reproducible with chester_collect.py / chester_dagger.py)
+# Locally generated simulation data (large, reproducible with collect.py / dagger.py)
 data_dart2/
 data_dagger/
 data_dart_mem/

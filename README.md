@@ -1,102 +1,50 @@
-# MLAI — VNC
+# Golden sensor driving + two-rate arm
 
-Private COMP0245 team workspace for robot learning and reproducible experiments.
-Train models in PyTorch; use MLflow to compare runs and GitHub to review code.
+This branch evaluates an exported two-rate arm behind Nat's iteration 43
+basics_standard sensor-only driving network on the 100 standard test points.
 
-## Chester memory policy v5
+Compared with Nat iteration 43, the median distance at STOP decreased from
+**169 mm to 17 mm** (168.8090 to 16.9519 mm). These medians use each controller's
+own stopped cases: 91 for Nat and 68 for the two-rate arm.
 
-This branch publishes Chester's latest memory policy and its required shared
-controller code. See [the v5 guide](docs/chester_memory_policy.md) for setup,
-checkpoint download, evaluation, training and recorded results: 34/40 validation
-and 98/120 test targets within 1 cm. Earlier exploratory implementations are
-not included. Weights and evaluation files are shared through the separate
-team MLflow run `chester_memory_policy_v5_seed0`, rather than Git.
+| Controller | Success within 10 mm at STOP | PARK | STOP |
+| --- | ---: | ---: | ---: |
+| Two-rate arm + iteration 43 driver | 1/100 | 100/100 | 68/100 |
+| Nat iteration 43 | 0/100 | 100/100 | 91/100 |
+| Nat iteration 57, different driver | 4/100 | 87/100 | 66/100 |
 
-## Use the shared tracker
+The STOP rule was frozen using 12 validation points: estimated distance at most
+5 mm for 100 consecutive milliseconds. Each full-arm test episode was run once.
+See [the full report](docs/golden_results.md) for all 100 pointwise comparisons,
+training and simulator limitations, and the exact success definition.
 
-Install [Pixi](https://pixi.sh) and clone this private repository:
+## Environment and verification
 
-```sh
-git clone https://github.com/NatMota/mlai-vnc.git
-cd mlai-vnc
+Use the course robot simulation Python environment with NumPy, PyTorch, PyBullet,
+Pinocchio and simulation_and_control. Supply the course models/ assets and the
+exported arm at outputs/v2_arm/arm_no_world_inputs.pt. The arm is referenced by
+source run 540bdcf9. Weights and course assets are not stored in this Git branch.
+
+Set KMP_DUPLICATE_LIB_OK=TRUE, PYTHONIOENCODING=utf-8, ROBOENV_HEADLESS=1 and
+CAMERA_RENDERER=tiny. The evaluator sets these values for its workers.
+
+```powershell
+python -B -m unittest tests.test_golden tests.test_golden_eval tests.test_golden_compare tests.test_v2_sensor tests.test_fused_policy tests.test_memory_policy
+python -B golden_eval.py --validation-case 6 --workers 1 --out-dir work/validation6
 ```
 
-Ask for access to the Mint device through Tailscale, then open
-https://nm-linmint-mlflow.taile381c0.ts.net/. GitHub repository access alone
-does not grant access to MLflow. The tracker is private to the tailnet; do not
-use Tailscale Funnel.
+The release verification repeats a validation point only. Do not repeat G for
+parameter selection. Saved publication results are archives: source_* fields
+identify original execution evidence; publication hashes identify the exported
+files after neutral labels and portable paths have been applied.
 
-Set `MLFLOW_TRACKING_URI` to that URL in the environment where you train. For
-example, in a macOS or Linux shell:
+## Results and source provenance
 
-```sh
-export MLFLOW_TRACKING_URI=https://nm-linmint-mlflow.taile381c0.ts.net
-```
+MLflow experiment: v2-sensors (ID 3). Run name: golden-tworate-arm-iter43.
+The tracker is available through the team's Tailscale network. Publication uses
+only a newly created run and does not modify any existing run.
 
-On Windows PowerShell, use
-`$env:MLFLOW_TRACKING_URI = "https://nm-linmint-mlflow.taile381c0.ts.net"`.
-From this repository, run `pixi run check` to verify your connection. It creates
-one clearly labelled setup run and verifies a metric and artifact round trip.
-
-## Log a training run
-
-Install `mlflow-skinny==3.17.2` in your existing PyTorch environment. Use one
-run for each training configuration and record enough information to reproduce
-it:
-
-```python
-import os
-import mlflow
-import torch
-
-mlflow.set_tracking_uri(os.environ["MLFLOW_TRACKING_URI"])
-mlflow.set_experiment("robot-behaviour-cloning")
-with mlflow.start_run() as run:
-    mlflow.log_params({"seed": 42, "learning_rate": 0.001, "hidden_sizes": "64,64"})
-    mlflow.set_tag("git_commit", "PUT_THE_TRAINING_CODE_COMMIT_HERE")
-    # Train and evaluate your model here, then log the actual results.
-    # mlflow.log_metric("validation_mse", measured_validation_mse, step=epoch)
-    # mlflow.log_metric("rollout_success_rate", successes / trials)
-    torch.save(model.state_dict(), "model_state.pt")
-    mlflow.log_artifact("model_state.pt", artifact_path="checkpoint")
-    print(run.info.run_id)
-```
-
-Replace the example values and `model` with your actual training code. Save the
-architecture/configuration with the code commit: weights alone are not enough
-to recreate a model. Log validation plots and selected checkpoints as artifacts,
-then compare runs in the web UI. Keep evaluation targets and data splits fixed
-when comparing model variants.
-
-To download a teammate's checkpoint, copy its run ID from the UI and use:
-
-```python
-import mlflow
-
-mlflow.set_tracking_uri("https://nm-linmint-mlflow.taile381c0.ts.net")
-path = mlflow.MlflowClient().download_artifacts(
-    "RUN_ID", "checkpoint/model_state.pt", dst_path="."
-)
-print(path)
-```
-
-The checkpoint is stored by the MLflow server on Mint's Fast Drive, not in
-GitHub. **University OneDrive is not required to share a model within this
-team.** The COMP0245 assignment handout also says the Moodle submission need
-not include data or pretrained weights/checkpoints; follow its separate report
-and code submission instructions. Do not put raw datasets, checkpoints or
-credentials in Git. Everyone granted MLflow access can read and change shared
-experiment data, so keep a local copy of important checkpoints.
-
-## Storage and collaboration
-
-Metadata and artifacts live outside Git in `~/.local/share/mlai-vnc` by default.
-Set `MLAI_TRACKING_DIR` for the database and `MLAI_ARTIFACTS_DIR` for artifacts.
-On Mint, keep the SQLite database on its Linux filesystem and set
-`MLAI_ARTIFACTS_DIR` to a persistent Fast Drive directory.
-Back up both `mlflow.db` and the artifacts directory together.
-
-Commit code, configurations and small reports. Keep raw data, model checkpoints,
-credentials and generated run databases out of Git. Use branches and pull requests.
-This initial repository contains tracking infrastructure; existing coursework
-and notebooks remain in their original repositories.
+Nat source snapshot: d89051b4f971c54d59c81bf71f9f92cb4f8e2833.
+Frozen snapshot files and checksums are documented in nat_golden/SOURCE.md.
+The release starts from commit 80e409277744ac238352bbe3d7babc5650c2d97a.
+Legacy implementation guides remain in docs/ with neutral module names.

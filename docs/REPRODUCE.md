@@ -4,7 +4,7 @@
 
 The policy is `fused30:outputs/ablation/all_world/policy.pt`.
 The teammate's base and phase networks run every 33 simulator steps (about
-30.303 Hz). Chester's arm velocity network also runs every 33 steps; the torque
+30.303 Hz). The arm velocity network also runs every 33 steps; the torque
 network runs at 1,000 Hz. The phase confirmation is two high-level updates.
 
 The arm masks these zero-based feature columns after standardisation:
@@ -51,7 +51,7 @@ python -B -m unittest tests.test_memory_policy tests.test_fused_policy
 ## Reproduce evaluation results
 
 Connect Tailscale and open the team MLflow experiment `robotnik_arm_task` (2).
-Use the new run named `chester_fused30_allworld_seed0`. Download its
+Locate the published fused30 all_world seed-0 run. Download its
 `model/policy.pt` into `outputs/ablation/all_world/policy.pt`.
 
 Run:
@@ -96,7 +96,7 @@ and `first_seed` fields. The two outside400 summaries include `dirty=true`,
 `source_sha256` and `first_seed`. Both groups record a Git commit that does not
 contain the actual code used for evaluation. All eight JSONL/summary files are
 preserved byte-for-byte. The outside hashes name the original local files with
-the `chester_` prefix; the published modules remove that prefix and update their
+a historical personal prefix; the published modules remove that prefix and update their
 imports, so published file hashes differ. The run's `git_commit` tag identifies
 the latest publication, and `initial_publication_git_commit` preserves the initial
 release commit. Do not treat either summary's commit as a complete source record.
@@ -145,7 +145,7 @@ teammate via `make_fused`. Using the published final checkpoint as this donor
 avoids requiring an older v5 checkpoint or accidentally skipping retraining when
 the default output already exists.
 
-Chester confirmed that the original ablation invocation supplied no command-line
+The original ablation invocation was reported to have supplied no command-line
 options and redirected stdout/stderr to `outputs/ablation_train.log`. It trained
 all six input groups, including `all_world`, using the script defaults:
 seed 0, stride 20, good-run limit 2 cm, phase-label advance 200 ms, 12 epochs,
@@ -170,7 +170,7 @@ excluded from Git. See `fusion_results.md` for the experiment comparisons.
 
 This release removes the personal prefix from executable source and test
 filenames; imports and commands above use the new names. The existing
-`docs/chester_memory_policy.md` is an unchanged historical v5 guide. Use this
+`docs/memory_policy.md` is an unchanged historical v5 guide. Use this
 document for the current fused release.
 
 ## V2: arm on Nat's sensor driving

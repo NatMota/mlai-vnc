@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 TRACKING_URI = (ROOT / "mlruns").as_uri()
-EXPERIMENT = "chester-memory-policy"
+EXPERIMENT = "memory-policy"
 
 
 def _mlflow():

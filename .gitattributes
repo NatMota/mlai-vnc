@@ -1,0 +1,9 @@
+.gitattributes text eol=lf
+.gitignore text eol=lf
+# Stable source bytes across platforms.
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+# Preserve the archived source files and datasets exactly.
+nat_v2/** -text
+nat_golden/** -text
