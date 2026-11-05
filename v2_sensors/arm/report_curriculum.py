@@ -26,6 +26,10 @@ def models(name):
 
 
 def scores(name):
+    cached=ROOT/name/'scores.csv'
+    sources=[ROOT/name/split/f for split in ('val','test') for f in ('seed7.json','expert_test.json','config.json','completion.json')]
+    if cached.exists() and all(p.exists() and p.stat().st_mtime<=cached.stat().st_mtime for p in sources):
+        return pd.read_csv(cached,index_col='split')
     rows=[]
     for split in ('val','test'):
         rows.append(dict(split=split,**select(name,split).score(7)))
@@ -39,6 +43,9 @@ def losses(name):
 
 def hold_table(name,split='test'):
     select(name,split)
+    cached=ROOT/name/split/'holding_metrics.csv';raw=ROOT/name/split/'seed7.json'
+    if cached.exists() and raw.exists() and raw.stat().st_mtime<=cached.stat().st_mtime:
+        return pd.read_csv(cached,index_col='dot')
     rows=plots.read(ROOT/name/split/'seed7.json');out=[]
     for r in rows:
         pre=[f for f in r['frames'] if not f['parked']]
@@ -62,6 +69,15 @@ def holding(name):
 
 
 def build(name):
+    # Reopening a notebook must not recompress thousands of unchanged camera frames.
+    # Fresh/changed evaluations still rebuild. The caller can explicitly force regeneration.
+    out=ROOT/name/'test'
+    outputs=[ROOT/name/'scores.csv',out/'seed7_metrics.csv',out/'holding_metrics.csv',out/'viewer_golden_seed7.html',out/'replay_test_seed7.zip']
+    sources=[ROOT/name/s/f for s in ('val','test') for f in ('seed7.json','expert_test.json','config.json','completion.json')]
+    sources.extend([Path(plots.__file__),Path(testing.__file__),plots.OLD/'replay_template.html'])
+    if os.environ.get('CURRICULUM_REUSE_REPORTS')=='1' and all(p.exists() for p in outputs+sources):
+        if min(p.stat().st_mtime for p in outputs)>=max(p.stat().st_mtime for p in sources):
+            return scores(name)
     score=scores(name)
     score.to_csv(ROOT/name/'scores.csv')
     out=ROOT/name/'test';select(name)

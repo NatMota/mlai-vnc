@@ -1,5 +1,15 @@
 We are replacing the native pre-PARK holding controller with learned arm torque control from reset. Mint hosts execution, notebook, camera recordings and MLflow. No Powerglide availability is assumed.
 
+## Publication update, 5 November
+
+All 18 full-run conditions have finished their 100 validation and 100 test episodes. Iterations 41–58 identify these conditions, including frozen-model stress tests as well as new training. The detailed notebook sections and `publication_scores.csv` are the current results; the queue status paragraphs below are retained as historical execution notes.
+
+Scope correction: the PARK-window row deletion below was an agent substitution, not the agreed bursty-packet experiment. Iteration 51 preserves that result as **outside agreed scope**. It does not complete ticket 11117, and bursty packets remain outstanding. The full evaluation stack includes encoder noise, damping, elasticity, inertia, 3 ms observation delay and random starts, with neither packet loss nor occlusion.
+
+The recovery branch starts from clean standardised training and adds DART-inspired or DAgger data. Each frozen model is tested separately on clean conditions and the full stack. The six validation checks used to select recovery rounds remain development records, not official iterations. All three rounds and the failed export are retained.
+
+Disk snapshot before publication: the overnight directory occupies 32 GiB, the original golden dataset 836 MiB and the notebook directory 257 MiB. MLflow artifact copies add storage after publication. Nothing was deleted. These are allocated disk sizes, including saved camera frames, replays, collected demonstrations, checkpoints and diagnostics.
+
 ## Frozen baseline plan: tickets 11109 and 11110
 
 Seed 7. Keep iteration 40's driving weights unchanged. Train the arm from scratch on all rows in the 100 golden training episodes, including the pre-PARK expert holding commands. Fit outputs on training rows only and select epochs using the 100 validation trajectories. Arm inputs: seven counted joint angles, seven finite-difference encoder speeds, three camera/tracker coordinates and the current PARK flag. At deployment PARK comes from the driving network, never the expert. Torque network 18 -> 128 -> 128 -> 7, with its existing auxiliary distance objective; independent STOP 18 -> 32 -> 16 -> 1. ReLU, FP32, Adam 0.01, 1,200 torque epochs and 600 STOP epochs, validation-selected checkpoints. The camera remains at 30 Hz; learned arm torques run at 1 kHz from the first tick. No PD or added gravity compensation. STOP is only actionable after PARK and learned torques continue during the 0.5 s observation.

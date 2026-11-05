@@ -1,0 +1,68 @@
+{
+  "kind": "driving",
+  "seed": 7,
+  "selected_epoch": 299,
+  "selected_val_loss": 0.3996012210845947,
+  "auxiliary_loss_weight": 1.0,
+  "elapsed_s": 2.0225079227238894,
+  "export_checks": [
+    {
+      "split": "train",
+      "max_abs_difference": 2.86102294921875e-06,
+      "atol": 0.0001,
+      "rtol": 1e-05
+    },
+    {
+      "split": "val",
+      "max_abs_difference": 2.9206275939941406e-06,
+      "atol": 0.0001,
+      "rtol": 1e-05
+    }
+  ],
+  "train_rows": 24254,
+  "val_rows": 25862,
+  "loss_terms": [
+    "wheel_mse",
+    "time_to_park_mse"
+  ],
+  "run_weighting": "equal mean per run",
+  "checkpoint_rule": "minimum validation total, earliest tie",
+  "input_mean": [
+    4.748457908630371,
+    4.317696571350098,
+    4.3054938316345215,
+    4.740334510803223,
+    4.527995586395264,
+    0.4328005611896515,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "input_scale": [
+    5.626971244812012,
+    5.791508674621582,
+    5.822205543518066,
+    5.655528545379639,
+    3.639525890350342,
+    8.837448120117188,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "output_mean": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "output_scale": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ]
+}

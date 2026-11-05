@@ -1,0 +1,18 @@
+{
+  "status": "simulations complete; publication review pending",
+  "completed": [
+    "basics_standard",
+    "random_start_fixed",
+    "random_start_retrained",
+    "random_start_retention",
+    "imperfect_park",
+    "standard_stack",
+    "dart",
+    "dart_stack",
+    "dagger",
+    "dagger_stack",
+    "dart_dagger",
+    "dart_dagger_stack"
+  ],
+  "elapsed_s": 10705.387509015389
+}

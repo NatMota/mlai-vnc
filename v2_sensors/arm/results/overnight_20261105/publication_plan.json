@@ -1,0 +1,110 @@
+{
+  "baseline": {
+    "iteration": 41,
+    "parent": null,
+    "role": "New training",
+    "change": "Learn arm torques from reset, including while driving. Removes the expert holding controller. Physical input scales; frozen iteration-40 driving."
+  },
+  "encoder_noise": {
+    "iteration": 42,
+    "parent": "baseline",
+    "role": "Frozen-model stress test",
+    "change": "Add Gaussian encoder-angle noise, standard deviation 0.0001 rad, before quantisation and velocity estimation. Networks unchanged."
+  },
+  "basics_standard": {
+    "iteration": 43,
+    "parent": "baseline",
+    "role": "New training",
+    "change": "Standardise arm inputs using training-set means and standard deviations. Keep the driving checkpoint and training budgets unchanged."
+  },
+  "damping": {
+    "iteration": 44,
+    "parent": "encoder_noise",
+    "role": "Frozen-model stress test",
+    "change": "Retain encoder noise and add the course motor damping term, c=1. Networks unchanged."
+  },
+  "elasticity": {
+    "iteration": 45,
+    "parent": "damping",
+    "role": "Frozen-model stress test",
+    "change": "Retain noise and damping; add the course elasticity term, k=1, towards zero joint angle. Networks unchanged."
+  },
+  "inertia": {
+    "iteration": 46,
+    "parent": "elasticity",
+    "role": "Frozen-model stress test",
+    "change": "Retain previous effects; add motor inertia J=0.001 kg m\u00b2 using the previous acceleration. Networks unchanged."
+  },
+  "delay": {
+    "iteration": 47,
+    "parent": "inertia",
+    "role": "Frozen-model stress test",
+    "change": "Add a causal 3 ms observation delay to noise, damping, elasticity and inertia. Networks unchanged."
+  },
+  "random_start_fixed": {
+    "iteration": 48,
+    "parent": "delay",
+    "role": "Frozen-model stress test",
+    "change": "Retain all five disturbances and randomise starting x/y within \u00b10.15 m and heading within \u00b130 degrees. Networks unchanged."
+  },
+  "random_start_retrained": {
+    "iteration": 49,
+    "parent": "random_start_fixed",
+    "role": "New training",
+    "change": "Retrain driving and reaching on random-start expert data with physical input scales. Evaluate with random starts and all five disturbances. The expert retains its original world-origin parking convention."
+  },
+  "random_start_retention": {
+    "iteration": 50,
+    "parent": "random_start_retrained",
+    "role": "Retention test",
+    "change": "Use exactly the random-start-retrained networks, but restore original starts and clean physics. This changes the evaluation condition, not the weights."
+  },
+  "imperfect_park": {
+    "iteration": 51,
+    "parent": "random_start_retrained",
+    "role": "Outside agreed scope",
+    "change": "Retrain after omitting prepared training rows within \u00b10.25 s of PARK. This was an unapproved substitution for bursty packet loss. Preserve it as exploratory evidence only; it does not complete the requested packet-loss experiment."
+  },
+  "standard_stack": {
+    "iteration": 52,
+    "parent": "basics_standard",
+    "role": "Frozen-model stress test",
+    "change": "Test the clean-trained standardised model under all five disturbances and random starts. This is a separate comparison: the preceding noise ladder used the physical-scale baseline."
+  },
+  "dart": {
+    "iteration": 53,
+    "parent": "basics_standard",
+    "role": "Recovery training",
+    "change": "Add two batches of 100 perturbed expert episodes to the original data; 199 reached successfully and contributed training rows. Fixed action-noise standard deviations: wheels 0.025 rad/s, arm 0.5 N m, held for 33 ms. Labels are clean expert commands at visited states. DART-inspired fixed noise, not the full adaptive DART algorithm."
+  },
+  "dart_stack": {
+    "iteration": 54,
+    "parent": "dart",
+    "role": "Frozen-model stress test",
+    "change": "Test the DART-trained model under all five disturbances and random starts. Training used action perturbations, not the full evaluation disturbance stack."
+  },
+  "dagger": {
+    "iteration": 55,
+    "parent": "basics_standard",
+    "role": "Recovery training",
+    "change": "Three rounds of 100 student rollouts with stateful shadow-expert labels, retaining the original data and all earlier rounds. Round 3 was selected on six fixed validation cases before full testing. New DAgger rows train command outputs only; they do not train PARK, auxiliary distance or STOP targets."
+  },
+  "dagger_stack": {
+    "iteration": 56,
+    "parent": "dagger",
+    "role": "Frozen-model stress test",
+    "change": "Test the selected DAgger model under all five disturbances and random starts. This is the same checkpoint as its clean test."
+  },
+  "dart_dagger": {
+    "iteration": 57,
+    "parent": "dart",
+    "role": "Recovery training",
+    "change": "Retain original and both DART datasets, then aggregate three rounds of 100 student rollouts with shadow-expert command labels. Round 3 was selected on the six validation cases. New DAgger rows do not train PARK or STOP. Round 2 export was repaired and rerun without loosening the numerical tolerance; the selected model is round 3."
+  },
+  "dart_dagger_stack": {
+    "iteration": 58,
+    "parent": "dart_dagger",
+    "role": "Frozen-model stress test",
+    "change": "Test the selected combined model under all five disturbances and random starts. No bursty-packet loss, occlusion or direct weight perturbation is included."
+  }
+}

@@ -5,6 +5,7 @@ import math
 from pathlib import Path
 import re
 import time
+import hashlib
 import mlflow
 from mlflow.entities import Metric
 
@@ -20,7 +21,9 @@ def main():
     import pandas as pd
     scores=pd.read_csv(a.run/'scores.csv').set_index('split')
     cfg=read(a.run/'test/config.json');model=a.run/'models'
-    if not model.exists():model=Path(cfg['models'])
+    if not (model/'summary.json').exists():model=Path(cfg['models'])
+    for filename,digest in cfg['model_hashes'].items():
+        assert hashlib.sha256((model/filename).read_bytes()).hexdigest()==digest, filename
     for split in ('val','test'):
         c=read(a.run/split/'completion.json');assert c['attempts']==100 and c['all_accounted']
     client=mlflow.MlflowClient();record=a.run/'mlflow.json'
@@ -47,9 +50,15 @@ def main():
         f'{int(s.parked)}/100 PARK, {int(s.stopped)}/100 STOP, {int(s.success_10mm)}/100 within 10 mm at STOP. '
         f'Condition: {cfg.get("condition",{})}. Previous test exposure disclosed; no fitting in evaluator. '
         f'[Notebook and complete replay]({url}).')
+    if (a.run/'analysis.md').exists():
+        description=(a.run/'analysis.md').read_text()+f'\n\n[Notebook and complete replay]({url}).'
+    publication=read(a.run.parent/'publication_plan.json')[a.run.name]
     with mlflow.start_run(run_id=run_id):
         mlflow.set_tags({'git.commit':a.commit,'mlflow.source.git.commit':a.commit,'mlflow.note.content':description,
-            'evaluation_split':'test','run_role':'official_test_iteration','test_reuse':cfg['test_reuse']})
+            'evaluation_split':'test','run_role':'official_test_iteration','test_reuse':cfg['test_reuse'],
+            'experiment_role':publication['role'],'parent_condition':publication['parent'] or 'iteration40',
+            'scope_status':'outside_agreed_scope' if a.run.name=='imperfect_park' else 'agreed',
+            'bursty_packets_tested':'false'})
         mlflow.log_params(dict(seed=7,train_runs=train_runs,stop_training_runs=stop_training_runs,val_runs=100,test_runs=100,arm_control='learned from reset',
             arm_inputs=18,driving_inputs=11,arm_hidden='128,128',driving_hidden='16,16',stop_hidden='32,16',
             camera_hz=30,driving_hz=30,arm_hz=1000,park_target='time',park_threshold_s=.25,
@@ -66,7 +75,15 @@ def main():
         for split in ('val','test'):
             mlflow.log_metrics({split+'/'+k:float(v) for k,v in scores.loc[split].items() if math.isfinite(float(v))})
             for f in ('config.json','completion.json','summary.json'):mlflow.log_artifact(str(a.run/split/f),split)
+            records=read(a.run/split/'seed7.json')
+            fields=('dot','status','parked','park_s','stop_s','success','at_network_stop_mm','min_mm','end_mm','park_error_vs_expert_m','elapsed_s','timed_out')
+            per_case=a.run/split/'publication_cases.csv'
+            pd.DataFrame([{k:r.get(k) for k in fields} for r in records]).to_csv(per_case,index=False)
+            mlflow.log_artifact(str(per_case),split)
         mlflow.log_artifacts(str(model),'models')
+        mlflow.log_artifact(str(a.run/'analysis.md'),'analysis')
+        for f in ('publication_plan.json','publication_scores.csv','recovery_status.json','EXPORT_REPAIR.md'):
+            if (a.run.parent/f).exists():mlflow.log_artifact(str(a.run.parent/f),'analysis')
         for f in ('seed7.json','expert_test.json','seed7_metrics.csv','holding_metrics.csv'):mlflow.log_artifact(str(a.run/'test'/f),'test')
         mlflow.log_artifact(str(a.run/'test/replay_test_seed7.zip'),'replay')
         for pth in (a.notebook,a.notebook.with_suffix('.html')):mlflow.log_artifact(str(pth),'notebook')
@@ -82,8 +99,13 @@ def main():
     counts={}
     for kind in ('driving','torque','stop'):
         expected={r['epoch'] for r in read(model/f'{kind}_seed7_history.json')}
-        got=client.get_metric_history(run_id,kind+'/val_total');assert {r.step for r in got}==expected;counts[kind]=len(got)
-    assert client.get_run(run_id).info.status=='FINISHED' and client.list_artifacts(run_id,'replay')
+        for key in ('train_command','train_aux','train_total','val_command','val_aux','val_total'):
+            got=client.get_metric_history(run_id,kind+'/'+key)
+            assert {r.step for r in got}==expected,(kind,key)
+        counts[kind]=len(expected)
+    assert client.get_run(run_id).info.status=='FINISHED'
+    for folder in ('replay','notebook','models','test','val','analysis','execution_snapshot'):
+        assert client.list_artifacts(run_id,folder),folder
     result=dict(iteration=a.iteration,run_id=run_id,verified=True,epoch_counts=counts,commit=a.commit)
     record.write_text(json.dumps(result,indent=2)+'\n');print(result)
 

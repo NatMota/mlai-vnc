@@ -1,0 +1,3 @@
+split,seed,attempts,parked,stopped,success_10mm,success_percent,wilson95_low_percent,wilson95_high_percent,median_park_error_cm,median_abs_heading_error_deg,median_closest_mm,median_stop_mm,median_park_s,median_stop_s,timeouts,execution_failures,sum_case_wall_s,median_case_wall_s
+val,7,100,89,89,0,0.0,0.0,3.699349820698568,6.035376982406026,4.779849702466285,761.8739480843961,855.0745746529566,8.1,8.1,11,0,1967.990175627172,19.98401406733319
+test,7,100,91,91,0,0.0,0.0,3.699349820698568,7.151230675693309,4.856938678686434,764.1271672151967,825.9331186652151,7.7,7.7,9,0,1747.3712276024744,17.662589797750115
