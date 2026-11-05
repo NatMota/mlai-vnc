@@ -121,7 +121,7 @@ def threshold_plot():
     for name in ('baseline','basics_standard','dart','dagger','dart_dagger','dart_dagger_stack'):
         d=report.select(name).table(7)
         rates=[100*(d.parked & d.stop_s.notna() & (d.at_stop_mm<=t)).mean() for t in thresholds]
-        ax.plot(thresholds,rates,label=f'{RUNS[name][0]} {name}')
+        ax.plot(thresholds,rates,label=f'{RUNS[name][0]} {LABELS[name]}')
     ax.axvline(10,color='black',linestyle=':',label='Official 10 mm criterion')
     ax.set(xlabel='Distance threshold at STOP (mm)',ylabel='Successful attempts out of 100',ylim=(0,100),xlim=(0,1000),title='No PARK or no STOP remains a failure at every distance threshold')
     ax.legend(fontsize=8);fig.tight_layout();return fig
