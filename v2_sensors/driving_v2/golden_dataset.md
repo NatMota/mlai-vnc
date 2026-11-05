@@ -5,6 +5,7 @@ This notebook starts from the frozen 300-target dataset and its 200 camera trace
 Re-running this notebook reads and plots saved results. It does not retrain models or run the simulator. Test results below are loaded from saved evaluations. The full data package is on university OneDrive; this repository contains its manifests and a small, explicitly labelled training preview. Use `GOLDEN_DATA_ROOT` for the location of the extracted package when running the training commands in `../arm/GOLDEN_DATA.md`.
 
 
+
 ```python
 from pathlib import Path
 import os, sys, json
@@ -35,7 +36,8 @@ def lazy_player(url, height=810):
 
 ## Dataset and split
 
-There are 100 training, 100 validation and 100 reserved test expert runs. Offline camera observations exist for training and validation. Test cameras were rendered live along each learned trajectory in ticket #11110, so expert test camera traces are not needed. Target IDs remain fixed across comparisons.
+There are 100 training, 100 validation and 100 reserved test expert runs. Offline camera observations exist for training and validation. Test cameras were rendered live along each learned trajectory during the full baseline evaluation, so expert test camera traces are not needed. Target IDs remain fixed across comparisons.
+
 
 
 ```python
@@ -167,6 +169,7 @@ Driving has 16 inputs: four accumulated encoder angles, four encoder speeds, fou
 Training targets are the expert wheel-speed and arm-torque commands, normalized time to PARK and normalized gripper distance for STOP. Simulator truth is permitted for labels and scoring; it is not fed into the learned policies.
 
 The existing simulator retains its PD-plus-model-gravity arm hold while driving. After PARK, the learned torque network controls the arm, including the 0.5 s following STOP. That fixed pre-PARK holding controller is part of this baseline and is not a learned sensor-only arm controller. STOP does not freeze physics.
+
 
 
 ```python
@@ -696,12 +699,14 @@ display(pd.DataFrame(preview['arm_commands'], columns=[f'expert_torque_{j}_Nm' f
 
 ## Frozen models
 
-Training finished under ticket 11109. Validation chose the checkpoints; ticket 11110 evaluates these unchanged models on the reserved test targets.
+Baseline training is complete. Validation chose the checkpoints; the full baseline evaluation tests these unchanged models on the reserved test targets.
+
+
 ### Golden data: driving and reaching, three seeds (iterations 34 to 36)
 
 #### Iterations 34 to 36: plan and expected results
 
-Written before training. Ticket #11109 follows the 4 November roadmap: retrain the iteration 13 driving architecture and iteration 27 reaching architecture on 100 training runs, choose epochs on 100 validation runs, and reserve the 100 test runs for ticket #11110. Seeds 7, 1 and 2 are iterations 34, 35 and 36 respectively. Earlier notebook results stay unchanged.
+Written before training. The golden-data training plan follows the 4 November roadmap: retrain the iteration 13 driving architecture and iteration 27 reaching architecture on 100 training runs, choose epochs on 100 validation runs, and reserve the 100 test runs for the full baseline evaluation. Seeds 7, 1 and 2 are iterations 34, 35 and 36 respectively. Earlier notebook results stay unchanged.
 
 Driving uses 16 encoder/camera inputs at 30 Hz, two 16-unit ReLU layers, four wheel-speed outputs and a separate time-to-PARK head. The target is seconds to the recorded PARK, clipped at 3 s and divided by 3; the PARK threshold remains 0.25 s. The loss is wheel-speed MSE plus normalized time-to-PARK MSE, with each run weighted equally. Include at most 100 available, real parked frames after PARK. Fit the six angle-feature scales on training only.
 
@@ -714,15 +719,19 @@ Expected result: validation losses should fall below their epoch-zero values, an
 Use a fixed validation subset, selected before training, for integration smoke checks. The expert is only a recorded reference/ghost. Report every seed, camera visibility, PARK, STOP, distance at STOP and timeouts; never tune against the reserved test runs. There is no PPO, weight perturbation, new CNN, DART or DAgger in this experiment.
 
 Training status: all three seeds trained on the GPU in 87.7 seconds including loading and export checks. Test trajectories were not opened during training. Final test evaluation is recorded below.
+
+
 ### Official iterations 34 to 36: frozen 100-target test plan
 
-Ticket 11110 evaluates seeds 7, 1 and 2 from ticket 11109 without retraining. Each seed attempts all 100 reserved test targets. Training and validation chose every checkpoint; representative seed 7 was fixed before simulation outcomes.
+The full baseline evaluation tests the trained models for seeds 7, 1 and 2 without retraining. Each seed attempts all 100 reserved test targets. Training and validation chose every checkpoint; representative seed 7 was fixed before simulation outcomes.
 
 Success requires PARK, STOP and a true gripper-to-dot distance of at most 10 mm at the exact STOP step. Closest approach and drift during the following 0.5 seconds are reported separately. Without STOP, the deadline is expert completion plus 4 seconds. No PARK, no STOP and numerical failures remain in the denominator.
 
 Camera and driving updates run at 30 Hz, reaching torques and arm encoders at 1 kHz. Inputs use encoders and the rendered camera/tracker. The original native PD-plus-model-gravity arm hold remains during driving. Encoder quantisation, camera error, robot model and limits remain unchanged; no added noise or dynamics effects.
 
 The smoke checks below found no successful 10 mm stops, so the expectation is weak final reaching performance. This evaluation measures that baseline honestly; no test outcomes will be used to change the model or deadline. All 300 attempts, per-seed Wilson intervals, training loss histories and test replays will be reported. The old validation-only MLflow entries are archived; the official test runs use iterations 34 to 36.
+
+
 ### Validation smoke checks
 
 Ten predetermined validation targets per seed, used only to check integration. These are not official test results or numbered MLflow runs. The full saved records remain available; no validation animations are loaded here.
@@ -937,6 +946,8 @@ print(f"Resumed segment: {completion['resumed_elapsed_s']/60:.1f} minutes, with 
 
     Active simulation time: 19.9 minutes across both execution segments; paused time excluded.
     Resumed segment: 11.4 minutes, with 65 earlier attempts retained.
+
+
 ### Rendering and execution checks
 
 The full 256 × 256 fisheye RGB-D camera, five 192 × 192 faces, visibility/occlusion, 30 Hz camera/driving rate, 1 kHz physics/torque rate and all frozen policy settings were preserved. Constant fisheye pixel mappings are cached. During driving, the native controller advances between camera updates; Python also reads the state one tick before each camera update to preserve the exact arm encoder velocity at PARK. After PARK, arm feedback remains at every millisecond.
@@ -1034,6 +1045,8 @@ print('Full image and policy hashes are preserved in the speed-check evidence fi
 
 
     Full image and policy hashes are preserved in the speed-check evidence files.
+
+
 ### Iteration 34: golden data, seed 7, results
 
 Official test evaluation of the frozen seed-7 models. The full table covers all 100 reserved targets. No retraining occurred during this evaluation.
@@ -3299,6 +3312,8 @@ display(Markdown(test_report.reading(7)))
 
 
 Seed 7: 47/100 PARK, 47/100 STOP and 0/100 successful stops within 10 mm (Wilson 95% interval 0.0–3.7%). 0/100 came within 10 mm during reaching; passing through is not a successful stop. Median parking error was 27.3 cm among parked attempts; median distance at STOP was 400.4 mm among stopped attempts. 53 attempts timed out and 0 had execution/termination failures. These conditional medians exclude attempts without the relevant event; the success rate keeps all 100. This is a frozen baseline result, not a basis for selecting checkpoints. Representative seed 7 remains the validation-selected seed.
+
+
 ### Iteration 35: golden data, seed 1, results
 
 Official test evaluation of the frozen seed-1 models. The full table covers all 100 reserved targets. No retraining occurred during this evaluation.
@@ -5564,6 +5579,8 @@ display(Markdown(test_report.reading(1)))
 
 
 Seed 1: 98/100 PARK, 60/100 STOP and 0/100 successful stops within 10 mm (Wilson 95% interval 0.0–3.7%). 0/100 came within 10 mm during reaching; passing through is not a successful stop. Median parking error was 22.1 cm among parked attempts; median distance at STOP was 558.8 mm among stopped attempts. 40 attempts timed out and 0 had execution/termination failures. These conditional medians exclude attempts without the relevant event; the success rate keeps all 100. This is a frozen baseline result, not a basis for selecting checkpoints. Representative seed 7 remains the validation-selected seed.
+
+
 ### Iteration 36: golden data, seed 2, results
 
 Official test evaluation of the frozen seed-2 models. The full table covers all 100 reserved targets. No retraining occurred during this evaluation.
@@ -7839,6 +7856,7 @@ The historical `driving_v2_sensors.ipynb` remains unchanged at 361 cells. Valida
 
 
 ## Development iteration: camera height for driving
+
 ### Plan and expected results
 
 Add one sensor input: tracked target height relative to the robot, in metres. Driving changes from 16 -> 16 -> 16 to 17 -> 16 -> 16, with the same four wheel-speed outputs and time-to-PARK head. All wheel-angle and speed inputs stay. Height comes from the existing camera/tracker, zero before first detection and held when temporarily hidden. There is no search rule or simulator-truth input.
@@ -7850,7 +7868,10 @@ Compare baseline and height models on the same six validation targets, selected 
 Prediction: lower median parking error, especially for low/high targets whose expert parking distance changes with height. Equal or worse paired parking error does not support improvement on this screen. Report every case, PARK/STOP counts, heading, closest reach and distance at STOP; six targets and one seed do not establish generalisation.
 
 Frozen validation cases: 673, 506, 830, 720, 16, 333. Selection uses target metadata and initial visibility, never model outcomes. This is a development comparison, not an official test iteration or MLflow run.
+
+
 ### Camera-height experiment: saved configuration and checks
+
 
 
 ```python
@@ -7947,7 +7968,10 @@ print('Baseline replay:', height_checks['baseline_dot506_parity'])
     Twelve full simulations: 43.67 s
     Checks: legacy input parity; causal zero before sighting; tracked height retained when hidden
     Baseline replay: exact PARK/STOP times, parking error, closest approach and STOP error match previous validation recording
+
+
 ### Training and validation loss: unchanged objectives
+
 
 
 ```python
@@ -7966,7 +7990,11 @@ fig.tight_layout(); plt.show()
 
 
 ![png](golden_dataset_files/golden_dataset_63_0.png)
+
+
+
 ### Paired results: complete driving and reaching episodes
+
 
 
 ```python
@@ -8174,7 +8202,10 @@ display(height_score.round(2))
   </tbody>
 </table>
 </div>
+
+
 ### Where height helped and where it did not
+
 
 
 ```python
@@ -8194,7 +8225,11 @@ fig.tight_layout(); plt.show()
 
 
 ![png](golden_dataset_files/golden_dataset_67_0.png)
+
+
+
 ### Reading the result
+
 
 
 ```python
@@ -8230,7 +8265,10 @@ Keep camera-derived height and remove only the six wheel-speed inputs (four indi
 Train driving from scratch with seed 7 and the same 100 training/100 validation runs, 300 epochs, Adam 0.01, FP32, losses and scaling convention. Keep the reaching checkpoint unchanged. Compare with the saved 17-input height model on the same six initially visible validation targets: 673, 506, 830, 720, 16, 333. Run both complete systems from the normal start through reaching. No search rules, test-set evaluation, new official MLflow entry or camera videos.
 
 Hypothesis: removing the speed shortcut may improve parking even if offline command loss rises. No improvement is assumed; equal/worse parking error would not support the change on this screen. Preserve the previous comparison and append the paired results. One seed and six targets remain a development check.
+
+
 ### No-speed comparison: inputs and execution
+
 
 
 ```python
@@ -8330,7 +8368,10 @@ print('Training including loading: %.2f s; 12 full simulations: %.2f s' % (ns_tr
     Wheel speeds remain in the tracker. Reaching weights unchanged. Seed 7, 300 epochs, same losses.
     Selected epoch: 299
     Training including loading: 11.89 s; 12 full simulations: 45.89 s
+
+
 ### No-speed comparison: losses
+
 
 
 ```python
@@ -8347,7 +8388,11 @@ axes[0].legend(fontsize=8); fig.tight_layout(); plt.show()
 
 
 ![png](golden_dataset_files/golden_dataset_74_0.png)
+
+
+
 ### No-speed comparison: six paired full runs
+
 
 
 ```python
@@ -8555,7 +8600,10 @@ display(ns_scores.round(2))
   </tbody>
 </table>
 </div>
+
+
 ### No-speed comparison: parking and reaching
+
 
 
 ```python
@@ -8575,7 +8623,11 @@ fig.tight_layout();plt.show()
 
 
 ![png](golden_dataset_files/golden_dataset_78_0.png)
+
+
+
 ### No-speed comparison: reading the result
+
 
 
 ```python
@@ -8612,6 +8664,8 @@ Freeze the improved 11-input driving model and the existing 17-input STOP-distan
 Each variant starts from scratch. Select its checkpoint by minimum validation loss across its training budget; do not select by simulator results. Save all epoch losses and intermediate PyTorch checkpoints at 300, 600 and 1,200 epochs. Use the same 100 training and 100 validation runs. Six full validation episodes per variant: 673, 506, 830, 720, 16, 333. Compare with the previous six runs of the improved driving model plus original reaching network. Every simulation starts normally; no isolated PARK resets or search rules. The reserved test set is untouched.
 
 Hypotheses: longer training may reduce underfitting; width may improve the state-to-torque mapping; history may resolve ambiguity from a single observation. None is assumed to help. Report all six runs, parking, closest approach, STOP error and drift for each variant. This cumulative design tests successive changes, not independent effects. One seed and six initially visible targets remain a development screen.
+
+
 ### Cumulative batch: shared evidence and outcomes
 
 Closest distance covers reaching and the 0.5-second observation after STOP. STOP is a completion signal; learned torques continue during that observation, so a closer pass after STOP is not a successful stop. The distance at STOP is reported separately.
@@ -8729,7 +8783,10 @@ print('Fixed seed 7 and six validation targets; frozen driving and STOP networks
 
     Total training/loading: 239.7 s; 18 full simulations: 62.3 s
     Fixed seed 7 and six validation targets; frozen driving and STOP networks; no test evaluation.
+
+
 ### 1,200 epochs, 64-unit layers
+
 
 
 ```python
@@ -8796,6 +8853,7 @@ print('The auxiliary distance head trains with the torque network; the separate 
 #### Training and validation losses
 
 
+
 ```python
 ab_name='longer';ab_parent='baseline'
 fig,axes=plt.subplots(1,2,figsize=(12,3.5))
@@ -8815,6 +8873,7 @@ axes[0].legend(fontsize=8);fig.tight_layout();plt.show()
 
 
 #### Six full validation episodes
+
 
 
 ```python
@@ -8996,6 +9055,7 @@ display(ab_score.loc[[ab_parent,ab_name]].round(2))
 #### Actual distance and frozen STOP prediction during reaching
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6),sharex=False)
 for ax,dot in zip(axes.flat,ab_config['validation_cases']):
@@ -9017,6 +9077,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 #### Reading this comparison
 
 
+
 ```python
 ab_name='longer';ab_parent='baseline'
 b=ab_score.loc[ab_parent];c=ab_score.loc[ab_name]
@@ -9035,7 +9096,10 @@ Against **baseline**, **longer** improved closest approach on **5/6** targets. M
 The driving model and separate STOP weights were frozen. STOP predictions can still change because each torque policy creates different sensor observations. Undefined STOP distances are omitted from their median, while all six attempts remain in the counts. The full episode, including the handover, is evaluated from the normal start.
 
 This cumulative, single-seed six-target screen does not establish generalisation or isolate interactions among changes. Selected epochs use offline validation loss only. No official MLflow iteration or reserved-test evaluation was created.
+
+
 ### 1,200 epochs, 128-unit layers
+
 
 
 ```python
@@ -9102,6 +9166,7 @@ print('The auxiliary distance head trains with the torque network; the separate 
 #### Training and validation losses
 
 
+
 ```python
 ab_name='wider';ab_parent='longer'
 fig,axes=plt.subplots(1,2,figsize=(12,3.5))
@@ -9121,6 +9186,7 @@ axes[0].legend(fontsize=8);fig.tight_layout();plt.show()
 
 
 #### Six full validation episodes
+
 
 
 ```python
@@ -9302,6 +9368,7 @@ display(ab_score.loc[[ab_parent,ab_name]].round(2))
 #### Actual distance and frozen STOP prediction during reaching
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6),sharex=False)
 for ax,dot in zip(axes.flat,ab_config['validation_cases']):
@@ -9323,6 +9390,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 #### Reading this comparison
 
 
+
 ```python
 ab_name='wider';ab_parent='longer'
 b=ab_score.loc[ab_parent];c=ab_score.loc[ab_name]
@@ -9341,7 +9409,10 @@ Against **longer**, **wider** improved closest approach on **1/6** targets. Medi
 The driving model and separate STOP weights were frozen. STOP predictions can still change because each torque policy creates different sensor observations. Undefined STOP distances are omitted from their median, while all six attempts remain in the counts. The full episode, including the handover, is evaluated from the normal start.
 
 This cumulative, single-seed six-target screen does not establish generalisation or isolate interactions among changes. Selected epochs use offline validation loss only. No official MLflow iteration or reserved-test evaluation was created.
+
+
 ### 1,200 epochs, 128-unit layers, short sensor history
+
 
 
 ```python
@@ -9408,6 +9479,7 @@ print('The auxiliary distance head trains with the torque network; the separate 
 #### Training and validation losses
 
 
+
 ```python
 ab_name='history';ab_parent='wider'
 fig,axes=plt.subplots(1,2,figsize=(12,3.5))
@@ -9427,6 +9499,7 @@ axes[0].legend(fontsize=8);fig.tight_layout();plt.show()
 
 
 #### Six full validation episodes
+
 
 
 ```python
@@ -9608,6 +9681,7 @@ display(ab_score.loc[[ab_parent,ab_name]].round(2))
 #### Actual distance and frozen STOP prediction during reaching
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6),sharex=False)
 for ax,dot in zip(axes.flat,ab_config['validation_cases']):
@@ -9627,6 +9701,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 
 
 #### Reading this comparison
+
 
 
 ```python
@@ -9660,7 +9735,10 @@ The four configurations are: (1) height-enabled 17-input driving and original ar
 Reuse the existing exact original/longer/wider arm checkpoints, whose inputs, torque loss and separate STOP network are unchanged. This keeps all four comparisons against the preceding time-based PARK results controlled. Arm training budgets and selected checkpoints remain as recorded in the preceding sections; the arm STOP threshold stays 10 mm. Two new driving trainings and 24 new full simulations are needed.
 
 Hypothesis: predicting remaining distance may make the PARK decision more accurate than predicting remaining time. Compare each configuration to its own saved time-based PARK counterpart; lower median parking error supports the hypothesis on this small screen. Report every case including non-parks and non-stops, closest reach and distance at arm STOP. Six initially visible targets and one seed do not establish generalisation or search ability. Full rendering, sensor rates, physics, command clipping and deadlines are unchanged. No validation animations or official MLflow iterations.
+
+
 ### Distance-based PARK: four paired comparisons
+
 
 
 ```python
@@ -9828,7 +9906,10 @@ print('Seed 7. Same six initially visible validation targets. No reserved test e
 
 
 Parking error is base distance to the expert PARK position. Reach distances are gripper-to-dot distances. Closest reach includes the 0.5-second observation after arm STOP, during which torque control continues. Missing PARK/STOP outcomes remain in counts and have no corresponding distance median.
+
+
 ### Camera height, original arm
+
 
 
 ```python
@@ -9892,6 +9973,7 @@ print('Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert
 #### Driving training and validation losses
 
 
+
 ```python
 pd_drive='height17'
 pd_h=pd.DataFrame(json.loads((PD/'models'/pd_drive/'driving_seed7_history.json').read_text()))
@@ -9920,6 +10002,7 @@ print('The old time-target loss and new distance-target loss measure different q
 
 
 #### Same six full validation episodes
+
 
 
 ```python
@@ -10135,6 +10218,7 @@ display(pd_score.loc[pd_name].round(2))
 #### PARK prediction versus actual distance to the expert parking position
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6))
 for ax,dot in zip(axes.flat,pd_config['validation_cases']):
@@ -10158,6 +10242,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 
 
 #### Reaching after the new PARK decision
+
 
 
 ```python
@@ -10184,6 +10269,7 @@ axes.flat[2].legend(fontsize=7);fig.tight_layout();plt.show()
 #### What changed
 
 
+
 ```python
 pd_name='height';before=pd_score.loc[(pd_name,'time')];after=pd_score.loc[(pd_name,'distance')]
 pairs=pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values='park_cm')
@@ -10201,7 +10287,10 @@ Changing PARK supervision improved parking error on **4/4** targets with PARK in
 The distance-based configuration issued PARK on **4/6** and arm STOP on **4/6**, with **0/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
 
 The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows.
+
+
 ### Remove driving speed inputs, original arm
+
 
 
 ```python
@@ -10265,6 +10354,7 @@ print('Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert
 #### Driving training and validation losses
 
 
+
 ```python
 pd_drive='no_speed11'
 pd_h=pd.DataFrame(json.loads((PD/'models'/pd_drive/'driving_seed7_history.json').read_text()))
@@ -10293,6 +10383,7 @@ print('The old time-target loss and new distance-target loss measure different q
 
 
 #### Same six full validation episodes
+
 
 
 ```python
@@ -10508,6 +10599,7 @@ display(pd_score.loc[pd_name].round(2))
 #### PARK prediction versus actual distance to the expert parking position
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6))
 for ax,dot in zip(axes.flat,pd_config['validation_cases']):
@@ -10533,6 +10625,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 #### Reaching after the new PARK decision
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6))
 for ax,dot in zip(axes.flat,pd_config['validation_cases']):
@@ -10555,6 +10648,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 #### What changed
 
 
+
 ```python
 pd_name='no_speed';before=pd_score.loc[(pd_name,'time')];after=pd_score.loc[(pd_name,'distance')]
 pairs=pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values='park_cm')
@@ -10572,7 +10666,10 @@ Changing PARK supervision improved parking error on **1/6** targets with PARK in
 The distance-based configuration issued PARK on **6/6** and arm STOP on **6/6**, with **0/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
 
 The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows.
+
+
 ### Retain those changes, longer-trained arm
+
 
 
 ```python
@@ -10636,6 +10733,7 @@ print('Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert
 #### Driving training and validation losses
 
 
+
 ```python
 pd_drive='no_speed11'
 pd_h=pd.DataFrame(json.loads((PD/'models'/pd_drive/'driving_seed7_history.json').read_text()))
@@ -10664,6 +10762,7 @@ print('The old time-target loss and new distance-target loss measure different q
 
 
 #### Same six full validation episodes
+
 
 
 ```python
@@ -10879,6 +10978,7 @@ display(pd_score.loc[pd_name].round(2))
 #### PARK prediction versus actual distance to the expert parking position
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6))
 for ax,dot in zip(axes.flat,pd_config['validation_cases']):
@@ -10904,6 +11004,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 #### Reaching after the new PARK decision
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6))
 for ax,dot in zip(axes.flat,pd_config['validation_cases']):
@@ -10926,6 +11027,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 #### What changed
 
 
+
 ```python
 pd_name='longer_arm';before=pd_score.loc[(pd_name,'time')];after=pd_score.loc[(pd_name,'distance')]
 pairs=pd_data[pd_data.variant==pd_name].pivot(index='dot',columns='park_target',values='park_cm')
@@ -10943,7 +11045,10 @@ Changing PARK supervision improved parking error on **1/6** targets with PARK in
 The distance-based configuration issued PARK on **6/6** and arm STOP on **6/6**, with **0/6** within 10 mm at arm STOP. This comparison changes the PARK target and its threshold units, with the same wheel-command loss and arm weights. Both the wheel and PARK heads share a trunk, so retraining can change wheel commands as well as the PARK decision.
 
 The 5 cm threshold was fixed before the runs. Training checkpoints were selected by offline validation loss, not these outcomes. Six initially visible targets and one seed remain a development check; no claim of generalisation follows.
+
+
 ### Retain those changes, wider arm
+
 
 
 ```python
@@ -11007,6 +11112,7 @@ print('Driving 300 epochs; two 16-unit hidden layers. Sensor inputs only; expert
 #### Driving training and validation losses
 
 
+
 ```python
 pd_drive='no_speed11'
 pd_h=pd.DataFrame(json.loads((PD/'models'/pd_drive/'driving_seed7_history.json').read_text()))
@@ -11035,6 +11141,7 @@ print('The old time-target loss and new distance-target loss measure different q
 
 
 #### Same six full validation episodes
+
 
 
 ```python
@@ -11250,6 +11357,7 @@ display(pd_score.loc[pd_name].round(2))
 #### PARK prediction versus actual distance to the expert parking position
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6))
 for ax,dot in zip(axes.flat,pd_config['validation_cases']):
@@ -11275,6 +11383,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 #### Reaching after the new PARK decision
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6))
 for ax,dot in zip(axes.flat,pd_config['validation_cases']):
@@ -11295,6 +11404,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 
 
 #### What changed
+
 
 
 ```python
@@ -11325,7 +11435,10 @@ Use the current 11-input no-speed driving model, two 16-unit layers, seed 7, 300
 Freeze the wider arm checkpoint and its separate STOP network from the preceding distance-PARK comparison. Evaluate only six full validation episodes from the normal start: 673, 506, 830, 720, 16, 333. Compare against the six saved weight-1 wider-arm runs. This fixes arm weights while changing only the driving loss coefficient. Camera and driving remain at 30 Hz, arm torque and physics at 1 kHz, with unchanged rendering, sensor models, clipping and deadlines. The test set remains untouched.
 
 Hypothesis: increasing PARK's influence may reduce actual parking error from the weight-1 median of 8.4 cm, without increasing non-parks. Equal or worse median parking error does not support that improvement on this screen. A lower PARK prediction loss alone does not establish better driving. Report raw wheel/PARK validation losses, all six PARK/STOP outcomes, actual parking and gripper distances. No official iteration, MLflow run or validation animation. Preserve the preceding 166 notebook cells.
+
+
 ### PARK weight 10 versus weight 1
+
 
 
 ```python
@@ -11422,6 +11535,7 @@ print('Closest distance includes the 0.5-second observation after arm STOP. Miss
 #### Raw training and validation losses
 
 
+
 ```python
 pw_hist={weight:pd.DataFrame(json.loads((root/'models/no_speed11/driving_seed7_history.json').read_text())) for weight,root in [(1,PW_BASE),(10,PW)]}
 fig,axes=plt.subplots(1,2,figsize=(12,3.5))
@@ -11498,6 +11612,7 @@ print('Raw component losses are comparable; total loss has a different coefficie
 
 
 #### Paired outcomes for the same six targets
+
 
 
 ```python
@@ -11652,6 +11767,7 @@ print('Parking error improved on %d/%d targets with PARK in both conditions.' % 
 #### PARK predictions versus actual remaining distance
 
 
+
 ```python
 fig,axes=plt.subplots(2,3,figsize=(12,6))
 for ax,dot in zip(axes.flat,pw_config['validation_cases']):
@@ -11672,6 +11788,7 @@ axes.flat[0].legend(fontsize=7);fig.tight_layout();plt.show()
 
 
 #### Reaching with the unchanged arm checkpoint
+
 
 
 ```python
@@ -11697,6 +11814,7 @@ fig.tight_layout();plt.show()
 #### Reading this single-change experiment
 
 
+
 ```python
 b=pw_score.loc[1];c=pw_score.loc[10]
 display(Markdown(f"""Increasing the PARK-distance coefficient from 1 to 10 changed median parking error from **{b.median_park_cm:.1f} to {c.median_park_cm:.1f} cm**. The new model issued PARK in **{int(c.PARK)}/6** and arm STOP in **{int(c.STOP)}/6** runs. Median closest reach changed from **{b.median_closest_mm:.1f} to {c.median_closest_mm:.1f} mm**, and median distance at arm STOP from **{b.median_arm_STOP_mm:.1f} to {c.median_arm_STOP_mm:.1f} mm**. Success within 10 mm at arm STOP was **{int(c.within_10mm)}/6**.
@@ -11708,6 +11826,8 @@ Only the driving loss coefficient changed. The shared trunk means this can alter
 Increasing the PARK-distance coefficient from 1 to 10 changed median parking error from **8.4 to 11.1 cm**. The new model issued PARK in **6/6** and arm STOP in **6/6** runs. Median closest reach changed from **104.9 to 113.2 mm**, and median distance at arm STOP from **214.6 to 220.6 mm**. Success within 10 mm at arm STOP was **0/6**.
 
 Only the driving loss coefficient changed. The shared trunk means this can alter wheel commands as well as PARK predictions. The arm weights stayed identical; changes in reaching reflect a different handover and subsequent trajectory. Neither the 5 cm threshold nor the training budget was adjusted after these results. The six cases are initially visible validation targets and use one seed, so this is a development comparison, not a generalisation result. No official MLflow run or reserved-test evaluation was created.
+
+
 ### Development checks: half-metre PARK labels, then longer driving training
 
 Plan recorded before training: use the 11-input no-wheel-speed driving model, seed 7, 16/16 hidden layers, Adam 0.01, equal weight per run and unchanged wider arm plus STOP checkpoint. Both full runs retain camera/driving at 30 Hz and arm torque/physics at 1 kHz.
@@ -11821,7 +11941,10 @@ print('Six full validation episodes per new model; one seed. Same frozen wider a
 
 
     Six full validation episodes per new model; one seed. Same frozen wider arm and separate STOP checkpoint.
+
+
 ### Half-metre PARK target: 300 driving epochs
+
 
 
 ```python
@@ -12141,7 +12264,10 @@ print('Arm weights are unchanged. The traces include 0.5 seconds after STOP with
 
 
     Arm weights are unchanged. The traces include 0.5 seconds after STOP with learned holding torques. Closest distance includes that period; distance at STOP does not.
+
+
 ### Half-metre PARK target: 1000 driving epochs
+
 
 
 ```python
@@ -12471,6 +12597,8 @@ print('Arm weights are unchanged. The traces include 0.5 seconds after STOP with
 
 
     Arm weights are unchanged. The traces include 0.5 seconds after STOP with learned holding torques. Closest distance includes that period; distance at STOP does not.
+
+
 ### Reading the half-metre and longer-training checks
 
 The original prediction was above 70 accurate first triggers out of 100 recorded validation trajectories. The half-metre target at 300 epochs reaches 60, up from 38, so it improves the result without meeting that prediction. It also reduces first triggers beyond 10 cm from 17 to 8. At 1,000 epochs, accurate first triggers fall to 37 despite a lower mean error near PARK: regression error and a first threshold crossing measure different things.
@@ -12478,6 +12606,8 @@ The original prediction was above 70 accurate first triggers out of 100 recorded
 The two runs share exactly the same first 300 updates, verified from all six raw/total loss fields. The arm checkpoint is identical and the physical PARK threshold is unchanged. The 1,000-epoch model is selected at epoch 993 by total offline validation loss. Changing the target clip alters supervision far from PARK and increases the squared-error contribution of physical errors within the final half metre; this is not a pure change of units.
 
 These are six repeatedly used, initially visible validation targets and one seed. They support a development decision, not a generalisation claim. Keep test data untouched. No new official MLflow runs or replay animations were created.
+
+
 ### Iterations 37 to 40: cumulative time-to-PARK full test plan
 
 Freeze the four existing seed-7 configurations before testing: (37) camera height with original arm; (38) remove six wheel-speed features; (39) retain that driving model and extend arm torque training to 1,200 epochs; (40) widen the arm torque layers to 128/128. Driving remains 300 epochs with wheel MSE plus time-to-PARK MSE, 3-second normalization and a 0.25-second trigger. Arm STOP remains the same separately trained distance network.
@@ -12603,7 +12733,10 @@ print('Total simulation wall time:',json.loads((tc.ROOT/'completion.json').read_
     Four frozen seed-7 configurations; all 100 test targets each. No retraining or test-based checkpoint selection.
     Test targets were previously used for baseline evaluation; this is not a new blind test.
     Total simulation wall time: 1132.591391891241 seconds
+
+
 ### Iteration 37: cumulative time-to-PARK height
+
 
 
 ```python
@@ -13139,7 +13272,10 @@ display(Markdown(tc.reading(tc_name)))
 
 
 Iteration 37: 87/100 PARK, 80/100 STOP, 0/100 within 10 mm at STOP. Median park error 18.7 cm among parked attempts; median distance at STOP 387.5 mm among stopped attempts. 0 execution/termination failures. Missing PARK or STOP remains a failed full task. Closest distance includes the 0.5-second observation after STOP. These are the same seed-7 checkpoints previously checked on six validation targets. The test targets were previously evaluated for baseline iterations 34 to 36, so this is a subsequent frozen comparison, not a new blind test.
+
+
 ### Iteration 38: cumulative time-to-PARK no-speed
+
 
 
 ```python
@@ -13675,7 +13811,10 @@ display(Markdown(tc.reading(tc_name)))
 
 
 Iteration 38: 100/100 PARK, 92/100 STOP, 0/100 within 10 mm at STOP. Median park error 5.6 cm among parked attempts; median distance at STOP 298.5 mm among stopped attempts. 0 execution/termination failures. Missing PARK or STOP remains a failed full task. Closest distance includes the 0.5-second observation after STOP. These are the same seed-7 checkpoints previously checked on six validation targets. The test targets were previously evaluated for baseline iterations 34 to 36, so this is a subsequent frozen comparison, not a new blind test.
+
+
 ### Iteration 39: cumulative time-to-PARK longer-arm
+
 
 
 ```python
@@ -14211,7 +14350,10 @@ display(Markdown(tc.reading(tc_name)))
 
 
 Iteration 39: 100/100 PARK, 98/100 STOP, 0/100 within 10 mm at STOP. Median park error 5.6 cm among parked attempts; median distance at STOP 193.7 mm among stopped attempts. 0 execution/termination failures. Missing PARK or STOP remains a failed full task. Closest distance includes the 0.5-second observation after STOP. These are the same seed-7 checkpoints previously checked on six validation targets. The test targets were previously evaluated for baseline iterations 34 to 36, so this is a subsequent frozen comparison, not a new blind test.
+
+
 ### Iteration 40: cumulative time-to-PARK wider-arm
+
 
 
 ```python
@@ -14747,6 +14889,8 @@ display(Markdown(tc.reading(tc_name)))
 
 
 Iteration 40: 100/100 PARK, 96/100 STOP, 2/100 within 10 mm at STOP. Median park error 5.6 cm among parked attempts; median distance at STOP 85.2 mm among stopped attempts. 0 execution/termination failures. Missing PARK or STOP remains a failed full task. Closest distance includes the 0.5-second observation after STOP. These are the same seed-7 checkpoints previously checked on six validation targets. The test targets were previously evaluated for baseline iterations 34 to 36, so this is a subsequent frozen comparison, not a new blind test.
+
+
 ### Reading the four full time-to-PARK evaluations
 
 Compare each row to the preceding configuration. The first two change driving inputs; the last two retain the same driving checkpoint and change only arm torque training. The independent arm STOP checkpoint is unchanged throughout. The four configurations were fixed before this evaluation, from the six-case validation development work.
@@ -14754,11 +14898,13 @@ Compare each row to the preceding configuration. The first two change driving in
 All 100 bearings, ranges and heights are included, including initially invisible targets. The earlier six validation targets were initially visible, so the full results can differ substantially. No fixed search policy has been added. Report the full success rate and failures alongside conditional parking and reaching errors; neither a low median nor passing close to the target establishes successful stopping.
 
 This is one seed per configuration. These test targets had already been evaluated in iterations 34 to 36, so the results should be described as a subsequent frozen comparison. Do not treat them as a fresh untouched test or use them to choose epochs. The distance-PARK experiments remain separate and unchanged.
+
+
 ### Full-episode arm training and cumulative robustness: plan
 
 We are replacing the native pre-PARK holding controller with learned arm torque control from reset. Mint hosts execution, notebook, camera recordings and MLflow. No Powerglide availability is assumed.
 
-## Frozen baseline plan: tickets 11109 and 11110
+## Frozen baseline plan: training and evaluation
 
 Seed 7. Keep iteration 40's driving weights unchanged. Train the arm from scratch on all rows in the 100 golden training episodes, including the pre-PARK expert holding commands. Fit outputs on training rows only and select epochs using the 100 validation trajectories. Arm inputs: seven counted joint angles, seven finite-difference encoder speeds, three camera/tracker coordinates and the current PARK flag. At deployment PARK comes from the driving network, never the expert. Torque network 18 -> 128 -> 128 -> 7, with its existing auxiliary distance objective; independent STOP 18 -> 32 -> 16 -> 1. ReLU, FP32, Adam 0.01, 1,200 torque epochs and 600 STOP epochs, validation-selected checkpoints. The camera remains at 30 Hz; learned arm torques run at 1 kHz from the first tick. No PD or added gravity compensation. STOP is only actionable after PARK and learned torques continue during the 0.5 s observation.
 
@@ -14766,16 +14912,16 @@ Prediction: including pre-PARK rows should produce nonzero learned holding torqu
 
 ## Cumulative queue
 
-1. 11111: encoder angle noise before counting, standard deviation 0.0001 rad; derive velocities from consecutive noisy counts. Verify course sampling semantics.
-2. 11112: retain noise; add mass-matrix-scaled damping, c=1 /s.
-3. 11113: retain preceding effects; add elasticity, k=1 /s².
-4. 11114: retain preceding effects; add previous-acceleration motor correction, J=0.001 kg m².
-5. 11115: retain ladder; add causal observation latency, starting with the 3 ms course setting.
-6. 11116: retain effects; random starting poses. Collect 100/100/100 new expert references and render train/validation. Compare fixed and retrained models.
-7. 11117: retain preceding setup; remove a declared window of prepared training rows around PARK and retrain. Preserve sensor history when masking.
-8. 11120, 11121, 11122: compare DART-inspired augmentation, DAgger alone, and DART followed by DAgger, on clean and the cumulative condition. DAgger uses training targets only, with a stateful expert and recorded internal reference. Never invent time-to-PARK labels on student trajectories.
+1. encoder angle noise before counting, standard deviation 0.0001 rad; derive velocities from consecutive noisy counts. Verify course sampling semantics.
+2. retain noise; add mass-matrix-scaled damping, c=1 /s.
+3. retain preceding effects; add elasticity, k=1 /s².
+4. retain preceding effects; add previous-acceleration motor correction, J=0.001 kg m².
+5. retain ladder; add causal observation latency, starting with the 3 ms course setting.
+6. retain effects; random starting poses. Collect 100/100/100 new expert references and render train/validation. Compare fixed and retrained models.
+7. retain preceding setup; remove a declared window of prepared training rows around PARK and retrain. Preserve sensor history when masking.
+8. compare DART-inspired augmentation, DAgger alone, and DART followed by DAgger, on clean and the cumulative condition. DAgger uses training targets only, with a stateful expert and recorded internal reference. Never invent time-to-PARK labels on student trajectories.
 
-Each frozen condition receives 100 validation and 100 test full episodes. Test outcomes are reporting only. Occlusion 11118 and direct weight editing 11123 are deferred. The old independent-lens stack definition in 11119 is superseded by Nat's cumulative instruction.
+Each frozen condition receives 100 validation and 100 test full episodes. Test outcomes are reporting only. Occlusion and direct weight editing are deferred. The old independent-lens stack definition is superseded by Nat's cumulative instruction.
 
 ## If a stage deteriorates
 
@@ -14784,6 +14930,10 @@ Check implementation, causal timestamps and phase coverage first. Compare physic
 ## Status
 
 Preparation in progress. No new training or evaluation has completed yet. Access to Powerglide failed; Nat explicitly authorised Mint instead. Running improvements list and stage status must distinguish planned, running, checked and published work.
+
+
+
+
 ### Iteration 41: full-episode baseline
 
 **What changed:** Learn arm torques from reset, including while driving. Removes the expert holding controller. Physical input scales; frozen iteration-40 driving.
@@ -14795,6 +14945,7 @@ Preparation in progress. No new training or evaluation has completed yet. Access
 **Training provenance:** selected epochs: driving 299, torque 1198, STOP 593. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
 
 
 ```python
@@ -15576,6 +15727,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 100/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 84/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 5.5 cm; median distance at STOP among stopped attempts was 272.7 mm. Median maximum pre-PARK joint deviation was 0.131 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Recovery programme: frozen plan before training
 
 ## Validation decision and recovery branch
@@ -15591,6 +15744,8 @@ The stateful DAgger label path reproduces all 9,549 steps of golden train target
 Each DAgger branch has three rounds on all 100 training targets. Keep all prior rounds and the original demonstrations; the combined branch also keeps both DART collections. New rows supervise commands only. PARK and STOP objectives retain original demonstration supervision. Choose the round on the same six validation targets, using median STOP error, or final error plus 1 m for missing PARK/STOP. This is a small reused development set; report that limitation, then run all 100 validation and test cases for the frozen choice.
 
 The narrow 200-row export check exposed float32 cancellation when nearly constant inputs are standardised and folded into the first layer. A complete real DAgger trajectory passed all exports. Full training still checks folded inference against PyTorch and stops on mismatch. If it recurs, use explicit input normalisation rather than weakening the numerical check.
+
+
 ### Iteration 42: full-episode encoder noise
 
 **What changed:** Add Gaussian encoder-angle noise, standard deviation 0.0001 rad, before quantisation and velocity estimation. Networks unchanged.
@@ -15606,6 +15761,17 @@ The narrow 200-row export check exposed float32 cancellation when nearly constan
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
 
 **Interpretation:** this measures cumulative sensitivity of the original physical-scale model. It does not isolate the same effect on the standardised model. Differencing noisy angle readings can amplify velocity noise; this is a plausible mechanism, not a demonstrated sole cause.
+
+#### Encoder trace audit
+
+Validation target 6, seed 7 was replayed with the frozen evaluator, models, native binary and EGL renderer. Every retained value matched the original: 269 frames, 897 control-log rows, all event/outcome fields, and all 269 camera PNGs byte for byte. The observer added no random draws and changed no commands. It now records 8,967 arm captures and 269 wheel captures, with exact checks of both random streams, quantisation and consecutive-count velocity calculations.
+
+These are newly recorded samples from a deterministic replay. The original logs retained joint states at 30 Hz, so their missing 1 kHz intermediate states cannot be independently compared. The wheel stream consumes 17 random draws per capture; preserving only four would change the run. Its original fixed 1/30 s velocity denominator is retained despite the alternating 33/34 ms capture intervals.
+
+The course configuration calls the angle setting `joint_cov`, but passes `0.0001` as NumPy's normal-distribution standard deviation, in radians. The course also has separate velocity noise; this experiment instead derives sensor velocity from noisy encoder counts. The source excerpts and hashes are saved beside the trace.
+
+The plots below show true angle (audit only), angle after noise, counted angle, encoder counts and the velocity derived from consecutive counts. Their time window is fixed to the first 200 ms; the histograms use the complete episode. The no-noise velocity comparison uses the same moving joint states, so it isolates the measurement effect without claiming how a separately controlled clean run would move. Arm velocity error has standard deviation 0.139–0.144 rad/s across joints; wheel velocity error is 0.014–0.017 rad/s. This verifies noise amplification in the inputs, but does not establish it as the sole cause of task failure.
+
 
 
 ```python
@@ -15742,6 +15908,24 @@ display(full_config)
 for kind in ('driving','torque','stop'):
     chosen=json.loads((overnight.models(full_name)/f'{kind}_seed7_summary.json').read_text())
     print(kind, 'selected epoch',chosen['selected_epoch'],'validation loss',chosen['selected_val_loss'])
+
+from recover_encoder_trace import plot as plot_encoder_trace
+import pandas as pd
+trace_dir=overnight.ROOT/'encoder_noise'/'encoder_trace_audit'
+trace_summary=json.loads((trace_dir/'summary.json').read_text())
+assert trace_summary['replay_output_exact'] and trace_summary['random_streams_exact']
+assert trace_summary['count_and_velocity_equations_exact']
+display(Markdown('**Recovered encoder trace: validation target 6, seed 7**'))
+display(pd.DataFrame([{'sensor':name, 'captures':v['captures'],
+    'angle_noise_sd_rad_min':min(v['angle_noise_sd_rad']),
+    'angle_noise_sd_rad_max':max(v['angle_noise_sd_rad']),
+    'velocity_error_sd_rad_s_min':min(v['velocity_error_sd_rad_s']),
+    'velocity_error_sd_rad_s_max':max(v['velocity_error_sd_rad_s'])}
+    for name,v in trace_summary['statistics'].items()]).set_index('sensor'))
+print(trace_summary['provenance'])
+plot_encoder_trace(trace_dir)
+plt.show()
+
 ```
 
 
@@ -15867,6 +16051,81 @@ for kind in ('driving','torque','stop'):
     driving selected epoch 299 validation loss 0.38417819142341614
     torque selected epoch 1198 validation loss 0.02170979417860508
     stop selected epoch 593 validation loss 0.0030433654319494963
+
+
+
+**Recovered encoder trace: validation target 6, seed 7**
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>captures</th>
+      <th>angle_noise_sd_rad_min</th>
+      <th>angle_noise_sd_rad_max</th>
+      <th>velocity_error_sd_rad_s_min</th>
+      <th>velocity_error_sd_rad_s_max</th>
+    </tr>
+    <tr>
+      <th>sensor</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>arm</th>
+      <td>8967</td>
+      <td>0.000099</td>
+      <td>0.000101</td>
+      <td>0.139148</td>
+      <td>0.144329</td>
+    </tr>
+    <tr>
+      <th>wheel</th>
+      <td>269</td>
+      <td>0.000094</td>
+      <td>0.000102</td>
+      <td>0.014307</td>
+      <td>0.016835</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    New instrumented deterministic replay; every retained original value and camera PNG matches exactly. Original logs did not save 1 kHz joint states, so those intermediate states cannot be independently compared.
+
+
+
+
+![png](golden_dataset_files/golden_dataset_243_5.png)
+
+
+
+
+
+![png](golden_dataset_files/golden_dataset_243_6.png)
+
 
 
 
@@ -16389,6 +16648,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 99/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 99/100 parked, 91/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 6.2 cm; median distance at STOP among stopped attempts was 755.0 mm. Median maximum pre-PARK joint deviation was 1.719 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 44: full-episode damping
 
 **What changed:** Retain encoder noise and add the course motor damping term, c=1. Networks unchanged.
@@ -16404,6 +16665,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
 
 **Interpretation:** this measures cumulative sensitivity of the original physical-scale model. It does not isolate the same effect on the standardised model. Differencing noisy angle readings can amplify velocity noise; this is a plausible mechanism, not a demonstrated sole cause.
+
 
 
 ```python
@@ -17187,6 +17449,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 98/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 88/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 6.3 cm; median distance at STOP among stopped attempts was 707.5 mm. Median maximum pre-PARK joint deviation was 1.826 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 43: full-episode basics standard
 
 **What changed:** Standardise arm inputs using training-set means and standard deviations. Keep the driving checkpoint and training budgets unchanged.
@@ -17200,6 +17464,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Training provenance:** selected epochs: driving 299, torque 1200, STOP 600. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
 
 
 ```python
@@ -17983,6 +18248,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 100/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 91/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 5.3 cm; median distance at STOP among stopped attempts was 168.8 mm. Median maximum pre-PARK joint deviation was 0.059 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 45: full-episode elasticity
 
 **What changed:** Retain noise and damping; add the course elasticity term, k=1, towards zero joint angle. Networks unchanged.
@@ -17998,6 +18265,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
 
 **Interpretation:** this measures cumulative sensitivity of the original physical-scale model. It does not isolate the same effect on the standardised model. Differencing noisy angle readings can amplify velocity noise; this is a plausible mechanism, not a demonstrated sole cause.
+
 
 
 ```python
@@ -18784,6 +19052,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 97/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 99/100 parked, 93/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 6.0 cm; median distance at STOP among stopped attempts was 790.5 mm. Median maximum pre-PARK joint deviation was 1.902 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 46: full-episode inertia
 
 **What changed:** Retain previous effects; add motor inertia J=0.001 kg m² using the previous acceleration. Networks unchanged.
@@ -18799,6 +19069,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
 
 **Interpretation:** this measures cumulative sensitivity of the original physical-scale model. It does not isolate the same effect on the standardised model. Differencing noisy angle readings can amplify velocity noise; this is a plausible mechanism, not a demonstrated sole cause.
+
 
 
 ```python
@@ -19586,6 +19857,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 96/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 94/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 7.2 cm; median distance at STOP among stopped attempts was 779.3 mm. Median maximum pre-PARK joint deviation was 2.046 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 48: full-episode random start fixed
 
 **What changed:** Retain all five disturbances and randomise starting x/y within ±0.15 m and heading within ±30 degrees. Networks unchanged.
@@ -19599,6 +19872,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Training provenance:** selected epochs: driving 299, torque 1198, STOP 593. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
 
 
 ```python
@@ -20387,6 +20661,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 88/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 89/100 parked, 89/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 7.8 cm; median distance at STOP among stopped attempts was 899.3 mm. Median maximum pre-PARK joint deviation was 4.059 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 50: full-episode random start retention
 
 **What changed:** Use exactly the random-start-retrained networks, but restore original starts and clean physics. This changes the evaluation condition, not the weights.
@@ -20400,6 +20676,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Training provenance:** selected epochs: driving 300, torque 1174, STOP 599. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
 
 
 ```python
@@ -21183,6 +21460,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 100/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 93/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 5.9 cm; median distance at STOP among stopped attempts was 806.5 mm. Median maximum pre-PARK joint deviation was 0.093 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Export and plotting repair before resuming recovery
 
 The first DART+DAgger round 2 attempt stopped after training because folded FP32 scaling exceeded the unchanged export tolerance (absolute 0.0001, relative 0.00001). Its selected epoch was 1198, but only epochs 300, 600 and 1200 were saved before export; epoch 1200 is not substituted for the selected checkpoint. The failed attempt and its logs remain intact.
@@ -21192,6 +21471,8 @@ The retry retains explicit input scaling and torque output scaling, in the same 
 Round 2 is retrained in a new models_exportfix1 directory with the same data, seed, architecture, losses, epochs and validation selection. The new recovery_runtime_exportfix1 snapshot preserves the original runtime. The remaining round and previously planned full validation/test comparisons then continue. No test result selects checkpoints or settings.
 
 Distance plots now label attempts without PARK as seconds since reset, retaining every failure. Earlier cells and results are unchanged. Recovered sections remain pending review and publication, not new official iterations.
+
+
 ### Iteration 47: full-episode delay
 
 **What changed:** Add a causal 3 ms observation delay to noise, damping, elasticity and inertia. Networks unchanged.
@@ -21207,6 +21488,7 @@ Distance plots now label attempts without PARK as seconds since reset, retaining
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
 
 **Interpretation:** this measures cumulative sensitivity of the original physical-scale model. It does not isolate the same effect on the standardised model. Differencing noisy angle readings can amplify velocity noise; this is a plausible mechanism, not a demonstrated sole cause.
+
 
 
 ```python
@@ -21995,6 +22277,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 89/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 91/100 parked, 91/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 7.2 cm; median distance at STOP among stopped attempts was 825.9 mm. Median maximum pre-PARK joint deviation was 4.235 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 51: full-episode imperfect park
 
 **What changed:** Retrain after omitting prepared training rows within ±0.25 s of PARK. This was an unapproved substitution for bursty packet loss. Preserve it as exploratory evidence only; it does not complete the requested packet-loss experiment.
@@ -22010,6 +22294,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
 
 **Scope correction:** bursty packets remain untested. Do not describe this row deletion as packet loss or mark that roadmap task complete.
+
 
 
 ```python
@@ -22798,6 +23083,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 99/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 97/100 parked, 97/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 9.0 cm; median distance at STOP among stopped attempts was 945.0 mm. Median maximum pre-PARK joint deviation was 3.630 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 49: full-episode random start retrained
 
 **What changed:** Retrain driving and reaching on random-start expert data with physical input scales. Evaluate with random starts and all five disturbances. The expert retains its original world-origin parking convention.
@@ -22811,6 +23098,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Training provenance:** selected epochs: driving 300, torque 1174, STOP 599. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
 
 
 ```python
@@ -23599,6 +23887,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 84/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 85/100 parked, 85/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 29.5 cm; median distance at STOP among stopped attempts was 801.3 mm. Median maximum pre-PARK joint deviation was 2.477 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 52: full-episode standard stack
 
 **What changed:** Test the clean-trained standardised model under all five disturbances and random starts. This is a separate comparison: the preceding noise ladder used the physical-scale baseline.
@@ -23612,6 +23902,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Training provenance:** selected epochs: driving 299, torque 1200, STOP 600. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
 
 
 ```python
@@ -24400,6 +24691,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 47/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 48/100 parked, 19/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 34.0 cm; median distance at STOP among stopped attempts was 1143.1 mm. Median maximum pre-PARK joint deviation was 108.828 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 53: full-episode dart
 
 **What changed:** Add two batches of 100 perturbed expert episodes to the original data; 199 reached successfully and contributed training rows. Fixed action-noise standard deviations: wheels 0.025 rad/s, arm 0.5 N m, held for 33 ms. Labels are clean expert commands at visited states. DART-inspired fixed noise, not the full adaptive DART algorithm.
@@ -24415,6 +24708,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
 
 **Interpretation:** compare both approach accuracy and completion. A smaller STOP median can coexist with fewer STOPs. The six-case development scores are not estimates of performance across all 100 test targets.
+
 
 
 ```python
@@ -25198,6 +25492,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 100/100 parked and 2/100 met the full task criterion. On the frozen test comparison, 100/100 parked, 78/100 issued STOP, and 1/100 were within 10 mm at STOP. Median parking error among parked attempts was 5.5 cm; median distance at STOP among stopped attempts was 60.9 mm. Median maximum pre-PARK joint deviation was 0.062 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 54: full-episode dart stack
 
 **What changed:** Test the DART-trained model under all five disturbances and random starts. Training used action perturbations, not the full evaluation disturbance stack.
@@ -25211,6 +25507,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Training provenance:** selected epochs: driving 300, torque 1168, STOP 582. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
 
 
 ```python
@@ -25999,6 +26296,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 68/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 65/100 parked, 64/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 19.1 cm; median distance at STOP among stopped attempts was 655.6 mm. Median maximum pre-PARK joint deviation was 7.014 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 55: full-episode dagger
 
 **What changed:** Three rounds of 100 student rollouts with stateful shadow-expert labels, retaining the original data and all earlier rounds. Round 3 was selected on six fixed validation cases before full testing. New DAgger rows train command outputs only; they do not train PARK, auxiliary distance or STOP targets.
@@ -26014,6 +26313,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
 
 **Interpretation:** compare both approach accuracy and completion. A smaller STOP median can coexist with fewer STOPs. The six-case development scores are not estimates of performance across all 100 test targets.
+
 
 
 ```python
@@ -26797,6 +27097,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 89/100 parked and 4/100 met the full task criterion. On the frozen test comparison, 84/100 parked, 69/100 issued STOP, and 2/100 were within 10 mm at STOP. Median parking error among parked attempts was 4.2 cm; median distance at STOP among stopped attempts was 37.0 mm. Median maximum pre-PARK joint deviation was 0.061 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 56: full-episode dagger stack
 
 **What changed:** Test the selected DAgger model under all five disturbances and random starts. This is the same checkpoint as its clean test.
@@ -26810,6 +27112,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Training provenance:** selected epochs: driving 292, torque 1186, STOP 600. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
 
 
 ```python
@@ -27598,6 +27901,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 66/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 64/100 parked, 61/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 19.6 cm; median distance at STOP among stopped attempts was 495.6 mm. Median maximum pre-PARK joint deviation was 5.256 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 57: full-episode dart dagger
 
 **What changed:** Retain original and both DART datasets, then aggregate three rounds of 100 student rollouts with shadow-expert command labels. Round 3 was selected on the six validation cases. New DAgger rows do not train PARK or STOP. Round 2 export was repaired and rerun without loosening the numerical tolerance; the selected model is round 3.
@@ -27613,6 +27918,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
 
 **Interpretation:** compare both approach accuracy and completion. A smaller STOP median can coexist with fewer STOPs. The six-case development scores are not estimates of performance across all 100 test targets.
+
 
 
 ```python
@@ -28396,6 +28702,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 93/100 parked and 1/100 met the full task criterion. On the frozen test comparison, 87/100 parked, 66/100 issued STOP, and 4/100 were within 10 mm at STOP. Median parking error among parked attempts was 4.9 cm; median distance at STOP among stopped attempts was 34.5 mm. Median maximum pre-PARK joint deviation was 0.059 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Iteration 58: full-episode dart dagger stack
 
 **What changed:** Test the selected combined model under all five disturbances and random starts. No bursty-packet loss, occlusion or direct weight perturbation is included.
@@ -28409,6 +28717,7 @@ Both networks controlled the complete run, including learned arm torques before 
 **Training provenance:** selected epochs: driving 300, torque 1187, STOP 582. The curves below belong to the actual checkpoint; frozen stress tests reuse their parent training histories and do not represent new training. Driving predicts four wheel speeds and time to PARK (trigger 0.25 s). The arm predicts seven torques; its STOP network predicts distance (trigger 10 mm). Command losses are MSE, with separate auxiliary MSE terms; run weights are equal. Saved configuration and histories give scaling and exact coefficients.
 
 **Limits:** these test targets have been viewed in earlier experiments. This is a reused-test comparison, not an untouched final estimate. One seed cannot establish seed robustness. Success requires PARK, STOP and distance at STOP ≤10 mm. Closest approach and later drift are diagnostics, not substitutes for that criterion. The complete per-target table, pre-PARK arm analysis, all loss terms, STOP/drift plots and 100-replay player follow below.
+
 
 
 ```python
@@ -29197,6 +29506,8 @@ display(Markdown(overnight.reading(full_name)))
 
 
 Both networks controlled the complete run, including learned arm torques before PARK. On validation, 88/100 parked and 0/100 met the full task criterion. On the frozen test comparison, 87/100 parked, 86/100 issued STOP, and 0/100 were within 10 mm at STOP. Median parking error among parked attempts was 19.6 cm; median distance at STOP among stopped attempts was 321.9 mm. Median maximum pre-PARK joint deviation was 1.755 rad. The 0.5 s after STOP is observed with learned torques still active, not a frozen simulation. These are previously viewed test targets and one seed; this is a frozen subsequent comparison, not an untouched estimate of generalisation. All timeouts and failures remain in the denominator.
+
+
 ### Overnight comparisons: publication and interpretation
 
 Iterations 41–58 are completed 100-test-target evaluations. Each also has a separate completed 100-target validation evaluation. No additional validation simulation is needed for publication. Six-case recovery checks remain development records only.
@@ -29204,6 +29515,7 @@ Iterations 41–58 are completed 100-test-target evaluations. Each also has a se
 The noise ladder starts from iteration 41, not the standardised iteration 43. The stack includes encoder noise, damping, elasticity, inertia, 3 ms delay and random starts. It does not include bursty packets or occlusion. Iteration 51 is outside the agreed scope. Recovery models were trained with added recovery data, then tested separately on clean conditions and on the full stack.
 
 All results use seed 7. Test targets have been reused; subsequent design decisions cannot be presented as blind final-test selection.
+
 
 
 ```python
@@ -29931,3 +30243,4 @@ print('Six fixed validation targets only. No official iteration or MLflow run. S
 **Challenge:** could the lower median simply come from dropping hard cases? The plots above retain every attempt in the success denominator, and each run reports paired comparisons and completion counts. **Decision:** publish the completed comparisons with these limits; do not call the system solved. Keep bursty-packet collection outstanding.
 
 **Next questions, not new experiments authorised by this publication:** which failures are missed transitions versus poor reaching; how much of noise sensitivity comes from finite-difference joint velocity; whether recovery labels should also cover PARK and STOP; and whether a new seed preserves the gain. Keep original recordings and failed exports for provenance.
+

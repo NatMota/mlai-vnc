@@ -1,0 +1,23 @@
+[
+  {
+    "file": "/Users/natanaelmota/github/mlai-vnc/collection/native/reference/robotnik_arm.json",
+    "sha256": "ee65349b469a95257f8e94fc06c22d76629f2b3b6f45ac74521c0e059de9bdf2",
+    "start_line": 40,
+    "end_line": 48,
+    "excerpt": "        \"delay_measure_steps\":[3],\n        \"noise_flag\":[0],\n        \"robot_noise\":[\n                {\n                    \"joint_cov\": 0.0001,\n                    \"joint_vel_cov\": 0.0001,\n                    \"joint_acc_cov\": 0.0001,\n                    \"base_pos_cov\": 0.0001,\n                    \"base_ori_cov\": 0.0001,"
+  },
+  {
+    "file": "/Users/natanaelmota/github/RoboEnv/simulation_and_control/simulation_and_control/sim/pybullet_robot_interface.py",
+    "sha256": "4635296328b78d8e5c4444ba97dbd4fae2323d1bf722faee67114bcd5705534f",
+    "start_line": 1411,
+    "end_line": 1425,
+    "excerpt": "                delayed_state = self.bot[index].state_buffer[0]\n                motor_angles = delayed_state['motor_angles'].copy()\n            else:\n                print(\"buffer is empty\")\n        else:\n            motor_angles = self.bot[index].motor_angles.copy()\n\n        # Add noise if the noise flag is set\n        if self.bot[index].noise_flag:\n            noise = np.random.normal(0, self.bot[index].robot_noise[\"joint_cov\"], size=motor_angles.shape)\n            motor_angles += noise\n\n        return motor_angles\n    \n    def ExtractMotorVelocities(self,index):"
+  },
+  {
+    "file": "/Users/natanaelmota/github/RoboEnv/simulation_and_control/simulation_and_control/sim/pybullet_robot_interface.py",
+    "sha256": "4635296328b78d8e5c4444ba97dbd4fae2323d1bf722faee67114bcd5705534f",
+    "start_line": 1442,
+    "end_line": 1455,
+    "excerpt": "                motor_velocities = delayed_state['motor_velocities'].copy()\n            else:\n                print(\"buffer is empty\")\n        else:\n            motor_velocities = self.bot[index].motor_velocities.copy()\n        \n        # Add noise if the noise flag is set\n        if self.bot[index].noise_flag:\n            noise = np.random.normal(0, self.bot[index].robot_noise[\"joint_vel_cov\"], size=motor_velocities.shape)\n            motor_velocities += noise\n\n        return motor_velocities\n\n    def ComputeMotorAccelerationTMinusOne(self,index):"
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "zero_effect_steps_bit_identical": 100,
+  "command_handoff_exact": true,
+  "missing_arm_rejected": true,
+  "batching_rejected": true,
+  "motor_effects_accounted": true,
+  "delivery_causality": true,
+  "limitation": "Motor-equation accounting check, not full trajectory parity against the Python course wrapper"
+}
