@@ -63,3 +63,10 @@ The frozen disturbance candidate and its three reserved noise-seed evaluations a
 To reproduce a validation episode in the supplied Linux/EGL environment, extract that archive into a new directory, provide the matching golden random-start data under `data/` (with `split.json` and `expert/val/run_45.npz`), then run `python evaluate_hybrid_geometry.py --out validation45 --split val --ids 45 --jobs 1 --camera calibrated_arm_only --record-camera`. The simulation Python requires NumPy and PyBullet. The frozen `condition.json` declares the physics and sensor-noise settings. Use a new copy to change them; do not overwrite a frozen candidate. The original runner's completion label is inherited from validation, so inspect `config.json` for the actual split.
 
 The reported seeds 7, 1 and 2 change measurement noise only. They reuse the same 100 target locations and recorded starting poses, while driving training seed remains 7. They are not independently trained models. No DART or DAgger data is used. Full camera and 1 kHz traces are in the per-seed recording archives; compact audits in this repository keep the notebook executable without those large downloads.
+
+
+## Unpowered-wheel exploratory probe
+
+The four `rowing_*_probe*` folders preserve two failed strokes and their matched controls. The notebook uses 10 ms plot samples; full 1 kHz records and the recorded video remain in the matching Mint R&D folder. These are development diagnostics, not additional MLflow test iterations. Zero wheel actuator torque was verified on every tick. Neither stroke demonstrated forward propulsion; unexplained rolling in the control prevents a rowing success claim.
+
+`rowing_native` contains an isolated copy of the native physics with only the wheel servo bypassed, plus its passive check. The original frozen native binaries and controllers were not changed. The exploratory Python scripts expect the original R&D layout, including `native/assets`, `trig_position_training/selected.npz` and `identified_torque_training/identified_torque.npz`; they are not installed into the production runtime.

@@ -1,0 +1,18 @@
+{
+  "mode": "stroke",
+  "seconds": 25.0,
+  "wall_s": 38.997954083024524,
+  "base_final": [
+    -28.1274348591285,
+    0.12090701725150818,
+    -0.004342682240685349
+  ],
+  "forward_displacement_m": -28.127434624539454,
+  "lateral_displacement_m": 0.12090701183203714,
+  "arm_floor_contact_seconds": 0.019,
+  "arm_net_work_J": -1621.4007192609618,
+  "wheel_actuator_work_J": 0.0,
+  "wheel_sent_torque_max_Nm": 0.0,
+  "max_contact_force_N": 10.20725102491028,
+  "columns": "time, base_xyz, base_quat, q17, qd17, sent_wheel4_arm7, ee_xyz, arm_floor_normal_force, arm_net_work, wheel_work"
+}

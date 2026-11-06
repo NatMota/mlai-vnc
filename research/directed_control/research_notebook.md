@@ -2315,3 +2315,130 @@ Five target IDs time out under every noise seed; target 545 additionally times o
 - [Disturbance stack, noise seed 7: 100 recorded test replays](https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/directed-control-rnd/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/test_seed7/viewer_test_seed7.html)
 - [Disturbance stack, noise seed 1: 100 recorded test replays](https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/directed-control-rnd/learned_geometry_branch/stack_reserved_seed1_v1/test_seed1/viewer_test_seed1.html)
 - [Disturbance stack, noise seed 2: 100 recorded test replays](https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/directed-control-rnd/learned_geometry_branch/stack_reserved_seed2_v1/test_seed2/viewer_test_seed2.html)
+
+## Unpowered-wheel rowing probe
+
+This separate, engineered demonstration is not imitation learning and is not a successful locomotion result. All four wheel actuator torques were explicitly zero, rather than commanding zero speed through a braking servo. The same course collision geometry and contact settings were retained; fingers kept their usual fixed-position commands.
+
+Two short stroke attempts and matched stationary-arm controls ran on the Mac in PyBullet at 1 kHz. The second used lower damping on selected joints and a lower floor target; its control used identical gains. These are exploratory diagnostics, not reserved-target evaluations. The native Mint simulator was checked separately with a wheel-servo bypass and zero arm torque.
+
+
+```python
+import json
+import pandas as pd
+from pathlib import Path
+root = Path.cwd()
+rowing_names = ['rowing_hold_probe1', 'rowing_stroke_probe1', 'rowing_hold_probe2', 'rowing_stroke_probe2']
+rowing_rows = [dict(case=n, **json.loads((root/n/'summary.json').read_text())) for n in rowing_names]
+pd.DataFrame(rowing_rows)[['case', 'forward_displacement_m', 'arm_floor_contact_seconds', 'wheel_sent_torque_max_Nm', 'wheel_actuator_work_J']]
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>case</th>
+      <th>forward_displacement_m</th>
+      <th>arm_floor_contact_seconds</th>
+      <th>wheel_sent_torque_max_Nm</th>
+      <th>wheel_actuator_work_J</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>rowing_hold_probe1</td>
+      <td>-28.496120</td>
+      <td>0.000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>rowing_stroke_probe1</td>
+      <td>-28.127435</td>
+      <td>0.019</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>rowing_hold_probe2</td>
+      <td>-27.468855</td>
+      <td>0.000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>rowing_stroke_probe2</td>
+      <td>-20.176495</td>
+      <td>7.231</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+fig, axes = plt.subplots(1, 2, figsize=(11, 3.6))
+for name in ['rowing_hold_probe2', 'rowing_stroke_probe2']:
+    d = np.load(root/name/'trajectory_10ms.npz')['data']
+    axes[0].plot(d[:,0], d[:,1]-d[0,1], label=name.replace('rowing_', '').replace('_probe2',''))
+    axes[1].plot(d[:,0], d[:,-3], label=name.replace('rowing_', '').replace('_probe2',''))
+axes[0].set(ylabel='Forward displacement (m)', xlabel='Time (s)', title='Both attempts roll backwards')
+axes[1].set(ylabel='Arm-ground normal force (N)', xlabel='Time (s)', title='Stroke makes contact with the floor')
+for ax in axes: ax.legend(); ax.grid(alpha=.25)
+fig.tight_layout()
+fig.savefig('rowing_diagnostic.png', dpi=160)
+plt.show()
+```
+
+
+
+![png](research_notebook_files/research_notebook_45_0.png)
+
+
+
+The second stroke produced 7.231 seconds of arm-ground contact and zero wheel actuator work. It ended 20.18 m backwards; the matched control ended 27.47 m backwards. This is braking relative to an unexplained rolling control, not forward propulsion. The first stroke also failed. Both attempts and controls are retained.
+
+The separate native zero-arm/zero-wheel check moved 1.247 m backwards in 5 seconds. It is not identical to the stationary-arm control because the arm can fall and the fingers retain position commands. The precise source of the large rolling motion remains unresolved; these observations do not establish an energy-conservation defect. No contact setting was changed to manufacture a successful demonstration.
+
+[Recorded failed stroke](https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/directed-control-rnd/rowing_stroke_probe2/recorded_probe.mp4)
+
+### Analytical computation and the remaining simulation cost
+
+The learned trigonometric position map already provides position and a Jacobian directly, without simulating a trajectory. An algebraically equivalent implementation was checked at 500 random joint configurations: maximum absolute difference below 1.5e-15. On the Mac, median evaluation fell from 654 to 279 microseconds for the seven-angle map, about 2.34 times faster. This is an inference-kernel measurement, not an end-to-end simulation speedup; frozen evaluated models were not changed.
+
+It does not remove contact, motor dynamics or camera rendering from a faithful evaluation. A reduced dynamics model could be faster, but would require separate validation and would not replace the existing simulator evidence. Encoding a model or trajectory into one integer, including a Gödel-style encoding, does not by itself remove the work needed to decode it or compute the next physical state. No such shortcut was implemented or claimed.
+
+## Published disturbance records
+
+- [Disturbance noise seed 7: verified MLflow run](https://nm-linmint-mlflow.taile381c0.ts.net/#/experiments/4/runs/7211873c67b645f39c97282fa5f06c3d)
+- [Disturbance noise seed 1: verified MLflow run](https://nm-linmint-mlflow.taile381c0.ts.net/#/experiments/4/runs/b8a50ca39aa743f7b916ce9b0d8c77e2)
+- [Disturbance noise seed 2: verified MLflow run](https://nm-linmint-mlflow.taile381c0.ts.net/#/experiments/4/runs/924b1f04428142e68281028eb6d7e081)
+
+All three runs contain frozen models, source archives, fitting records, full trajectory/camera recordings, alignment checks and the test metrics. Noise seeds are repeat measurements of one controller, not separately trained models.
