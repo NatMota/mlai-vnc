@@ -17,6 +17,8 @@ Follow collection → training → evaluation → analysis. Existing paths are r
 | Saved-result analysis | [Golden](../v2_sensors/arm/report_golden.py), [curriculum](../v2_sensors/arm/report_curriculum.py), [notebooks](../v2_sensors/README.md#notebooks) | Read existing evidence and produce tables and figures |
 | Iteration identity | [Index](../v2_sensors/ITERATIONS.md), [display-label mapping](../v2_sensors/arm/experiment_labels.py), [reference manifest](../v2_sensors/REFERENCE.json) | Resolve report numbering, unchanged condition names and frozen model hashes |
 
+For a runnable review, use the [reproduction guide](REPRODUCE.md), [reported-value checker](reproduction/verify_reported_results.py) and [statistics notebook](../v2_sensors/driving_v2/report_statistics.ipynb).
+
 Teammate implementations have their own dependencies and entry points: see [V1](V1.md) and [V2 extensions](../v2_sensors/README.md#team-sensor-extensions).
 
 The root Pixi environment is for MLflow tracking. Simulation and training need the environments described by the linked guides. Current source links identify the implementation; historical evaluations also record source hashes in their configuration files. A current file is not automatically the exact historical runtime.

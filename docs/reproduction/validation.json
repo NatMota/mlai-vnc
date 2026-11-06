@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-06",
+  "saved_metric_checks": {
+    "total": 219,
+    "explicit_reported_values": 95,
+    "mismatches": 0
+  },
+  "statistics_notebook": {
+    "code_cells": 32,
+    "status": "all executed successfully",
+    "python": "3.14.7",
+    "platform": "macOS arm64",
+    "dependency_file": "statistics-requirements.txt"
+  },
+  "occlusion": {
+    "raw_episodes": 1200,
+    "original_hashes_verified": 1200,
+    "analysis_table_matches": 1200,
+    "technical_gate_status": "preserved; not changed by this check"
+  },
+  "navigation": {
+    "iterations": 57,
+    "notebook_cell_links": 59,
+    "local_links": 971
+  },
+  "native": {
+    "build": "fresh directory and locked environment",
+    "targets": [
+      "sensor_curriculum",
+      "sensor_parking",
+      "expert_compatible"
+    ],
+    "platform": "macOS arm64",
+    "renderer": "tiny",
+    "condition": "basics_standard",
+    "split": "val",
+    "target": 6,
+    "parked": true,
+    "status": "stop_outside_10mm",
+    "success": false,
+    "at_network_stop_mm": 125.5629478641237,
+    "source_hashes": {
+      "full_run.py": "a099cabfe4479cf25bd59665e16717b8634a7feeb1b647f1dc39df9bf674514d",
+      "evaluate_curriculum.py": "7fa3b64db19e7a39b0cb3a598945fee4695e3a0dce7d037d1eee1e73a85f132c",
+      "curriculum_sensors.py": "8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520"
+    },
+    "split_sha256": "286f578aec7e3ab0953592466e63014cc1dde7f467106fadf273b30762ac1abf"
+  },
+  "scope": "Saved-number and plot checks plus one fresh validation rollout; not full retraining or a rerun of every historical test."
+}

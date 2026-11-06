@@ -103,5 +103,6 @@ Read the notebook in three parts. Saved prose, code, tables and plots are retain
 
 [Source hashes and output counts](manifest.json) · Regenerate with `python3 docs/render_notebook_views.py` from the repository.
 ''')
+    records.append(render('report_statistics'))
     (OUT / 'manifest.json').write_text(json.dumps(records, indent=2) + '\n')
     print(json.dumps(records, indent=2))

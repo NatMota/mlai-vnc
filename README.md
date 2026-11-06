@@ -8,6 +8,7 @@ Group 02 investigates behaviour cloning for a simulated mobile manipulator: driv
 | **[V2: sensor experiments and notebooks](v2_sensors/README.md)** | Main notebooks, saved results and frozen reference configurations |
 | **[Code map](docs/CODE.md)** | Collection, training, evaluation and analysis entry points |
 | **[Iteration index](v2_sensors/ITERATIONS.md)** | Each report iteration linked to its code, models and evidence |
+| **[Reproduce the results](docs/REPRODUCE.md)** | Data downloads, checksums, saved-result checks and simulator reruns |
 | **[Glossary](docs/GLOSSARY.md)** | Definitions of project terms, acronyms and result measures |
 
 The [decision log](DECISION_LOG.md) holds the report's appendices. For V2, **iteration 43** is the frozen clean comparison baseline; **iteration 56** is the final combined recovery comparison. These identify configurations, not successful task completion.

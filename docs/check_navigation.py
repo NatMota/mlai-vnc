@@ -35,7 +35,11 @@ def check():
         assert rendered.count('<a id="cell-') == view['cells']
         assert rendered.count('![Saved plot from cell ') == view['plots']
         assert len(rendered.encode()) < 500_000, view['view']
-    documents = [ROOT / 'README.md', *(ROOT / 'docs').glob('*.md'), V2 / 'README.md',
+    for record in json.loads((ROOT / 'docs/reproduction/notebook-links.json').read_text()):
+        name = {'e': 'driving_v2_sensors', 'g': 'golden_dataset', 'r': 'report_statistics'}[record['kind']]
+        notebook = json.loads((V2 / f'driving_v2/{name}.ipynb').read_text())
+        assert record['cell_id'] in {c['id'] for c in notebook['cells']}, record
+    documents = [ROOT / 'README.md', ROOT / 'DECISION_LOG.md', *(ROOT / 'docs').glob('*.md'), V2 / 'README.md',
                  V2 / 'ITERATIONS.md', V2 / 'driving_v2/HISTORICAL_BASELINE.md',
                  V2 / 'arm/results/overnight_20261105/README.md', *(V2 / 'review').glob('*.md')]
     links = 0

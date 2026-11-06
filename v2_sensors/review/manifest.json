@@ -50,5 +50,18 @@
     "outputs": 139,
     "plots": 38,
     "interactive_outputs": 14
+  },
+  {
+    "source": "v2_sensors/driving_v2/report_statistics.ipynb",
+    "sha256": "c44f779f3cf9cde23aa60bd313dccb4f96c36997d99ccbe97f9c84f83b4df27e",
+    "view": "report_statistics.md",
+    "cells": 91,
+    "original_cell_range": [
+      0,
+      90
+    ],
+    "outputs": 65,
+    "plots": 29,
+    "interactive_outputs": 0
   }
 ]

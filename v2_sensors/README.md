@@ -10,6 +10,9 @@ V2 develops camera and encoder policies for driving, PARK, arm torque and STOP. 
 |---|---|---|
 | 1. Sensor design and initial policies, iterations 1–36 | [driving_v2_sensors.ipynb](driving_v2/driving_v2_sensors.ipynb) | [Reading view](review/driving_v2_sensors.md) |
 | 2. Golden dataset, full episodes and recovery, iterations 34–57 | [golden_dataset.ipynb](driving_v2/golden_dataset.ipynb) | [Reading view](review/golden_dataset.md) |
+| 3. Report statistics and diagnostic comparisons | [report_statistics.ipynb](driving_v2/report_statistics.ipynb) | [Reading view](review/report_statistics.md) |
+
+[Live notebook access](../docs/NOTEBOOKS.md) requires Tailscale. The [reproduction guide](../docs/REPRODUCE.md) provides the data archives, checksums and local commands.
 
 The reading views retain saved prose, code, tables and plots; interactive players remain in the original notebooks. They require no simulator or tracker access. The original notebooks are 10 MB and 20 MB, so downloading them may be more reliable than GitHub's notebook preview.
 
@@ -39,4 +42,4 @@ For a review, start with saved notebook outputs and the [report appendices](../D
 
 Open the original notebooks from `v2_sensors/driving_v2/`; relative imports assume that directory. The early notebook contains training cells. The golden notebook reads saved evidence and uses `GOLDEN_DATA_ROOT` when full trajectories are available. Interactive replays may need the separately hosted records.
 
-Git includes models and compact evaluation records. The [artifact manifest and data notes](arm/results/overnight_20261105/README.md) explain the external trajectory archive and recovery-training collections. Those dependencies must be available for a full retraining run; the repository alone is not a complete training-data release. [MLflow setup](../docs/TRACKING.md) requires separate tracker access, but is not needed to read the saved evidence here.
+Git includes models and compact evaluation records. [Data and reproduction instructions](../docs/REPRODUCE.md) link the school OneDrive archives and distinguish saved-result checks from simulator and training reruns. The [artifact manifest and data notes](arm/results/overnight_20261105/README.md) explain the external trajectory archive and recovery-training collections. Those dependencies must be available for a full retraining run; the repository alone is not a complete training-data release. [MLflow setup](../docs/TRACKING.md) requires separate tracker access, but is not needed to read the saved evidence here.

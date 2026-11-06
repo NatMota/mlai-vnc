@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-06",
+  "archives": [
+    {
+      "archive": "analysis_evidence_20261106.zip",
+      "bytes": 8696282,
+      "sha256": "7d52c207808b6b2807e05823fcfc95c006b597eb0b0028e10a2607fdb451b423",
+      "files": 402,
+      "folder_url": "https://liveuclac-my.sharepoint.com/my?id=%2Fpersonal%2Fucabdos_ucl_ac_uk%2FDocuments%2FCOMP0245%20Golden%20Dataset%202026-11-04%2FReproducibility%20supplement%202026-11-06"
+    },
+    {
+      "archive": "early_v2_training_20261106.zip",
+      "bytes": 376590401,
+      "sha256": "1ac5f6e6c7e4020439fe0e9ededd77eaa95bb2e49533a9ea7a4aeb400949558e",
+      "files": 737,
+      "folder_url": "https://liveuclac-my.sharepoint.com/my?id=%2Fpersonal%2Fucabdos_ucl_ac_uk%2FDocuments%2FCOMP0245%20Golden%20Dataset%202026-11-04%2FReproducibility%20supplement%202026-11-06"
+    },
+    {
+      "archive": "historical_runtimes_20261106.zip",
+      "bytes": 14040030,
+      "sha256": "835e50d2d8788f042e4fbaba7179f0e22ac21a6f174edb49e18993c86596e3d1",
+      "files": 287,
+      "source_bytes": 34215336,
+      "created_utc": "2026-11-06T12:03:15Z",
+      "note": "Unmodified frozen runtime directories retained under their original experiment-relative names. Includes source, source hashes and archived Linux native binaries. Build native code for your platform; do not substitute a current evaluator when comparing recorded historical source hashes. No environments or credentials included.",
+      "folder_url": "https://liveuclac-my.sharepoint.com/my?id=%2Fpersonal%2Fucabdos_ucl_ac_uk%2FDocuments%2FCOMP0245%20Golden%20Dataset%202026-11-04%2FReproducibility%20supplement%202026-11-06"
+    },
+    {
+      "archive": "occlusion_records_20261106.zip",
+      "bytes": 432026770,
+      "sha256": "326b6aaa74617c48a550632f75e24468409899ecc8c84bab75d6175fce9fb7e5",
+      "files": 3181,
+      "source_bytes": 1404057502,
+      "created_utc": "2026-11-06T12:09:36Z",
+      "note": "All 1,200 saved paired occlusion episode records, original runtime, checkpoints, cases, protocol and geometry preflight. Per-frame camera PNGs are excluded; recorded states, visibility and geometry diagnostics remain. The historical runner retains its original Steam Deck paths and renderer identity. Consult the reproduction guide for portable replay limits.",
+      "folder_url": "https://liveuclac-my.sharepoint.com/my?id=%2Fpersonal%2Fucabdos_ucl_ac_uk%2FDocuments%2FCOMP0245%20Golden%20Dataset%202026-11-04%2FReproducibility%20supplement%202026-11-06"
+    },
+    {
+      "archive": "recovery_training_20261106.zip",
+      "bytes": 2339459712,
+      "sha256": "1330bdbeca1ec213d2138999266097ccc58003b01938310c99352f566f659e26",
+      "files": 2079,
+      "source_bytes": 2345252440,
+      "created_utc": "2026-11-06T12:03:13Z",
+      "note": "Exact packed expert/camera inputs for fixed-noise and random-start training, all six DAgger collections, intermediate models and round-selection records. Duplicate raw collector exports are excluded; these are the inputs consumed by the trainer. Golden baseline data is in the parent OneDrive archive. Original files remain on Mint.",
+      "folder_url": "https://liveuclac-my.sharepoint.com/my?id=%2Fpersonal%2Fucabdos_ucl_ac_uk%2FDocuments%2FCOMP0245%20Golden%20Dataset%202026-11-04%2FReproducibility%20supplement%202026-11-06"
+    },
+    {
+      "archive": "report_analysis_data_20261106.zip",
+      "bytes": 1893341,
+      "sha256": "60cb1aae5c3ac8b54ebb7cee99338cf25b0794faa70fcf4115d0d0d5ef1dd092",
+      "files": 98,
+      "source_bytes": 5527913,
+      "created_utc": "2026-11-06T12:09:36Z",
+      "note": "Inputs read by the report statistics notebook, original analysis scripts and saved analysis outputs. Interpreter environments are not bundled. Notebook plots can be regenerated from notebook/data; the analysis scripts use raw trajectories and checkpoints as specified by their arguments.",
+      "folder_url": "https://liveuclac-my.sharepoint.com/my?id=%2Fpersonal%2Fucabdos_ucl_ac_uk%2FDocuments%2FCOMP0245%20Golden%20Dataset%202026-11-04%2FReproducibility%20supplement%202026-11-06"
+    },
+    {
+      "archive": "recovery_selection_20261106.zip",
+      "bytes": 1676575,
+      "sha256": "5399add143b9770b72bfd1ea4b588b13dba1d97ed0e6a9772d3d18742b81ec65",
+      "files": 26,
+      "folder_url": "https://liveuclac-my.sharepoint.com/my?id=%2Fpersonal%2Fucabdos_ucl_ac_uk%2FDocuments%2FCOMP0245%20Golden%20Dataset%202026-11-04%2FReproducibility%20supplement%202026-11-06"
+    },
+    {
+      "archive": "COMP0245_Golden_300_2026-11-04.zip",
+      "bytes": 875376604,
+      "sha256": "66cc115917bd90868154807a55dd22626fd61baaaefd071af9ac9b6e9cee1e21",
+      "folder_url": "https://liveuclac-my.sharepoint.com/my?id=%2Fpersonal%2Fucabdos_ucl_ac_uk%2FDocuments%2FCOMP0245%20Golden%20Dataset%202026-11-04"
+    },
+    {
+      "archive": "iteration_41_58_records_models.zip",
+      "bytes": 1328916101,
+      "sha256": "bdb2569ccfb344b309e931bd961f16231d6f18728b05043d368c3b1bb6ea2e1e",
+      "folder_url": "https://liveuclac-my.sharepoint.com/:f:/g/personal/ucabdos_ucl_ac_uk/IgCNPEGA3exISLAjJTeC_SOMAUkixVY1PwH50LZCMYRDoFE?e=3sej5t"
+    },
+    {
+      "archive": "iteration_41_58_test_replays.zip",
+      "bytes": 2747712269,
+      "sha256": "70b32dbccb5bee00c30fddaa79cc8d0fe00da9f2c5209fb3214a9f11c79e6e41",
+      "folder_url": "https://liveuclac-my.sharepoint.com/:f:/g/personal/ucabdos_ucl_ac_uk/IgCNPEGA3exISLAjJTeC_SOMAUkixVY1PwH50LZCMYRDoFE?e=3sej5t"
+    }
+  ]
+}
