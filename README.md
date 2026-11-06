@@ -12,3 +12,10 @@ Group 02 investigates behaviour cloning for a simulated mobile manipulator: driv
 The [decision log](DECISION_LOG.md) holds the report's appendices. For V2, **iteration 43** is the frozen clean comparison baseline; **iteration 56** is the final combined recovery comparison. These identify configurations, not successful task completion.
 
 [Tracking setup](docs/TRACKING.md) · [Repository and data access](v2_sensors/README.md#running-and-data)
+
+## V2 experimental roadmap
+
+The [V2 roadmap](docs/v2-roadmap.html) preserves the supplied planning document
+from 4 November 2026. It describes intended experiments, not a completion record.
+For implemented methods, deviations and results, consult the
+[decision log](DECISION_LOG.md), experiment records and MLflow.
