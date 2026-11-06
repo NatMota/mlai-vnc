@@ -95,3 +95,10 @@ and notebooks remain in their original repositories.
 The [expert collection and sampling tools](collection/README.md) provide a
 CPU-only C++ collector at 1 kHz and compact 30 Hz preprocessing. Their Pixi
 environments are separate from the tracking and training environments.
+
+## V2 experimental roadmap
+
+The [V2 roadmap](docs/v2-roadmap.html) preserves the supplied planning document
+from 4 November 2026. It describes intended experiments, not a completion record.
+For implemented methods, deviations and results, consult the
+[decision log](DECISION_LOG.md), experiment records and MLflow.

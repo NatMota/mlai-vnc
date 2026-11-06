@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>COMP0245 roadmap</title>
+<style>
+  body { font-family: -apple-system, Helvetica, Arial, sans-serif; margin: 28px; color: #222; background: #fff; max-width: 1240px; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  h2 { font-size: 17px; margin: 28px 0 8px; }
+  p.sub { margin: 0 0 18px; color: #555; font-size: 14px; }
+  svg text { font-size: 14px; }
+  .grp { font-size: 13px; font-weight: 700; fill: #666; letter-spacing: 0.04em; }
+  .box { stroke-width: 1.6; rx: 8; }
+  .core { fill: #e8f1fb; stroke: #4a90d9; }
+  .ladder { fill: #e9f7ea; stroke: #43a047; }
+  .adv { fill: #fbe9e7; stroke: #e05a3a; }
+  .improve { fill: #fff4e0; stroke: #f0a030; }
+  .edit { fill: #f1e8fb; stroke: #8e5ad9; }
+  .done { fill: #f0f0f0; stroke: #999; }
+  .n { font-weight: 700; }
+  .arrow { stroke: #555; stroke-width: 1.8; fill: none; marker-end: url(#head); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid #e3e3e3; }
+  th { background: #f7f7f7; font-size: 13px; }
+  td.k { white-space: nowrap; font-weight: 700; width: 230px; }
+  tr.g td { background: #fafafa; font-weight: 700; color: #555; font-size: 13px; letter-spacing: 0.04em; }
+  code { background: #f3f3f3; padding: 1px 4px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<h1>Roadmap</h1>
+<p class="sub">Boxes are epics; arrows are what waits for what. Descriptions are in the table below, by number. Every test is the full run (drive, park, reach, stop) of the two networks together, no expert in the loop, on the same 100 test dots.</p>
+
+<svg width="1240" height="510" viewBox="0 0 1240 510">
+  <defs>
+    <marker id="head" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- CORE -->
+  <text class="grp" x="20" y="24">CORE</text>
+  <rect class="box core" x="20"  y="40" width="220" height="48"/>
+  <text x="32" y="60" class="n">1  Golden expert data</text>
+  <text x="32" y="78">100 train, 100 val, 100 test</text>
+  <rect class="box core" x="290" y="40" width="220" height="48"/>
+  <text x="302" y="60" class="n">2  Camera render</text>
+  <text x="302" y="78">200 golden runs</text>
+  <rect class="box core" x="560" y="40" width="220" height="48"/>
+  <text x="572" y="60" class="n">3  The two networks</text>
+  <text x="572" y="78">13 + 27, retrained, 3 seeds</text>
+  <rect class="box core" x="830" y="40" width="240" height="48"/>
+  <text x="842" y="60" class="n">4  Run with no noise</text>
+  <text x="842" y="78">full run, 100 test dots</text>
+  <path class="arrow" d="M240,64 L290,64"/>
+  <path class="arrow" d="M510,64 L560,64"/>
+  <path class="arrow" d="M780,64 L830,64"/>
+
+  <!-- LADDER -->
+  <text class="grp" x="20" y="208">ROBUSTNESS LADDER: effects from the course's settings, added one at a time, cumulative, networks from 3 unchanged</text>
+  <rect class="box ladder" x="20"  y="224" width="230" height="44"/><text x="30" y="242" class="n">5  + encoder noise</text><text x="30" y="260">sensor, course value</text>
+  <rect class="box ladder" x="290" y="224" width="230" height="44"/><text x="300" y="242" class="n">6  + damping</text><text x="300" y="260">motor, c = 1.0</text>
+  <rect class="box ladder" x="560" y="224" width="230" height="44"/><text x="570" y="242" class="n">7  + elasticity</text><text x="570" y="260">motor, k = 1.0</text>
+  <rect class="box ladder" x="830" y="224" width="230" height="44"/><text x="840" y="242" class="n">8  + inertia</text><text x="840" y="260">motor, 0.001 kg m²</text>
+  <path class="arrow" d="M250,246 L290,246"/>
+  <path class="arrow" d="M520,246 L560,246"/>
+  <path class="arrow" d="M790,246 L830,246"/>
+
+  <!-- ADVERSARIAL -->
+  <text class="grp" x="20" y="316">ADVERSARIAL LENSES: each alone on the run with no noise, then all four stacked</text>
+  <rect class="box adv" x="20"  y="332" width="190" height="44"/><text x="30" y="350" class="n">9  Delay 3 ms</text><text x="30" y="368">test-time</text>
+  <rect class="box adv" x="230" y="332" width="190" height="44"/><text x="240" y="350" class="n">10  Random start pose</text><text x="240" y="368">own expert data + test-time</text>
+  <rect class="box adv" x="440" y="332" width="190" height="44"/><text x="450" y="350" class="n">11  Imperfect expert record</text><text x="450" y="368">training-time</text>
+  <rect class="box adv" x="650" y="332" width="190" height="44"/><text x="660" y="350" class="n">12  Goal occlusion</text><text x="660" y="368">test-time</text>
+  <rect class="box adv" x="880" y="332" width="220" height="44"/><text x="890" y="350" class="n">13  Full adversarial stack</text><text x="890" y="368">9 + 10 + 11 + 12 together</text>
+  <path class="arrow" d="M210,354 L230,354"/>
+  <path class="arrow" d="M420,354 L440,354"/>
+  <path class="arrow" d="M630,354 L650,354"/>
+  <path class="arrow" d="M840,354 L880,354"/>
+
+  <!-- arrows out of 4: to the ladder's first step and to the first lens -->
+  <path class="arrow" d="M900,88 C900,150 135,160 135,224"/>
+  <path class="arrow" d="M1000,88 C1000,180 1140,250 1140,300 C1140,330 300,300 115,332"/>
+
+  <!-- IMPROVEMENT -->
+  <text class="grp" x="20" y="424">IMPROVEMENT LENSES: each retrained pair tested on the run with no noise and on the full stack (13)</text>
+  <rect class="box improve" x="20"  y="440" width="190" height="44"/><text x="30" y="458" class="n">14  DART</text><text x="30" y="476">no noise + stack</text>
+  <rect class="box improve" x="230" y="440" width="190" height="44"/><text x="240" y="458" class="n">15  DAgger</text><text x="240" y="476">no noise + stack</text>
+  <rect class="box improve" x="440" y="440" width="190" height="44"/><text x="450" y="458" class="n">16  DART + DAgger</text><text x="450" y="476">no noise + stack</text>
+  <path class="arrow" d="M990,376 C990,410 120,400 115,440"/>
+  <path class="arrow" d="M210,462 L230,462"/>
+  <path class="arrow" d="M420,462 L440,462"/>
+
+  <!-- EDIT -->
+  <rect class="box edit" x="700" y="440" width="260" height="44"/><text x="710" y="458" class="n">17  Direct weight editing</text><text x="710" y="476">on the best networks; no noise + stack</text>
+  <path class="arrow" d="M630,462 L700,462"/>
+
+</svg>
+
+<h2>What each epic is</h2>
+<table>
+<tr><th>#</th><th>Epic</th><th>What it is, what it needs, what it produces</th></tr>
+
+<tr class="g"><td colspan="3">CORE</td></tr>
+<tr><td class="k">1</td><td class="k">Golden expert data</td><td>The one dataset everything is measured against. Clean expert runs: no effects, the fixed start pose, all 1 ms rows. 100 training dots chosen from the 800 so bearing, distance and height are each spread evenly; the existing 100 validation dots and 100 test dots. Already collected; the training selection is in <code>dots_spread.json</code>.</td></tr>
+<tr><td class="k">2</td><td class="k">Camera render</td><td>The corner camera rendered every 1/30 s along the 100 golden training runs <b>and the 100 validation runs</b> (the validation loss needs camera inputs too), start to stop, with the dot detections saved. The two trackers (driving: distance and bearing; reaching: x, y, height) turn them into the camera inputs each network trains on. About 40 minutes for 200 runs.</td></tr>
+<tr><td class="k">3</td><td class="k">The two networks</td><td>
+  The architectures of iterations 13 and 27, unchanged, retrained on the golden data and run together end to end: the driving network drives and parks, and its own PARK output hands over to the reaching network.<br><br>
+  <b>Driving (iteration 13), 30 Hz.</b> Inputs 16: 4 wheel-encoder angles, 4 wheel-encoder speeds, their mean angle, right minus left angle, mean speed, right minus left speed; camera dot distance, sin and cos of its bearing, visible flag. 16 → 16 ReLU → 16 ReLU → 4 wheel speeds and time to park. The time-to-park head predicts a value in 0 to 1 that is multiplied by 3 s; <b>PARK when that time is 0.25 s or less</b> (<code>camera_loop.py:71</code>). The six angle inputs standardised with the training mean and standard deviation, folded into the first layer. Rows: start to PARK plus 100 parked rows per run (wheels 0, time to park 0). Adam lr 0.01, full batch.<br><br>
+  <b>Reaching (iteration 27), 1 kHz.</b> Inputs 17: 7 arm-encoder angles, 7 arm-encoder speeds, camera dot x, y, height (height-keeping tracker, held between frames). Torque network 17 → 64 ReLU → 64 ReLU → 7 torques. Stop network, separate, 17 → 32 ReLU → 16 ReLU → 1, the distance to the dot clipped at 0.25 m; stop when the prediction ≤ 10 mm. Angles divided by π, speeds by each joint's limit, dot by 1 m; torques standardised per joint; both folded into the weights. Rows: PARK to the expert's stop. Adam lr 0.01, full batch.<br><br>
+  <b>Seeds:</b> 7, 1 and 2 for every network; the run with no noise is reported for all three with its spread, and the median seed is used for everything below. Any difference between conditions smaller than the seed spread is not a finding.<br>
+  <b>Epochs:</b> every network up to 300, the count chosen on the 100 validation dots at the lowest validation loss (the stop network's up to 600, as in iteration 27). <b>Saves:</b> <code>driving_seedN.npz</code>, <code>reaching_seedN.npz</code> (torque + stop) and a loss history per epoch for each output.</td></tr>
+<tr><td class="k">4</td><td class="k">Run with no noise</td><td>The full-run harness and the headline number in one. The harness (<code>full_run.py</code>, working): both networks, no expert, inputs from the camera and encoders only, any list of dots, runs in parallel, logs the state every 1/30 s; every effect and lens below is a switch in it. The result: the 100 test dots with nothing switched on; success rate (gripper within 10 mm of the dot at stop) with its ±10-point interval, median closest, where it parked against where the expert parked, for the three seeds. If it fails, the handover is checked first, then the reach, before anything below runs.</td></tr>
+
+<tr class="g"><td colspan="3">ROBUSTNESS LADDER (tests only; networks from 3 fixed; each step keeps the ones before; doses from the course's settings, not tuned; one curve of success against effects on)</td></tr>
+<tr><td class="k">5</td><td class="k">+ encoder noise</td><td>
+  <b>Where it enters:</b> in the measurement pipeline, before the speed estimate. Gaussian noise with the course's standard deviation (0.0001 rad, <code>joint_cov</code>) is added to the true joint angle, the encoder then counts that noisy angle in whole ticks, and the speed is the difference of counts over the sampling time, as now. Angle and speed are therefore perturbed consistently; perturbing them independently (the course does that to the expert's measurements) would be a different experiment. Expected: no detectable change, because 0.0001 rad is below one wheel tick (0.0015 rad) and the arm's ticks (about 2 × 10⁻⁶ rad) are far below the network's resolution. A flat step is a result.</td></tr>
+<tr><td class="k">6</td><td class="k">+ damping</td><td>
+  <b>The course's motor model</b> (<code>servo_motor.py</code>, <code>compute_torque</code>): an extra torque is added to every motor's command, <b>τ<sub>extra</sub> = M(q) · (−c · q̇ − k · q)</b>, where M(q) is the joint-space mass matrix (kg m²), q and q̇ the measured joint angles (rad) and speeds (rad/s) of all joints, and the product is taken over all 17 joints before the 11 motors' components are applied. The collector implements exactly this (<code>M.bottomRightCorner(17,17) * (−c·q̇ − k·q)</code> on the measured state; parity with the Python simulator checked). Because the term goes through the mass matrix, c has units 1/s and k has units 1/s²; the torque is in N m. Affected joints: the 4 wheels and the 7 arm joints (the fingers have no motor).<br>
+  <b>Damping:</b> c = 1.0 (1/s), k = 0. A viscous drag proportional to each joint's speed, scaled by the inertia it sees.</td></tr>
+<tr><td class="k">7</td><td class="k">+ elasticity</td><td><b>Elasticity:</b> k = 1.0 (1/s²) in the same equation: a spring pulling every joint towards angle zero, scaled by the mass matrix. Note that the wheels are continuous joints whose angle grows as they turn, so this spring on the wheels grows with distance driven; the expert still reached 997 of 1,000 dots under it (median run 8.6 s), so the effect at k = 1.0 is small. The course gives no value; 1.0 is ours.</td></tr>
+<tr><td class="k">8</td><td class="k">+ inertia</td><td><b>Inertia:</b> commented out in the course code; the commented line is <b>τ<sub>extra</sub> += −J · q̈<sub>prev</sub></b> with J = <code>motor_inertia_coeff</code> and q̈<sub>prev</sub> the previous step's measured acceleration, not through the mass matrix. We switch it on with J = 0.001 kg m² (about half the smallest joint inertia, 0.0021 kg m², so the one-step lag stays stable). <b>Caveat for the write-up:</b> this is an acceleration-dependent torque correction with a one-step lag, not a physical rotor inertia added to the links; it approximates one for slow changes of acceleration only.</td></tr>
+
+<tr class="g"><td colspan="3">ADVERSARIAL LENSES (on the run with no noise, not on the ladder)</td></tr>
+<tr><td class="k">9</td><td class="k">Delay 3 ms</td><td>The networks' inputs delayed by three simulator steps, the course's value, which breaks the expert. Test-time only. (1 ms as a second point if time.)</td></tr>
+<tr><td class="k">9</td><td class="k">Random start pose</td><td>
+  <b>Is it possible to collect?</b> Yes. The expert navigates in world coordinates (base position and target from the simulator), so it drives correctly from any start pose; only the networks are restricted to relative inputs. The collector resets the robot by reloading a saved state; setting a start pose after that is one call through the pose command API already bound in <code>bullet_api.hpp</code> (base position and orientation). Small change.<br>
+  <b>Data:</b> the same 100 training dots and 100 test dots, each with one random start pose: position uniform in ±0.5 m, heading uniform over 360°. New expert runs are needed because the expert's path from a new start is a new run. 200 runs, minutes to collect, plus 20 minutes to render the training half. The dots are reused: a new start with the same dot is a new relative geometry, which is all the networks see.<br>
+  <b>Tested two ways:</b> the golden networks from random starts (if they lose accuracy, something depends on where the run begins; by design nothing should), and the pair retrained on the random-start runs. The retrained pair goes into the stack.</td></tr>
+<tr><td class="k">9</td><td class="k">Imperfect expert record</td><td>
+  The expert is remote; its log reaches us over a link that drops bursts. The physics is untouched; rows of the golden record are removed before training. Training-time only: retrain per case, test clean.<br>
+  <b>Literature check:</b> incomplete demonstrations are a studied setting. <a href="https://www.ijcai.org/proceedings/2019/487">Sun and Ma (IJCAI 2019)</a> learn from demonstrations where actions are missing for part of the states; TAILO (<a href="https://liner.com/review/a-simple-solution-for-offline-imitation-from-observations-and-examples">offline imitation from incomplete trajectories</a>) weights the cloning loss along the trajectory to cope with missing steps. Both use RL-style machinery; for plain behaviour cloning the gap simply means the network never sees those states, which is the effect we want to measure, so the setting is sound. Two consequences shape the design: (a) a cut of the last 0.5 s before the stop removes every row with a small distance target, so the stop network may never predict ≤ 10 mm and the run ends at the time cap; that is the expected finding, not a bug, and the harness's cap handles it; (b) at 1 kHz, random drops of single rows change nothing, so only bursts are informative.<br>
+  <b>Cases:</b> three targeted cuts (0.25 s either side of PARK; the last 0.5 s before the stop; the first 0.5 s of driving), then random bursts of 0.25 to 1 s at 10% and 30% lost if time. Each case is a retrained pair and its own test.</td></tr>
+<tr><td class="k">9</td><td class="k">Goal occlusion</td><td>A visual-only sheet, 0.3 × 0.2 m, moves at 0.1 m/s across the camera's line to the dot from 0.5 s after PARK, hiding it for about 2 s and clearing with 2 s left. A collision is counted if the hand crosses the sheet's plane inside its outline. Test-time only; tests the tracker's held estimate and the stop.</td></tr>
+<tr><td class="k">9</td><td class="k">Full adversarial stack</td><td>All four at once: the pair trained on the random-start runs with the record cut around PARK (the harshest cut), tested from random start poses with the 3 ms delay and the occluder. The worst case, and the one combination that matters most. Of the pairs, only delay + occlusion gets its own test: both attack the tracker's memory of the dot, so they may interact; the other pairs touch different phases of the run and should add up.</td></tr>
+
+<tr class="g"><td colspan="3">IMPROVEMENT LENSES (new data, retrain, each tested on the run with no noise and on the full stack)</td></tr>
+<tr><td class="k">9</td><td class="k">DART</td><td>Expert runs collected with noise on the actions sent to the motors and the clean actions as labels, so the expert shows recoveries from off-path states. 100 training dots × 2 noise seeds, noise level checked on 10 dots first for the expert's success rate. Retrain as in 3.</td></tr>
+<tr><td class="k">9</td><td class="k">DAgger</td><td>Roll out the pair, record the states it visits, ask the expert for its command in each, add them, retrain; three rounds. Needs a mode in the native code that returns the expert's command for a given state and time since PARK.</td></tr>
+<tr><td class="k">9</td><td class="k">DART + DAgger</td><td>DAgger rounds started from the DART-trained pair, with the DART runs kept in the data.</td></tr>
+
+<tr class="g"><td colspan="3">FINAL STEP</td></tr>
+<tr><td class="k">9</td><td class="k">Direct weight editing</td><td>Starting from the best pair above, Fable reads the validation logs and proposes edits to a small, interpretable part (the stop threshold, an input scale, an output bias). Each edit is scored on the validation dots under the full stack, kept or reverted, logged in MLflow. The same number of random edits is the control. The result is tested on the run with no noise and the full stack.</td></tr>
+
+</table>
+
+<h2>Test count and order</h2>
+<p>Run with no noise 3 tests (one per seed), ladder 4, lenses 4 alone + 1 stack + 1 pair, record loss 3 more retrained pairs, improvements 3 × 2, weight editing 2: 24 tests of about an hour each, about 24 h of testing in all. Order: 2 and the effects port in parallel; 3; 4; then the ladder and the lenses as one scripted queue; the improvements as their data arrives; 17 last. Cut first if behind: 16, then 15, then the random-burst half of 11, then the delay + occlusion pair.</p>
+
+
+<h2>Work items</h2>
+<p class="sub">One row per piece of work, in the order it can start. "Step" is the epic number above. A test is the full run on the 100 test dots, about 1 hour. Training the two networks (driving, reaching and its stop network) is about 10 minutes.</p>
+<table>
+<tr><th>Work</th><th>Step</th><th>Waits for</th><th>Produces</th><th>Time</th></tr>
+
+<tr class="g"><td colspan="5">CAN START NOW, ALL AT THE SAME TIME</td></tr>
+<tr><td class="k">Render the camera along the 200 golden runs</td><td>2</td><td>nothing</td><td>camera inputs for training and validation</td><td>40 min</td></tr>
+<tr><td class="k">Port damping, elasticity and inertia to the test server, check against the collector</td><td>6, 7, 8</td><td>nothing</td><td>the three motor-effect switches</td><td>2 h</td></tr>
+<tr><td class="k">Encoder noise and input delay switches in the harness</td><td>5, 9</td><td>nothing</td><td>two sensor switches</td><td>1 h</td></tr>
+<tr><td class="k">Occluder in the harness, with the collision count</td><td>12</td><td>nothing</td><td>the occluder switch</td><td>2 h</td></tr>
+<tr><td class="k">Start pose in the collector and in the harness</td><td>10</td><td>nothing</td><td>random-start runs can be collected and tested</td><td>1 h</td></tr>
+<tr><td class="k">Record-loss masks in the training loader</td><td>11</td><td>nothing</td><td>training on a cut record</td><td>1 h</td></tr>
+<tr><td class="k">DART action noise in the collector, 10-dot pilot for the noise level</td><td>14</td><td>nothing</td><td>DART runs can be collected</td><td>1.5 h</td></tr>
+<tr><td class="k">DAgger labelling mode: the expert's command for a given state</td><td>15</td><td>nothing</td><td>DAgger rounds can run</td><td>4 h</td></tr>
+
+<tr class="g"><td colspan="5">AS SOON AS THE ITEM IT WAITS FOR IS DONE</td></tr>
+<tr><td class="k">Train the two networks, seeds 7, 1, 2</td><td>3</td><td>the render (step 2)</td><td>three pairs of networks</td><td>30 min</td></tr>
+<tr><td class="k">Collect 200 random-start expert runs, render the 100 training ones</td><td>10</td><td>start pose in the collector</td><td>random-start data</td><td>10 + 20 min</td></tr>
+<tr><td class="k">Collect 200 DART runs, render them</td><td>14</td><td>the DART pilot</td><td>DART data</td><td>10 + 40 min</td></tr>
+<tr><td class="k">Train on the random-start runs; train on random-start runs with the PARK cut</td><td>10, 13</td><td>random-start render, masks</td><td>two more pairs</td><td>20 min</td></tr>
+<tr><td class="k">Train on the three record cuts</td><td>11</td><td>the render (step 2), masks</td><td>three more pairs</td><td>30 min</td></tr>
+<tr><td class="k">Train on golden + DART runs</td><td>14</td><td>DART render</td><td>one more pair</td><td>10 min</td></tr>
+
+<tr class="g"><td colspan="5">TESTS: EACH IS INDEPENDENT OF EVERY OTHER TEST, SO ALL CAN RUN AT ONCE</td></tr>
+<tr><td class="k">Run with no noise, one test per seed</td><td>4</td><td>step 3</td><td>the headline and the seed spread</td><td>3 tests</td></tr>
+<tr><td class="k">Ladder: noise; + damping; + elasticity; + inertia</td><td>5 to 8</td><td>step 3, the effects port, the noise switch</td><td>the robustness curve</td><td>4 tests</td></tr>
+<tr><td class="k">Delay 3 ms</td><td>9</td><td>step 3, the delay switch</td><td>–</td><td>1 test</td></tr>
+<tr><td class="k">Random start: the golden networks, then the random-start-trained ones</td><td>10</td><td>step 10 training, start pose in the harness</td><td>–</td><td>2 tests</td></tr>
+<tr><td class="k">The three record-cut networks, no noise</td><td>11</td><td>step 11 training</td><td>–</td><td>3 tests</td></tr>
+<tr><td class="k">Occlusion; then delay + occlusion</td><td>12, 9 + 12</td><td>step 3, the occluder</td><td>–</td><td>2 tests</td></tr>
+<tr><td class="k">Full stack: random-start + PARK-cut networks, from random starts, with delay and the occluder</td><td>13</td><td>step 13 training, occluder, delay, start pose</td><td>the worst case</td><td>1 test</td></tr>
+<tr><td class="k">DART networks: no noise, and the full stack</td><td>14</td><td>step 14 training</td><td>–</td><td>2 tests</td></tr>
+
+<tr class="g"><td colspan="5">SERIAL: EACH ROUND WAITS FOR THE ONE BEFORE</td></tr>
+<tr><td class="k">DAgger: roll out on the training dots, label with the expert, retrain; three rounds; then no noise and the full stack</td><td>15</td><td>labelling mode, step 3</td><td>–</td><td>3 × 1 h + 2 tests</td></tr>
+<tr><td class="k">DART + DAgger: the same three rounds starting from the DART networks</td><td>16</td><td>step 14, labelling mode</td><td>–</td><td>3 × 1 h + 2 tests</td></tr>
+<tr><td class="k">Weight editing: each proposal scored on the validation dots under the stack, and a random edit as its control; then no noise and the full stack</td><td>17</td><td>the best networks from 13 to 16</td><td>–</td><td>2 h per proposal + 2 tests</td></tr>
+</table>
+
+<h2>Totals</h2>
+<table>
+<tr><td class="k">Building</td><td>12.5 h of work, all of it can start now and be shared out; the longest single item is the DAgger labelling mode (4 h)</td></tr>
+<tr><td class="k">Collecting and rendering</td><td>about 2 h of compute in total; the golden render (40 min) is the only one everything else waits for</td></tr>
+<tr><td class="k">Training</td><td>9 pairs, about 1.5 h of compute, 10 to 30 min each, as their data arrives</td></tr>
+<tr><td class="k">Testing</td><td>18 tests of 1 hour, steps 4 to 14; they all wait only for their networks and switches, so the wall-clock is 18 hours divided by how many run at once. DAgger adds 6 hours of rounds and 4 tests, serial. Editing adds 2 hours per proposal, serial.</td></tr>
+</table>
+
+<h2>Extra tests worth an hour, if there is time</h2>
+<p>Any trained networks can be tested under any switch, so these are the combinations beyond the plan that would tell us something, in order:</p>
+<ol>
+<li><b>DART networks under delay, and under occlusion.</b> DART is the fix for compounding error, and those two conditions are where compounding error bites. 2 tests.</li>
+<li><b>DART networks at the end of the ladder</b> (all motor effects on). Does recovery data also buy robustness to the physics? 1 test.</li>
+<li><b>The stop-cut network (step 11, last 0.5 s removed) under occlusion.</b> A network that never saw the end of the reach, tested when the dot disappears near the end. 1 test.</li>
+<li><b>The random-start-trained networks with no noise.</b> Does training on random starts cost anything on the fixed start? 1 test.</li>
+<li><b>The golden networks under the full stack.</b> How much of the stack's cost the stack-trained networks recover. 1 test.</li>
+</ol>
+</body>
+</html>
