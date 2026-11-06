@@ -102,6 +102,37 @@ class EvaluationIterationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "manifest|legacy|Legacy"):
             self.invoke(self.complete, "--resume")
 
+    def test_lock_blocks_a_second_writer(self):
+        self.out.with_suffix(".lock").write_text("12345")
+        with self.assertRaises(FileExistsError):
+            self.invoke(self.complete)
+        self.assertFalse(self.out.exists())
+        self.assertEqual(self.out.with_suffix(".lock").read_text(), "12345")
+
+    def test_changed_completed_results_reject_resume(self):
+        self.invoke(self.complete)
+        self.out.write_text(self.out.read_text().replace('0.5', '0.9'))
+        with self.assertRaisesRegex(ValueError, "Summary.*match"):
+            self.invoke(self.complete, "--resume")
+
+    def test_process_errors_stay_in_denominator(self):
+        def failed(jobs, workers, prefix, callback):
+            callback(0, json.dumps(row(0)), None)
+            callback(1, None, "worker failed")
+            return 1
+        with self.assertRaises(SystemExit) as error:
+            self.invoke(failed)
+        self.assertEqual(error.exception.code, 1)
+        summary = json.loads(self.out.with_suffix(".summary.json").read_text())
+        self.assertEqual((summary["targets"], summary["successes"], summary["process_errors"]), (2, 1, 1))
+
+    def test_wrong_worker_identity_is_not_written(self):
+        def wrong(jobs, workers, prefix, callback):
+            callback(0, json.dumps(row(1)), None)
+        with self.assertRaisesRegex(ValueError, "mismatched"):
+            self.invoke(wrong)
+        self.assertEqual(self.out.read_bytes(), b"")
+
 
 if __name__ == "__main__":
     unittest.main()
