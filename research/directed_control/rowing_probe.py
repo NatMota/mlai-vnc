@@ -12,7 +12,7 @@ def feature(q, axes):
     return f
 
 def main():
-    a=argparse.ArgumentParser();a.add_argument('--mode',choices=['hold','stroke'],required=True);a.add_argument('--seconds',type=float,default=25);a.add_argument('--out',required=True);a.add_argument('--ground-z',type=float,default=.10);a.add_argument('--damping-scale',type=float,default=1);args=a.parse_args()
+    a=argparse.ArgumentParser();a.add_argument('--mode',choices=['hold','stroke'],required=True);a.add_argument('--seconds',type=float,default=25);a.add_argument('--out',required=True);a.add_argument('--ground-z',type=float,default=.10);a.add_argument('--damping-scale',type=float,default=1);a.add_argument('--hard-contact-diagnostic',action='store_true');args=a.parse_args()
     out=R/args.out;out.mkdir(exist_ok=False)
     pw=dict(np.load(R/'trig_position_training/selected.npz'));tw=dict(np.load(R/'identified_torque_training/identified_torque.npz'))
     p.connect(p.DIRECT);p.setTimeStep(.001);p.setGravity(0,0,-9.81);p.setPhysicsEngineParameter(numSolverIterations=30,enableConeFriction=0)
@@ -23,7 +23,9 @@ def main():
     infos=[p.getJointInfo(robot,j) for j in range(p.getNumJoints(robot))];active=[x[0] for x in infos if x[2]!=p.JOINT_FIXED];assert len(active)==17
     wheels,arm,fingers=active[:4],active[4:11],active[11:]
     ee=next(x[0] for x in infos if x[12].decode()=='robot_j2s7s300_end_effector')
-    for j in wheels:p.changeDynamics(robot,j,contactStiffness=30000,contactDamping=1000,anisotropicFriction=[1,.01,1])
+    for j in wheels:
+        p.changeDynamics(robot,j,anisotropicFriction=[1,.01,1])
+        if not args.hard_contact_diagnostic:p.changeDynamics(robot,j,contactStiffness=30000,contactDamping=1000)
     qhome=np.array([0,1.57,0,1,0,1,0.]);q0=np.r_[np.zeros(4),qhome,np.full(6,.1)]
     p.setJointMotorControlArray(robot,active,p.VELOCITY_CONTROL,forces=[0]*17)
     for j,x in zip(active,q0):p.resetJointState(robot,j,float(x),0)
@@ -49,7 +51,7 @@ def main():
         calibration.append(dict(target=xyz.tolist(),q=q.tolist(),learned=pred.tolist(),actual=actual.tolist(),error_mm=float(np.linalg.norm(pred-actual)*1000)))
     for j,x in zip(active,q0):p.resetJointState(robot,j,float(x),0)
     p.resetBasePositionAndOrientation(robot,[0,0,0],[0,0,0,1]);p.resetBaseVelocity(robot,[0,0,0],[0,0,0])
-    cfg=dict(mode=args.mode,seconds=args.seconds,ground_z=args.ground_z,damping_scale=args.damping_scale,physics_hz=1000,wheel_torque=0,torque_limit_Nm=30,self_collision=False,geometry_calibration=calibration,description='Engineered arm-reference gait, frozen learned feedforward torque, no powered wheels or external force. Self-collision setting matches baseline; not a navigation or imitation result.')
+    cfg=dict(mode=args.mode,seconds=args.seconds,ground_z=args.ground_z,damping_scale=args.damping_scale,hard_contact_diagnostic=args.hard_contact_diagnostic,physics_hz=1000,wheel_torque=0,torque_limit_Nm=30,self_collision=False,geometry_calibration=calibration,description='Engineered arm-reference gait, frozen learned feedforward torque, no powered wheels or external force. Self-collision setting matches baseline; not a navigation or imitation result.')
     (out/'config.json').write_text(json.dumps(cfg,indent=2))
     rows=[];frames=[];wheel_work=0.;arm_work=0.;contact_ticks=0;reference=qhome.copy();filtered=np.zeros(7);start=time.monotonic()
     for tick in range(int(args.seconds*1000)):

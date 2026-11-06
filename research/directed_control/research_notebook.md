@@ -2442,3 +2442,9 @@ It does not remove contact, motor dynamics or camera rendering from a faithful e
 - [Disturbance noise seed 2: verified MLflow run](https://nm-linmint-mlflow.taile381c0.ts.net/#/experiments/4/runs/924b1f04428142e68281028eb6d7e081)
 
 All three runs contain frozen models, source archives, fitting records, full trajectory/camera recordings, alignment checks and the test metrics. Noise seeds are repeat measurements of one controller, not separately trained models.
+
+### Contact-setting diagnostic, separate from the course physics
+
+Removing only the wheel contact spring/damper reduced stationary-arm backward displacement over 5 s from about 1.9 m to 0.033 m. This identifies strong sensitivity to those settings; it does not establish the precise cause of the rolling motion. A matched 25 s rigid-contact check still failed to demonstrate rowing: the stationary-arm control ended 0.646 m backwards and the stroke ended 0.709 m backwards, despite 7.068 s of arm-ground contact. Wheel actuator torque and work remained zero throughout.
+
+The rigid-contact condition changes physics, so it is a diagnostic only. It was not substituted into either evaluated controller, the clean/disturbance results, or the original course simulation. Successful unpowered-wheel locomotion remains unfinished.
