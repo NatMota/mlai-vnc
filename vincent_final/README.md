@@ -156,7 +156,7 @@ ROBOENV_SEED=1 python3 count_nets.py
 ## Sensor-only extension
 
 This code runs in the `v2_sensors/arm` folder of the team's repository, https://github.com/NatMota/mlai-vnc,
-on the `v2-sensor` branch at commit 27e96dd. Copy everything in our `sensor_only` folder, with its `models`
+on the `v2-sensor` branch at commit 36d1597 (27e96dd before the history was rewritten on 6 November). Copy everything in our `sensor_only` folder, with its `models`
 and `results` folders, into `v2_sensors/arm`. The seed 7 driving network is already in that repository.
 It also needs the golden dataset and the native simulator, built from the `collection/native` folder of that repository:
 
