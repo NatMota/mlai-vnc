@@ -1,0 +1,54 @@
+{
+  "navigation_source_revision": "360a5d93e04a05f854c121509a68375284904ea3",
+  "meaning": "Frozen comparison references, not simulator defaults or claims of stable task success.",
+  "continuation_record": [
+    "parent_report_iteration",
+    "parent_condition",
+    "source_commit",
+    "model_hashes",
+    "split",
+    "evaluation_configuration"
+  ],
+  "references": [
+    {
+      "report_iteration": 43,
+      "archive_iteration": 43,
+      "condition": "basics_standard",
+      "role": "clean full-episode comparison baseline",
+      "sha256": {
+        "v2_sensors/arm/results/overnight_20261105/basics_standard/test/config.json": "b2bf96e7a358ee9a5f4b205c2330d52d22f8efef3514ca159f4ed2e447f24ec1",
+        "v2_sensors/arm/results/overnight_20261105/basics_standard/models/config.json": "3fcadefb9c573f288549721f1d8b91a1c7bf1331c4922cf157dbf7a12f16f28a",
+        "v2_sensors/arm/results/overnight_20261105/basics_standard/models/driving_seed7.npz": "458fc825c3d3c1e5d39d3630655eb872bb46f3ddc34e0a850ee4eb5da52a18c3",
+        "v2_sensors/arm/results/overnight_20261105/basics_standard/models/reaching_seed7.npz": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+        "v2_sensors/arm/results/overnight_20261105/basics_standard/models/stop_seed7.npz": "1c7a15bcae23dbc460f476409980fcf4dce3ae2c9b1f297cffe21780109d2fc1",
+        "v2_sensors/arm/results/overnight_20261105/basics_standard/models/torque_seed7.npz": "72f5e53c1ace5730ad17e48f99f73092e42dad651ae09ccfa46c59bdff618528"
+      },
+      "recorded_runtime_source_sha256": {
+        "full_run.py": "a099cabfe4479cf25bd59665e16717b8634a7feeb1b647f1dc39df9bf674514d",
+        "evaluate_curriculum.py": "7fa3b64db19e7a39b0cb3a598945fee4695e3a0dce7d037d1eee1e73a85f132c",
+        "curriculum_sensors.py": "8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520"
+      },
+      "recorded_split_sha256": "286f578aec7e3ab0953592466e63014cc1dde7f467106fadf273b30762ac1abf"
+    },
+    {
+      "report_iteration": 56,
+      "archive_iteration": 57,
+      "condition": "dart_dagger",
+      "role": "final combined recovery comparison",
+      "sha256": {
+        "v2_sensors/arm/results/overnight_20261105/dart_dagger/test/config.json": "f0e0f0c89c78013800a222c5ddc4c799ed37b556d99f95173a54c3f57a0a73c2",
+        "v2_sensors/arm/results/overnight_20261105/dart_dagger/models/config.json": "679fa50b242ed89ed6a620db95e31e8e5301deff12e01a1943435e2598f8b334",
+        "v2_sensors/arm/results/overnight_20261105/dart_dagger/models/driving_seed7.npz": "1fe7edaa505eb346a2e1746ab18c8bdc768b4bab4fac96b213b879f0196425da",
+        "v2_sensors/arm/results/overnight_20261105/dart_dagger/models/reaching_seed7.npz": "2b501ed2f44cd8f25343298daa1b7f1e837faf64b6e9c187c7c1f1de247b8633",
+        "v2_sensors/arm/results/overnight_20261105/dart_dagger/models/stop_seed7.npz": "8e2a7ed6d3de98b46e5946637d13b127feac377272d84405571d9cb3b2dc0a7d",
+        "v2_sensors/arm/results/overnight_20261105/dart_dagger/models/torque_seed7.npz": "231e68cb3f26586f383668703eeeed65585ac580d37f93533a889311cbc46ffb"
+      },
+      "recorded_runtime_source_sha256": {
+        "full_run.py": "a099cabfe4479cf25bd59665e16717b8634a7feeb1b647f1dc39df9bf674514d",
+        "evaluate_curriculum.py": "7fa3b64db19e7a39b0cb3a598945fee4695e3a0dce7d037d1eee1e73a85f132c",
+        "curriculum_sensors.py": "8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520"
+      },
+      "recorded_split_sha256": "286f578aec7e3ab0953592466e63014cc1dde7f467106fadf273b30762ac1abf"
+    }
+  ]
+}
