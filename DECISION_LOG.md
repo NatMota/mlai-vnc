@@ -205,7 +205,7 @@ Main V2 family:
 - Validation and test rank DAgger and the combined model differently: 4 against 1 validation successes, and 2 against 4 test successes.
 - Before STOP, the gripper visited the 10 mm band on 7 DAgger and 6 combined runs, and the network stopped inside it on 2 and 4. A different STOP would also change what follows. Encoder noise alone moves the STOP output by 32 mm (SD). Over the 0.5 s after STOP, distance to the target changes by a median 103.1 mm for the baseline and -0.6 mm for DAgger, each on its own stopped runs.
 - Under all effects the baseline's 48 PARK uses the same driving network as the cumulative test's 89, so its arm's motion may disturb the base, which was not tested. Retraining on random starts gave PARK on 85 with a 29.5 cm park error, possibly because the expert parks relative to the world origin. DAgger raised the torque noise predicted from encoder noise from 1.6 to 2.9 N m to 4.0 to 8.4 N m.
-- Training STOP on recovery rows in a six-target pilot improved its loss on those rows, and it issued STOP on two targets instead of five. Bursty packet loss was planned and not done. The strongest direct weight edit scaled the arm's PARK-input weights by 1.25 and cut median closest distance from 86 to 52 mm on twenty validation targets, with no 10 mm successes.
+- Training STOP on recovery rows in a six-target pilot improved its loss on those rows, and it issued STOP on two targets instead of five. The strongest direct weight edit scaled the arm's PARK-input weights by 1.25 and cut median closest distance from 86 to 52 mm on twenty validation targets, with no 10 mm successes.
 
 Targets:
 
@@ -216,6 +216,39 @@ Next steps in more detail:
 - A time to PARK on the policy's own states could be defined from the true distance to the expert's parking position.
 - After filtering the speed estimate over several readings, we would measure how much encoder noise reaches the STOP output.
 - For occlusion we would compare normal tracker updates with holding the last camera estimate before sweeping screen frequency and phase.
+
+Simulator checks:
+
+- With the simulator's URDF flags the end-effector link loads at 1 kg and 1 kg m², leaving a gravity gap of about 5 N m at joint 2 against the controller's model. The lecturers asked us to leave the simulation unchanged, and we did.
+- The expert commands torque at 1 kHz, above the 500 Hz low-level limit in Kinova's sheet for the closely related 6-DOF Jaco (Kinova, "Ultra lightweight robotic arm, 6 DOF spherical: specifications," 2018). With its torque held for a second simulator step it followed its own run on 0 of 30 targets, against 30 of 30 at 1 kHz. That is a limitation of the tested setup. Hardware transfer has not been demonstrated.
+- We ported the expert to C++ on the same Bullet build ([collection/native](collection/native)). It is about 9 to 12 times faster with eight workers and 2 to 3 times faster in one process, with no numerical difference over ten audited runs (Appendix E).
+
+More V1 detail:
+
+- With weight updates held about equal, the three-network model reached 117 of 120 validation targets with the full runs, 110 with a quarter and 69 with a sixteenth, and parked on all 120 each time.
+- Constant sensor errors on 50 golden validation targets: the saved model reached 49 and 32 at levels 1 and 5, and the learned version 16 and 1.
+- Behind the base and switch networks of the split model, the two-rate arm raised validation success from 104 to 112 of 120, and moving the slow, base and switch networks to 30 Hz gave 117, a change to several parts together.
+- Three seeds cannot explain how the input groups interact in the ablations.
+
+More main V2 detail:
+
+- On the expert's 100 test runs the base path is 1.22 times the straight line at the median and the gripper path is 1.09 times the straight line.
+- At about the same parameter count, two layers gave a lower validation loss on the arm than one or three, and 128 units stopped closer to the target than 64 (194 to 85 mm at STOP among stopped runs on 100 targets).
+- The per-run averaging and the 3 s clip on time were set early and not compared with alternatives. The baseline's torque and STOP checkpoints came at the last permitted epoch, so more training might have lowered those losses further.
+- Gripper paths are recorded at 30 Hz in the main family, so a very short visit could go unseen.
+- Blind starts: of 55 blind training runs, 28 turn left and 27 turn right. With speed inputs, seed 7 parked on all 47 test targets visible at the start.
+- Median torque RMSE after PARK on training targets, on expert states and own states: baseline 0.24 and 16.0 N m, DART-inspired 0.25 and 10.9, DAgger round 1 0.87 and 7.5, DAgger round 2 1.12 and 7.6.
+- The 16 DAgger runs with no PARK all start blind, in one sector from 88° to 151°.
+- Of the 73 DAgger runs that park and never arrive, 43 were still closing at over 10 mm/s when STOP or the deadline came, 14 were nearly still and 16 were moving away.
+- Training noise acted on commands and was held for 33 ms, while encoder noise enters through a 1 ms backward difference, so these are different disturbances. Model error is 0.6 times our injected noise on the arm and 24 times on the wheels.
+- Occlusion rerun without the screen: the same combined networks match the full-run table on PARK for 100 of 100 test targets, with closest distance differing by a median 1.2 mm.
+
+Across systems:
+
+- In the two-rate system, over the 68 stopped runs, the last camera error and the true distance at STOP have a rank correlation of 0.94, an association, since the last capture need not coincide with STOP. The main family's arm network trained on the same camera bias, so we cannot say how much it costs there.
+- Target-memory system: 8 of the 13 runs with no STOP had come within 10 mm at some moment. One round of DAgger on this robot reached 3 of 37 targets against 23 without it, with different data, architecture and supervision.
+- The three STOP designs fail differently: the main family's network trained on expert demonstrations and its inputs change when the arm improves, the two-rate rule inherits the tracked goal's error, and the target-memory network trained on runs of its own arm.
+- The target-memory arm is itself a direct-torque network and two-rate tracking coexists with few successes, so arm design alone does not separate the outcomes. Joint speed appears as a sensitive input across settings: constant speed error in V1 and differenced encoder noise in the main family, at different scales.
 
 Alternative V2 systems:
 
