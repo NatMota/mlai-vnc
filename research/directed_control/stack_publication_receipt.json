@@ -1,0 +1,678 @@
+{
+  "scope": "Compact audits and frozen source. Binary, course assets and full camera/trace records remain in MLflow archives.",
+  "portable_archive_sha256": "c3a6c0871fbf555a51266e29460eea895a127505c9814ebaab533db0ee2e765f",
+  "files": [
+    {
+      "path": "research_notebook.ipynb",
+      "sha256": "410f3646681f139cde256f0c49a6176c4ed87fe83e11d72a1602b181ff040308"
+    },
+    {
+      "path": "research_notebook.html",
+      "sha256": "5a0fc6834b4e173562fa4b3f41f48c8a53e19d3b12c6d577d7d41fe5b238ef4f"
+    },
+    {
+      "path": "research_notebook.md",
+      "sha256": "ed160b1755df5cf7d85644af6c715277fed275a0d2f7afc5807fd8e42bc893fe"
+    },
+    {
+      "path": "ARCHITECTURE.md",
+      "sha256": "56e6b92eb1f4e9ef42f2945c616f99eb8bdaaf86f09b06d11c06432eede299a5"
+    },
+    {
+      "path": "activation_audit.json",
+      "sha256": "c7882c77039cf49931bf4f01b6b9186336d800a484e3f9e49952c631b8958ed6"
+    },
+    {
+      "path": "original_activation_activity.png",
+      "sha256": "7f258b03795fee4909e61ce2beaa85423995a565058c3eef4fecb82955a5124f"
+    },
+    {
+      "path": "frozen_stack_distances.png",
+      "sha256": "f04bda69b1f21516f048910ce16e0a8899054083a728bb229299b54c214b1835"
+    },
+    {
+      "path": "research_notebook_files/research_notebook_3_0.png",
+      "sha256": "d80a1c0a0bcc3d5b69043094b7d2614ec33b5d2e60b6e71d8ac9271b6a5f529b"
+    },
+    {
+      "path": "research_notebook_files/research_notebook_39_0.png",
+      "sha256": "7f5302cc0d80e87bcc399bdaa83801284a0c5945d9a3ad302c914fb4e70c5b3e"
+    },
+    {
+      "path": "research_notebook_files/research_notebook_6_0.png",
+      "sha256": "7a0ff4778207547d72b36170c42c5ce888599361db2d23f60c53df588527de5f"
+    },
+    {
+      "path": "research_notebook_files/research_notebook_26_0.png",
+      "sha256": "042e60ba78c7890b78fd28e88a4b5ceafa849c9fe406b80cb68966e3654c15b8"
+    },
+    {
+      "path": "research_notebook_files/research_notebook_24_0.png",
+      "sha256": "dd6fd1200836fdb1c7cf2ae12bff4e4dccf9c458a8d7c6ee224a72bbed4eaf85"
+    },
+    {
+      "path": "research_notebook_files/research_notebook_17_2.png",
+      "sha256": "ba4abc96545e0cdb6884ac292bde85135547454560aa4d667512ec78a27d96b6"
+    },
+    {
+      "path": "research_notebook_files/research_notebook_15_0.png",
+      "sha256": "e38349e1a24673c65da5c89945a18097ecaced3b2756aa3490afc0ef3591126d"
+    },
+    {
+      "path": "research_notebook_files/research_notebook_31_0.png",
+      "sha256": "487d728c026d03e92d3af75759b0eaf4bfca6a8e07f8ad9d88ca6e52e5be35e5"
+    },
+    {
+      "path": "research_notebook_files/research_notebook_30_0.png",
+      "sha256": "c237d55ef17a477864689bbb758a2b6a6d4fe892e382cbdc1d9f9690af572154"
+    },
+    {
+      "path": "source/publish_activation_audit.py",
+      "sha256": "805f0c56e943c64ce40b2fc67683281df193cb15e59c36cb441d46dc94c2938a"
+    },
+    {
+      "path": "source/publish_stack_results.py",
+      "sha256": "42e1617846772517970c1b4bfc0955bab7f4dad4939d486e6fed75828b3b494e"
+    },
+    {
+      "path": "source/log_stack_research.py",
+      "sha256": "ccbb0330a26caaffb3984f3fb65e14b8be6dbfd330c992b39e4df2680342e214"
+    },
+    {
+      "path": "source/build_research_replay.py",
+      "sha256": "a667d5d6e14dd7f5ccb208442920316d99460e442bb19ba2476310eb0b5fc6e0"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_test_plan.json",
+      "sha256": "ced81a22e038fbd2c1027122c4a2c22f72b13f8c6cca18717f9e24df876d8bbc"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_test_freeze.json",
+      "sha256": "f3a577fecbc3a426c9b4ad5f6f4023e15720b016ba5d9f31b3e8b38b2e60a242"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_test_data_receipt.json",
+      "sha256": "be1f85134c701e5449293e4e591550c439bf1386a2a75063918de210157d8aee"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_test_summary300.json",
+      "sha256": "c631ab3c9c38f4f5f4eed7046f075e50c5a8f2218c389ff83d9ecb2310d3f9ac"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_failure_analysis.json",
+      "sha256": "c430c3648b29dba03e27fdea884377d9516a3fdb3ad74fa7d50197e8534702e6"
+    },
+    {
+      "path": "learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/test_seed7/reserved_audit.json",
+      "sha256": "9c86a92dd229fd63b46ccd4a877f6bdf86d3d50d2878fcb8e11012b0f27c795a"
+    },
+    {
+      "path": "learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/test_seed7/frame_alignment_audit.json",
+      "sha256": "e6d050b5c0057c9b01ced7c64981c6cd52927703c0e4e3face7eaa506f810caa"
+    },
+    {
+      "path": "learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/test_seed7/config.json",
+      "sha256": "040f351d3d8b2c0bdf19a769f6988396c44ce948804afb3e8fbfbb4087b2351a"
+    },
+    {
+      "path": "learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/test_seed7/completion.json",
+      "sha256": "5cb76ed9fbfb2eda1cef11f327623b86017a86a5c57203db8ca63afa5eab174f"
+    },
+    {
+      "path": "learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/test_seed7/summary.json",
+      "sha256": "54e25dee26e2117aa30ee33c649e322f756da53ea42f9f9b9c2e0b665d16f52d"
+    },
+    {
+      "path": "learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/test_seed7/replay_receipt.json",
+      "sha256": "e282ae805be8c78009aea324dbd7758bd2988fbb8c84f6cdcc2f11bea98bceb3"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed1_v1/test_seed1/reserved_audit.json",
+      "sha256": "d23e1c6f5c6916c30b78c871a5fd25eac43011805a6b13f131fe1de9fce9dbf9"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed1_v1/test_seed1/frame_alignment_audit.json",
+      "sha256": "01c574a03ab3c3e5f8554d687f1f37eb462323e80b468b55383a1722e06b4103"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed1_v1/test_seed1/config.json",
+      "sha256": "d86dfca0d2fcc9d5a24ab352fe653e22830011430d3934407eff673a56512ac4"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed1_v1/test_seed1/completion.json",
+      "sha256": "5cb76ed9fbfb2eda1cef11f327623b86017a86a5c57203db8ca63afa5eab174f"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed1_v1/test_seed1/summary.json",
+      "sha256": "d621c7fb6787ada113dead7d8d7c3aaf83c71d28d940145f7d70beae2fff797f"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed1_v1/test_seed1/replay_receipt.json",
+      "sha256": "1708a6c889edbbad0bec942d1dd27df13893dde22cf77655bcfa0ce5aae87d18"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed2_v1/test_seed2/reserved_audit.json",
+      "sha256": "dd1556e622ea5d574bbabb51dc1aa4b3507b41206688000203715723f30e828e"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed2_v1/test_seed2/frame_alignment_audit.json",
+      "sha256": "40f4f61ec3046c193bd312f31b0cbb5d458540e0aca7260c3ea7b9e4fc3fd3d4"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed2_v1/test_seed2/config.json",
+      "sha256": "28c0b679f26880b3cc41ed3e5a75b2711c95a48b8b504064aa615188c723aa96"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed2_v1/test_seed2/completion.json",
+      "sha256": "5cb76ed9fbfb2eda1cef11f327623b86017a86a5c57203db8ca63afa5eab174f"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed2_v1/test_seed2/summary.json",
+      "sha256": "7a29b5bc092cc85462bad1b392a69b562656cbb6bff4aa938c2715c2facc206d"
+    },
+    {
+      "path": "learned_geometry_branch/stack_reserved_seed2_v1/test_seed2/replay_receipt.json",
+      "sha256": "ec17a49ccbdaad1c570bee89cf279d95765958f5625b3bb16382953ee7420b07"
+    },
+    {
+      "path": "stack_controller/audit_camera_fit_v2.py",
+      "sha256": "eb310ce80a94925ab32cd64653b51c1c5e47955aed0848a0a27a93f2ec9f4d01"
+    },
+    {
+      "path": "stack_controller/condition.json",
+      "sha256": "56307761d7d02f8d37b188aec2a51ee9fbcd6716c07cd256383d91f68b528e52"
+    },
+    {
+      "path": "stack_controller/evaluate_hybrid_geometry.py",
+      "sha256": "3be16a25f5ab5b44d0dc9f8e58f81bd9b9de88a6072d92e40e67f6d4640de5b0"
+    },
+    {
+      "path": "stack_controller/exec_native",
+      "sha256": "e1b9ee537fa1e5454a07f59d4ac3fc9a6d8b6dba35017bf43c37665b8f5b2156"
+    },
+    {
+      "path": "stack_controller/geometry_runtime.py",
+      "sha256": "14e7cd3940f81cc2cdf489c35bd69fe64d89fee11b94db0e2a0a3dcb15759ee6"
+    },
+    {
+      "path": "stack_controller/hybrid_geometry_runtime.py",
+      "sha256": "7770b2ff99db2e20a90b2dc595db4315f3fb5e96036b3d70d863904da7eede55"
+    },
+    {
+      "path": "stack_controller/plan.json",
+      "sha256": "086f92dd181e228ffc0281e6cd63413ef0f7ef7687138c1cc4fe32772851bfbf"
+    },
+    {
+      "path": "stack_controller/baseline/driving_seed7.npz",
+      "sha256": "458fc825c3d3c1e5d39d3630655eb872bb46f3ddc34e0a850ee4eb5da52a18c3"
+    },
+    {
+      "path": "stack_controller/baseline/reaching_seed7.npz",
+      "sha256": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3"
+    },
+    {
+      "path": "stack_controller/baseline/torque_seed7_summary.json",
+      "sha256": "1ac8df3ec446c58aeb1d78e69fb64d84c6c35d09229348d9f26e895994daeae6"
+    },
+    {
+      "path": "stack_controller/baseline/torque_training_summary.json",
+      "sha256": "1ac8df3ec446c58aeb1d78e69fb64d84c6c35d09229348d9f26e895994daeae6"
+    },
+    {
+      "path": "stack_controller/models/envelope.npz",
+      "sha256": "c6506ba11554a23430f9d8c6da651d97f4e83e855828bf84253cfe24f7feadc8"
+    },
+    {
+      "path": "stack_controller/models/hybrid_bounds.npz",
+      "sha256": "9d0be43054151a30b697c3303c242ddb1eeeb47bc345b26da58328a29e1e789d"
+    },
+    {
+      "path": "stack_controller/models/identified_bounds.npz",
+      "sha256": "4743e2619fcbe1518791221caf36036bffffa079aade5e5b9862ceac12f0b5c2"
+    },
+    {
+      "path": "stack_controller/models/position.npz",
+      "sha256": "d394c21e86d0f499e569344b8ad6137b8d6ae11cd72cc8ee82921c92e8b0792a"
+    },
+    {
+      "path": "stack_controller/models/torque.npz",
+      "sha256": "b56e762476c6cde7e557116235be3ffc7516da7ed7b813355441658d55506e37"
+    },
+    {
+      "path": "stack_controller/native/bullet_api.hpp",
+      "sha256": "7c66bf4e5940fe73824040e8cd11b180659a43f2c26fbd110b9dc28b0d5bb1dd"
+    },
+    {
+      "path": "stack_controller/native/collect_curriculum.cpp",
+      "sha256": "b48665694b11f9dccfd8e1cd9fb622cc6297975c14349460dbe9db7df78a5dcd"
+    },
+    {
+      "path": "stack_controller/native/controller.cpp",
+      "sha256": "ca3120541d61adf00ec0cc1885cfffee3ccbc9292b8e4a8dfa3a51b4b6165893"
+    },
+    {
+      "path": "stack_controller/native/expert.hpp",
+      "sha256": "96ab9ba6bd6d033367964ef0365a8b55567e466f7915e96447e2f732dc064c7a"
+    },
+    {
+      "path": "stack_controller/native/golden_camera_stream.cpp",
+      "sha256": "880f5c6ed43b7e48066491e22ca7d3d11ec9c8bf404c1901c0927c9ae001f6b8"
+    },
+    {
+      "path": "stack_controller/native/main.cpp",
+      "sha256": "ed7066eeb963616c6cf69e02647a493761668ba587b1fad47b271f626eeb671e"
+    },
+    {
+      "path": "stack_controller/native/numerics.hpp",
+      "sha256": "8f58cce4f19826204b7b67bb74a94b897b6fcfb2437c58307bc3a2d47acd151a"
+    },
+    {
+      "path": "stack_controller/native/parking_ppo.cpp",
+      "sha256": "5902b66d77e78085bb399ee13becd802319459647b2fe409fad7cd705707cac9"
+    },
+    {
+      "path": "stack_controller/native/physics.cpp",
+      "sha256": "f568ff93d5bf56003bc5814a4925123b954b8392b3e253d267aef898d4df2c60"
+    },
+    {
+      "path": "stack_controller/native/policy_replay.cpp",
+      "sha256": "bc7205aee5195a48af99f2f940a80bf1cece89ab9f0bfc390a4cde27158e9bf4"
+    },
+    {
+      "path": "stack_controller/native/sensor_curriculum.cpp",
+      "sha256": "85a6236a4d1fdc0c9dc2d0e991e460cc150e12abb2e153c596f3c8b247ed60d6"
+    },
+    {
+      "path": "stack_controller/native/sensor_parking.cpp",
+      "sha256": "a5b41dda5672b9c9bf5e3cae0b78ecd85d985b0f8cc940149c110a27a754d0f6"
+    },
+    {
+      "path": "stack_controller/reproducibility/CMakeLists.txt",
+      "sha256": "4930cea9bd2bf711605d9d1c281a083de7196c66ce944246fc19d2b7cdda5212"
+    },
+    {
+      "path": "stack_controller/reproducibility/native_bullet.cmake",
+      "sha256": "86244861ab254b340c8ebcb335df8446dd2153717c0feb91dc6282893ffded04"
+    },
+    {
+      "path": "stack_controller/reproducibility/native_link_dependencies.txt",
+      "sha256": "e14246f9bdcb7c4a295dd8bef42893553018099fa094c711bb97a10f08a28dab"
+    },
+    {
+      "path": "stack_controller/reproducibility/pixi.lock",
+      "sha256": "28be5a23d89ddd413e6cc6a71729225dad994a797abdbcfb9e8a1ee81abd273d"
+    },
+    {
+      "path": "stack_controller/reproducibility/pixi.toml",
+      "sha256": "6ddc47561b438770906474ed245fdf547447871e0aedd65464dd24042457a5ae"
+    },
+    {
+      "path": "stack_controller/reproducibility/python_environment.json",
+      "sha256": "10c169a0eb3bfb05802995bff3927b09a8d7940d322c5219cbab23aecc458320"
+    },
+    {
+      "path": "stack_controller/reproducibility/README.txt",
+      "sha256": "1eb21d12c91ac791e8b1946d24ff7335286a63d5de6fb328c01f670b286b7bfb"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/evaluate_time_cumulative.py",
+      "sha256": "0e2dbcba95ff86c71a125b97c6d3e82cea7c7d05194fe7c2f2ea743a66a740d6"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/pilot_torque_runtime.py",
+      "sha256": "3872598e940be841ae8c360bff9e68b6fdc96e5476ccae66020a78469a67a80c"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/append_curriculum.py",
+      "sha256": "12a228a54ee9f5a599edd2433d74e8edb864fe3fe172d36b18bb8db74ffb6637"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/arm_cumulative.py",
+      "sha256": "abb1daf48bd99bbe082c1bf06625011a8b52cb13626b1a18f450852e5cf58f00"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/arm_history.py",
+      "sha256": "68a8fe128b2750ee547faf474b606433617326fdcb60d326cc6c746599a28d3a"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/audit_camera_renderer.py",
+      "sha256": "030cd16ec25096d4bfe82468613dd68421c30ae55d58c0a77fd908f49da5edef"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/audit_park_clip.py",
+      "sha256": "72d733bd6667d199be99ce2798b484d9ce3478855de9ae4172198a7217c65254"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/camera_dot.py",
+      "sha256": "24233c130caaabc8429c1bb792135ca20c111133974f8175a47d2b4599461403"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_curriculum.py",
+      "sha256": "61da74e1532f4697088e01b2d068c0154ac0bc573b6b9f260b7411284260b0ad"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_dagger.py",
+      "sha256": "a34a49a3f5bf08efb0dedddb7f5aa7fb54f6c426f27dc0efcc09a8b7dbbda72c"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_driving_height.py",
+      "sha256": "3c325d596aba6e456f706e563aa23b88cdbeb6ed10f7ecf5173dc8cec724fe8c"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_export_runtime.py",
+      "sha256": "f40e94f2bd280dbeca44c92e35e1866467ca69638adb0e173052948ad13dd479"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_full_run_speed.py",
+      "sha256": "42e69cc0d2329d7979ef2c2f01d5c2a01f37948ba9024f87a63fa5ef50cb4ec6"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_recovery_training.py",
+      "sha256": "534aaa80b41a4578156f6db3a8b8b3de779dbe45c1992e5872fa8d480ede1cb9"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_render_golden.py",
+      "sha256": "bfae2e23531ff21765d7d8e2a13f9ea2fae08ba4b3ab248f329604512e978aee"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_report_camera.py",
+      "sha256": "f0727402b0298f4d5a460c811fa1f7cdb5c01541bddd0653dc966c3648b745fc"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_report_loading.py",
+      "sha256": "4d071a0c691f649bda9a5b5af117143910e8676781c59b1500fffedecb522a54"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_time_cumulative.py",
+      "sha256": "bd06a8e0730afdc95b1ce37900439089e58d0d14cad7e83507c7f7a0eb970ea4"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/check_train_golden.py",
+      "sha256": "969fbe56a19030d03651527553c5d2730efca9233fe44db4e82f366ee1639b7b"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/collect_dagger.py",
+      "sha256": "d86afd09a21abc0d50e3dcdf9d537f5a1517c24680822c309e298358f34fffca"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/collect_recovery.py",
+      "sha256": "36c0645e88588cbe40844813aca69fddc8e86e7d3931c0a3fd6f5bf3b37a0459"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/curriculum_sensors.py",
+      "sha256": "8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/driving_height.py",
+      "sha256": "e177a61441ca38faba63146b6041a7384ccc482d189b0c1155a262bfdbf1b9b3"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/evaluate_curriculum.py",
+      "sha256": "7d0b28b4aa285ad73ff60a4c14cf20de39a76e182ed7c33800a691dbb0128d8c"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/evaluate_golden.py",
+      "sha256": "e8f2bfdfda05bd81b5edb79a4359ff6dce2925acaeae73b18bc76dd22ea5eff4"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/publish_curriculum.py",
+      "sha256": "b309c61f4593f95ad9c9c3353afa61a17d07ff90f63faec35af7e109b747dad2"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/recover_encoder_trace.py",
+      "sha256": "261e4b7cbd9fc54177b6858e957342b783682a40cfdb81d0330cd304ec36257f"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/render_golden.py",
+      "sha256": "68e19b9ef1a552864da65f66266db71b3273c08e49d203d13ef7bfc4b0182c59"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/replay_arm.py",
+      "sha256": "aaca178efc1e173929760874b4d5e3b2e5b5e47feeb68a02b7f312a3736c3fc3"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/replay_identity.py",
+      "sha256": "07c64c8f9b6ce9d40ac3d84d6951a9d50aa338908dfd80b0c0df85f3e56d99ef"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/report_camera.py",
+      "sha256": "e8d5cab4cfdea41b6b2cb12438ff9c80c307bf32e36575762495229f503b987c"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/report_curriculum.py",
+      "sha256": "b61722ec46507a0899b087a338907fd09006cb2688b480caf4daad58bce70b80"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/report_golden.py",
+      "sha256": "f34198f26e2901624608f533d538b6a5fd5161870dc1092ffc6df66c81a3bfc9"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/report_loading.py",
+      "sha256": "c2b456029a2a13998672aae18a61894f373966180871de486253b5524581d0f2"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/report_test_golden.py",
+      "sha256": "9a15f152c105e4b44cd7bed71c9d88263f7e064975bc8d0b6d5fd44f8eadc789"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/report_time_cumulative.py",
+      "sha256": "712d9af1a736bea6cfa422230c5d4031bd0db807b8946a1ed0ba2b8d7e90de2a"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/run_curriculum_ladder.py",
+      "sha256": "89a05177bc27421555ddc751ef351eb9376eccaa6505338812206013e3993ffb"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/run_paired_validation.py",
+      "sha256": "6a213d0f429a819cc4ead29b3512238c7db60f17f40e32a1d9e7a887dbc172dd"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/run_recovery_programme.py",
+      "sha256": "eb61402fb47494cd70236f3b2630941d0fbf6163a1738801ee7f27e334f4ea0b"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/run_remaining_validation.py",
+      "sha256": "d15f5a7c0d06d73157baea05534064d79852b6a08eeb2df6a4454681d22ee43e"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/run_torque_baseline.py",
+      "sha256": "b9b496e647f81a4ccb131d1cbe0b3fdca438cf85966ecb93e40cf53116cdbc94"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/smoke_arm.py",
+      "sha256": "7710952927c219d85d606cacf22ce7072d54990eab928938fca88332bd9c4d12"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/summarize_torque_pilot.py",
+      "sha256": "08db4658ffed54aadcf7ab0c2089a22f4cb34ce26c7ea0dae9b04544b0089a44"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/test_arm.py",
+      "sha256": "308d4a0ea972987f50fa2be96b84c33a0fe1d415bb0c4a283bd8f41232e22d88"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/train_arm.py",
+      "sha256": "e5755994d1197ef2fe185581f54954b3064af7f3b954cb1719510c37df13a830"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/train_full_episode.py",
+      "sha256": "03fae4cc7c5b9feab5aad6212a087dbb400a48ffc1d6eaba2cf7d60409ab65d0"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/train_golden.py",
+      "sha256": "6a0ddeecfa0044d117c16862a3d086f2e0cef6e1c85d30e6858e9508cd7318b9"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/train_paired_arms.py",
+      "sha256": "a35a1d54215c8141e261bc79e2c3dbb69b12a2e13f3c595a6ce0d2acee7d73c0"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/train_stop.py",
+      "sha256": "02508cb8032eef6081d1d5950fd6156b595690edb6237601d3fef60219ca2605"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/train_torque_only.py",
+      "sha256": "058173a53297a9be47ed9a102250a4536529286e6da57959bdbece9b84b0e5bc"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/validate_golden.py",
+      "sha256": "0d7be4c0f0b8c884c12d7cdd96c179dd8b72d267a6a556d244c0b13a65097856"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/watch_curriculum_notebook.py",
+      "sha256": "8e2a152fd5a36ea08a2004d996bd2607bbd11d905a0550c94aa97deb4bb459f0"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/evaluate_torque_pilot.py",
+      "sha256": "543836a7963fa0f87fb260c05be6e9e036f87a6d6b94aa119cd1bc479f5742b7"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/experiment_labels.py",
+      "sha256": "a1646d987119d35dd4838c2ccf758be6b00fbaadabd6a28360156e0952d7665c"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/export_dot_cases.py",
+      "sha256": "5a61edd2ef6b7bc9376e616c03734fc350fe7ab3c93a36b4e69ab67ba4a1245d"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/full_run.py",
+      "sha256": "c5676f59cbdf4093fddfa4f62cc41ea3a9c07ad9d7b8d547af061c8751e6044e"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/full_run_gated.py",
+      "sha256": "b964f8824a27bd1950203123b29aea1b0ff86f44157cc393262a9a345113fd62"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/full_run_stack.py",
+      "sha256": "54cfa41d05268c50ec0056a6e1b2cf102bc08d84e6182151827d7ce4caabe7dc"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/full_run_stack_ticktruth.py",
+      "sha256": "16f85219fa02abd2e6b458fc512a840e9887561b717850dc767c91ce492e810e"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/log_curriculum.py",
+      "sha256": "6168d24253fe20c0052fdb083bb082baf81e4b7ddbb0e5b7bc955b1cf5ac5e74"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/log_golden.py",
+      "sha256": "4288a60571a323ce0ca56e3af4da8eb822451b2d9ea9acf50ad35c84d9eab538"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/log_time_cumulative.py",
+      "sha256": "d34ec8b8a3c51e84f718f30debcb744fd677740bf9c0bebd0a3312d4793af84d"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/mlflow_arm.py",
+      "sha256": "a3b758f780f1e5e02e0cca3f05d61bb8977838c601911d5f33e2cede941ffef4"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/offline_dots.py",
+      "sha256": "f5b3302d838d9b3a0658ebda7ffebd385e272bccba8c6d588a5c7083f0c4ca72"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/parking_target.py",
+      "sha256": "668b2c8f74b39c5df5964892f85f703b5ac29241855652d756d98684394d3026"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/park_distance_batch.py",
+      "sha256": "6b9222b7ae4238f3abae24f47964d5652fe70f555b3eb7a7cdc64f0e757d99d1"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/pilot_stop_combine.py",
+      "sha256": "790ead60953978121973a02d34c2df17b90ba00fa2371314053243e2915f07e8"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/pilot_stop_recovery.py",
+      "sha256": "fef60e9dac210af11fe344afd1ca0b3f86fcd76e0b0ab0a644e65a8c402d07c6"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/pilot_stop_report.py",
+      "sha256": "27b18875475d35d1a56441ac5d79d2a391352e4359f4c446b090799813c70b03"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/pilot_stop_validation_report.py",
+      "sha256": "23d1fc92681ebf94f6e737c89a5fdb49f48415d9d588b85b22bec6060725c43d"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/arm/pilot_torque_only.py",
+      "sha256": "1d6a65e0d72d3278d72fc75e20bdd3f9b36a4cc439b550fb9c074087b07156fc"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/camera_check.py",
+      "sha256": "a03e129c20fa9e94977882ea3ceac2ac039be90fe152998596506067972b35ce"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/camera_features.py",
+      "sha256": "15d19cf54cd50c93590b480243b1ed2d0f763e2f3a18b036e06a5140bd76cba4"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/camera_loop.py",
+      "sha256": "1fa00e61e61c3b05bd2bc2bd3fb23dd0e6462ee14e728ea5b93b2221ad1a26ec"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/expert_reference.json",
+      "sha256": "43d1f888fec75418a4d173efa0eddac9368eb516dd02e49bea0e7cde0c20b716"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/expert_tail.py",
+      "sha256": "b12b12faef6c4c3c6672c0c695332e436198269e4d6c7f02d5627a4c7fad5bed"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/mlflow_runs.json",
+      "sha256": "cff62f0364955d6f4fe231ee60d84957470a12c2de6ea47b413abbe2971df233"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/mlflow_runs.py",
+      "sha256": "f412e6a93b73eb9cf994e3b441e17173b665864051a1b12bc19e05d879865e15"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/prow_camera.py",
+      "sha256": "09d3a1b13945983cb769f7ae246b834d432d83b174d61a8937b93165a002a9ae"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/replay_v2.py",
+      "sha256": "06fd9259f861169673da7bbbd1b514a4d213842508bcdb72c5cb863cd49f64c3"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/sensors.py",
+      "sha256": "e8d59c74670ab0643edee7e4d5598bd47d93b1846cc2f16af9dd67235415959e"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/train_camera.py",
+      "sha256": "08676251b50a2bd600c2912c80bbef5b6735ae8c3ffc73566b455eb58a7e524d"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/train_camera_ttp.py",
+      "sha256": "764033dedaf88b5a396f3fc94a21c2c1d504ce78570a50cc45d7700c41054643"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/train_v2.py",
+      "sha256": "bd38691239081250481e557830a5a7dd89280297d0321a3a5daf48d0c60d2b5f"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/v2_results.py",
+      "sha256": "06accf59257a41d2717cd9ea8d5dcdf44e31d4cd32d15e1d5e35eeca510ff0dc"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_v2/wrist_camera.py",
+      "sha256": "53b325fd5a8360b8c26436a9454b113704ead71b5f7e51837a3dc5e45357314e"
+    },
+    {
+      "path": "stack_controller/runtime/v2_sensors/driving_30/data/expert_30hz/split_plan.json",
+      "sha256": "7080e648ec663cc729bbf3eee93f82d1ad462fa903b03e3471a761aa29d02771"
+    },
+    {
+      "path": "stack_controller/portable_package_manifest.json",
+      "sha256": "c6a9b24c8f6996b8890506e0c95ae0d7ba85a1354b8d9263a7745acc1e8ef947"
+    },
+    {
+      "path": "source/audit_reserved_seed.py",
+      "sha256": "8f7553408c9bde2106dd351c4ad378032ad0a3cd21ef772ebb100cb7dea2fb63"
+    },
+    {
+      "path": "source/summarise_reserved300.py",
+      "sha256": "bceddae00f85fec5c1ad4f20a01e37657f0cd4a769dde84f2d5a1dfafa18ab2f"
+    }
+  ]
+}

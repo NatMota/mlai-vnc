@@ -1,0 +1,8 @@
+{
+  "scope": "Prepare recording adapter; no reservedtest until frozen100gate.",
+  "source": "stack_q6half_timestamp_reference_recovery_v1",
+  "changes": "Evaluator split/record-camera flags only; runtime/models identicaltocandidate.",
+  "parity_case": 45,
+  "test_records_opened": false,
+  "split": "Explicit--split val/test drives case_for andhashprovenance"
+}

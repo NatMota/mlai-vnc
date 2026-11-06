@@ -1,0 +1,740 @@
+{
+  "timestamp_utc": "2026-11-06T02:56:50.309337+00:00",
+  "files": {
+    "audit_camera_fit_v2.py": {
+      "sha256": "eb310ce80a94925ab32cd64653b51c1c5e47955aed0848a0a27a93f2ec9f4d01",
+      "bytes": 3578
+    },
+    "condition.json": {
+      "sha256": "56307761d7d02f8d37b188aec2a51ee9fbcd6716c07cd256383d91f68b528e52",
+      "bytes": 128
+    },
+    "evaluate_hybrid_geometry.py": {
+      "sha256": "3be16a25f5ab5b44d0dc9f8e58f81bd9b9de88a6072d92e40e67f6d4640de5b0",
+      "bytes": 5983
+    },
+    "exec_native": {
+      "sha256": "e1b9ee537fa1e5454a07f59d4ac3fc9a6d8b6dba35017bf43c37665b8f5b2156",
+      "bytes": 26
+    },
+    "geometry_runtime.py": {
+      "sha256": "14e7cd3940f81cc2cdf489c35bd69fe64d89fee11b94db0e2a0a3dcb15759ee6",
+      "bytes": 1345
+    },
+    "hybrid_geometry_runtime.py": {
+      "sha256": "7770b2ff99db2e20a90b2dc595db4315f3fb5e96036b3d70d863904da7eede55",
+      "bytes": 1875
+    },
+    "plan.json": {
+      "sha256": "086f92dd181e228ffc0281e6cd63413ef0f7ef7687138c1cc4fe32772851bfbf",
+      "bytes": 361
+    },
+    "baseline/._torque_seed7_summary.json": {
+      "sha256": "cd6cc8f36672c1e501a50ac630bdd0a36b6e85a5d6c8a24da8115ad229e576cd",
+      "bytes": 163
+    },
+    "baseline/._torque_training_summary.json": {
+      "sha256": "cd6cc8f36672c1e501a50ac630bdd0a36b6e85a5d6c8a24da8115ad229e576cd",
+      "bytes": 163
+    },
+    "baseline/driving_seed7.npz": {
+      "sha256": "458fc825c3d3c1e5d39d3630655eb872bb46f3ddc34e0a850ee4eb5da52a18c3",
+      "bytes": 8968
+    },
+    "baseline/reaching_seed7.npz": {
+      "sha256": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+      "bytes": 94672
+    },
+    "baseline/torque_seed7_summary.json": {
+      "sha256": "1ac8df3ec446c58aeb1d78e69fb64d84c6c35d09229348d9f26e895994daeae6",
+      "bytes": 2000
+    },
+    "baseline/torque_training_summary.json": {
+      "sha256": "1ac8df3ec446c58aeb1d78e69fb64d84c6c35d09229348d9f26e895994daeae6",
+      "bytes": 2000
+    },
+    "models/envelope.npz": {
+      "sha256": "c6506ba11554a23430f9d8c6da651d97f4e83e855828bf84253cfe24f7feadc8",
+      "bytes": 618
+    },
+    "models/hybrid_bounds.npz": {
+      "sha256": "9d0be43054151a30b697c3303c242ddb1eeeb47bc345b26da58328a29e1e789d",
+      "bytes": 618
+    },
+    "models/identified_bounds.npz": {
+      "sha256": "4743e2619fcbe1518791221caf36036bffffa079aade5e5b9862ceac12f0b5c2",
+      "bytes": 618
+    },
+    "models/position.npz": {
+      "sha256": "d394c21e86d0f499e569344b8ad6137b8d6ae11cd72cc8ee82921c92e8b0792a",
+      "bytes": 53296
+    },
+    "models/torque.npz": {
+      "sha256": "b56e762476c6cde7e557116235be3ffc7516da7ed7b813355441658d55506e37",
+      "bytes": 41958
+    },
+    "native/bullet_api.hpp": {
+      "sha256": "7c66bf4e5940fe73824040e8cd11b180659a43f2c26fbd110b9dc28b0d5bb1dd",
+      "bytes": 12237
+    },
+    "native/collect_curriculum.cpp": {
+      "sha256": "b48665694b11f9dccfd8e1cd9fb622cc6297975c14349460dbe9db7df78a5dcd",
+      "bytes": 3953
+    },
+    "native/controller.cpp": {
+      "sha256": "ca3120541d61adf00ec0cc1885cfffee3ccbc9292b8e4a8dfa3a51b4b6165893",
+      "bytes": 5821
+    },
+    "native/controller.o.d": {
+      "sha256": "a28f58d56dcf5d3fd79f0d321ef93df2657f3c813f65a21f519c845426df03c6",
+      "bytes": 335970
+    },
+    "native/expert.hpp": {
+      "sha256": "96ab9ba6bd6d033367964ef0365a8b55567e466f7915e96447e2f732dc064c7a",
+      "bytes": 2176
+    },
+    "native/golden_camera_stream.cpp": {
+      "sha256": "880f5c6ed43b7e48066491e22ca7d3d11ec9c8bf404c1901c0927c9ae001f6b8",
+      "bytes": 1724
+    },
+    "native/main.cpp": {
+      "sha256": "ed7066eeb963616c6cf69e02647a493761668ba587b1fad47b271f626eeb671e",
+      "bytes": 27059
+    },
+    "native/numerics.hpp": {
+      "sha256": "8f58cce4f19826204b7b67bb74a94b897b6fcfb2437c58307bc3a2d47acd151a",
+      "bytes": 2495
+    },
+    "native/parking_ppo.cpp": {
+      "sha256": "5902b66d77e78085bb399ee13becd802319459647b2fe409fad7cd705707cac9",
+      "bytes": 9079
+    },
+    "native/physics.cpp": {
+      "sha256": "f568ff93d5bf56003bc5814a4925123b954b8392b3e253d267aef898d4df2c60",
+      "bytes": 7658
+    },
+    "native/physics.o.d": {
+      "sha256": "398b19e57b1d94e2f83fb76cc52958fbe9d4c42ed5533a967794e12f934b58b5",
+      "bytes": 118414
+    },
+    "native/policy_replay.cpp": {
+      "sha256": "bc7205aee5195a48af99f2f940a80bf1cece89ab9f0bfc390a4cde27158e9bf4",
+      "bytes": 10790
+    },
+    "native/sensor_curriculum": {
+      "sha256": "d589e24b3ac57a056801059812d64271bc83cc2d350c6a487509b6555b6ecf8d",
+      "bytes": 430976
+    },
+    "native/sensor_curriculum.cpp": {
+      "sha256": "85a6236a4d1fdc0c9dc2d0e991e460cc150e12abb2e153c596f3c8b247ed60d6",
+      "bytes": 8784
+    },
+    "native/sensor_curriculum.o.d": {
+      "sha256": "8f215c8e786504a6a788e35df5c2495655d9eea03f521b0b2b81a269316f4401",
+      "bytes": 136525
+    },
+    "native/sensor_parking.cpp": {
+      "sha256": "a5b41dda5672b9c9bf5e3cae0b78ecd85d985b0f8cc940149c110a27a754d0f6",
+      "bytes": 5615
+    },
+    "reproducibility/CMakeLists.txt": {
+      "sha256": "4930cea9bd2bf711605d9d1c281a083de7196c66ce944246fc19d2b7cdda5212",
+      "bytes": 6306
+    },
+    "reproducibility/native_bullet.cmake": {
+      "sha256": "86244861ab254b340c8ebcb335df8446dd2153717c0feb91dc6282893ffded04",
+      "bytes": 8059
+    },
+    "reproducibility/native_link_dependencies.txt": {
+      "sha256": "e14246f9bdcb7c4a295dd8bef42893553018099fa094c711bb97a10f08a28dab",
+      "bytes": 5323
+    },
+    "reproducibility/pixi.lock": {
+      "sha256": "28be5a23d89ddd413e6cc6a71729225dad994a797abdbcfb9e8a1ee81abd273d",
+      "bytes": 132072
+    },
+    "reproducibility/pixi.toml": {
+      "sha256": "6ddc47561b438770906474ed245fdf547447871e0aedd65464dd24042457a5ae",
+      "bytes": 1047
+    },
+    "reproducibility/python_environment.json": {
+      "sha256": "10c169a0eb3bfb05802995bff3927b09a8d7940d322c5219cbab23aecc458320",
+      "bytes": 455
+    },
+    "reproducibility/README.txt": {
+      "sha256": "1eb21d12c91ac791e8b1946d24ff7335286a63d5de6fb328c01f670b286b7bfb",
+      "bytes": 2814
+    },
+    "runtime/v2_sensors/arm/evaluate_time_cumulative.py": {
+      "sha256": "0e2dbcba95ff86c71a125b97c6d3e82cea7c7d05194fe7c2f2ea743a66a740d6",
+      "bytes": 6140
+    },
+    "runtime/v2_sensors/arm/pilot_torque_runtime.py": {
+      "sha256": "3872598e940be841ae8c360bff9e68b6fdc96e5476ccae66020a78469a67a80c",
+      "bytes": 951
+    },
+    "runtime/v2_sensors/arm/append_curriculum.py": {
+      "sha256": "12a228a54ee9f5a599edd2433d74e8edb864fe3fe172d36b18bb8db74ffb6637",
+      "bytes": 4577
+    },
+    "runtime/v2_sensors/arm/arm_cumulative.py": {
+      "sha256": "abb1daf48bd99bbe082c1bf06625011a8b52cb13626b1a18f450852e5cf58f00",
+      "bytes": 5017
+    },
+    "runtime/v2_sensors/arm/arm_history.py": {
+      "sha256": "68a8fe128b2750ee547faf474b606433617326fdcb60d326cc6c746599a28d3a",
+      "bytes": 1091
+    },
+    "runtime/v2_sensors/arm/audit_camera_renderer.py": {
+      "sha256": "030cd16ec25096d4bfe82468613dd68421c30ae55d58c0a77fd908f49da5edef",
+      "bytes": 2948
+    },
+    "runtime/v2_sensors/arm/audit_park_clip.py": {
+      "sha256": "72d733bd6667d199be99ce2798b484d9ce3478855de9ae4172198a7217c65254",
+      "bytes": 4199
+    },
+    "runtime/v2_sensors/arm/camera_dot.py": {
+      "sha256": "24233c130caaabc8429c1bb792135ca20c111133974f8175a47d2b4599461403",
+      "bytes": 3567
+    },
+    "runtime/v2_sensors/arm/check_curriculum.py": {
+      "sha256": "61da74e1532f4697088e01b2d068c0154ac0bc573b6b9f260b7411284260b0ad",
+      "bytes": 3049
+    },
+    "runtime/v2_sensors/arm/check_dagger.py": {
+      "sha256": "a34a49a3f5bf08efb0dedddb7f5aa7fb54f6c426f27dc0efcc09a8b7dbbda72c",
+      "bytes": 2117
+    },
+    "runtime/v2_sensors/arm/check_driving_height.py": {
+      "sha256": "3c325d596aba6e456f706e563aa23b88cdbeb6ed10f7ecf5173dc8cec724fe8c",
+      "bytes": 1842
+    },
+    "runtime/v2_sensors/arm/check_export_runtime.py": {
+      "sha256": "f40e94f2bd280dbeca44c92e35e1866467ca69638adb0e173052948ad13dd479",
+      "bytes": 2480
+    },
+    "runtime/v2_sensors/arm/check_full_run_speed.py": {
+      "sha256": "42e69cc0d2329d7979ef2c2f01d5c2a01f37948ba9024f87a63fa5ef50cb4ec6",
+      "bytes": 5028
+    },
+    "runtime/v2_sensors/arm/check_recovery_training.py": {
+      "sha256": "534aaa80b41a4578156f6db3a8b8b3de779dbe45c1992e5872fa8d480ede1cb9",
+      "bytes": 1744
+    },
+    "runtime/v2_sensors/arm/check_render_golden.py": {
+      "sha256": "bfae2e23531ff21765d7d8e2a13f9ea2fae08ba4b3ab248f329604512e978aee",
+      "bytes": 6687
+    },
+    "runtime/v2_sensors/arm/check_report_camera.py": {
+      "sha256": "f0727402b0298f4d5a460c811fa1f7cdb5c01541bddd0653dc966c3648b745fc",
+      "bytes": 1983
+    },
+    "runtime/v2_sensors/arm/check_report_loading.py": {
+      "sha256": "4d071a0c691f649bda9a5b5af117143910e8676781c59b1500fffedecb522a54",
+      "bytes": 3038
+    },
+    "runtime/v2_sensors/arm/check_time_cumulative.py": {
+      "sha256": "bd06a8e0730afdc95b1ce37900439089e58d0d14cad7e83507c7f7a0eb970ea4",
+      "bytes": 2770
+    },
+    "runtime/v2_sensors/arm/check_train_golden.py": {
+      "sha256": "969fbe56a19030d03651527553c5d2730efca9233fe44db4e82f366ee1639b7b",
+      "bytes": 2397
+    },
+    "runtime/v2_sensors/arm/collect_dagger.py": {
+      "sha256": "d86afd09a21abc0d50e3dcdf9d537f5a1517c24680822c309e298358f34fffca",
+      "bytes": 2584
+    },
+    "runtime/v2_sensors/arm/collect_recovery.py": {
+      "sha256": "36c0645e88588cbe40844813aca69fddc8e86e7d3931c0a3fd6f5bf3b37a0459",
+      "bytes": 5408
+    },
+    "runtime/v2_sensors/arm/curriculum_sensors.py": {
+      "sha256": "8117d6a981b4e5dd37dbcf2f4c051e11e6be80dc414dd5beac3c30cbbd523520",
+      "bytes": 1565
+    },
+    "runtime/v2_sensors/arm/driving_height.py": {
+      "sha256": "e177a61441ca38faba63146b6041a7384ccc482d189b0c1155a262bfdbf1b9b3",
+      "bytes": 7347
+    },
+    "runtime/v2_sensors/arm/evaluate_curriculum.py": {
+      "sha256": "7d0b28b4aa285ad73ff60a4c14cf20de39a76e182ed7c33800a691dbb0128d8c",
+      "bytes": 4814
+    },
+    "runtime/v2_sensors/arm/evaluate_golden.py": {
+      "sha256": "e8f2bfdfda05bd81b5edb79a4359ff6dce2925acaeae73b18bc76dd22ea5eff4",
+      "bytes": 7084
+    },
+    "runtime/v2_sensors/arm/publish_curriculum.py": {
+      "sha256": "b309c61f4593f95ad9c9c3353afa61a17d07ff90f63faec35af7e109b747dad2",
+      "bytes": 16246
+    },
+    "runtime/v2_sensors/arm/recover_encoder_trace.py": {
+      "sha256": "261e4b7cbd9fc54177b6858e957342b783682a40cfdb81d0330cd304ec36257f",
+      "bytes": 10415
+    },
+    "runtime/v2_sensors/arm/render_golden.py": {
+      "sha256": "68e19b9ef1a552864da65f66266db71b3273c08e49d203d13ef7bfc4b0182c59",
+      "bytes": 12535
+    },
+    "runtime/v2_sensors/arm/replay_arm.py": {
+      "sha256": "aaca178efc1e173929760874b4d5e3b2e5b5e47feeb68a02b7f312a3736c3fc3",
+      "bytes": 7411
+    },
+    "runtime/v2_sensors/arm/replay_identity.py": {
+      "sha256": "07c64c8f9b6ce9d40ac3d84d6951a9d50aa338908dfd80b0c0df85f3e56d99ef",
+      "bytes": 2050
+    },
+    "runtime/v2_sensors/arm/report_camera.py": {
+      "sha256": "e8d5cab4cfdea41b6b2cb12438ff9c80c307bf32e36575762495229f503b987c",
+      "bytes": 2398
+    },
+    "runtime/v2_sensors/arm/report_curriculum.py": {
+      "sha256": "b61722ec46507a0899b087a338907fd09006cb2688b480caf4daad58bce70b80",
+      "bytes": 5475
+    },
+    "runtime/v2_sensors/arm/report_golden.py": {
+      "sha256": "f34198f26e2901624608f533d538b6a5fd5161870dc1092ffc6df66c81a3bfc9",
+      "bytes": 11820
+    },
+    "runtime/v2_sensors/arm/report_loading.py": {
+      "sha256": "c2b456029a2a13998672aae18a61894f373966180871de486253b5524581d0f2",
+      "bytes": 3564
+    },
+    "runtime/v2_sensors/arm/report_test_golden.py": {
+      "sha256": "9a15f152c105e4b44cd7bed71c9d88263f7e064975bc8d0b6d5fd44f8eadc789",
+      "bytes": 9438
+    },
+    "runtime/v2_sensors/arm/report_time_cumulative.py": {
+      "sha256": "712d9af1a736bea6cfa422230c5d4031bd0db807b8946a1ed0ba2b8d7e90de2a",
+      "bytes": 3396
+    },
+    "runtime/v2_sensors/arm/run_curriculum_ladder.py": {
+      "sha256": "89a05177bc27421555ddc751ef351eb9376eccaa6505338812206013e3993ffb",
+      "bytes": 4381
+    },
+    "runtime/v2_sensors/arm/run_paired_validation.py": {
+      "sha256": "6a213d0f429a819cc4ead29b3512238c7db60f17f40e32a1d9e7a887dbc172dd",
+      "bytes": 4262
+    },
+    "runtime/v2_sensors/arm/run_recovery_programme.py": {
+      "sha256": "eb61402fb47494cd70236f3b2630941d0fbf6163a1738801ee7f27e334f4ea0b",
+      "bytes": 8143
+    },
+    "runtime/v2_sensors/arm/run_remaining_validation.py": {
+      "sha256": "d15f5a7c0d06d73157baea05534064d79852b6a08eeb2df6a4454681d22ee43e",
+      "bytes": 5569
+    },
+    "runtime/v2_sensors/arm/run_torque_baseline.py": {
+      "sha256": "b9b496e647f81a4ccb131d1cbe0b3fdca438cf85966ecb93e40cf53116cdbc94",
+      "bytes": 5292
+    },
+    "runtime/v2_sensors/arm/smoke_arm.py": {
+      "sha256": "7710952927c219d85d606cacf22ce7072d54990eab928938fca88332bd9c4d12",
+      "bytes": 4828
+    },
+    "runtime/v2_sensors/arm/summarize_torque_pilot.py": {
+      "sha256": "08db4658ffed54aadcf7ab0c2089a22f4cb34ce26c7ea0dae9b04544b0089a44",
+      "bytes": 4925
+    },
+    "runtime/v2_sensors/arm/test_arm.py": {
+      "sha256": "308d4a0ea972987f50fa2be96b84c33a0fe1d415bb0c4a283bd8f41232e22d88",
+      "bytes": 9806
+    },
+    "runtime/v2_sensors/arm/train_arm.py": {
+      "sha256": "e5755994d1197ef2fe185581f54954b3064af7f3b954cb1719510c37df13a830",
+      "bytes": 16066
+    },
+    "runtime/v2_sensors/arm/train_full_episode.py": {
+      "sha256": "03fae4cc7c5b9feab5aad6212a087dbb400a48ffc1d6eaba2cf7d60409ab65d0",
+      "bytes": 5998
+    },
+    "runtime/v2_sensors/arm/train_golden.py": {
+      "sha256": "6a0ddeecfa0044d117c16862a3d086f2e0cef6e1c85d30e6858e9508cd7318b9",
+      "bytes": 23318
+    },
+    "runtime/v2_sensors/arm/train_paired_arms.py": {
+      "sha256": "a35a1d54215c8141e261bc79e2c3dbb69b12a2e13f3c595a6ce0d2acee7d73c0",
+      "bytes": 7704
+    },
+    "runtime/v2_sensors/arm/train_stop.py": {
+      "sha256": "02508cb8032eef6081d1d5950fd6156b595690edb6237601d3fef60219ca2605",
+      "bytes": 5983
+    },
+    "runtime/v2_sensors/arm/train_torque_only.py": {
+      "sha256": "058173a53297a9be47ed9a102250a4536529286e6da57959bdbece9b84b0e5bc",
+      "bytes": 2380
+    },
+    "runtime/v2_sensors/arm/validate_golden.py": {
+      "sha256": "0d7be4c0f0b8c884c12d7cdd96c179dd8b72d267a6a556d244c0b13a65097856",
+      "bytes": 4241
+    },
+    "runtime/v2_sensors/arm/watch_curriculum_notebook.py": {
+      "sha256": "8e2a152fd5a36ea08a2004d996bd2607bbd11d905a0550c94aa97deb4bb459f0",
+      "bytes": 2367
+    },
+    "runtime/v2_sensors/arm/evaluate_torque_pilot.py": {
+      "sha256": "543836a7963fa0f87fb260c05be6e9e036f87a6d6b94aa119cd1bc479f5742b7",
+      "bytes": 328
+    },
+    "runtime/v2_sensors/arm/experiment_labels.py": {
+      "sha256": "a1646d987119d35dd4838c2ccf758be6b00fbaadabd6a28360156e0952d7665c",
+      "bytes": 3791
+    },
+    "runtime/v2_sensors/arm/export_dot_cases.py": {
+      "sha256": "5a61edd2ef6b7bc9376e616c03734fc350fe7ab3c93a36b4e69ab67ba4a1245d",
+      "bytes": 2035
+    },
+    "runtime/v2_sensors/arm/full_run.py": {
+      "sha256": "c5676f59cbdf4093fddfa4f62cc41ea3a9c07ad9d7b8d547af061c8751e6044e",
+      "bytes": 19607
+    },
+    "runtime/v2_sensors/arm/full_run_gated.py": {
+      "sha256": "b964f8824a27bd1950203123b29aea1b0ff86f44157cc393262a9a345113fd62",
+      "bytes": 20195
+    },
+    "runtime/v2_sensors/arm/full_run_stack.py": {
+      "sha256": "54cfa41d05268c50ec0056a6e1b2cf102bc08d84e6182151827d7ce4caabe7dc",
+      "bytes": 20463
+    },
+    "runtime/v2_sensors/arm/full_run_stack_ticktruth.py": {
+      "sha256": "16f85219fa02abd2e6b458fc512a840e9887561b717850dc767c91ce492e810e",
+      "bytes": 21928
+    },
+    "runtime/v2_sensors/arm/log_curriculum.py": {
+      "sha256": "6168d24253fe20c0052fdb083bb082baf81e4b7ddbb0e5b7bc955b1cf5ac5e74",
+      "bytes": 7925
+    },
+    "runtime/v2_sensors/arm/log_golden.py": {
+      "sha256": "4288a60571a323ce0ca56e3af4da8eb822451b2d9ea9acf50ad35c84d9eab538",
+      "bytes": 8002
+    },
+    "runtime/v2_sensors/arm/log_time_cumulative.py": {
+      "sha256": "d34ec8b8a3c51e84f718f30debcb744fd677740bf9c0bebd0a3312d4793af84d",
+      "bytes": 6114
+    },
+    "runtime/v2_sensors/arm/mlflow_arm.py": {
+      "sha256": "a3b758f780f1e5e02e0cca3f05d61bb8977838c601911d5f33e2cede941ffef4",
+      "bytes": 44284
+    },
+    "runtime/v2_sensors/arm/offline_dots.py": {
+      "sha256": "f5b3302d838d9b3a0658ebda7ffebd385e272bccba8c6d588a5c7083f0c4ca72",
+      "bytes": 3650
+    },
+    "runtime/v2_sensors/arm/parking_target.py": {
+      "sha256": "668b2c8f74b39c5df5964892f85f703b5ac29241855652d756d98684394d3026",
+      "bytes": 546
+    },
+    "runtime/v2_sensors/arm/park_distance_batch.py": {
+      "sha256": "6b9222b7ae4238f3abae24f47964d5652fe70f555b3eb7a7cdc64f0e757d99d1",
+      "bytes": 8717
+    },
+    "runtime/v2_sensors/arm/pilot_stop_combine.py": {
+      "sha256": "790ead60953978121973a02d34c2df17b90ba00fa2371314053243e2915f07e8",
+      "bytes": 1873
+    },
+    "runtime/v2_sensors/arm/pilot_stop_recovery.py": {
+      "sha256": "fef60e9dac210af11fe344afd1ca0b3f86fcd76e0b0ab0a644e65a8c402d07c6",
+      "bytes": 4950
+    },
+    "runtime/v2_sensors/arm/pilot_stop_report.py": {
+      "sha256": "27b18875475d35d1a56441ac5d79d2a391352e4359f4c446b090799813c70b03",
+      "bytes": 2362
+    },
+    "runtime/v2_sensors/arm/pilot_stop_validation_report.py": {
+      "sha256": "23d1fc92681ebf94f6e737c89a5fdb49f48415d9d588b85b22bec6060725c43d",
+      "bytes": 2063
+    },
+    "runtime/v2_sensors/arm/pilot_torque_only.py": {
+      "sha256": "1d6a65e0d72d3278d72fc75e20bdd3f9b36a4cc439b550fb9c074087b07156fc",
+      "bytes": 3320
+    },
+    "runtime/v2_sensors/driving_v2/._expert_reference.json": {
+      "sha256": "cd6cc8f36672c1e501a50ac630bdd0a36b6e85a5d6c8a24da8115ad229e576cd",
+      "bytes": 163
+    },
+    "runtime/v2_sensors/driving_v2/._mlflow_runs.json": {
+      "sha256": "cd6cc8f36672c1e501a50ac630bdd0a36b6e85a5d6c8a24da8115ad229e576cd",
+      "bytes": 163
+    },
+    "runtime/v2_sensors/driving_v2/camera_check.py": {
+      "sha256": "a03e129c20fa9e94977882ea3ceac2ac039be90fe152998596506067972b35ce",
+      "bytes": 1896
+    },
+    "runtime/v2_sensors/driving_v2/camera_features.py": {
+      "sha256": "15d19cf54cd50c93590b480243b1ed2d0f763e2f3a18b036e06a5140bd76cba4",
+      "bytes": 2440
+    },
+    "runtime/v2_sensors/driving_v2/camera_loop.py": {
+      "sha256": "1fa00e61e61c3b05bd2bc2bd3fb23dd0e6462ee14e728ea5b93b2221ad1a26ec",
+      "bytes": 10431
+    },
+    "runtime/v2_sensors/driving_v2/expert_reference.json": {
+      "sha256": "43d1f888fec75418a4d173efa0eddac9368eb516dd02e49bea0e7cde0c20b716",
+      "bytes": 7867
+    },
+    "runtime/v2_sensors/driving_v2/expert_tail.py": {
+      "sha256": "b12b12faef6c4c3c6672c0c695332e436198269e4d6c7f02d5627a4c7fad5bed",
+      "bytes": 4378
+    },
+    "runtime/v2_sensors/driving_v2/mlflow_runs.json": {
+      "sha256": "cff62f0364955d6f4fe231ee60d84957470a12c2de6ea47b413abbe2971df233",
+      "bytes": 237458
+    },
+    "runtime/v2_sensors/driving_v2/mlflow_runs.py": {
+      "sha256": "f412e6a93b73eb9cf994e3b441e17173b665864051a1b12bc19e05d879865e15",
+      "bytes": 37338
+    },
+    "runtime/v2_sensors/driving_v2/prow_camera.py": {
+      "sha256": "09d3a1b13945983cb769f7ae246b834d432d83b174d61a8937b93165a002a9ae",
+      "bytes": 4160
+    },
+    "runtime/v2_sensors/driving_v2/replay_v2.py": {
+      "sha256": "06fd9259f861169673da7bbbd1b514a4d213842508bcdb72c5cb863cd49f64c3",
+      "bytes": 7939
+    },
+    "runtime/v2_sensors/driving_v2/sensors.py": {
+      "sha256": "e8d59c74670ab0643edee7e4d5598bd47d93b1846cc2f16af9dd67235415959e",
+      "bytes": 7871
+    },
+    "runtime/v2_sensors/driving_v2/train_camera.py": {
+      "sha256": "08676251b50a2bd600c2912c80bbef5b6735ae8c3ffc73566b455eb58a7e524d",
+      "bytes": 3155
+    },
+    "runtime/v2_sensors/driving_v2/train_camera_ttp.py": {
+      "sha256": "764033dedaf88b5a396f3fc94a21c2c1d504ce78570a50cc45d7700c41054643",
+      "bytes": 4266
+    },
+    "runtime/v2_sensors/driving_v2/train_v2.py": {
+      "sha256": "bd38691239081250481e557830a5a7dd89280297d0321a3a5daf48d0c60d2b5f",
+      "bytes": 6607
+    },
+    "runtime/v2_sensors/driving_v2/v2_results.py": {
+      "sha256": "06accf59257a41d2717cd9ea8d5dcdf44e31d4cd32d15e1d5e35eeca510ff0dc",
+      "bytes": 2277
+    },
+    "runtime/v2_sensors/driving_v2/wrist_camera.py": {
+      "sha256": "53b325fd5a8360b8c26436a9454b113704ead71b5f7e51837a3dc5e45357314e",
+      "bytes": 11948
+    },
+    "runtime/v2_sensors/driving_30/data/expert_30hz/._split_plan.json": {
+      "sha256": "cd6cc8f36672c1e501a50ac630bdd0a36b6e85a5d6c8a24da8115ad229e576cd",
+      "bytes": 163
+    },
+    "runtime/v2_sensors/driving_30/data/expert_30hz/split_plan.json": {
+      "sha256": "7080e648ec663cc729bbf3eee93f82d1ad462fa903b03e3471a761aa29d02771",
+      "bytes": 4639
+    },
+    "native/assets/plane.mtl": {
+      "sha256": "421de8c371462058b3eaa022fe19aad28c32524603d9c3b72c3bee1995a7a652",
+      "bytes": 255
+    },
+    "native/assets/plane.urdf": {
+      "sha256": "0854ed06ba0b15079ba05396b4138f366dc784d670583d96230f3b5a4105bae2",
+      "bytes": 684
+    },
+    "native/assets/plane100.obj": {
+      "sha256": "0ef1366701af4d234af4f98789249ec6e9383914d9497c85d8113d9a445bf4da",
+      "bytes": 365
+    },
+    "native/assets/summit_xl_arm_description/forearm_mico.dae": {
+      "sha256": "ba6649b3568630b70bddd8b1e5596f12c301fcc549c6ce57bf7e0389f3e1c0da",
+      "bytes": 556683
+    },
+    "native/assets/summit_xl_arm_description/arm.dae": {
+      "sha256": "34fbe87b12d0878546ad8f01541c61d4a54d204e52b03f3aa83955d47b5fc067",
+      "bytes": 645873
+    },
+    "native/assets/summit_xl_arm_description/arm.SLDPRT": {
+      "sha256": "ff05abaddc04044f074de1415194c99591f6e3615102ad83264a776ae0262465",
+      "bytes": 597168
+    },
+    "native/assets/summit_xl_arm_description/arm.STL": {
+      "sha256": "cc77aeb83ea0e648fd4e028fa5dcca91c14af098cbd27a19c44befe4e5792a92",
+      "bytes": 410884
+    },
+    "native/assets/summit_xl_arm_description/arm_half_1.dae": {
+      "sha256": "b1d9bf67a736e22f587c58de16699a212b1818786815f03ce83300076edf951b",
+      "bytes": 469714
+    },
+    "native/assets/summit_xl_arm_description/arm_half_1.STL": {
+      "sha256": "e3845b39cf479174a0405b4ae1830ca1fa445e5451ed9a26b7870f3d7773dc19",
+      "bytes": 321084
+    },
+    "native/assets/summit_xl_arm_description/arm_half_2.dae": {
+      "sha256": "cb0cde072c2ebca152f121df98f37dae98c1ed8c6dd5364925fabaf03c954078",
+      "bytes": 467085
+    },
+    "native/assets/summit_xl_arm_description/arm_half_2.STL": {
+      "sha256": "f8ec7a8deb28027d4c785611449ba83da2b61245c408646f7dbe15b297563143",
+      "bytes": 321084
+    },
+    "native/assets/summit_xl_arm_description/arm_mico.dae": {
+      "sha256": "7806101c64584157486a1fbcd1f9cf077435b26694695e77d71626419af4acfb",
+      "bytes": 633481
+    },
+    "native/assets/summit_xl_arm_description/arm_mico.STL": {
+      "sha256": "b55798decb047af93487d56ab7fada341fbdaaea3fa080946a9eb5cfbde6ba69",
+      "bytes": 430884
+    },
+    "native/assets/summit_xl_arm_description/base.dae": {
+      "sha256": "84d6c46a5cf934f8d9abd669928948857ef8eec0d537ea226e9e44cd72e5133c",
+      "bytes": 1336047
+    },
+    "native/assets/summit_xl_arm_description/base.STL": {
+      "sha256": "5889fe8e3c490dc41b8532c92deb7895dbf62ecd1544bd43942681efe0336b60",
+      "bytes": 853484
+    },
+    "native/assets/summit_xl_arm_description/finger_distal.dae": {
+      "sha256": "73f6662e0e9c47e43b9f3018069cf6285f40e163d3555a6928607f058ed7cffb",
+      "bytes": 141699
+    },
+    "native/assets/summit_xl_arm_description/finger_distal.STL": {
+      "sha256": "27ce521eedbd5e70b6bfa364a29b357d2b03f15ebf1ffeb08c46bf28ccf7f6ca",
+      "bytes": 97184
+    },
+    "native/assets/summit_xl_arm_description/finger_proximal.dae": {
+      "sha256": "ce16acaa3571b4023c131c7310744fc28894c9703c9833a3d274bb38a704fa33",
+      "bytes": 200973
+    },
+    "native/assets/summit_xl_arm_description/finger_proximal.STL": {
+      "sha256": "4e4c3b68fe806f53fbae43503176981be61aca54a396d1aa9f3e10f87bc4e4f5",
+      "bytes": 135584
+    },
+    "native/assets/summit_xl_arm_description/forearm.dae": {
+      "sha256": "4da6f9148f2b3fd0d4fdfa13129f1a1f2080277a07598540636c4b9eccabc170",
+      "bytes": 547752
+    },
+    "native/assets/summit_xl_arm_description/forearm.STL": {
+      "sha256": "48cdf606a4d84b329bdb37508cc2aac522312ad61c216c3dbc8106f7df022256",
+      "bytes": 350384
+    },
+    "native/assets/summit_xl_arm_description/forearm_mico.STL": {
+      "sha256": "b19a47da4089e2f7baa25ba63c4dabff2c19400185373bd8689d825a56a4949e",
+      "bytes": 381684
+    },
+    "native/assets/summit_xl_arm_description/hand_2finger.dae": {
+      "sha256": "25d70ab15bcbece6b50e819656624e7d7374ba48e0a54a14742dc4612f73c2c9",
+      "bytes": 3952875
+    },
+    "native/assets/summit_xl_arm_description/hand_2finger.STL": {
+      "sha256": "ce4ebd0c7a258e5f8ef52da36fbf2c12c3b7a484feac60eb1f8eeedae15bddb5",
+      "bytes": 2522684
+    },
+    "native/assets/summit_xl_arm_description/hand_3finger.dae": {
+      "sha256": "018d65704e40f198c2af21ce69de59b955f13c238875f0df229ac7f8436bb003",
+      "bytes": 2286771
+    },
+    "native/assets/summit_xl_arm_description/hand_3finger.STL": {
+      "sha256": "7e1a0ecb85ee2c8213ec197e75e53c30dbfcca06ca114bef1a1a80c798349a22",
+      "bytes": 1395484
+    },
+    "native/assets/summit_xl_arm_description/omni_wheel_1.dae": {
+      "sha256": "728f46627110dda2ea1f6061bc3121eff107ac25f189fbcc86403d6369a13b95",
+      "bytes": 994095
+    },
+    "native/assets/summit_xl_arm_description/omni_wheel_2.dae": {
+      "sha256": "1a935046c78a2f321f43d3f3f6b1b4d4e7c09484162997d569f0ae561afecc8e",
+      "bytes": 931943
+    },
+    "native/assets/summit_xl_arm_description/ring_big.dae": {
+      "sha256": "ddd3db4dd2e64ef0673b90a0b2aead433c65ee81fa485a64c169356dcea2b952",
+      "bytes": 34042
+    },
+    "native/assets/summit_xl_arm_description/ring_big.STL": {
+      "sha256": "e0715633b6d217880a8291843f4716de29faa317c7365be7d3c2c6b95ad47c58",
+      "bytes": 22684
+    },
+    "native/assets/summit_xl_arm_description/ring_small.dae": {
+      "sha256": "cf4d3b83ed06116b66c6d33a7e2d5e2d2643b7a822147c44bfbba80b5b27a234",
+      "bytes": 35177
+    },
+    "native/assets/summit_xl_arm_description/ring_small.STL": {
+      "sha256": "9d60973e9d9ff8c6b05d49a120bab2fc8df42e7270d72e369808e9c1678db5eb",
+      "bytes": 22684
+    },
+    "native/assets/summit_xl_arm_description/rubber_wheel_left.dae": {
+      "sha256": "325e6eb606a8e053568bd9e64635a681f61947cc8b547761d60968f7f1fda0e8",
+      "bytes": 791199
+    },
+    "native/assets/summit_xl_arm_description/rubber_wheel_right.dae": {
+      "sha256": "528d7ca0bcfa8e082983333bf57ea4083aed98128b67808908857a6947348d9f",
+      "bytes": 791235
+    },
+    "native/assets/summit_xl_arm_description/shoulder.dae": {
+      "sha256": "c94f20e293244a5cf55b724cc19573fb5f4dd3e7fa3ba6fb17f1582bc9bf9963",
+      "bytes": 643584
+    },
+    "native/assets/summit_xl_arm_description/shoulder.STL": {
+      "sha256": "142067f7985c4fe9cdd94738a0fa8a7fa2d0ed713851d275c4491048b6157e99",
+      "bytes": 410184
+    },
+    "native/assets/summit_xl_arm_description/summit_xl_chassis.dae": {
+      "sha256": "cb66463c5a39768f5bbefb564b47d6da51c49f0cb3ee7a94bef747416d9b13b2",
+      "bytes": 1109107
+    },
+    "native/assets/summit_xl_arm_description/summit_xl_chassis.stl": {
+      "sha256": "6a64a888414db6758c963ae0fedd01e2fd72ce11d55a555ce2ca0f5d1f90d9d3",
+      "bytes": 144684
+    },
+    "native/assets/summit_xl_arm_description/summit_xl_chassis_collision.dae": {
+      "sha256": "f45990127ea91d007197931078d201e96f71f0db5b9c4c5d1ffa079e821280fd",
+      "bytes": 134860
+    },
+    "native/assets/summit_xl_arm_description/summit_xl_chassis_copy.dae": {
+      "sha256": "a95b3806cb798dcaba6e1086dabdac1c3b1c3e1e477be718461681a59bb939bf",
+      "bytes": 1111548
+    },
+    "native/assets/summit_xl_arm_description/summit_xl_chassis_simple.stl": {
+      "sha256": "b66d5f361c23ab5cfaa555d3e665424b13e39728d53e6ca7334fe5225e7c730e",
+      "bytes": 46684
+    },
+    "native/assets/summit_xl_arm_description/summit_xl_complete.urdf": {
+      "sha256": "25923594d151ed8fdf953de09072adc41e07ba29374b6bcdf44fa3a90bb1b180",
+      "bytes": 21233
+    },
+    "native/assets/summit_xl_arm_description/summit_xl_complete_pin.urdf": {
+      "sha256": "aea40a17a794e73d1b8058b0308431130f9b055e35a6092c51074406e951f369",
+      "bytes": 21481
+    },
+    "native/assets/summit_xl_arm_description/summit_xl_covers.stl": {
+      "sha256": "c0106995971bdf9250411e3c453381aba21e9c4c42c24d9adacce9100480f004",
+      "bytes": 330284
+    },
+    "native/assets/summit_xl_arm_description/summit_xl_hl_chassis.dae": {
+      "sha256": "c5cef29a3dfba5ab2d4f92e429e98da8dfbe96b3157d0d68cb02168ba4bffff5",
+      "bytes": 1085021
+    },
+    "native/assets/summit_xl_arm_description/summit_xl_logos.stl": {
+      "sha256": "9d76e3a8f737840b71134dde84c0d452c8d5aaad6577b9e39f2dfafb6f62f8c5",
+      "bytes": 58584
+    },
+    "native/assets/summit_xl_arm_description/wrist.dae": {
+      "sha256": "dd7f14d83ee829804b780d152adb878034d2fc3e142a3a2ea9ac26ed8e68c4a4",
+      "bytes": 290082
+    },
+    "native/assets/summit_xl_arm_description/wrist.STL": {
+      "sha256": "8b71f21d669472de8b29eb08f296940a236f8fafd39165fb4d44aeeeba79c6bc",
+      "bytes": 184384
+    },
+    "native/assets/summit_xl_arm_description/wrist_spherical_1.dae": {
+      "sha256": "37c505698084ecf21d724f36c0771c58da7458829340503f7ca494e6080e2089",
+      "bytes": 566958
+    },
+    "native/assets/summit_xl_arm_description/wrist_spherical_1.STL": {
+      "sha256": "e703075888eeded30c99b3daa83a98513ef3dfb6d57456b89f2f2240781bd62d",
+      "bytes": 387384
+    },
+    "native/assets/summit_xl_arm_description/wrist_spherical_2.dae": {
+      "sha256": "bdb261fe1d11d9aaaa92232de57c54a0b8a738ed261eafb2ca10dbc3d10cd841",
+      "bytes": 568875
+    },
+    "native/assets/summit_xl_arm_description/wrist_spherical_2.STL": {
+      "sha256": "7eafa8be6d2d91ca4592c1bb642c116d879b5c0ba952a0ec3dc9d111a86b5dbd",
+      "bytes": 387384
+    }
+  },
+  "data_excluded": true,
+  "test_examples_opened": false,
+  "source_candidate": "stack_q6half_timestamp_reference_recovery_v1"
+}

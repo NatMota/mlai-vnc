@@ -1,0 +1,27 @@
+"""Frozen reserved evaluation audit only; never modifies policy or reruns episodes."""
+from pathlib import Path
+import argparse,json,hashlib,numpy as np
+p=argparse.ArgumentParser();p.add_argument('--seed',type=int,choices=[7,1,2],required=True);args=p.parse_args();B=Path(__file__).parent;R=B/('stack_recovery_reserved_recording_adapter_v1' if args.seed==7 else f'stack_reserved_seed{args.seed}_v1');O=R/f'test_seed{args.seed}';plan=json.loads((B/'stack_reserved_test_plan.json').read_text());cfg=json.loads((O/'config.json').read_text());assert cfg['split']=='test' and cfg['test'] and cfg['record_camera'];assert cfg['condition']['sensor_seed']==args.seed;assert cfg['ids']==plan['same_test_ids'];receipt=json.loads((B/'stack_reserved_test_data_receipt.json').read_text());hashes={str(x['dot']):x['source_sha256'] for x in receipt['records']};assert cfg['case_sha256']==hashes
+rows=[];alignment=[];internal=[]
+for dot in cfg['ids']:
+ path=O/f'run_{dot}.json'
+ if not path.exists():continue
+ d=json.loads(path.read_text())
+ if d.get('status')=='execution_failure':
+  rows.append(dict(dot=dot,success=False,status='execution_failure',PARK=False,park_s=None,limit_s=None,stop_s=None,STOP_mm=None,final_mm=None,exact_postSTOP_peak_mm=None,actual_sent_peak_Nm=None,postSTOP=None,error=d.get('error')))
+  alignment.append(dict(dot=dot,execution_failure=True,frames=0,PNGs_verified=0));continue
+ assert d.get('split')=='test';z=dict(np.load(O/f'trace_{dot}.npz'));n=len(z['x']);assert len(z['motor_command_step'])==n;assert np.all(z['motor_returned_step']==z['motor_command_step']+1);assert np.all(np.diff(z['motor_command_step'])==1)
+ algebra=float(np.max(abs(z['motor_sent']-z['motor_pre_effect']-z['motor_extra'][:,4:11])));assert algebra<1e-10
+ idx={int(s):i for i,s in enumerate(z['motor_command_step'])};maxerr=0.;ages=[];pngs=[]
+ for f in d['frames']:
+  step=round(f['time_s']*1000);i=idx[step];maxerr=max(maxerr,float(np.max(abs(np.array(f['sent_arm_torque'])-z['motor_sent'][i]))));assert np.array_equal(np.array(f['tau']),z['motor_pre_effect'][i]);im=O/f['camera_src'];assert im.is_file();assert int(im.stem)==step;pngs.append(str(im.relative_to(O)));capture=f['camera_capture_step'];assert capture is None or capture<=step
+  if capture is not None:ages.append(step-capture)
+ assert maxerr==0
+ peak=None;phase=None
+ if d['stop_s'] is not None:
+  mt=z['motor_returned_time_s']>=d['stop_s'];peak=max(d['at_network_stop_mm'],float(z['motor_true_distance_m'][mt].max()*1000));m=z['step']*.001>=d['stop_s'];q=z['filtered_velocity'][m];rms=np.sqrt(np.mean(q*q,axis=0));clip=np.mean(abs(z['tau_raw'][m])>=30,axis=0);window=np.hanning(len(q));freq=np.fft.rfftfreq(len(q),.001);am=2*abs(np.fft.rfft((q-q.mean(0))*window[:,None],axis=0))/window.sum();band=(freq>=25)&(freq<=45);high=float(am[band].max());phase=dict(qdRMS_rad_s=rms.tolist(),clipping_fraction=clip.tolist(),max25_45Hz_amplitude_rad_s=high,diagnostic_flag=bool(rms.max()>.3 or clip.max()>.02 or high>.3))
+  if phase['diagnostic_flag']:internal.append(dict(dot=dot,**phase))
+ rows.append(dict(dot=dot,success=d['success'],status=d['status'],PARK=d['parked'],park_s=d['park_s'],limit_s=d['limit_s'],stop_s=d['stop_s'],STOP_mm=d.get('at_network_stop_mm'),final_mm=d['end_mm'],exact_postSTOP_peak_mm=peak,actual_sent_peak_Nm=float(np.max(abs(z['motor_sent']))),postSTOP=phase))
+ alignment.append(dict(dot=dot,frames=len(pngs),PNGs_verified=len(pngs),preview_capture_steps_match_frames=True,delivered_camera_age_min_ms=min(ages) if ages else None,delivered_camera_age_max_ms=max(ages) if ages else None,frame_sent_matches_commandstep=True,returned_step_equals_command_plus_one=True,motor_algebra_max_error=algebra))
+stop=[x['STOP_mm'] for x in rows if x['STOP_mm'] is not None];result=dict(split_authority={'config.split':cfg['split'],'config.test':cfg['test']},completion_status_note='Frozen runner inherits complete exploratory validation text; config.split/test are authoritative and this is reserved test evaluation.',sensor_noise_seed=args.seed,driving_training_seed=7,coefficient_fit="Deterministic original-training-data fits, unchanged across noise seeds",expected=100,completed=len(rows),complete=len(rows)==100,PARK=sum(x['PARK'] for x in rows),STOP=len(stop),canonical_success=sum(x['success'] for x in rows),canonical_success_and_settled=sum(x['success'] and x['exact_postSTOP_peak_mm']<=10 for x in rows),median_STOP_mm=float(np.median(stop)) if stop else None,median_final_mm=float(np.median([x['final_mm'] for x in rows if x['final_mm'] is not None])) if any(x['final_mm'] is not None for x in rows) else None,failures=[x for x in rows if not x['success']],settling_exceptions=[x for x in rows if x['success'] and x['exact_postSTOP_peak_mm']>10],internal_diagnostic_flags=internal,rows=rows,scope='Frozenvariant reserved evaluation; historicallyusedtargets, no globallyuntouchedtargetclaim; same100targets across3 noise seeds, not3trainingseeds')
+(O/'reserved_audit.json').write_text(json.dumps(result,indent=2,allow_nan=False));(O/'frame_alignment_audit.json').write_text(json.dumps(alignment,indent=2,allow_nan=False));print(json.dumps({k:result[k] for k in ['sensor_noise_seed','completed','expected','canonical_success','canonical_success_and_settled','median_STOP_mm','median_final_mm']}));print('failureIDs',[x['dot'] for x in result['failures']],'settlingIDs',[x['dot'] for x in result['settling_exceptions']],'internalFlagIDs',[x['dot'] for x in internal])

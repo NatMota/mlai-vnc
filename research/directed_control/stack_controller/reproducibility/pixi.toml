@@ -1,0 +1,22 @@
+[workspace]
+name = "comp0245-native-expert"
+channels = ["conda-forge"]
+platforms = ["osx-arm64", "linux-64"]
+
+[dependencies]
+bullet-cpp = "==3.25"
+libpinocchio = "==4.1.0"
+eigen = "==5.0.1"
+nlohmann_json = "*"
+cmake = "*"
+ninja = "*"
+clangxx = "19.*"
+pybullet = "==3.25"
+
+[tasks]
+configure = 'sh tools/fetch_bullet.sh && python tools/prepare_compiler.py && cmake -S . -B build-clang19 -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="$CONDA_PREFIX" -DCMAKE_C_COMPILER="$CONDA_PREFIX/bin/clang" -DCMAKE_CXX_COMPILER="$CONDA_PREFIX/bin/clang++"'
+build = { cmd = "cmake --build build-clang19 -j 1", depends-on = ["configure"] }
+build-compatible = { cmd = "cmake --build build-clang19 --target expert_compatible -j 1", depends-on = ["configure"] }
+collect = "EXPERT_SKIP_VISUALS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 build-clang19/expert_compatible"
+collect-driving = "EXPERT_SKIP_VISUALS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 build-clang19/expert_compatible --driving-only"
+standalone = "EXPERT_SKIP_VISUALS=1 build-clang19/expert"

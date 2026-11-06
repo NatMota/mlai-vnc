@@ -55,3 +55,11 @@ python source/evaluate_recorded_candidate.py --runtime portable/clean_controller
 ```
 
 The simulation Python needs NumPy and PyBullet; Pixi must be installed in the normal user location. The golden dataset supplies `split.json` and `expert/val/run_45.npz`. This exact fresh-layout workflow reproduced every result and replay field, all 8,042 input/control rows and every recorded true-distance sample bit for bit on validation target45. Only the descriptive run name and wall-clock timing differed. See `publication_reproduction_receipt.json`.
+
+## Disturbance extension
+
+The frozen disturbance candidate and its three reserved noise-seed evaluations are documented in the same research notebook. `stack_controller/` preserves its runtime sources and coefficients. The complete portable source archive in each MLflow run additionally includes the Linux native executable and course assets. Its Pixi environment and CMake files are recorded under `reproducibility/`; the executable is platform-specific, and a different build requires parity checks.
+
+To reproduce a validation episode in the supplied Linux/EGL environment, extract that archive into a new directory, provide the matching golden random-start data under `data/` (with `split.json` and `expert/val/run_45.npz`), then run `python evaluate_hybrid_geometry.py --out validation45 --split val --ids 45 --jobs 1 --camera calibrated_arm_only --record-camera`. The simulation Python requires NumPy and PyBullet. The frozen `condition.json` declares the physics and sensor-noise settings. Use a new copy to change them; do not overwrite a frozen candidate. The original runner's completion label is inherited from validation, so inspect `config.json` for the actual split.
+
+The reported seeds 7, 1 and 2 change measurement noise only. They reuse the same 100 target locations and recorded starting poses, while driving training seed remains 7. They are not independently trained models. No DART or DAgger data is used. Full camera and 1 kHz traces are in the per-seed recording archives; compact audits in this repository keep the notebook executable without those large downloads.

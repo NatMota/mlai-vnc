@@ -476,6 +476,97 @@ A learned history residual slightly improved offline torque loss but worsened si
 
 None of these parameter-only candidates achieved the 10 mm PARK-and-STOP success criterion on the development cases. Later architecture experiments are reported separately below.
 
+## What inspecting the original weights revealed
+
+The audit evaluated 26,867 sampled rows from all 100 training demonstrations. In the arm's second 128-unit hidden layer, 44 ReLU units never activated on those sampled rows; one unit in the independent STOP network was also inactive. This does not establish that they are permanently dead or that removing them would improve control. The first arm hidden layer had no always-inactive units in this sample.
+
+Weights and biases are fully accessible numerical arrays, but an individual value rarely has an isolated behavioural meaning. The plots measure how often each unit participates, rather than assigning a label such as “parking neuron”. Changes to an activation function also change the fitted function and must be evaluated as new candidates. The activation and gain edits preserved in the early development tables did not establish reliable reaching, which motivated the later structural experiments.
+
+
+```python
+import json, numpy as np, pandas as pd, matplotlib.pyplot as plt
+from pathlib import Path
+ROOT=Path.cwd()
+activation=json.loads((ROOT/'activation_audit.json').read_text())
+fig,axes=plt.subplots(2,2,figsize=(12,6))
+rows=[]
+for ax,(name,layer) in zip(axes.flat,activation['layers'].items()):
+    fraction=np.asarray(layer['positive_fraction'])
+    ax.bar(np.arange(len(fraction)),fraction,width=1)
+    ax.set(title=name,xlabel='Unit index',ylabel='Fraction active',ylim=(0,1))
+    rows.append(dict(layer=name,width=layer['width'],inactive_on_sample=len(layer['inactive_on_all_sampled_rows']),
+        median_fraction_active=float(np.median(fraction))))
+fig.suptitle('Original ReLU activity on training demonstrations only')
+fig.tight_layout();fig.savefig(ROOT/'original_activation_activity.png',dpi=150);plt.show()
+display(pd.DataFrame(rows).round(3))
+
+```
+
+
+
+![png](research_notebook_files/research_notebook_6_0.png)
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>layer</th>
+      <th>width</th>
+      <th>inactive_on_sample</th>
+      <th>median_fraction_active</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>shared.0</td>
+      <td>128</td>
+      <td>0</td>
+      <td>0.523</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>shared.2</td>
+      <td>128</td>
+      <td>44</td>
+      <td>0.096</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>stopnet.0</td>
+      <td>32</td>
+      <td>0</td>
+      <td>0.514</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>stopnet.2</td>
+      <td>16</td>
+      <td>1</td>
+      <td>0.590</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 ## Matched filter fine-tuning, plan recorded before execution
 
 Hypothesis: causal speed filtering reduces differentiation noise, but the unchanged model misinterprets the lag. Compare the same warm-start fine-tune with raw speeds and with a 5 ms exponential filter. The filter runs at 1 kHz, resets at episode reset and uses only current/past encoder measurements. Angles, camera inputs, driving and physical conditions are unchanged.
@@ -880,7 +971,7 @@ plt.tight_layout();plt.savefig(ROOT/'geometry_research_comparison.png',dpi=150);
 
 
 
-![png](research_notebook_files/research_notebook_13_0.png)
+![png](research_notebook_files/research_notebook_15_0.png)
 
 
 
@@ -1089,7 +1180,7 @@ ax.legend();ax.grid(alpha=.2);plt.tight_layout();plt.savefig(ROOT/'geometry_vali
 
 
 
-![png](research_notebook_files/research_notebook_15_2.png)
+![png](research_notebook_files/research_notebook_17_2.png)
 
 
 
@@ -1539,7 +1630,7 @@ fig.tight_layout();fig.savefig(ROOT/'clean_damping40_settling.png',dpi=150);plt.
 
 
 
-![png](research_notebook_files/research_notebook_22_0.png)
+![png](research_notebook_files/research_notebook_24_0.png)
 
 
 
@@ -1572,7 +1663,7 @@ axes[0].legend(fontsize=8);fig.tight_layout();fig.savefig(ROOT/'reference_recove
 
 
 
-![png](research_notebook_files/research_notebook_24_0.png)
+![png](research_notebook_files/research_notebook_26_0.png)
 
 
 
@@ -1699,7 +1790,7 @@ fig.tight_layout();fig.savefig(ROOT/'identified_model_fit.png',dpi=150);plt.show
 
 
 
-![png](research_notebook_files/research_notebook_28_0.png)
+![png](research_notebook_files/research_notebook_30_0.png)
 
 
 
@@ -1723,7 +1814,7 @@ else:
 
 
 
-![png](research_notebook_files/research_notebook_29_0.png)
+![png](research_notebook_files/research_notebook_31_0.png)
 
 
 
@@ -1813,3 +1904,414 @@ display(pd.DataFrame({'Original iteration43':comparison['baseline'],'Learned-geo
 The historical clean simulator sources were recovered and rebuilt. The rebuilt executable has exactly the same SHA-256 as the binary used for evaluation. A fresh published directory, with relative-path model loading and that rebuilt binary, reproduced the saved validation45 episode bit for bit: every result/replay field, all 8,042 control inputs and outputs, and the exact-time diagnostic trace. Only the run label and wall-clock timing differed. This reproduction check does not add another test attempt.
 
 The MLflow recording archive contains all 100 model trajectories, corresponding expert ghosts, exact-time diagnostics and recorded camera previews. The original project notebook, branch and checkpoints are unchanged.
+
+## Frozen disturbance evaluation
+
+This is a separately tuned controller using the same learned coefficients and frozen driving network as the clean research model. It reduces reference speed and feedback gains, compensates the arm camera estimate for capture age using delivered wheel measurements, and recovers its own reference toward the existing training-derived posture bounds. All settings were selected on validation. The candidate then passed 98 of 100 validation episodes, including the exact half-second settling check, before its source hashes and test plan were frozen.
+
+The enabled disturbances are encoder noise (0.0001 rad standard deviation), motor damping (1.0), elasticity (1.0), added motor inertia (0.001 kg m²), nominal 3 ms measurement delay and random starting poses. Reset x and y are each sampled uniformly within ±0.15 m and yaw within ±30°. The same recorded starts are used across sensor-noise seeds 7, 1 and 2. These are **three noise realisations of one frozen model on the same 100 targets**, not three independently trained models or 300 independent targets. Occlusion and bursty recording loss are excluded. Neither DART nor DAgger is used.
+
+The predeclared prediction was at least 95 canonical successes per seed. Every failed attempt remains in the denominator; no test result changes the candidate or triggers a selective rerun. These targets have historical project exposure. The original runner's completion receipt inherits the words “exploratory validation”; its saved configuration and per-episode split explicitly identify these as reserved test evaluations, and the derived audit records that metadata defect.
+
+Canonical success is PARK, STOP and true distance within 10 mm at STOP. Settling additionally checks every 1 kHz sample for the following 0.5 s. STOP-distance medians exclude attempts that never issue STOP, so they must be read with the success and STOP counts.
+
+
+```python
+import json, numpy as np, pandas as pd
+from pathlib import Path
+ROOT = Path.cwd()
+B = ROOT/'learned_geometry_branch'
+stack = json.loads((B/'stack_reserved_test_summary300.json').read_text())
+assert stack['complete'] and stack['completed_episodes'] == 300
+stack_rows = []
+stack_audits = {}
+for seed in [7, 1, 2]:
+    folder = 'stack_recovery_reserved_recording_adapter_v1' if seed == 7 else f'stack_reserved_seed{seed}_v1'
+    audit = json.loads((B/folder/f'test_seed{seed}'/'reserved_audit.json').read_text())
+    assert audit['complete'] and audit['completed'] == 100
+    stack_audits[seed] = audit
+    stopped = [r for r in audit['rows'] if r['STOP_mm'] is not None]
+    stack_rows.append(dict(noise_seed=seed, attempts=100, PARK=audit['PARK'], STOP=audit['STOP'],
+        success=audit['canonical_success'], settled=audit['canonical_success_and_settled'],
+        median_STOP_mm=audit['median_STOP_mm'], p95_STOP_mm=np.quantile([r['STOP_mm'] for r in stopped], .95),
+        median_final_mm=audit['median_final_mm'], internal_flags=len(audit['internal_diagnostic_flags'])))
+display(pd.DataFrame(stack_rows).round(3))
+print('Predeclared ≥95/100 prediction met per seed:', {s: a['canonical_success'] >= 95 for s, a in stack_audits.items()})
+print('Total attempts:', stack['completed_episodes'], '; unique targets:', stack['unique_target_count'])
+by_target = {}
+for seed, audit in stack_audits.items():
+    for row in audit['rows']:
+        by_target.setdefault(row['dot'], []).append(int(row['success']))
+assert len(by_target) == 100 and all(len(v) == 3 for v in by_target.values())
+print('Targets succeeding under all three noise seeds:', sum(all(v) for v in by_target.values()), '/100')
+print('Targets failing under all three noise seeds:', sum(not any(v) for v in by_target.values()), '/100')
+
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>noise_seed</th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>success</th>
+      <th>settled</th>
+      <th>median_STOP_mm</th>
+      <th>p95_STOP_mm</th>
+      <th>median_final_mm</th>
+      <th>internal_flags</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7</td>
+      <td>100</td>
+      <td>100</td>
+      <td>95</td>
+      <td>95</td>
+      <td>95</td>
+      <td>4.882</td>
+      <td>6.230</td>
+      <td>2.618</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>100</td>
+      <td>100</td>
+      <td>95</td>
+      <td>95</td>
+      <td>95</td>
+      <td>4.978</td>
+      <td>6.190</td>
+      <td>2.668</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>100</td>
+      <td>100</td>
+      <td>94</td>
+      <td>94</td>
+      <td>94</td>
+      <td>5.114</td>
+      <td>6.284</td>
+      <td>2.601</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Predeclared ≥95/100 prediction met per seed: {7: True, 1: True, 2: False}
+    Total attempts: 300 ; unique targets: 100
+    Targets succeeding under all three noise seeds: 94 /100
+    Targets failing under all three noise seeds: 5 /100
+
+
+
+```python
+import matplotlib.pyplot as plt
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+for seed, audit in stack_audits.items():
+    stop = np.sort([r['STOP_mm'] for r in audit['rows'] if r['STOP_mm'] is not None])
+    final = np.sort([r['final_mm'] for r in audit['rows'] if r['final_mm'] is not None])
+    axes[0].plot(stop, np.arange(1, len(stop)+1)/100, label=f'Noise seed {seed}')
+    axes[1].plot(final, np.arange(1, len(final)+1)/100, label=f'Noise seed {seed}')
+for ax, title in zip(axes, ['Distance at STOP', 'Distance at episode end, including failures']):
+    ax.axvline(10, color='grey', ls='--'); ax.set(xlabel='True distance (mm)', ylabel='Fraction of all 100 attempts', title=title)
+    ax.set_xscale('symlog', linthresh=10); ax.grid(alpha=.2); ax.legend()
+fig.tight_layout(); fig.savefig(ROOT/'frozen_stack_distances.png', dpi=150); plt.show()
+
+```
+
+
+
+![png](research_notebook_files/research_notebook_39_0.png)
+
+
+
+
+```python
+failure_rows = []
+for seed, audit in stack_audits.items():
+    for row in audit['failures']:
+        failure_rows.append(dict(noise_seed=seed, target=row['dot'], status=row['status'], PARK=row['PARK'],
+            park_s=row['park_s'], deadline_s=row['limit_s'], STOP_s=row['stop_s'],
+            STOP_mm=row['STOP_mm'], final_mm=row['final_mm']))
+display(pd.DataFrame(failure_rows).round(3))
+print('Successful attempts with settling exceptions:', {s: [r['dot'] for r in a['settling_exceptions']] for s, a in stack_audits.items()})
+print('Internal-motion diagnostic flags:', {s: [r['dot'] for r in a['internal_diagnostic_flags']] for s, a in stack_audits.items()})
+
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>noise_seed</th>
+      <th>target</th>
+      <th>status</th>
+      <th>PARK</th>
+      <th>park_s</th>
+      <th>deadline_s</th>
+      <th>STOP_s</th>
+      <th>STOP_mm</th>
+      <th>final_mm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7</td>
+      <td>239</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>4.767</td>
+      <td>12.000</td>
+      <td>None</td>
+      <td>None</td>
+      <td>41.330</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7</td>
+      <td>479</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>11.533</td>
+      <td>12.638</td>
+      <td>None</td>
+      <td>None</td>
+      <td>7.517</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7</td>
+      <td>707</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>10.733</td>
+      <td>12.669</td>
+      <td>None</td>
+      <td>None</td>
+      <td>7.328</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7</td>
+      <td>738</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>9.333</td>
+      <td>12.766</td>
+      <td>None</td>
+      <td>None</td>
+      <td>9.090</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7</td>
+      <td>770</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>9.700</td>
+      <td>12.273</td>
+      <td>None</td>
+      <td>None</td>
+      <td>8.274</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>239</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>4.667</td>
+      <td>12.000</td>
+      <td>None</td>
+      <td>None</td>
+      <td>37.565</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>479</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>11.600</td>
+      <td>12.638</td>
+      <td>None</td>
+      <td>None</td>
+      <td>7.544</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1</td>
+      <td>707</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>10.900</td>
+      <td>12.669</td>
+      <td>None</td>
+      <td>None</td>
+      <td>12.093</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>738</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>9.367</td>
+      <td>12.766</td>
+      <td>None</td>
+      <td>None</td>
+      <td>9.904</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>770</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>9.733</td>
+      <td>12.273</td>
+      <td>None</td>
+      <td>None</td>
+      <td>8.103</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2</td>
+      <td>239</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>4.600</td>
+      <td>12.000</td>
+      <td>None</td>
+      <td>None</td>
+      <td>35.655</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2</td>
+      <td>479</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>11.600</td>
+      <td>12.638</td>
+      <td>None</td>
+      <td>None</td>
+      <td>7.635</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2</td>
+      <td>545</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>8.967</td>
+      <td>12.231</td>
+      <td>None</td>
+      <td>None</td>
+      <td>11.690</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2</td>
+      <td>707</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>10.633</td>
+      <td>12.669</td>
+      <td>None</td>
+      <td>None</td>
+      <td>6.876</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2</td>
+      <td>738</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>9.400</td>
+      <td>12.766</td>
+      <td>None</td>
+      <td>None</td>
+      <td>10.571</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2</td>
+      <td>770</td>
+      <td>no_stop_timeout</td>
+      <td>True</td>
+      <td>9.667</td>
+      <td>12.273</td>
+      <td>None</td>
+      <td>None</td>
+      <td>9.448</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+    Successful attempts with settling exceptions: {7: [], 1: [], 2: []}
+    Internal-motion diagnostic flags: {7: [], 1: [], 2: []}
+
+
+### Reading these results
+
+The success counts, distance distributions and complete failure list above are loaded from the frozen evaluation records. Noise seeds reuse targets, so pooling them describes repeated trials rather than increasing the number of independent target locations. The clean and disturbed candidates also have different controller settings; this is a robustness extension, not an isolated measurement of the disturbances' causal effect.
+
+Camera previews show the image captured at the displayed frame. With delay, the controller may use an earlier delivered image; capture and delivery timing are retained in the logs. The player displays final sent arm torque, including motor corrections, separately from the underlying requested torque. Requested torque clipping does not bound the final motor-corrected torque.
+
+The unchanged coefficient-fitting curves appear earlier in this notebook. No additional neural training epochs or recovery-data training were performed for these three evaluations. Source, data and native executable hashes are preserved with the freeze and each evaluation.
+
+The completed scores are 95/100, 95/100 and 94/100 for noise seeds 7, 1 and 2: 284 successful attempts out of 300. All 284 pass the settling check, with no post-STOP internal-motion audit flags. The ≥95-per-seed prediction misses by one attempt on seed 2. Median STOP distances are 4.882, 4.978 and 5.114 mm.
+
+Five target IDs time out under every noise seed; target 545 additionally times out under seed 2. Target 239 repeatedly loses accepted camera updates near the end, leaving its arm target estimate more than nine seconds old. The other timeouts have fresh camera updates and limited time after PARK. Ten of the 16 timeouts finish within true 10 mm but never issue STOP; they remain failures. This is descriptive evidence, not a test-guided retuning proposal.
+
+### Recorded disturbance replays
+
+- [Disturbance stack, noise seed 7: 100 recorded test replays](https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/directed-control-rnd/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/test_seed7/viewer_test_seed7.html)
+- [Disturbance stack, noise seed 1: 100 recorded test replays](https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/directed-control-rnd/learned_geometry_branch/stack_reserved_seed1_v1/test_seed1/viewer_test_seed1.html)
+- [Disturbance stack, noise seed 2: 100 recorded test replays](https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/directed-control-rnd/learned_geometry_branch/stack_reserved_seed2_v1/test_seed2/viewer_test_seed2.html)

@@ -62,6 +62,10 @@ def main():
     page = page.replace('Learned driving and reaching.', 'Frozen learned driving; learned-geometry reaching with explicit feedback.')
     page = page.replace('Learned arm torques and physics: 1,000 Hz.', 'Arm control and physics: 1,000 Hz.')
     page = page.replace('No trajectory truncation.', 'No trajectory truncation. When the model finishes before the expert, its last pose and camera frame remain while the expert continues.')
+    if 'condition' in cfg:
+        noise_seed = cfg['condition'].get('sensor_seed')
+        page = page.replace('Seed 7;', f'Driving training seed 7; sensor-noise seed {noise_seed};')
+        page = page.replace('Camera inset: actual recorded frames,', 'Camera inset: current captured image; delayed control may use an earlier delivered frame. Actual recorded frames,')
     unique = a.results / f'viewer_{a.results.name}.html'
     path.rename(unique)
     path = unique

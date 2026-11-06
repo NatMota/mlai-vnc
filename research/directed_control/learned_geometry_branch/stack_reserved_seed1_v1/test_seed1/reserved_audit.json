@@ -1,0 +1,3491 @@
+{
+  "split_authority": {
+    "config.split": "test",
+    "config.test": true
+  },
+  "completion_status_note": "Frozen runner inherits complete exploratory validation text; config.split/test are authoritative and this is reserved test evaluation.",
+  "sensor_noise_seed": 1,
+  "driving_training_seed": 7,
+  "coefficient_fit": "Deterministic original-training-data fits, unchanged across noise seeds",
+  "expected": 100,
+  "completed": 100,
+  "complete": true,
+  "PARK": 100,
+  "STOP": 95,
+  "canonical_success": 95,
+  "canonical_success_and_settled": 95,
+  "median_STOP_mm": 4.978174495450442,
+  "median_final_mm": 2.6677878477457955,
+  "failures": [
+    {
+      "dot": 239,
+      "success": false,
+      "status": "no_stop_timeout",
+      "PARK": true,
+      "park_s": 4.667,
+      "limit_s": 12.0,
+      "stop_s": null,
+      "STOP_mm": null,
+      "final_mm": 37.56504933156842,
+      "exact_postSTOP_peak_mm": null,
+      "actual_sent_peak_Nm": 31.046891633739477,
+      "postSTOP": null
+    },
+    {
+      "dot": 479,
+      "success": false,
+      "status": "no_stop_timeout",
+      "PARK": true,
+      "park_s": 11.6,
+      "limit_s": 12.638000000000002,
+      "stop_s": null,
+      "STOP_mm": null,
+      "final_mm": 7.543964688553227,
+      "exact_postSTOP_peak_mm": null,
+      "actual_sent_peak_Nm": 31.040603620231042,
+      "postSTOP": null
+    },
+    {
+      "dot": 707,
+      "success": false,
+      "status": "no_stop_timeout",
+      "PARK": true,
+      "park_s": 10.9,
+      "limit_s": 12.669,
+      "stop_s": null,
+      "STOP_mm": null,
+      "final_mm": 12.092539633331086,
+      "exact_postSTOP_peak_mm": null,
+      "actual_sent_peak_Nm": 31.04321344547749,
+      "postSTOP": null
+    },
+    {
+      "dot": 738,
+      "success": false,
+      "status": "no_stop_timeout",
+      "PARK": true,
+      "park_s": 9.367,
+      "limit_s": 12.766,
+      "stop_s": null,
+      "STOP_mm": null,
+      "final_mm": 9.903824666106605,
+      "exact_postSTOP_peak_mm": null,
+      "actual_sent_peak_Nm": 31.044478939500145,
+      "postSTOP": null
+    },
+    {
+      "dot": 770,
+      "success": false,
+      "status": "no_stop_timeout",
+      "PARK": true,
+      "park_s": 9.733,
+      "limit_s": 12.273,
+      "stop_s": null,
+      "STOP_mm": null,
+      "final_mm": 8.10326180510167,
+      "exact_postSTOP_peak_mm": null,
+      "actual_sent_peak_Nm": 31.041651378749883,
+      "postSTOP": null
+    }
+  ],
+  "settling_exceptions": [],
+  "internal_diagnostic_flags": [],
+  "rows": [
+    {
+      "dot": 11,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 2.667,
+      "limit_s": 12.0,
+      "stop_s": 6.196,
+      "STOP_mm": 5.291755198006896,
+      "final_mm": 3.686827887835343,
+      "exact_postSTOP_peak_mm": 5.291755198006896,
+      "actual_sent_peak_Nm": 31.04611512861896,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.019599930574688115,
+          0.01781749951705578,
+          0.019179967406072276,
+          0.023385363029831036,
+          0.018585664324470605,
+          0.01993278208903025,
+          0.020593279677917284
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.00696318868859306,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 17,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.933,
+      "limit_s": 12.0,
+      "stop_s": 8.665000000000001,
+      "STOP_mm": 3.6311187843365142,
+      "final_mm": 0.9286655062937822,
+      "exact_postSTOP_peak_mm": 3.6311187843365142,
+      "actual_sent_peak_Nm": 31.04418619317919,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.020178849556547182,
+          0.02025590631195054,
+          0.018224565368157027,
+          0.02331098503194517,
+          0.017885691802231023,
+          0.021932513658322668,
+          0.019802904552865985
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004426782319562139,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 33,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.167,
+      "limit_s": 12.699,
+      "stop_s": 10.612,
+      "STOP_mm": 5.2619280516237,
+      "final_mm": 3.845795761231753,
+      "exact_postSTOP_peak_mm": 5.412827696561753,
+      "actual_sent_peak_Nm": 31.039320211875957,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.03883851112374652,
+          0.017155447201418914,
+          0.06001432897275617,
+          0.018610569084428596,
+          0.05705876136585278,
+          0.01788583007459181,
+          0.04397775686056109
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.006204353423902485,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 35,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.433,
+      "limit_s": 12.0,
+      "stop_s": 11.053,
+      "STOP_mm": 6.017929001433514,
+      "final_mm": 3.0098144514699525,
+      "exact_postSTOP_peak_mm": 6.017929001433514,
+      "actual_sent_peak_Nm": 31.040721602041767,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.022063225988004163,
+          0.021846806629093676,
+          0.020535264624415888,
+          0.0192823484459737,
+          0.019978442653096437,
+          0.018490143861943246,
+          0.022261722981926624
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.006458806349386499,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 40,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.733,
+      "limit_s": 12.624,
+      "stop_s": 9.689,
+      "STOP_mm": 5.723240221094521,
+      "final_mm": 3.3865966629160367,
+      "exact_postSTOP_peak_mm": 5.723240221094521,
+      "actual_sent_peak_Nm": 31.045848742005436,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.026336709391452908,
+          0.017149798432953528,
+          0.039950766396562525,
+          0.01764863255827243,
+          0.03364899846290728,
+          0.01931716627220389,
+          0.025043336796453233
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.013140224094090566,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 43,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 10.067,
+      "limit_s": 12.0,
+      "stop_s": 10.711,
+      "STOP_mm": 5.420965168775472,
+      "final_mm": 6.735344229949813,
+      "exact_postSTOP_peak_mm": 6.747177508405272,
+      "actual_sent_peak_Nm": 31.043362712656965,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02119421303909912,
+          0.01991505060483087,
+          0.03719773308069145,
+          0.020354529556397563,
+          0.023960628447796062,
+          0.018694713166051518,
+          0.03971315158034676
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005208259011711391,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 44,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 10.3,
+      "limit_s": 14.276,
+      "stop_s": 12.088000000000001,
+      "STOP_mm": 5.9755808527956855,
+      "final_mm": 3.0323539496468723,
+      "exact_postSTOP_peak_mm": 5.9755808527956855,
+      "actual_sent_peak_Nm": 31.041655923574606,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.019164199746229887,
+          0.019859994009814794,
+          0.018359054496989827,
+          0.01756529502939033,
+          0.01865096990661604,
+          0.018523838339233573,
+          0.018802943637085682
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004176705074596148,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 48,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 3.0,
+      "limit_s": 12.0,
+      "stop_s": 5.181,
+      "STOP_mm": 5.90925711554352,
+      "final_mm": 3.561836528483026,
+      "exact_postSTOP_peak_mm": 5.90925711554352,
+      "actual_sent_peak_Nm": 31.055938492991245,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.016941614559613596,
+          0.022726552874837783,
+          0.01865708120857413,
+          0.01939020618379685,
+          0.017460319945758588,
+          0.018716102685398327,
+          0.017345005518507206
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004670180494151819,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 52,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.367,
+      "limit_s": 12.0,
+      "stop_s": 6.4510000000000005,
+      "STOP_mm": 3.3448723897221857,
+      "final_mm": 0.7615343294837382,
+      "exact_postSTOP_peak_mm": 3.3448723897221857,
+      "actual_sent_peak_Nm": 31.04026368188195,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.020298081491974165,
+          0.02067971233160849,
+          0.022688154961239593,
+          0.02251142980423663,
+          0.016656382454464526,
+          0.020991619705734925,
+          0.021583273489859264
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004119529034720196,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 56,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.2,
+      "limit_s": 14.459,
+      "stop_s": 11.947000000000001,
+      "STOP_mm": 4.978174495450442,
+      "final_mm": 2.3919771557125613,
+      "exact_postSTOP_peak_mm": 5.190382433084804,
+      "actual_sent_peak_Nm": 31.04361952968031,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.019229172890359785,
+          0.019965333563067258,
+          0.028839699484350927,
+          0.032544768842173506,
+          0.02064916030695456,
+          0.020782671747362917,
+          0.020968661187780627
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.011205164036598563,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 65,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 10.3,
+      "limit_s": 16.494999999999997,
+      "stop_s": 13.317,
+      "STOP_mm": 4.274317962093811,
+      "final_mm": 2.665677908113793,
+      "exact_postSTOP_peak_mm": 4.274317962093811,
+      "actual_sent_peak_Nm": 31.04383024160468,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01985871004208837,
+          0.02150134868741628,
+          0.0191269691727788,
+          0.03352123157679655,
+          0.019473056124567786,
+          0.03036733528180562,
+          0.019445916637004432
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005063942124949827,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 83,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.533,
+      "limit_s": 15.338,
+      "stop_s": 12.292,
+      "STOP_mm": 3.509993078826657,
+      "final_mm": 0.8153972856626133,
+      "exact_postSTOP_peak_mm": 3.509993078826657,
+      "actual_sent_peak_Nm": 31.04171486422028,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02026361045225596,
+          0.02057173452360921,
+          0.019231576849780583,
+          0.027882657944888242,
+          0.018797808221383387,
+          0.025946794962163146,
+          0.019294768281146398
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004798903877123872,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 92,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 2.967,
+      "limit_s": 12.0,
+      "stop_s": 6.385,
+      "STOP_mm": 4.933268088406679,
+      "final_mm": 2.2109692322529675,
+      "exact_postSTOP_peak_mm": 4.933268088406679,
+      "actual_sent_peak_Nm": 31.040529463554336,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01851692258772838,
+          0.01883321448785251,
+          0.021893537305477946,
+          0.028848885559837355,
+          0.019895529829609782,
+          0.02044684734985521,
+          0.018393584004501744
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.014185328495115558,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 97,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.567,
+      "limit_s": 13.425,
+      "stop_s": 9.491,
+      "STOP_mm": 1.8589818178790112,
+      "final_mm": 3.4022262556711484,
+      "exact_postSTOP_peak_mm": 3.8623894926692692,
+      "actual_sent_peak_Nm": 31.029302144065696,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02438332307635799,
+          0.018163931472343915,
+          0.04584138102519584,
+          0.01791505834489815,
+          0.040225508831679954,
+          0.017750598353326114,
+          0.02196625060409631
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005521911148345485,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 98,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.967,
+      "limit_s": 12.0,
+      "stop_s": 6.688,
+      "STOP_mm": 3.6873693616201004,
+      "final_mm": 0.8716507831639464,
+      "exact_postSTOP_peak_mm": 3.6873693616201004,
+      "actual_sent_peak_Nm": 31.066172108666823,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.022339125826311184,
+          0.020881920888849555,
+          0.02388027240702955,
+          0.02344178268114397,
+          0.017787366161006818,
+          0.02203356651587538,
+          0.025588020521247003
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004085729711717651,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 113,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.6,
+      "limit_s": 12.0,
+      "stop_s": 6.066,
+      "STOP_mm": 3.5437429527147035,
+      "final_mm": 1.5497692143035386,
+      "exact_postSTOP_peak_mm": 3.5437429527147035,
+      "actual_sent_peak_Nm": 31.044359477738755,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.017533475530007253,
+          0.020419709649243556,
+          0.017533473347738325,
+          0.020765121222727344,
+          0.017701324717891414,
+          0.021654312443322284,
+          0.01819558439255701
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005793184904928447,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 136,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 7.1,
+      "limit_s": 12.0,
+      "stop_s": 8.507,
+      "STOP_mm": 4.504321367913665,
+      "final_mm": 1.873482518965739,
+      "exact_postSTOP_peak_mm": 4.504321367913665,
+      "actual_sent_peak_Nm": 31.04345339376445,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.024570292423953224,
+          0.017651937610251318,
+          0.039909692883397754,
+          0.018443753030215802,
+          0.025657081585129252,
+          0.01865190314187577,
+          0.04009865812678656
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0052875001836253455,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 147,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.4,
+      "limit_s": 13.861999999999998,
+      "stop_s": 9.148,
+      "STOP_mm": 3.843984912141817,
+      "final_mm": 1.1359121924011906,
+      "exact_postSTOP_peak_mm": 3.843984912141817,
+      "actual_sent_peak_Nm": 31.038003523026248,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.0187078965721535,
+          0.020260368085351962,
+          0.018381355785327763,
+          0.023617370762196523,
+          0.017528116882151796,
+          0.022748300895092815,
+          0.017600149623991864
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.003588870304683238,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 148,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.9,
+      "limit_s": 12.0,
+      "stop_s": 10.302,
+      "STOP_mm": 5.66925140452113,
+      "final_mm": 2.5144771793460565,
+      "exact_postSTOP_peak_mm": 5.66925140452113,
+      "actual_sent_peak_Nm": 31.036772907998067,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02008639829607596,
+          0.01901925794031809,
+          0.026767256428693806,
+          0.025049162961622518,
+          0.023205938264318514,
+          0.01789902337605556,
+          0.026136466465112376
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0063429713553394,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 154,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.9,
+      "limit_s": 12.0,
+      "stop_s": 11.317,
+      "STOP_mm": 3.936732356816389,
+      "final_mm": 0.9201635252968491,
+      "exact_postSTOP_peak_mm": 3.936732356816389,
+      "actual_sent_peak_Nm": 31.043965115945095,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02325051969283393,
+          0.019111896754336763,
+          0.034760549336831814,
+          0.020350693086932443,
+          0.018791192019737037,
+          0.020225948400224972,
+          0.03427358486063759
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004811344315200428,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 162,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.6,
+      "limit_s": 12.130000000000003,
+      "stop_s": 10.091000000000001,
+      "STOP_mm": 3.7294111529468323,
+      "final_mm": 1.3659430357186804,
+      "exact_postSTOP_peak_mm": 3.7294111529468323,
+      "actual_sent_peak_Nm": 31.03920928575625,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.021871929804980678,
+          0.019547375797306837,
+          0.029370661403212123,
+          0.019165429885746856,
+          0.017944569093723457,
+          0.020836315008091848,
+          0.02885504355185678
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005726528009331764,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 196,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 5.3,
+      "limit_s": 12.0,
+      "stop_s": 7.313,
+      "STOP_mm": 5.701908095631407,
+      "final_mm": 3.651463307168442,
+      "exact_postSTOP_peak_mm": 5.701908095631407,
+      "actual_sent_peak_Nm": 31.03429070049851,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.019534061217257113,
+          0.02079638766257428,
+          0.01769707949547617,
+          0.018126031601855087,
+          0.018825678543809322,
+          0.018564578668918672,
+          0.018694119452494187
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004668323871870411,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 221,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.6,
+      "limit_s": 12.434,
+      "stop_s": 7.349,
+      "STOP_mm": 6.073083241029642,
+      "final_mm": 3.1564539396930793,
+      "exact_postSTOP_peak_mm": 6.073083241029642,
+      "actual_sent_peak_Nm": 31.049621836229093,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.026548113056650103,
+          0.01885415943706519,
+          0.04581122810442867,
+          0.017422023592572576,
+          0.03991530476385437,
+          0.018285946208255268,
+          0.02559824169652279
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.008881055948183208,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 229,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.7,
+      "limit_s": 12.42,
+      "stop_s": 11.126,
+      "STOP_mm": 4.772856568371487,
+      "final_mm": 1.9995913773451561,
+      "exact_postSTOP_peak_mm": 4.772856568371487,
+      "actual_sent_peak_Nm": 31.042798344638655,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.024676372544775595,
+          0.018576448561342735,
+          0.033993206454957,
+          0.017973366808995823,
+          0.023304775900617764,
+          0.018803593391914102,
+          0.03690333890476476
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.003666238486668262,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 232,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.533,
+      "limit_s": 13.122999999999998,
+      "stop_s": 10.385,
+      "STOP_mm": 5.894113477983389,
+      "final_mm": 3.034001059965645,
+      "exact_postSTOP_peak_mm": 5.894113477983389,
+      "actual_sent_peak_Nm": 31.045221655427483,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.020199397013797,
+          0.02083296978837615,
+          0.018356669841915425,
+          0.018183483404265996,
+          0.017882003070750645,
+          0.0181198465250908,
+          0.017605215969349518
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.006754992436948601,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 239,
+      "success": false,
+      "status": "no_stop_timeout",
+      "PARK": true,
+      "park_s": 4.667,
+      "limit_s": 12.0,
+      "stop_s": null,
+      "STOP_mm": null,
+      "final_mm": 37.56504933156842,
+      "exact_postSTOP_peak_mm": null,
+      "actual_sent_peak_Nm": 31.046891633739477,
+      "postSTOP": null
+    },
+    {
+      "dot": 248,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 3.167,
+      "limit_s": 12.0,
+      "stop_s": 4.918,
+      "STOP_mm": 6.104026886522294,
+      "final_mm": 3.432110234979887,
+      "exact_postSTOP_peak_mm": 6.104026886522294,
+      "actual_sent_peak_Nm": 31.044540232956734,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.018219953249491258,
+          0.022693426067586155,
+          0.018743905214134503,
+          0.020469600414674508,
+          0.018293596565830215,
+          0.018049387292194855,
+          0.017380582177647208
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004163968700602715,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 260,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.833,
+      "limit_s": 15.441,
+      "stop_s": 12.682,
+      "STOP_mm": 4.967692837124627,
+      "final_mm": 2.930162113443491,
+      "exact_postSTOP_peak_mm": 4.967692837124627,
+      "actual_sent_peak_Nm": 31.04246086017188,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02090447183665122,
+          0.019854793766247124,
+          0.019272392878267076,
+          0.02460236135832067,
+          0.01967592028602805,
+          0.022702834174877656,
+          0.01973113696964346
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004839230749221386,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 271,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.233,
+      "limit_s": 12.0,
+      "stop_s": 5.86,
+      "STOP_mm": 4.791714417478384,
+      "final_mm": 2.4572573071318606,
+      "exact_postSTOP_peak_mm": 4.791714417478384,
+      "actual_sent_peak_Nm": 31.061116601292447,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.03460433597433524,
+          0.018550912613138973,
+          0.03581466266158576,
+          0.020112789210809088,
+          0.02865880729139757,
+          0.018960855979482574,
+          0.04035106307479222
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004929433655659738,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 274,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.733,
+      "limit_s": 13.049,
+      "stop_s": 9.686,
+      "STOP_mm": 6.380460598472025,
+      "final_mm": 3.2617105358232097,
+      "exact_postSTOP_peak_mm": 6.380460598472025,
+      "actual_sent_peak_Nm": 31.037434236322408,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02276481903614568,
+          0.018511617671934582,
+          0.040433728451961366,
+          0.018073692146880514,
+          0.033031429086226416,
+          0.018273733685024163,
+          0.02528831900693552
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005443227666340626,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 277,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.433,
+      "limit_s": 14.864,
+      "stop_s": 12.266,
+      "STOP_mm": 3.86964996922124,
+      "final_mm": 3.28240410990367,
+      "exact_postSTOP_peak_mm": 4.307204708443,
+      "actual_sent_peak_Nm": 31.04375129595293,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.022970194161798407,
+          0.01751144278627291,
+          0.03881435742154394,
+          0.019230296865187183,
+          0.03343453764979561,
+          0.0173017159230452,
+          0.021314921894456353
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.007106425411766495,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 281,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.733,
+      "limit_s": 12.889,
+      "stop_s": 11.428,
+      "STOP_mm": 3.7748221525494476,
+      "final_mm": 1.1226725157133903,
+      "exact_postSTOP_peak_mm": 3.7748221525494476,
+      "actual_sent_peak_Nm": 31.037660488697327,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02554999085965336,
+          0.019546883228554284,
+          0.028751919804753157,
+          0.02357724957579013,
+          0.01725910795927574,
+          0.023427979242565657,
+          0.030489891211216126
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004439959189003007,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 285,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.433,
+      "limit_s": 12.172,
+      "stop_s": 10.158,
+      "STOP_mm": 5.403729378813864,
+      "final_mm": 2.663888039198028,
+      "exact_postSTOP_peak_mm": 5.403729378813864,
+      "actual_sent_peak_Nm": 31.041957293778342,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.025761351542120618,
+          0.020999744796802708,
+          0.01977840966358109,
+          0.018132650919090516,
+          0.02045672320465413,
+          0.01863069636149125,
+          0.02123971261917775
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.00694362673865245,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 302,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.3,
+      "limit_s": 12.0,
+      "stop_s": 7.188,
+      "STOP_mm": 5.760738676494394,
+      "final_mm": 4.157408074102849,
+      "exact_postSTOP_peak_mm": 5.760738676494394,
+      "actual_sent_peak_Nm": 31.039497366074016,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.03065531298612709,
+          0.0180538182528709,
+          0.055984269643541223,
+          0.018436846567305664,
+          0.042016491932996766,
+          0.018890326121829715,
+          0.024309923593156247
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005873553310852771,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 306,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.833,
+      "limit_s": 12.794,
+      "stop_s": 10.253,
+      "STOP_mm": 3.9798392230444306,
+      "final_mm": 0.8574618863039131,
+      "exact_postSTOP_peak_mm": 3.9798392230444306,
+      "actual_sent_peak_Nm": 31.039537481902137,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.024983965973829673,
+          0.01852233789914778,
+          0.03991014774901136,
+          0.019109460643275344,
+          0.019724479498186648,
+          0.01934722913439586,
+          0.03940154937379981
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0035431075287069773,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 311,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 11.0,
+      "limit_s": 13.305,
+      "stop_s": 12.346,
+      "STOP_mm": 4.420401555283287,
+      "final_mm": 0.9520418449262058,
+      "exact_postSTOP_peak_mm": 4.420401555283287,
+      "actual_sent_peak_Nm": 31.038922146973864,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02221450260052601,
+          0.018493390506246227,
+          0.035638143048941855,
+          0.019878538214412232,
+          0.019686918209901295,
+          0.019675700731259824,
+          0.03491679619825234
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0045091237287957,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 315,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.467,
+      "limit_s": 12.0,
+      "stop_s": 6.5280000000000005,
+      "STOP_mm": 5.8543625017814485,
+      "final_mm": 3.165422937902494,
+      "exact_postSTOP_peak_mm": 5.8543625017814485,
+      "actual_sent_peak_Nm": 31.042700914930222,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.017371417136051927,
+          0.021789706214967005,
+          0.01895959978967565,
+          0.017908126784319883,
+          0.01631992431265415,
+          0.0175329166435061,
+          0.018605397313443423
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004219824101403639,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 316,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 7.767,
+      "limit_s": 12.0,
+      "stop_s": 9.567,
+      "STOP_mm": 5.254903573402402,
+      "final_mm": 2.995523367687132,
+      "exact_postSTOP_peak_mm": 5.254903573402402,
+      "actual_sent_peak_Nm": 31.04802063606752,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02901718252643989,
+          0.0196802397443174,
+          0.026562771180377177,
+          0.01709763140547045,
+          0.02423613797494374,
+          0.01899422654809556,
+          0.028624046209199113
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.007363574836681831,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 317,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.733,
+      "limit_s": 12.0,
+      "stop_s": 11.120000000000001,
+      "STOP_mm": 3.9600934121761355,
+      "final_mm": 1.3945479547210122,
+      "exact_postSTOP_peak_mm": 3.9600934121761355,
+      "actual_sent_peak_Nm": 31.041291517870857,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.021632372869099394,
+          0.019022264186015332,
+          0.034486986399886045,
+          0.018482812541307063,
+          0.019838426933897996,
+          0.018486391751806594,
+          0.033649802455590884
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004550952822764372,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 361,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 10.433,
+      "limit_s": 14.864,
+      "stop_s": 12.532,
+      "STOP_mm": 2.494125483431104,
+      "final_mm": 0.6704760776025485,
+      "exact_postSTOP_peak_mm": 2.494125483431104,
+      "actual_sent_peak_Nm": 31.04236309822922,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01834322362501867,
+          0.018728373595807868,
+          0.020024369093412677,
+          0.021025225473796642,
+          0.01742446310802774,
+          0.02127206197816074,
+          0.01909066121735647
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.003643609351747536,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 413,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 10.867,
+      "limit_s": 14.623,
+      "stop_s": 12.464,
+      "STOP_mm": 5.282599167014202,
+      "final_mm": 2.669897787377798,
+      "exact_postSTOP_peak_mm": 5.282599167014202,
+      "actual_sent_peak_Nm": 31.04287057330631,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.03185054235179257,
+          0.019783161555328877,
+          0.025415062182690445,
+          0.017702124415933277,
+          0.02562264125492668,
+          0.01853613835588118,
+          0.031081534753493154
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0036788459753337027,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 427,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 5.833,
+      "limit_s": 12.0,
+      "stop_s": 7.3420000000000005,
+      "STOP_mm": 4.678644414623234,
+      "final_mm": 1.843120591911904,
+      "exact_postSTOP_peak_mm": 4.678644414623234,
+      "actual_sent_peak_Nm": 31.05251089948998,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.03613857294486144,
+          0.01788327260707082,
+          0.053457595382149434,
+          0.01761872428431006,
+          0.02952967873344789,
+          0.01809009789987672,
+          0.05777938420865896
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004447491876645312,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 432,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.9,
+      "limit_s": 14.150000000000002,
+      "stop_s": 11.825000000000001,
+      "STOP_mm": 3.566500305195793,
+      "final_mm": 0.43898388888115336,
+      "exact_postSTOP_peak_mm": 3.566500305195793,
+      "actual_sent_peak_Nm": 31.04156092986721,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.020144266835068637,
+          0.019788031475189555,
+          0.022314480823203153,
+          0.023485099561248817,
+          0.01761723846984274,
+          0.021944542187086368,
+          0.021629312681223256
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.003130384941021094,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 463,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.733,
+      "limit_s": 12.0,
+      "stop_s": 8.232,
+      "STOP_mm": 4.084746980844946,
+      "final_mm": 1.481781689501689,
+      "exact_postSTOP_peak_mm": 4.084746980844946,
+      "actual_sent_peak_Nm": 31.04292908606591,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.03381098717043332,
+          0.01808526918536447,
+          0.050338204649301777,
+          0.01726328557767665,
+          0.02816253322807381,
+          0.018409682221775258,
+          0.05339995675742876
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004221855385341566,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 478,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 10.733,
+      "limit_s": 14.135,
+      "stop_s": 12.735,
+      "STOP_mm": 5.999560101837514,
+      "final_mm": 3.331854420188476,
+      "exact_postSTOP_peak_mm": 5.999560101837514,
+      "actual_sent_peak_Nm": 31.042433892527924,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01993741398922036,
+          0.021649576656687052,
+          0.01805610790667884,
+          0.018554642621419107,
+          0.017603850894054838,
+          0.0172479821045046,
+          0.01798893887622487
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0035391048042347057,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 479,
+      "success": false,
+      "status": "no_stop_timeout",
+      "PARK": true,
+      "park_s": 11.6,
+      "limit_s": 12.638000000000002,
+      "stop_s": null,
+      "STOP_mm": null,
+      "final_mm": 7.543964688553227,
+      "exact_postSTOP_peak_mm": null,
+      "actual_sent_peak_Nm": 31.040603620231042,
+      "postSTOP": null
+    },
+    {
+      "dot": 492,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.3,
+      "limit_s": 13.130000000000003,
+      "stop_s": 10.200000000000001,
+      "STOP_mm": 6.007093563979898,
+      "final_mm": 3.199567037434,
+      "exact_postSTOP_peak_mm": 6.007093563979898,
+      "actual_sent_peak_Nm": 31.04310356043814,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.017798744590753826,
+          0.02191163338845367,
+          0.0188053066237671,
+          0.01648088993040553,
+          0.017059443809404773,
+          0.017411849738697808,
+          0.01799822236137737
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004719224955981546,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 502,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 5.0,
+      "limit_s": 12.0,
+      "stop_s": 7.649,
+      "STOP_mm": 2.822073298567784,
+      "final_mm": 2.399693694690408,
+      "exact_postSTOP_peak_mm": 2.822073298567784,
+      "actual_sent_peak_Nm": 31.04650064314264,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.022431875725255103,
+          0.020428239413861952,
+          0.021733901516547655,
+          0.02055215006391571,
+          0.01897316348880874,
+          0.02071153072492769,
+          0.02151716704095163
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005093989758910268,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 534,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.333,
+      "limit_s": 12.0,
+      "stop_s": 6.933,
+      "STOP_mm": 5.986432553897443,
+      "final_mm": 3.3627851108046545,
+      "exact_postSTOP_peak_mm": 5.986432553897443,
+      "actual_sent_peak_Nm": 31.033806373384937,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.06613567833068977,
+          0.018832542826366032,
+          0.06647763155777864,
+          0.018402918398024187,
+          0.0406806898469645,
+          0.017880222066678827,
+          0.04496414462012151
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.025121023313434594,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 545,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 5.3,
+      "limit_s": 12.231,
+      "stop_s": 8.705,
+      "STOP_mm": 5.67405686516766,
+      "final_mm": 3.904766066641556,
+      "exact_postSTOP_peak_mm": 5.67405686516766,
+      "actual_sent_peak_Nm": 31.05262859582679,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02771990298873411,
+          0.01997233694796569,
+          0.029259553064825906,
+          0.020330547378739745,
+          0.026062671770472133,
+          0.018647128753521126,
+          0.023242390705359123
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.013156045856600507,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 554,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 11.067,
+      "limit_s": 14.99,
+      "stop_s": 12.701,
+      "STOP_mm": 5.408572612158573,
+      "final_mm": 2.753049540902599,
+      "exact_postSTOP_peak_mm": 5.408572612158573,
+      "actual_sent_peak_Nm": 31.042849122851795,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.029410290380947057,
+          0.019650334096636923,
+          0.02109115746857964,
+          0.01714859048808581,
+          0.022812109155564753,
+          0.017586569410347967,
+          0.026983673847542432
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0042141874827498135,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 571,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.333,
+      "limit_s": 16.186999999999998,
+      "stop_s": 13.256,
+      "STOP_mm": 4.366774221667754,
+      "final_mm": 1.6374416157089633,
+      "exact_postSTOP_peak_mm": 4.366774221667754,
+      "actual_sent_peak_Nm": 31.043884421430135,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.020085213506608572,
+          0.01878398416877206,
+          0.029743437102898902,
+          0.028137805837564693,
+          0.024486667102752893,
+          0.01977652637438995,
+          0.021731777788713328
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.026205047639620515,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 585,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.867,
+      "limit_s": 12.877,
+      "stop_s": 10.999,
+      "STOP_mm": 5.626905541367551,
+      "final_mm": 2.9585527871083865,
+      "exact_postSTOP_peak_mm": 5.626905541367551,
+      "actual_sent_peak_Nm": 31.03739325619829,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.018757489168857448,
+          0.022026859275288135,
+          0.018986620365724856,
+          0.018073896639896336,
+          0.018081462972396857,
+          0.018094787653235144,
+          0.019972024957422018
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005091589798864018,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 586,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 10.5,
+      "limit_s": 14.51,
+      "stop_s": 12.114,
+      "STOP_mm": 5.441322752665937,
+      "final_mm": 2.6046569191096958,
+      "exact_postSTOP_peak_mm": 5.441322752665937,
+      "actual_sent_peak_Nm": 31.046756468777573,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.030333547439827795,
+          0.019057864092056214,
+          0.022134277385890414,
+          0.017929771155513263,
+          0.023166112976216843,
+          0.018347901932947837,
+          0.029190141199838402
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004844840497261236,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 592,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 5.4,
+      "limit_s": 12.0,
+      "stop_s": 7.526,
+      "STOP_mm": 6.182075933170702,
+      "final_mm": 3.421705086229212,
+      "exact_postSTOP_peak_mm": 6.182075933170702,
+      "actual_sent_peak_Nm": 31.060709180771237,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01871146458542716,
+          0.022423701159243303,
+          0.018831665137057918,
+          0.0200772531369178,
+          0.018260102390627798,
+          0.018320083294581856,
+          0.017551618433778438
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.00625234742867973,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 599,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.8,
+      "limit_s": 12.0,
+      "stop_s": 10.695,
+      "STOP_mm": 3.388435150348902,
+      "final_mm": 0.831933567189893,
+      "exact_postSTOP_peak_mm": 3.388435150348902,
+      "actual_sent_peak_Nm": 31.04162564921893,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.024280059492935994,
+          0.019695428078565145,
+          0.025185721939207796,
+          0.022184047801408636,
+          0.017796672329135566,
+          0.022991021649911122,
+          0.025826413978026954
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004215555386591476,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 600,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 5.0,
+      "limit_s": 12.0,
+      "stop_s": 6.5680000000000005,
+      "STOP_mm": 3.3294739687134802,
+      "final_mm": 1.2655284131085753,
+      "exact_postSTOP_peak_mm": 3.3294739687134802,
+      "actual_sent_peak_Nm": 31.04698676112786,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01800582121395914,
+          0.02031558343542914,
+          0.017023254895927098,
+          0.019289986023295756,
+          0.017710029684008654,
+          0.020091275517495632,
+          0.018133722375866062
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0034380365878637653,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 605,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.6,
+      "limit_s": 12.793,
+      "stop_s": 10.126,
+      "STOP_mm": 3.6233083154963888,
+      "final_mm": 1.1146990000573924,
+      "exact_postSTOP_peak_mm": 3.6233083154963888,
+      "actual_sent_peak_Nm": 31.04210827063903,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02207369979093465,
+          0.019764866658142578,
+          0.030402333606818883,
+          0.020824986449556215,
+          0.01709752403071578,
+          0.020670149995607876,
+          0.03010735468335866
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0043885049630609544,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 628,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.067,
+      "limit_s": 12.0,
+      "stop_s": 5.424,
+      "STOP_mm": 4.109394419154497,
+      "final_mm": 1.4323930963926197,
+      "exact_postSTOP_peak_mm": 4.109394419154497,
+      "actual_sent_peak_Nm": 31.041858977327145,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.020889444919748645,
+          0.020095638193122885,
+          0.0329015433543411,
+          0.01806748170689147,
+          0.01755604126195491,
+          0.020634810491104754,
+          0.03142093010040873
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.00422495366850322,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 632,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.767,
+      "limit_s": 12.0,
+      "stop_s": 7.7170000000000005,
+      "STOP_mm": 5.962662188969223,
+      "final_mm": 4.3341844924565285,
+      "exact_postSTOP_peak_mm": 5.962662188969223,
+      "actual_sent_peak_Nm": 31.038592150365353,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.029178979538599346,
+          0.019180639197225152,
+          0.053630850315559815,
+          0.017606999617128104,
+          0.04413434389933475,
+          0.018450538888716884,
+          0.025053657201506336
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005872342345058823,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 642,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.667,
+      "limit_s": 12.0,
+      "stop_s": 8.479000000000001,
+      "STOP_mm": 3.5778600277511656,
+      "final_mm": 0.7109393623779067,
+      "exact_postSTOP_peak_mm": 3.5778600277511656,
+      "actual_sent_peak_Nm": 31.042096687215412,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.024374664438378827,
+          0.018989007764699105,
+          0.025298130449163663,
+          0.023191437140611157,
+          0.018085832540379865,
+          0.021165176002187383,
+          0.026912744166963282
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004415434575850304,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 646,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 7.067,
+      "limit_s": 12.971999999999998,
+      "stop_s": 10.371,
+      "STOP_mm": 4.534056801006266,
+      "final_mm": 2.3877813455423267,
+      "exact_postSTOP_peak_mm": 4.534056801006266,
+      "actual_sent_peak_Nm": 31.04438379546856,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.022222765757737958,
+          0.017908632111307853,
+          0.033629805910973275,
+          0.02058563151120805,
+          0.02527575746625735,
+          0.01781224266762713,
+          0.021705577224379526
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.007480937454036933,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 652,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 5.233,
+      "limit_s": 12.0,
+      "stop_s": 6.714,
+      "STOP_mm": 4.938025428873023,
+      "final_mm": 1.9123389111001903,
+      "exact_postSTOP_peak_mm": 4.938025428873023,
+      "actual_sent_peak_Nm": 31.05575772000751,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.03100285954805711,
+          0.016827363412552674,
+          0.039757671556537956,
+          0.018211377284746748,
+          0.027714416281103802,
+          0.019317412902393718,
+          0.043243486376936056
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004962602347413707,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 653,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 5.133,
+      "limit_s": 12.0,
+      "stop_s": 7.007000000000001,
+      "STOP_mm": 6.018676254888197,
+      "final_mm": 3.292510631644211,
+      "exact_postSTOP_peak_mm": 6.018676254888197,
+      "actual_sent_peak_Nm": 31.041674755078187,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01769262652754505,
+          0.021792086878528898,
+          0.018405136012465212,
+          0.018055056722478015,
+          0.017356205321738986,
+          0.017687656090138774,
+          0.017607697437605117
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0037701719719829578,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 664,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.433,
+      "limit_s": 12.0,
+      "stop_s": 5.228,
+      "STOP_mm": 6.109789407378494,
+      "final_mm": 4.815658815355719,
+      "exact_postSTOP_peak_mm": 6.109789407378494,
+      "actual_sent_peak_Nm": 31.043778705997013,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02007407488735412,
+          0.02331966474924133,
+          0.029899090325684146,
+          0.01836670985137349,
+          0.019463418717064116,
+          0.018393632430691097,
+          0.03180240311066037
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004698827761993601,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 669,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 11.4,
+      "limit_s": 13.888,
+      "stop_s": 12.767,
+      "STOP_mm": 4.2288754955777295,
+      "final_mm": 1.1672887806393846,
+      "exact_postSTOP_peak_mm": 4.2288754955777295,
+      "actual_sent_peak_Nm": 31.039449371276923,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02319050081579575,
+          0.01811973078505953,
+          0.03698013872819783,
+          0.018520950672237416,
+          0.021083806315728003,
+          0.017472659250151432,
+          0.036552051167518446
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0038712798774517897,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 671,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 10.4,
+      "limit_s": 16.016,
+      "stop_s": 13.516,
+      "STOP_mm": 5.586527019232947,
+      "final_mm": 3.402028245482577,
+      "exact_postSTOP_peak_mm": 5.586527019232947,
+      "actual_sent_peak_Nm": 31.040117425313674,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02742609612020682,
+          0.018019127857190786,
+          0.02547511906234884,
+          0.026026792291798044,
+          0.024918875337087257,
+          0.01840142431816037,
+          0.02592391756741996
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0071091326903444186,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 683,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 7.8,
+      "limit_s": 12.0,
+      "stop_s": 9.195,
+      "STOP_mm": 3.7044363851928304,
+      "final_mm": 0.873207567558834,
+      "exact_postSTOP_peak_mm": 3.7044363851928304,
+      "actual_sent_peak_Nm": 31.043876352629923,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.020309710264305184,
+          0.019533542491487466,
+          0.03902160047269119,
+          0.018882741873414027,
+          0.021212333180593446,
+          0.01886658964772445,
+          0.034817130976884623
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.00423892391848628,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 693,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.4,
+      "limit_s": 15.387,
+      "stop_s": 10.241,
+      "STOP_mm": 5.919435280700646,
+      "final_mm": 3.0061951436309835,
+      "exact_postSTOP_peak_mm": 5.919435280700646,
+      "actual_sent_peak_Nm": 31.040393979697086,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01978615205599095,
+          0.018317767320107526,
+          0.023165465240628777,
+          0.03012771517213474,
+          0.019116852541998675,
+          0.01890290155802993,
+          0.019968904893773554
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.013304895712155469,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 700,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 5.633,
+      "limit_s": 13.388,
+      "stop_s": 9.076,
+      "STOP_mm": 5.258911525806602,
+      "final_mm": 4.358501093742516,
+      "exact_postSTOP_peak_mm": 5.258911525806602,
+      "actual_sent_peak_Nm": 31.02818698064772,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01935750162823676,
+          0.01853372600636823,
+          0.02106571410600869,
+          0.02744098673160994,
+          0.01932942950098649,
+          0.02089288521001753,
+          0.022168205240411163
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.010751180986480152,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 707,
+      "success": false,
+      "status": "no_stop_timeout",
+      "PARK": true,
+      "park_s": 10.9,
+      "limit_s": 12.669,
+      "stop_s": null,
+      "STOP_mm": null,
+      "final_mm": 12.092539633331086,
+      "exact_postSTOP_peak_mm": null,
+      "actual_sent_peak_Nm": 31.04321344547749,
+      "postSTOP": null
+    },
+    {
+      "dot": 708,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.433,
+      "limit_s": 13.55,
+      "stop_s": 10.714,
+      "STOP_mm": 5.7349250351969046,
+      "final_mm": 2.911871086450599,
+      "exact_postSTOP_peak_mm": 5.7349250351969046,
+      "actual_sent_peak_Nm": 31.045831714340757,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.019251959642722558,
+          0.020311801493849865,
+          0.018239145931726274,
+          0.018561299868420898,
+          0.01860771055309846,
+          0.017146496386226822,
+          0.017717482114540002
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004413616100971596,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 722,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 11.367,
+      "limit_s": 13.997,
+      "stop_s": 12.873000000000001,
+      "STOP_mm": 5.422492553019661,
+      "final_mm": 2.354355479347687,
+      "exact_postSTOP_peak_mm": 5.422492553019661,
+      "actual_sent_peak_Nm": 31.04118125340313,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.028934046081218936,
+          0.017533628888162216,
+          0.02836099673050015,
+          0.01830580434513869,
+          0.02452643139395678,
+          0.017953583822987586,
+          0.03326589404475276
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004746935404399178,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 729,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.067,
+      "limit_s": 13.876000000000001,
+      "stop_s": 11.798,
+      "STOP_mm": 4.317206353819998,
+      "final_mm": 1.882021602109196,
+      "exact_postSTOP_peak_mm": 4.317206353819998,
+      "actual_sent_peak_Nm": 31.040311638204656,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.017352610372770656,
+          0.020520280740300614,
+          0.017361836508122647,
+          0.0214582761923424,
+          0.01806838532110833,
+          0.021520485779387134,
+          0.018722987570852084
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.006641502746187009,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 730,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 7.233,
+      "limit_s": 13.373,
+      "stop_s": 10.299,
+      "STOP_mm": 5.646700603924636,
+      "final_mm": 3.4708054643716872,
+      "exact_postSTOP_peak_mm": 5.646700603924636,
+      "actual_sent_peak_Nm": 31.05163528470114,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02475624600664627,
+          0.019229736452100726,
+          0.037384396000127676,
+          0.01860066496068685,
+          0.03273694190533722,
+          0.018817817554053255,
+          0.02368140627849556
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.006424908903674968,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 738,
+      "success": false,
+      "status": "no_stop_timeout",
+      "PARK": true,
+      "park_s": 9.367,
+      "limit_s": 12.766,
+      "stop_s": null,
+      "STOP_mm": null,
+      "final_mm": 9.903824666106605,
+      "exact_postSTOP_peak_mm": null,
+      "actual_sent_peak_Nm": 31.044478939500145,
+      "postSTOP": null
+    },
+    {
+      "dot": 741,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 10.633,
+      "limit_s": 14.316,
+      "stop_s": 12.169,
+      "STOP_mm": 5.298000826842144,
+      "final_mm": 2.4050131155851395,
+      "exact_postSTOP_peak_mm": 5.298000826842144,
+      "actual_sent_peak_Nm": 31.043171245387782,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.030924958185997508,
+          0.01944901979762544,
+          0.02729509066370834,
+          0.01813807562142347,
+          0.02474420475413121,
+          0.01853294919308576,
+          0.032835151837157
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004517613355214989,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 750,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.167,
+      "limit_s": 12.0,
+      "stop_s": 4.98,
+      "STOP_mm": 3.5918440839120445,
+      "final_mm": 2.5354463083649725,
+      "exact_postSTOP_peak_mm": 3.5918440839120445,
+      "actual_sent_peak_Nm": 31.044380990019864,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.0194722780615886,
+          0.020552070531007063,
+          0.025875261190213203,
+          0.02532424247811218,
+          0.018544911586472538,
+          0.018975834546545115,
+          0.027140351918817775
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004786834042924919,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 770,
+      "success": false,
+      "status": "no_stop_timeout",
+      "PARK": true,
+      "park_s": 9.733,
+      "limit_s": 12.273,
+      "stop_s": null,
+      "STOP_mm": null,
+      "final_mm": 8.10326180510167,
+      "exact_postSTOP_peak_mm": null,
+      "actual_sent_peak_Nm": 31.041651378749883,
+      "postSTOP": null
+    },
+    {
+      "dot": 779,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.567,
+      "limit_s": 13.696000000000002,
+      "stop_s": 8.744,
+      "STOP_mm": 5.85609922030617,
+      "final_mm": 3.117927448580883,
+      "exact_postSTOP_peak_mm": 5.85609922030617,
+      "actual_sent_peak_Nm": 31.0497106914354,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.017512435420497387,
+          0.01906650566389468,
+          0.018448144391954087,
+          0.018767358254531224,
+          0.01758048416052389,
+          0.017118133763316626,
+          0.017410531990123858
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005016426441479426,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 806,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 7.5,
+      "limit_s": 12.0,
+      "stop_s": 9.417,
+      "STOP_mm": 6.134574602628686,
+      "final_mm": 3.471817127785464,
+      "exact_postSTOP_peak_mm": 6.134574602628686,
+      "actual_sent_peak_Nm": 31.04080908847111,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01884147900881117,
+          0.023684432249106404,
+          0.01917638439373179,
+          0.021938713711237356,
+          0.017304778377435066,
+          0.021978567491942068,
+          0.017953036869321135
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.017793063711035464,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 834,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 2.9,
+      "limit_s": 12.0,
+      "stop_s": 4.471,
+      "STOP_mm": 6.241217224623802,
+      "final_mm": 3.0053509215447938,
+      "exact_postSTOP_peak_mm": 6.241217224623802,
+      "actual_sent_peak_Nm": 31.024503600740672,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02234052460639721,
+          0.022013591593512894,
+          0.02082410145690929,
+          0.019798155315179387,
+          0.01903834519279469,
+          0.018905826338579432,
+          0.024186332395369103
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004573709991659186,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 845,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.933,
+      "limit_s": 12.595,
+      "stop_s": 8.91,
+      "STOP_mm": 6.0432623259292475,
+      "final_mm": 2.923676036733757,
+      "exact_postSTOP_peak_mm": 6.0432623259292475,
+      "actual_sent_peak_Nm": 31.044476788709257,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.018108015341111457,
+          0.021800895528356797,
+          0.019122005812579772,
+          0.018138257816131712,
+          0.018537709432908146,
+          0.01908232546059401,
+          0.017272019608849092
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0048263432830741426,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 846,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 3.133,
+      "limit_s": 12.0,
+      "stop_s": 3.851,
+      "STOP_mm": 3.6433485099931304,
+      "final_mm": 2.270852681874261,
+      "exact_postSTOP_peak_mm": 3.6433485099931304,
+      "actual_sent_peak_Nm": 31.04414935626729,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.017904653539876744,
+          0.022079132211951458,
+          0.020866168194143636,
+          0.02174362086791325,
+          0.018492069922469104,
+          0.01918947749187867,
+          0.02157234899920209
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005076934891476168,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 848,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 10.4,
+      "limit_s": 16.161,
+      "stop_s": 12.89,
+      "STOP_mm": 3.5792631648487694,
+      "final_mm": 1.115910325764401,
+      "exact_postSTOP_peak_mm": 3.5792631648487694,
+      "actual_sent_peak_Nm": 31.041436137652468,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.018422547005240604,
+          0.02074957484783173,
+          0.02040746856568187,
+          0.02898137074372953,
+          0.019208943281224352,
+          0.02610337969257929,
+          0.019343572483980172
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004973811467369368,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 854,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.433,
+      "limit_s": 12.641,
+      "stop_s": 8.537,
+      "STOP_mm": 3.369073513642655,
+      "final_mm": 0.8699260792158939,
+      "exact_postSTOP_peak_mm": 3.369073513642655,
+      "actual_sent_peak_Nm": 31.03510059185694,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.018248063167144193,
+          0.020254891786909226,
+          0.019028864444184584,
+          0.023871480956061362,
+          0.01657294304321258,
+          0.02278690778699937,
+          0.018098428639379823
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004335653972878818,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 857,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 11.467,
+      "limit_s": 13.41,
+      "stop_s": 13.207,
+      "STOP_mm": 3.461697251143443,
+      "final_mm": 0.4867471392804135,
+      "exact_postSTOP_peak_mm": 3.461697251143443,
+      "actual_sent_peak_Nm": 31.040683249139445,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01759219646448425,
+          0.02081803439015283,
+          0.018597963443069722,
+          0.026464071692998584,
+          0.01728271097863117,
+          0.02406729416038663,
+          0.019770156998006924
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0038354111216601884,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 859,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.867,
+      "limit_s": 12.0,
+      "stop_s": 11.115,
+      "STOP_mm": 6.010138900430836,
+      "final_mm": 3.321520734940599,
+      "exact_postSTOP_peak_mm": 6.010138900430836,
+      "actual_sent_peak_Nm": 31.045710797297446,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01824936042801248,
+          0.022831075634375336,
+          0.018194419352928773,
+          0.018317186853590586,
+          0.017710742486505993,
+          0.018124371360642107,
+          0.018022106048370415
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.006082164994471035,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 872,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 11.433,
+      "limit_s": 13.425,
+      "stop_s": 12.887,
+      "STOP_mm": 3.6965697817202954,
+      "final_mm": 0.5895148424994335,
+      "exact_postSTOP_peak_mm": 3.6965697817202954,
+      "actual_sent_peak_Nm": 31.045455580215013,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.021966736911068402,
+          0.019397343944756795,
+          0.030801720257070113,
+          0.02330244490670718,
+          0.01789688333707655,
+          0.02176924269939044,
+          0.029734432363055403
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005126404241411456,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 883,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.633,
+      "limit_s": 12.0,
+      "stop_s": 8.467,
+      "STOP_mm": 6.206970492947058,
+      "final_mm": 3.291449346375876,
+      "exact_postSTOP_peak_mm": 6.206970492947058,
+      "actual_sent_peak_Nm": 31.041367097451577,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.018797368185412243,
+          0.023190046452171993,
+          0.019031393237983862,
+          0.022121602886465835,
+          0.01916560230910998,
+          0.01811676785493935,
+          0.017689083640939372
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005349151170016873,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 898,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 7.6,
+      "limit_s": 12.29,
+      "stop_s": 9.575000000000001,
+      "STOP_mm": 3.6783420486099074,
+      "final_mm": 1.2797291581570642,
+      "exact_postSTOP_peak_mm": 3.6783420486099074,
+      "actual_sent_peak_Nm": 31.047492104702847,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.020023604369080527,
+          0.020651528204216,
+          0.02155297403658271,
+          0.023922059690770884,
+          0.01668963551780927,
+          0.023314009605389246,
+          0.02030630918226711
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0044393131945347775,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 903,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.5,
+      "limit_s": 12.002000000000002,
+      "stop_s": 10.215,
+      "STOP_mm": 6.4849687466111705,
+      "final_mm": 3.38498452076753,
+      "exact_postSTOP_peak_mm": 6.4849687466111705,
+      "actual_sent_peak_Nm": 31.041098804554032,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02060369934167469,
+          0.02323612169371253,
+          0.01807789869847405,
+          0.019771883404835662,
+          0.01954227217263476,
+          0.018786364323810444,
+          0.02089217093483803
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0034935773056920683,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 905,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.467,
+      "limit_s": 12.0,
+      "stop_s": 6.081,
+      "STOP_mm": 3.281079121145507,
+      "final_mm": 0.8150283270320454,
+      "exact_postSTOP_peak_mm": 3.281079121145507,
+      "actual_sent_peak_Nm": 31.06113221140657,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.027150725360779126,
+          0.020485645685336163,
+          0.03231829266361974,
+          0.023201454095094613,
+          0.017825590335639376,
+          0.021937275746504104,
+          0.03392659250004693
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.004023099551244912,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 945,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 8.4,
+      "limit_s": 12.0,
+      "stop_s": 10.067,
+      "STOP_mm": 2.794915699341441,
+      "final_mm": 0.9266665175534292,
+      "exact_postSTOP_peak_mm": 2.794915699341441,
+      "actual_sent_peak_Nm": 31.04486704305804,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.021620485029709896,
+          0.020213261750366394,
+          0.022960961258083105,
+          0.019361785534103823,
+          0.017326865783179005,
+          0.019318467424688734,
+          0.02386294969633258
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.003951908211372623,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 952,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 7.233,
+      "limit_s": 12.0,
+      "stop_s": 10.176,
+      "STOP_mm": 5.991781065082294,
+      "final_mm": 3.0954579499600694,
+      "exact_postSTOP_peak_mm": 5.991781065082294,
+      "actual_sent_peak_Nm": 31.042914778219817,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.02423149343887248,
+          0.019084536527933127,
+          0.037236930408132994,
+          0.018383298940923394,
+          0.031015277668802264,
+          0.018816255554940816,
+          0.02433608845612672
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.0071077439529972615,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 958,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 4.9,
+      "limit_s": 12.0,
+      "stop_s": 7.035,
+      "STOP_mm": 6.0006025101266225,
+      "final_mm": 3.034632256108157,
+      "exact_postSTOP_peak_mm": 6.0006025101266225,
+      "actual_sent_peak_Nm": 31.036433169862192,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01889591728977635,
+          0.0221055593850681,
+          0.018608589988845452,
+          0.018199217351364705,
+          0.019525461332985248,
+          0.018608727082169062,
+          0.019161244572546695
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.009370569554024046,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 981,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 6.333,
+      "limit_s": 12.0,
+      "stop_s": 8.103,
+      "STOP_mm": 6.261823038311702,
+      "final_mm": 3.1782109444728257,
+      "exact_postSTOP_peak_mm": 6.261823038311702,
+      "actual_sent_peak_Nm": 31.03731167708561,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.019312030470058503,
+          0.023008531006132562,
+          0.019581447857233737,
+          0.019061184688000804,
+          0.017044705513443656,
+          0.017340530878433576,
+          0.01878630082385996
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.00436528991906099,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 985,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 5.467,
+      "limit_s": 12.881,
+      "stop_s": 8.167,
+      "STOP_mm": 3.1396320838477583,
+      "final_mm": 1.1375763122152154,
+      "exact_postSTOP_peak_mm": 3.1396320838477583,
+      "actual_sent_peak_Nm": 31.040566490604146,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01763570474238399,
+          0.019142876697928406,
+          0.01743104972507322,
+          0.023659711017211076,
+          0.018746929201688172,
+          0.022892720786375706,
+          0.017546595050993624
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.007000282164969822,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 986,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 9.233,
+      "limit_s": 13.743,
+      "stop_s": 12.779,
+      "STOP_mm": 5.147936413150518,
+      "final_mm": 3.051018513269677,
+      "exact_postSTOP_peak_mm": 5.147936413150518,
+      "actual_sent_peak_Nm": 31.039946019871458,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.01894845245402469,
+          0.01801590014274584,
+          0.02136136601651066,
+          0.028836863112893518,
+          0.019935386315453812,
+          0.018477947027362357,
+          0.020955339926300956
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.006923196429818962,
+        "diagnostic_flag": false
+      }
+    },
+    {
+      "dot": 989,
+      "success": true,
+      "status": "success",
+      "PARK": true,
+      "park_s": 7.7,
+      "limit_s": 13.803999999999998,
+      "stop_s": 10.223,
+      "STOP_mm": 3.836279556346325,
+      "final_mm": 1.3082693049291119,
+      "exact_postSTOP_peak_mm": 3.836279556346325,
+      "actual_sent_peak_Nm": 31.030654928353727,
+      "postSTOP": {
+        "qdRMS_rad_s": [
+          0.018534552008803672,
+          0.021288215458153032,
+          0.01940675600662901,
+          0.02873672323347527,
+          0.018246335349075916,
+          0.024227613910023815,
+          0.019166526690606017
+        ],
+        "clipping_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max25_45Hz_amplitude_rad_s": 0.005270292982991313,
+        "diagnostic_flag": false
+      }
+    }
+  ],
+  "scope": "Frozenvariant reserved evaluation; historicallyusedtargets, no globallyuntouchedtargetclaim; same100targets across3 noise seeds, not3trainingseeds"
+}

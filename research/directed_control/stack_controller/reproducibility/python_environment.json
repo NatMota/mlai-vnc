@@ -1,0 +1,19 @@
+{
+  "python": "3.14.10 | packaged by conda-forge | (main, Oct 26 2026, 11:35:38) [GCC 15.3.0]",
+  "executable": "/home/nm/Projects/comp0245-native-expert/.pixi/envs/default/bin/python",
+  "platform": "Linux-7.0.0-29-generic-x86_64-with-glibc2.39",
+  "packages": [
+    {
+      "name": "casadi",
+      "version": "3.7.2"
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.4"
+    },
+    {
+      "name": "pybullet",
+      "version": "3.2.5"
+    }
+  ]
+}

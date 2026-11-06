@@ -1,0 +1,2209 @@
+{
+  "timestamp_utc": "2026-11-06T03:16:32.190736+00:00",
+  "source_manifest_sha256": "f1bd3ee58ae4bf7359b02361b70f8a348c0bd7b073d6e2b3ca46a8252102ba89",
+  "freeze_sha256": "f3a577fecbc3a426c9b4ad5f6f4023e15720b016ba5d9f31b3e8b38b2e60a242",
+  "records": [
+    {
+      "dot": 11,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_11.npz",
+      "source_sha256": "56f298fdc87403de2bd56b2d2f8773f4ffd220a524c3389d8ba3c639e47e5eed",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_11.npz",
+          "sha256": "56f298fdc87403de2bd56b2d2f8773f4ffd220a524c3389d8ba3c639e47e5eed"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_11.npz",
+          "sha256": "56f298fdc87403de2bd56b2d2f8773f4ffd220a524c3389d8ba3c639e47e5eed"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_11.npz",
+          "sha256": "56f298fdc87403de2bd56b2d2f8773f4ffd220a524c3389d8ba3c639e47e5eed"
+        }
+      ]
+    },
+    {
+      "dot": 17,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_17.npz",
+      "source_sha256": "51db0c1b756c93acad11cefe6e2fc47c1a4392c9322a4f81cd09ef24e22e4449",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_17.npz",
+          "sha256": "51db0c1b756c93acad11cefe6e2fc47c1a4392c9322a4f81cd09ef24e22e4449"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_17.npz",
+          "sha256": "51db0c1b756c93acad11cefe6e2fc47c1a4392c9322a4f81cd09ef24e22e4449"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_17.npz",
+          "sha256": "51db0c1b756c93acad11cefe6e2fc47c1a4392c9322a4f81cd09ef24e22e4449"
+        }
+      ]
+    },
+    {
+      "dot": 33,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_33.npz",
+      "source_sha256": "4ab7e2069a4a46ed1a28b4d13b47f38c3e004203b7aa62db181ef7d91fc4d223",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_33.npz",
+          "sha256": "4ab7e2069a4a46ed1a28b4d13b47f38c3e004203b7aa62db181ef7d91fc4d223"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_33.npz",
+          "sha256": "4ab7e2069a4a46ed1a28b4d13b47f38c3e004203b7aa62db181ef7d91fc4d223"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_33.npz",
+          "sha256": "4ab7e2069a4a46ed1a28b4d13b47f38c3e004203b7aa62db181ef7d91fc4d223"
+        }
+      ]
+    },
+    {
+      "dot": 35,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_35.npz",
+      "source_sha256": "7c80917bb95838488f051de4e1c523c92fa015a41de97ee2bf44e869a9a20f98",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_35.npz",
+          "sha256": "7c80917bb95838488f051de4e1c523c92fa015a41de97ee2bf44e869a9a20f98"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_35.npz",
+          "sha256": "7c80917bb95838488f051de4e1c523c92fa015a41de97ee2bf44e869a9a20f98"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_35.npz",
+          "sha256": "7c80917bb95838488f051de4e1c523c92fa015a41de97ee2bf44e869a9a20f98"
+        }
+      ]
+    },
+    {
+      "dot": 40,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_40.npz",
+      "source_sha256": "d509124e5adb9c5e51e07476e8a50a6a6003c611ab8ef78d02c4e1a2328d0be1",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_40.npz",
+          "sha256": "d509124e5adb9c5e51e07476e8a50a6a6003c611ab8ef78d02c4e1a2328d0be1"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_40.npz",
+          "sha256": "d509124e5adb9c5e51e07476e8a50a6a6003c611ab8ef78d02c4e1a2328d0be1"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_40.npz",
+          "sha256": "d509124e5adb9c5e51e07476e8a50a6a6003c611ab8ef78d02c4e1a2328d0be1"
+        }
+      ]
+    },
+    {
+      "dot": 43,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_43.npz",
+      "source_sha256": "117721a1063e1966c1a94bd58f5d58f4175154ad235d4c229b4bf3708ae70f53",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_43.npz",
+          "sha256": "117721a1063e1966c1a94bd58f5d58f4175154ad235d4c229b4bf3708ae70f53"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_43.npz",
+          "sha256": "117721a1063e1966c1a94bd58f5d58f4175154ad235d4c229b4bf3708ae70f53"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_43.npz",
+          "sha256": "117721a1063e1966c1a94bd58f5d58f4175154ad235d4c229b4bf3708ae70f53"
+        }
+      ]
+    },
+    {
+      "dot": 44,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_44.npz",
+      "source_sha256": "34f937a7cc6cce0b43a30720bc09bb61fd8c812f8fe174d34baf6606ee228a35",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_44.npz",
+          "sha256": "34f937a7cc6cce0b43a30720bc09bb61fd8c812f8fe174d34baf6606ee228a35"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_44.npz",
+          "sha256": "34f937a7cc6cce0b43a30720bc09bb61fd8c812f8fe174d34baf6606ee228a35"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_44.npz",
+          "sha256": "34f937a7cc6cce0b43a30720bc09bb61fd8c812f8fe174d34baf6606ee228a35"
+        }
+      ]
+    },
+    {
+      "dot": 48,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_48.npz",
+      "source_sha256": "9912aa066eba85c2ee8b12aebbcee631984610e54f8d5a9e8c32bfb910bd8f6b",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_48.npz",
+          "sha256": "9912aa066eba85c2ee8b12aebbcee631984610e54f8d5a9e8c32bfb910bd8f6b"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_48.npz",
+          "sha256": "9912aa066eba85c2ee8b12aebbcee631984610e54f8d5a9e8c32bfb910bd8f6b"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_48.npz",
+          "sha256": "9912aa066eba85c2ee8b12aebbcee631984610e54f8d5a9e8c32bfb910bd8f6b"
+        }
+      ]
+    },
+    {
+      "dot": 52,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_52.npz",
+      "source_sha256": "555a38cd55665b69b790f96ba09f7c9a3dfe7f8fb09154bc7fbbadf6d43de621",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_52.npz",
+          "sha256": "555a38cd55665b69b790f96ba09f7c9a3dfe7f8fb09154bc7fbbadf6d43de621"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_52.npz",
+          "sha256": "555a38cd55665b69b790f96ba09f7c9a3dfe7f8fb09154bc7fbbadf6d43de621"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_52.npz",
+          "sha256": "555a38cd55665b69b790f96ba09f7c9a3dfe7f8fb09154bc7fbbadf6d43de621"
+        }
+      ]
+    },
+    {
+      "dot": 56,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_56.npz",
+      "source_sha256": "445d56ed43e859ec5980d257c53b0f5ce38d66b22a45ea3a3e3f3801dffb7922",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_56.npz",
+          "sha256": "445d56ed43e859ec5980d257c53b0f5ce38d66b22a45ea3a3e3f3801dffb7922"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_56.npz",
+          "sha256": "445d56ed43e859ec5980d257c53b0f5ce38d66b22a45ea3a3e3f3801dffb7922"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_56.npz",
+          "sha256": "445d56ed43e859ec5980d257c53b0f5ce38d66b22a45ea3a3e3f3801dffb7922"
+        }
+      ]
+    },
+    {
+      "dot": 65,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_65.npz",
+      "source_sha256": "97b7516083f459601fb54e600726db8e9b7bb0f5d7f0616192ecf5c515b7a61f",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_65.npz",
+          "sha256": "97b7516083f459601fb54e600726db8e9b7bb0f5d7f0616192ecf5c515b7a61f"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_65.npz",
+          "sha256": "97b7516083f459601fb54e600726db8e9b7bb0f5d7f0616192ecf5c515b7a61f"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_65.npz",
+          "sha256": "97b7516083f459601fb54e600726db8e9b7bb0f5d7f0616192ecf5c515b7a61f"
+        }
+      ]
+    },
+    {
+      "dot": 83,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_83.npz",
+      "source_sha256": "84e291605411808e3423ed36ada43a0f6b2fde96dca719712d01175a91c477e0",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_83.npz",
+          "sha256": "84e291605411808e3423ed36ada43a0f6b2fde96dca719712d01175a91c477e0"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_83.npz",
+          "sha256": "84e291605411808e3423ed36ada43a0f6b2fde96dca719712d01175a91c477e0"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_83.npz",
+          "sha256": "84e291605411808e3423ed36ada43a0f6b2fde96dca719712d01175a91c477e0"
+        }
+      ]
+    },
+    {
+      "dot": 92,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_92.npz",
+      "source_sha256": "25bc719011ea29e44e130567e649d8e98c1bcf3dd2511f7575e6e05d95036c5b",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_92.npz",
+          "sha256": "25bc719011ea29e44e130567e649d8e98c1bcf3dd2511f7575e6e05d95036c5b"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_92.npz",
+          "sha256": "25bc719011ea29e44e130567e649d8e98c1bcf3dd2511f7575e6e05d95036c5b"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_92.npz",
+          "sha256": "25bc719011ea29e44e130567e649d8e98c1bcf3dd2511f7575e6e05d95036c5b"
+        }
+      ]
+    },
+    {
+      "dot": 97,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_97.npz",
+      "source_sha256": "2b35d1470075f405c651d23a4cfa896e29912087428a1358557a647bc6b704a0",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_97.npz",
+          "sha256": "2b35d1470075f405c651d23a4cfa896e29912087428a1358557a647bc6b704a0"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_97.npz",
+          "sha256": "2b35d1470075f405c651d23a4cfa896e29912087428a1358557a647bc6b704a0"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_97.npz",
+          "sha256": "2b35d1470075f405c651d23a4cfa896e29912087428a1358557a647bc6b704a0"
+        }
+      ]
+    },
+    {
+      "dot": 98,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_98.npz",
+      "source_sha256": "b8bc5708df77392671de6cdd9086ed08ea8c63365a3634d3edcc6cf5f20b324a",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_98.npz",
+          "sha256": "b8bc5708df77392671de6cdd9086ed08ea8c63365a3634d3edcc6cf5f20b324a"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_98.npz",
+          "sha256": "b8bc5708df77392671de6cdd9086ed08ea8c63365a3634d3edcc6cf5f20b324a"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_98.npz",
+          "sha256": "b8bc5708df77392671de6cdd9086ed08ea8c63365a3634d3edcc6cf5f20b324a"
+        }
+      ]
+    },
+    {
+      "dot": 113,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_113.npz",
+      "source_sha256": "5e32a828256241621204faa37dc43680079ab12c952b4291d16d2bfc8be542ca",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_113.npz",
+          "sha256": "5e32a828256241621204faa37dc43680079ab12c952b4291d16d2bfc8be542ca"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_113.npz",
+          "sha256": "5e32a828256241621204faa37dc43680079ab12c952b4291d16d2bfc8be542ca"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_113.npz",
+          "sha256": "5e32a828256241621204faa37dc43680079ab12c952b4291d16d2bfc8be542ca"
+        }
+      ]
+    },
+    {
+      "dot": 136,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_136.npz",
+      "source_sha256": "dceb50242c3c78970fc4ae6af4298e66eaca2be744f02ef414292557b0ffc835",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_136.npz",
+          "sha256": "dceb50242c3c78970fc4ae6af4298e66eaca2be744f02ef414292557b0ffc835"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_136.npz",
+          "sha256": "dceb50242c3c78970fc4ae6af4298e66eaca2be744f02ef414292557b0ffc835"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_136.npz",
+          "sha256": "dceb50242c3c78970fc4ae6af4298e66eaca2be744f02ef414292557b0ffc835"
+        }
+      ]
+    },
+    {
+      "dot": 147,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_147.npz",
+      "source_sha256": "8d52014631d672c4815479e7fa4485d614dff9873af23c4ac33f9e93382c373e",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_147.npz",
+          "sha256": "8d52014631d672c4815479e7fa4485d614dff9873af23c4ac33f9e93382c373e"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_147.npz",
+          "sha256": "8d52014631d672c4815479e7fa4485d614dff9873af23c4ac33f9e93382c373e"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_147.npz",
+          "sha256": "8d52014631d672c4815479e7fa4485d614dff9873af23c4ac33f9e93382c373e"
+        }
+      ]
+    },
+    {
+      "dot": 148,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_148.npz",
+      "source_sha256": "eb67b2e1ca89acc5d3621894040c29d35f1f5488ee67e0534b1e937fc14c8d88",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_148.npz",
+          "sha256": "eb67b2e1ca89acc5d3621894040c29d35f1f5488ee67e0534b1e937fc14c8d88"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_148.npz",
+          "sha256": "eb67b2e1ca89acc5d3621894040c29d35f1f5488ee67e0534b1e937fc14c8d88"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_148.npz",
+          "sha256": "eb67b2e1ca89acc5d3621894040c29d35f1f5488ee67e0534b1e937fc14c8d88"
+        }
+      ]
+    },
+    {
+      "dot": 154,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_154.npz",
+      "source_sha256": "74273b901476160ab0f3313dd9b744e4b791520925e80312210077a4347e7ee8",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_154.npz",
+          "sha256": "74273b901476160ab0f3313dd9b744e4b791520925e80312210077a4347e7ee8"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_154.npz",
+          "sha256": "74273b901476160ab0f3313dd9b744e4b791520925e80312210077a4347e7ee8"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_154.npz",
+          "sha256": "74273b901476160ab0f3313dd9b744e4b791520925e80312210077a4347e7ee8"
+        }
+      ]
+    },
+    {
+      "dot": 162,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_162.npz",
+      "source_sha256": "c903f59cc3a63da442a755d47860f2c8cbda99ed77cc405b046f47a6acadd669",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_162.npz",
+          "sha256": "c903f59cc3a63da442a755d47860f2c8cbda99ed77cc405b046f47a6acadd669"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_162.npz",
+          "sha256": "c903f59cc3a63da442a755d47860f2c8cbda99ed77cc405b046f47a6acadd669"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_162.npz",
+          "sha256": "c903f59cc3a63da442a755d47860f2c8cbda99ed77cc405b046f47a6acadd669"
+        }
+      ]
+    },
+    {
+      "dot": 196,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_196.npz",
+      "source_sha256": "eeee14c6d1828876651596c1cfaeb2134852829a70a0c9614b20b63b2cd9b906",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_196.npz",
+          "sha256": "eeee14c6d1828876651596c1cfaeb2134852829a70a0c9614b20b63b2cd9b906"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_196.npz",
+          "sha256": "eeee14c6d1828876651596c1cfaeb2134852829a70a0c9614b20b63b2cd9b906"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_196.npz",
+          "sha256": "eeee14c6d1828876651596c1cfaeb2134852829a70a0c9614b20b63b2cd9b906"
+        }
+      ]
+    },
+    {
+      "dot": 221,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_221.npz",
+      "source_sha256": "2e8342a38ce39bb92c7838cc60ba2d559299f492a49712a17f969a83671cb081",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_221.npz",
+          "sha256": "2e8342a38ce39bb92c7838cc60ba2d559299f492a49712a17f969a83671cb081"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_221.npz",
+          "sha256": "2e8342a38ce39bb92c7838cc60ba2d559299f492a49712a17f969a83671cb081"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_221.npz",
+          "sha256": "2e8342a38ce39bb92c7838cc60ba2d559299f492a49712a17f969a83671cb081"
+        }
+      ]
+    },
+    {
+      "dot": 229,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_229.npz",
+      "source_sha256": "d77c7002260dc6559eceac310680cd6c8a62ed719845acb7d4693985ea14f9b2",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_229.npz",
+          "sha256": "d77c7002260dc6559eceac310680cd6c8a62ed719845acb7d4693985ea14f9b2"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_229.npz",
+          "sha256": "d77c7002260dc6559eceac310680cd6c8a62ed719845acb7d4693985ea14f9b2"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_229.npz",
+          "sha256": "d77c7002260dc6559eceac310680cd6c8a62ed719845acb7d4693985ea14f9b2"
+        }
+      ]
+    },
+    {
+      "dot": 232,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_232.npz",
+      "source_sha256": "94327a5e7a668bdfc57efa1003bd356b281871c4dc44436f5513248e67294537",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_232.npz",
+          "sha256": "94327a5e7a668bdfc57efa1003bd356b281871c4dc44436f5513248e67294537"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_232.npz",
+          "sha256": "94327a5e7a668bdfc57efa1003bd356b281871c4dc44436f5513248e67294537"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_232.npz",
+          "sha256": "94327a5e7a668bdfc57efa1003bd356b281871c4dc44436f5513248e67294537"
+        }
+      ]
+    },
+    {
+      "dot": 239,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_239.npz",
+      "source_sha256": "d1b62fd6b5d994cf4dadcc4874a5f2ae0733bbf9f8d46418e343f2905ba4eaba",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_239.npz",
+          "sha256": "d1b62fd6b5d994cf4dadcc4874a5f2ae0733bbf9f8d46418e343f2905ba4eaba"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_239.npz",
+          "sha256": "d1b62fd6b5d994cf4dadcc4874a5f2ae0733bbf9f8d46418e343f2905ba4eaba"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_239.npz",
+          "sha256": "d1b62fd6b5d994cf4dadcc4874a5f2ae0733bbf9f8d46418e343f2905ba4eaba"
+        }
+      ]
+    },
+    {
+      "dot": 248,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_248.npz",
+      "source_sha256": "0401196a080efcd23fbc3bc7cf3332b3f1f006dca7ded55d0f7c3c7cc52690da",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_248.npz",
+          "sha256": "0401196a080efcd23fbc3bc7cf3332b3f1f006dca7ded55d0f7c3c7cc52690da"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_248.npz",
+          "sha256": "0401196a080efcd23fbc3bc7cf3332b3f1f006dca7ded55d0f7c3c7cc52690da"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_248.npz",
+          "sha256": "0401196a080efcd23fbc3bc7cf3332b3f1f006dca7ded55d0f7c3c7cc52690da"
+        }
+      ]
+    },
+    {
+      "dot": 260,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_260.npz",
+      "source_sha256": "94d6c1fde06093d30ec4225ab018b583a1ee7aae003e8250588b052ff4a245eb",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_260.npz",
+          "sha256": "94d6c1fde06093d30ec4225ab018b583a1ee7aae003e8250588b052ff4a245eb"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_260.npz",
+          "sha256": "94d6c1fde06093d30ec4225ab018b583a1ee7aae003e8250588b052ff4a245eb"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_260.npz",
+          "sha256": "94d6c1fde06093d30ec4225ab018b583a1ee7aae003e8250588b052ff4a245eb"
+        }
+      ]
+    },
+    {
+      "dot": 271,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_271.npz",
+      "source_sha256": "8363ddede5965f4b077111bf6c2d7ebba8f956bf5a4a510b5016d93f294c4b73",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_271.npz",
+          "sha256": "8363ddede5965f4b077111bf6c2d7ebba8f956bf5a4a510b5016d93f294c4b73"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_271.npz",
+          "sha256": "8363ddede5965f4b077111bf6c2d7ebba8f956bf5a4a510b5016d93f294c4b73"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_271.npz",
+          "sha256": "8363ddede5965f4b077111bf6c2d7ebba8f956bf5a4a510b5016d93f294c4b73"
+        }
+      ]
+    },
+    {
+      "dot": 274,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_274.npz",
+      "source_sha256": "68620fcd3ccb0c35e578595356c89fd7f382a5148c35540334bf9b5811813841",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_274.npz",
+          "sha256": "68620fcd3ccb0c35e578595356c89fd7f382a5148c35540334bf9b5811813841"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_274.npz",
+          "sha256": "68620fcd3ccb0c35e578595356c89fd7f382a5148c35540334bf9b5811813841"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_274.npz",
+          "sha256": "68620fcd3ccb0c35e578595356c89fd7f382a5148c35540334bf9b5811813841"
+        }
+      ]
+    },
+    {
+      "dot": 277,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_277.npz",
+      "source_sha256": "9cf1ff4c4dc721765ca3294ca5e1ecb5fb21fd9f9dc78b16d377ea4d8be9b2d0",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_277.npz",
+          "sha256": "9cf1ff4c4dc721765ca3294ca5e1ecb5fb21fd9f9dc78b16d377ea4d8be9b2d0"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_277.npz",
+          "sha256": "9cf1ff4c4dc721765ca3294ca5e1ecb5fb21fd9f9dc78b16d377ea4d8be9b2d0"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_277.npz",
+          "sha256": "9cf1ff4c4dc721765ca3294ca5e1ecb5fb21fd9f9dc78b16d377ea4d8be9b2d0"
+        }
+      ]
+    },
+    {
+      "dot": 281,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_281.npz",
+      "source_sha256": "5fd18042c88904bec783260fe05c400182e8dfe1611265284d7601240747723b",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_281.npz",
+          "sha256": "5fd18042c88904bec783260fe05c400182e8dfe1611265284d7601240747723b"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_281.npz",
+          "sha256": "5fd18042c88904bec783260fe05c400182e8dfe1611265284d7601240747723b"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_281.npz",
+          "sha256": "5fd18042c88904bec783260fe05c400182e8dfe1611265284d7601240747723b"
+        }
+      ]
+    },
+    {
+      "dot": 285,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_285.npz",
+      "source_sha256": "e4462f7a60e7a82caff495f29c4363f13e077d77dc2adbb06ebdeb639b3f5bfc",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_285.npz",
+          "sha256": "e4462f7a60e7a82caff495f29c4363f13e077d77dc2adbb06ebdeb639b3f5bfc"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_285.npz",
+          "sha256": "e4462f7a60e7a82caff495f29c4363f13e077d77dc2adbb06ebdeb639b3f5bfc"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_285.npz",
+          "sha256": "e4462f7a60e7a82caff495f29c4363f13e077d77dc2adbb06ebdeb639b3f5bfc"
+        }
+      ]
+    },
+    {
+      "dot": 302,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_302.npz",
+      "source_sha256": "3ce6710e64309c72009219921b148c4bf61242c695c2a1ce1cfdc9652d899d91",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_302.npz",
+          "sha256": "3ce6710e64309c72009219921b148c4bf61242c695c2a1ce1cfdc9652d899d91"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_302.npz",
+          "sha256": "3ce6710e64309c72009219921b148c4bf61242c695c2a1ce1cfdc9652d899d91"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_302.npz",
+          "sha256": "3ce6710e64309c72009219921b148c4bf61242c695c2a1ce1cfdc9652d899d91"
+        }
+      ]
+    },
+    {
+      "dot": 306,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_306.npz",
+      "source_sha256": "632893a086533aaa6a2042457f0e5a905c076cdbb513ac758a3d415b30b1f9c1",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_306.npz",
+          "sha256": "632893a086533aaa6a2042457f0e5a905c076cdbb513ac758a3d415b30b1f9c1"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_306.npz",
+          "sha256": "632893a086533aaa6a2042457f0e5a905c076cdbb513ac758a3d415b30b1f9c1"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_306.npz",
+          "sha256": "632893a086533aaa6a2042457f0e5a905c076cdbb513ac758a3d415b30b1f9c1"
+        }
+      ]
+    },
+    {
+      "dot": 311,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_311.npz",
+      "source_sha256": "d19e697d9de470fba189c00af679f446dfd21317184e366c5eb0ee8c42382561",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_311.npz",
+          "sha256": "d19e697d9de470fba189c00af679f446dfd21317184e366c5eb0ee8c42382561"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_311.npz",
+          "sha256": "d19e697d9de470fba189c00af679f446dfd21317184e366c5eb0ee8c42382561"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_311.npz",
+          "sha256": "d19e697d9de470fba189c00af679f446dfd21317184e366c5eb0ee8c42382561"
+        }
+      ]
+    },
+    {
+      "dot": 315,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_315.npz",
+      "source_sha256": "0f305d7532bfb87b036830a8117725a4a9d63ea723b3544841fe40e4e5038839",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_315.npz",
+          "sha256": "0f305d7532bfb87b036830a8117725a4a9d63ea723b3544841fe40e4e5038839"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_315.npz",
+          "sha256": "0f305d7532bfb87b036830a8117725a4a9d63ea723b3544841fe40e4e5038839"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_315.npz",
+          "sha256": "0f305d7532bfb87b036830a8117725a4a9d63ea723b3544841fe40e4e5038839"
+        }
+      ]
+    },
+    {
+      "dot": 316,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_316.npz",
+      "source_sha256": "c0fd3eef00fff429e8cef901d7d863bb3dd010f391af2798e65a51ead3ec5621",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_316.npz",
+          "sha256": "c0fd3eef00fff429e8cef901d7d863bb3dd010f391af2798e65a51ead3ec5621"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_316.npz",
+          "sha256": "c0fd3eef00fff429e8cef901d7d863bb3dd010f391af2798e65a51ead3ec5621"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_316.npz",
+          "sha256": "c0fd3eef00fff429e8cef901d7d863bb3dd010f391af2798e65a51ead3ec5621"
+        }
+      ]
+    },
+    {
+      "dot": 317,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_317.npz",
+      "source_sha256": "ec5188ef271ceabc2a995e08fd0ecc9f44b77b79a163c9012574ddc762fc6282",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_317.npz",
+          "sha256": "ec5188ef271ceabc2a995e08fd0ecc9f44b77b79a163c9012574ddc762fc6282"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_317.npz",
+          "sha256": "ec5188ef271ceabc2a995e08fd0ecc9f44b77b79a163c9012574ddc762fc6282"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_317.npz",
+          "sha256": "ec5188ef271ceabc2a995e08fd0ecc9f44b77b79a163c9012574ddc762fc6282"
+        }
+      ]
+    },
+    {
+      "dot": 361,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_361.npz",
+      "source_sha256": "9639728f2f7d5652ef702d7205680442212cf65fce6a186da841937c837de4b5",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_361.npz",
+          "sha256": "9639728f2f7d5652ef702d7205680442212cf65fce6a186da841937c837de4b5"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_361.npz",
+          "sha256": "9639728f2f7d5652ef702d7205680442212cf65fce6a186da841937c837de4b5"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_361.npz",
+          "sha256": "9639728f2f7d5652ef702d7205680442212cf65fce6a186da841937c837de4b5"
+        }
+      ]
+    },
+    {
+      "dot": 413,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_413.npz",
+      "source_sha256": "3054aa8e856964aab71b6f9895707123640b2f44683c204f385df72591fa49c7",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_413.npz",
+          "sha256": "3054aa8e856964aab71b6f9895707123640b2f44683c204f385df72591fa49c7"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_413.npz",
+          "sha256": "3054aa8e856964aab71b6f9895707123640b2f44683c204f385df72591fa49c7"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_413.npz",
+          "sha256": "3054aa8e856964aab71b6f9895707123640b2f44683c204f385df72591fa49c7"
+        }
+      ]
+    },
+    {
+      "dot": 427,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_427.npz",
+      "source_sha256": "7c5abb89071f50d54de3845fe810e80872948c15a0d87061df8d7d81a517669e",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_427.npz",
+          "sha256": "7c5abb89071f50d54de3845fe810e80872948c15a0d87061df8d7d81a517669e"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_427.npz",
+          "sha256": "7c5abb89071f50d54de3845fe810e80872948c15a0d87061df8d7d81a517669e"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_427.npz",
+          "sha256": "7c5abb89071f50d54de3845fe810e80872948c15a0d87061df8d7d81a517669e"
+        }
+      ]
+    },
+    {
+      "dot": 432,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_432.npz",
+      "source_sha256": "4bf82058f938fde0ad7f6e977519416c8e1e104e2555f802fa7f132d44a2d72f",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_432.npz",
+          "sha256": "4bf82058f938fde0ad7f6e977519416c8e1e104e2555f802fa7f132d44a2d72f"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_432.npz",
+          "sha256": "4bf82058f938fde0ad7f6e977519416c8e1e104e2555f802fa7f132d44a2d72f"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_432.npz",
+          "sha256": "4bf82058f938fde0ad7f6e977519416c8e1e104e2555f802fa7f132d44a2d72f"
+        }
+      ]
+    },
+    {
+      "dot": 463,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_463.npz",
+      "source_sha256": "5669e9f28af79f93270c09017cd012f438bbe061591a3908c3eb08326739c22c",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_463.npz",
+          "sha256": "5669e9f28af79f93270c09017cd012f438bbe061591a3908c3eb08326739c22c"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_463.npz",
+          "sha256": "5669e9f28af79f93270c09017cd012f438bbe061591a3908c3eb08326739c22c"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_463.npz",
+          "sha256": "5669e9f28af79f93270c09017cd012f438bbe061591a3908c3eb08326739c22c"
+        }
+      ]
+    },
+    {
+      "dot": 478,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_478.npz",
+      "source_sha256": "a9107ddb46eb2f10bef4bf6e09c131ce67c2572d356f8af7b9cd4642a87a8284",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_478.npz",
+          "sha256": "a9107ddb46eb2f10bef4bf6e09c131ce67c2572d356f8af7b9cd4642a87a8284"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_478.npz",
+          "sha256": "a9107ddb46eb2f10bef4bf6e09c131ce67c2572d356f8af7b9cd4642a87a8284"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_478.npz",
+          "sha256": "a9107ddb46eb2f10bef4bf6e09c131ce67c2572d356f8af7b9cd4642a87a8284"
+        }
+      ]
+    },
+    {
+      "dot": 479,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_479.npz",
+      "source_sha256": "3f2a23086ed788d1269529fd503bd412d60e4b056e2e971f2caafda5fabfd778",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_479.npz",
+          "sha256": "3f2a23086ed788d1269529fd503bd412d60e4b056e2e971f2caafda5fabfd778"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_479.npz",
+          "sha256": "3f2a23086ed788d1269529fd503bd412d60e4b056e2e971f2caafda5fabfd778"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_479.npz",
+          "sha256": "3f2a23086ed788d1269529fd503bd412d60e4b056e2e971f2caafda5fabfd778"
+        }
+      ]
+    },
+    {
+      "dot": 492,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_492.npz",
+      "source_sha256": "07c9b749822e0bfeed126d4efb3226aec87333c086edf34e5356e742ee21ba85",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_492.npz",
+          "sha256": "07c9b749822e0bfeed126d4efb3226aec87333c086edf34e5356e742ee21ba85"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_492.npz",
+          "sha256": "07c9b749822e0bfeed126d4efb3226aec87333c086edf34e5356e742ee21ba85"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_492.npz",
+          "sha256": "07c9b749822e0bfeed126d4efb3226aec87333c086edf34e5356e742ee21ba85"
+        }
+      ]
+    },
+    {
+      "dot": 502,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_502.npz",
+      "source_sha256": "18fcfcd59e1520104dbd4d8298bb8d3893ead0614c05c38bec3b4b8dc9fb1bcb",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_502.npz",
+          "sha256": "18fcfcd59e1520104dbd4d8298bb8d3893ead0614c05c38bec3b4b8dc9fb1bcb"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_502.npz",
+          "sha256": "18fcfcd59e1520104dbd4d8298bb8d3893ead0614c05c38bec3b4b8dc9fb1bcb"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_502.npz",
+          "sha256": "18fcfcd59e1520104dbd4d8298bb8d3893ead0614c05c38bec3b4b8dc9fb1bcb"
+        }
+      ]
+    },
+    {
+      "dot": 534,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_534.npz",
+      "source_sha256": "0553a8b269dacb1da505466227e08353738cfde6b15e472c9a83afa57273d14a",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_534.npz",
+          "sha256": "0553a8b269dacb1da505466227e08353738cfde6b15e472c9a83afa57273d14a"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_534.npz",
+          "sha256": "0553a8b269dacb1da505466227e08353738cfde6b15e472c9a83afa57273d14a"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_534.npz",
+          "sha256": "0553a8b269dacb1da505466227e08353738cfde6b15e472c9a83afa57273d14a"
+        }
+      ]
+    },
+    {
+      "dot": 545,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_545.npz",
+      "source_sha256": "03fe166378f7c2efe2f391c6320fa95387f3eec8c3aee5bed4f19edb53b635d5",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_545.npz",
+          "sha256": "03fe166378f7c2efe2f391c6320fa95387f3eec8c3aee5bed4f19edb53b635d5"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_545.npz",
+          "sha256": "03fe166378f7c2efe2f391c6320fa95387f3eec8c3aee5bed4f19edb53b635d5"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_545.npz",
+          "sha256": "03fe166378f7c2efe2f391c6320fa95387f3eec8c3aee5bed4f19edb53b635d5"
+        }
+      ]
+    },
+    {
+      "dot": 554,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_554.npz",
+      "source_sha256": "2250e918f85a0fab0b79065409051447b4836e51beb8f7c0b81f96851cbb566a",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_554.npz",
+          "sha256": "2250e918f85a0fab0b79065409051447b4836e51beb8f7c0b81f96851cbb566a"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_554.npz",
+          "sha256": "2250e918f85a0fab0b79065409051447b4836e51beb8f7c0b81f96851cbb566a"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_554.npz",
+          "sha256": "2250e918f85a0fab0b79065409051447b4836e51beb8f7c0b81f96851cbb566a"
+        }
+      ]
+    },
+    {
+      "dot": 571,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_571.npz",
+      "source_sha256": "f333ff7c9f67205f40798f0efec123f1ca75005797dc7ee00d2568eebcc70a5b",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_571.npz",
+          "sha256": "f333ff7c9f67205f40798f0efec123f1ca75005797dc7ee00d2568eebcc70a5b"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_571.npz",
+          "sha256": "f333ff7c9f67205f40798f0efec123f1ca75005797dc7ee00d2568eebcc70a5b"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_571.npz",
+          "sha256": "f333ff7c9f67205f40798f0efec123f1ca75005797dc7ee00d2568eebcc70a5b"
+        }
+      ]
+    },
+    {
+      "dot": 585,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_585.npz",
+      "source_sha256": "a822dc37c126545c47a7a830df39e4bca906aef15f7058230cc769fe4f6132ce",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_585.npz",
+          "sha256": "a822dc37c126545c47a7a830df39e4bca906aef15f7058230cc769fe4f6132ce"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_585.npz",
+          "sha256": "a822dc37c126545c47a7a830df39e4bca906aef15f7058230cc769fe4f6132ce"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_585.npz",
+          "sha256": "a822dc37c126545c47a7a830df39e4bca906aef15f7058230cc769fe4f6132ce"
+        }
+      ]
+    },
+    {
+      "dot": 586,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_586.npz",
+      "source_sha256": "7be4684f58774cef6d228e7a780ab6f82cffc3f540c80d47b71435fa7f379b9a",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_586.npz",
+          "sha256": "7be4684f58774cef6d228e7a780ab6f82cffc3f540c80d47b71435fa7f379b9a"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_586.npz",
+          "sha256": "7be4684f58774cef6d228e7a780ab6f82cffc3f540c80d47b71435fa7f379b9a"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_586.npz",
+          "sha256": "7be4684f58774cef6d228e7a780ab6f82cffc3f540c80d47b71435fa7f379b9a"
+        }
+      ]
+    },
+    {
+      "dot": 592,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_592.npz",
+      "source_sha256": "262aa87eeb21d42e0d14a2bd116155400917d51961262e3f5191eeadb0242c5c",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_592.npz",
+          "sha256": "262aa87eeb21d42e0d14a2bd116155400917d51961262e3f5191eeadb0242c5c"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_592.npz",
+          "sha256": "262aa87eeb21d42e0d14a2bd116155400917d51961262e3f5191eeadb0242c5c"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_592.npz",
+          "sha256": "262aa87eeb21d42e0d14a2bd116155400917d51961262e3f5191eeadb0242c5c"
+        }
+      ]
+    },
+    {
+      "dot": 599,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_599.npz",
+      "source_sha256": "10386dd3c8da8acf4e01100926e3a13b011e460e245a75847085ce1cdb6f5a95",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_599.npz",
+          "sha256": "10386dd3c8da8acf4e01100926e3a13b011e460e245a75847085ce1cdb6f5a95"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_599.npz",
+          "sha256": "10386dd3c8da8acf4e01100926e3a13b011e460e245a75847085ce1cdb6f5a95"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_599.npz",
+          "sha256": "10386dd3c8da8acf4e01100926e3a13b011e460e245a75847085ce1cdb6f5a95"
+        }
+      ]
+    },
+    {
+      "dot": 600,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_600.npz",
+      "source_sha256": "3275e68e0028a331c62c7dddc40b84cdf7ec152d30429d4d8a0ded33a78fe48c",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_600.npz",
+          "sha256": "3275e68e0028a331c62c7dddc40b84cdf7ec152d30429d4d8a0ded33a78fe48c"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_600.npz",
+          "sha256": "3275e68e0028a331c62c7dddc40b84cdf7ec152d30429d4d8a0ded33a78fe48c"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_600.npz",
+          "sha256": "3275e68e0028a331c62c7dddc40b84cdf7ec152d30429d4d8a0ded33a78fe48c"
+        }
+      ]
+    },
+    {
+      "dot": 605,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_605.npz",
+      "source_sha256": "12410aac9d9e707e1cf23698642e02099ace4f0a8143f4260f58022474d9b85a",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_605.npz",
+          "sha256": "12410aac9d9e707e1cf23698642e02099ace4f0a8143f4260f58022474d9b85a"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_605.npz",
+          "sha256": "12410aac9d9e707e1cf23698642e02099ace4f0a8143f4260f58022474d9b85a"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_605.npz",
+          "sha256": "12410aac9d9e707e1cf23698642e02099ace4f0a8143f4260f58022474d9b85a"
+        }
+      ]
+    },
+    {
+      "dot": 628,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_628.npz",
+      "source_sha256": "b54e8c549f5eb715bfe2997eeca1cf98353fb8d255fff03a285f760fe65a287d",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_628.npz",
+          "sha256": "b54e8c549f5eb715bfe2997eeca1cf98353fb8d255fff03a285f760fe65a287d"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_628.npz",
+          "sha256": "b54e8c549f5eb715bfe2997eeca1cf98353fb8d255fff03a285f760fe65a287d"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_628.npz",
+          "sha256": "b54e8c549f5eb715bfe2997eeca1cf98353fb8d255fff03a285f760fe65a287d"
+        }
+      ]
+    },
+    {
+      "dot": 632,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_632.npz",
+      "source_sha256": "36035df8d662e42429029782c64d816eaa142ad65e1509d294a020c5e7ec8f2a",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_632.npz",
+          "sha256": "36035df8d662e42429029782c64d816eaa142ad65e1509d294a020c5e7ec8f2a"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_632.npz",
+          "sha256": "36035df8d662e42429029782c64d816eaa142ad65e1509d294a020c5e7ec8f2a"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_632.npz",
+          "sha256": "36035df8d662e42429029782c64d816eaa142ad65e1509d294a020c5e7ec8f2a"
+        }
+      ]
+    },
+    {
+      "dot": 642,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_642.npz",
+      "source_sha256": "858587958a37012cfc75b531126c182215b08177c91a03a65d877fd9d90e9f2b",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_642.npz",
+          "sha256": "858587958a37012cfc75b531126c182215b08177c91a03a65d877fd9d90e9f2b"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_642.npz",
+          "sha256": "858587958a37012cfc75b531126c182215b08177c91a03a65d877fd9d90e9f2b"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_642.npz",
+          "sha256": "858587958a37012cfc75b531126c182215b08177c91a03a65d877fd9d90e9f2b"
+        }
+      ]
+    },
+    {
+      "dot": 646,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_646.npz",
+      "source_sha256": "a760a1e33be533bf9eec5fcbee065f89d76b2578b8ba79751e8114db37653eb7",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_646.npz",
+          "sha256": "a760a1e33be533bf9eec5fcbee065f89d76b2578b8ba79751e8114db37653eb7"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_646.npz",
+          "sha256": "a760a1e33be533bf9eec5fcbee065f89d76b2578b8ba79751e8114db37653eb7"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_646.npz",
+          "sha256": "a760a1e33be533bf9eec5fcbee065f89d76b2578b8ba79751e8114db37653eb7"
+        }
+      ]
+    },
+    {
+      "dot": 652,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_652.npz",
+      "source_sha256": "7dea60acc9268d13ddd395a29e8d33f8d7f81339a3a59f66e8d75a5f17ca9bb0",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_652.npz",
+          "sha256": "7dea60acc9268d13ddd395a29e8d33f8d7f81339a3a59f66e8d75a5f17ca9bb0"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_652.npz",
+          "sha256": "7dea60acc9268d13ddd395a29e8d33f8d7f81339a3a59f66e8d75a5f17ca9bb0"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_652.npz",
+          "sha256": "7dea60acc9268d13ddd395a29e8d33f8d7f81339a3a59f66e8d75a5f17ca9bb0"
+        }
+      ]
+    },
+    {
+      "dot": 653,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_653.npz",
+      "source_sha256": "5a726f066e052bff951e66e75b053994c4553e9552678f30e9d59028a1197efd",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_653.npz",
+          "sha256": "5a726f066e052bff951e66e75b053994c4553e9552678f30e9d59028a1197efd"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_653.npz",
+          "sha256": "5a726f066e052bff951e66e75b053994c4553e9552678f30e9d59028a1197efd"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_653.npz",
+          "sha256": "5a726f066e052bff951e66e75b053994c4553e9552678f30e9d59028a1197efd"
+        }
+      ]
+    },
+    {
+      "dot": 664,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_664.npz",
+      "source_sha256": "5a32b10b558dce4645cee714a0df80024f3e1ca72d1364ac1c2375683a36466b",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_664.npz",
+          "sha256": "5a32b10b558dce4645cee714a0df80024f3e1ca72d1364ac1c2375683a36466b"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_664.npz",
+          "sha256": "5a32b10b558dce4645cee714a0df80024f3e1ca72d1364ac1c2375683a36466b"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_664.npz",
+          "sha256": "5a32b10b558dce4645cee714a0df80024f3e1ca72d1364ac1c2375683a36466b"
+        }
+      ]
+    },
+    {
+      "dot": 669,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_669.npz",
+      "source_sha256": "3b89d9b1d529f6aefae8c518dfa25d6aad48727b15c0b89ea8fec5e2db3942b9",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_669.npz",
+          "sha256": "3b89d9b1d529f6aefae8c518dfa25d6aad48727b15c0b89ea8fec5e2db3942b9"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_669.npz",
+          "sha256": "3b89d9b1d529f6aefae8c518dfa25d6aad48727b15c0b89ea8fec5e2db3942b9"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_669.npz",
+          "sha256": "3b89d9b1d529f6aefae8c518dfa25d6aad48727b15c0b89ea8fec5e2db3942b9"
+        }
+      ]
+    },
+    {
+      "dot": 671,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_671.npz",
+      "source_sha256": "32da8dd684318377713f02f913fdef2e8b910ac1e7666f9faca6e22c3716835b",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_671.npz",
+          "sha256": "32da8dd684318377713f02f913fdef2e8b910ac1e7666f9faca6e22c3716835b"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_671.npz",
+          "sha256": "32da8dd684318377713f02f913fdef2e8b910ac1e7666f9faca6e22c3716835b"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_671.npz",
+          "sha256": "32da8dd684318377713f02f913fdef2e8b910ac1e7666f9faca6e22c3716835b"
+        }
+      ]
+    },
+    {
+      "dot": 683,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_683.npz",
+      "source_sha256": "cac4c8fa4e67c12fbe45a33bcf6eaa677a6a7804753c9cb10f2f257513ad4e5d",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_683.npz",
+          "sha256": "cac4c8fa4e67c12fbe45a33bcf6eaa677a6a7804753c9cb10f2f257513ad4e5d"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_683.npz",
+          "sha256": "cac4c8fa4e67c12fbe45a33bcf6eaa677a6a7804753c9cb10f2f257513ad4e5d"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_683.npz",
+          "sha256": "cac4c8fa4e67c12fbe45a33bcf6eaa677a6a7804753c9cb10f2f257513ad4e5d"
+        }
+      ]
+    },
+    {
+      "dot": 693,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_693.npz",
+      "source_sha256": "f653883f1916767a3a4e11420b9b0056b1909854b6a38fb33b3f20d7cc9aac21",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_693.npz",
+          "sha256": "f653883f1916767a3a4e11420b9b0056b1909854b6a38fb33b3f20d7cc9aac21"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_693.npz",
+          "sha256": "f653883f1916767a3a4e11420b9b0056b1909854b6a38fb33b3f20d7cc9aac21"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_693.npz",
+          "sha256": "f653883f1916767a3a4e11420b9b0056b1909854b6a38fb33b3f20d7cc9aac21"
+        }
+      ]
+    },
+    {
+      "dot": 700,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_700.npz",
+      "source_sha256": "b39e3cc7611cfc3a0c6f43b09552453fe0b3433d42f242d324b6216ed5249bb7",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_700.npz",
+          "sha256": "b39e3cc7611cfc3a0c6f43b09552453fe0b3433d42f242d324b6216ed5249bb7"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_700.npz",
+          "sha256": "b39e3cc7611cfc3a0c6f43b09552453fe0b3433d42f242d324b6216ed5249bb7"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_700.npz",
+          "sha256": "b39e3cc7611cfc3a0c6f43b09552453fe0b3433d42f242d324b6216ed5249bb7"
+        }
+      ]
+    },
+    {
+      "dot": 707,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_707.npz",
+      "source_sha256": "1027c909d95b0a5adcd51586e2588eeb0a6aa892f0201f42fd2b1f8a24d131b9",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_707.npz",
+          "sha256": "1027c909d95b0a5adcd51586e2588eeb0a6aa892f0201f42fd2b1f8a24d131b9"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_707.npz",
+          "sha256": "1027c909d95b0a5adcd51586e2588eeb0a6aa892f0201f42fd2b1f8a24d131b9"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_707.npz",
+          "sha256": "1027c909d95b0a5adcd51586e2588eeb0a6aa892f0201f42fd2b1f8a24d131b9"
+        }
+      ]
+    },
+    {
+      "dot": 708,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_708.npz",
+      "source_sha256": "e6d85891866d17af803527ff263bf6fd96e7332b150daa64bddce518e846389c",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_708.npz",
+          "sha256": "e6d85891866d17af803527ff263bf6fd96e7332b150daa64bddce518e846389c"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_708.npz",
+          "sha256": "e6d85891866d17af803527ff263bf6fd96e7332b150daa64bddce518e846389c"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_708.npz",
+          "sha256": "e6d85891866d17af803527ff263bf6fd96e7332b150daa64bddce518e846389c"
+        }
+      ]
+    },
+    {
+      "dot": 722,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_722.npz",
+      "source_sha256": "b1bb92b44ed2971e1e73902dd73f40b113804bafd054cf34f0c7ced2383379c0",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_722.npz",
+          "sha256": "b1bb92b44ed2971e1e73902dd73f40b113804bafd054cf34f0c7ced2383379c0"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_722.npz",
+          "sha256": "b1bb92b44ed2971e1e73902dd73f40b113804bafd054cf34f0c7ced2383379c0"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_722.npz",
+          "sha256": "b1bb92b44ed2971e1e73902dd73f40b113804bafd054cf34f0c7ced2383379c0"
+        }
+      ]
+    },
+    {
+      "dot": 729,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_729.npz",
+      "source_sha256": "e98d43f35cff6dbdaebcbaa0b8a5dd5f5326a4102a2fac861a6610a8d7aad0b7",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_729.npz",
+          "sha256": "e98d43f35cff6dbdaebcbaa0b8a5dd5f5326a4102a2fac861a6610a8d7aad0b7"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_729.npz",
+          "sha256": "e98d43f35cff6dbdaebcbaa0b8a5dd5f5326a4102a2fac861a6610a8d7aad0b7"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_729.npz",
+          "sha256": "e98d43f35cff6dbdaebcbaa0b8a5dd5f5326a4102a2fac861a6610a8d7aad0b7"
+        }
+      ]
+    },
+    {
+      "dot": 730,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_730.npz",
+      "source_sha256": "9802c965b59090200852af5edfbe4efdace25ea3633c0c0b2c9cc153bb6ce4e6",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_730.npz",
+          "sha256": "9802c965b59090200852af5edfbe4efdace25ea3633c0c0b2c9cc153bb6ce4e6"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_730.npz",
+          "sha256": "9802c965b59090200852af5edfbe4efdace25ea3633c0c0b2c9cc153bb6ce4e6"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_730.npz",
+          "sha256": "9802c965b59090200852af5edfbe4efdace25ea3633c0c0b2c9cc153bb6ce4e6"
+        }
+      ]
+    },
+    {
+      "dot": 738,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_738.npz",
+      "source_sha256": "b06cda7658484a9c6b0dfa3069e1adc6c7fd581fc3d951f60fb89be03b9fefa6",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_738.npz",
+          "sha256": "b06cda7658484a9c6b0dfa3069e1adc6c7fd581fc3d951f60fb89be03b9fefa6"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_738.npz",
+          "sha256": "b06cda7658484a9c6b0dfa3069e1adc6c7fd581fc3d951f60fb89be03b9fefa6"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_738.npz",
+          "sha256": "b06cda7658484a9c6b0dfa3069e1adc6c7fd581fc3d951f60fb89be03b9fefa6"
+        }
+      ]
+    },
+    {
+      "dot": 741,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_741.npz",
+      "source_sha256": "94f4da8e25e09b7b5ae5eec466a2ad89fc5cd8d1af933136b1291e2c4b80a6ff",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_741.npz",
+          "sha256": "94f4da8e25e09b7b5ae5eec466a2ad89fc5cd8d1af933136b1291e2c4b80a6ff"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_741.npz",
+          "sha256": "94f4da8e25e09b7b5ae5eec466a2ad89fc5cd8d1af933136b1291e2c4b80a6ff"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_741.npz",
+          "sha256": "94f4da8e25e09b7b5ae5eec466a2ad89fc5cd8d1af933136b1291e2c4b80a6ff"
+        }
+      ]
+    },
+    {
+      "dot": 750,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_750.npz",
+      "source_sha256": "3dc0a41e2e0e9dee8e5238353050a454663acf770f31bd46dca98833edfb0718",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_750.npz",
+          "sha256": "3dc0a41e2e0e9dee8e5238353050a454663acf770f31bd46dca98833edfb0718"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_750.npz",
+          "sha256": "3dc0a41e2e0e9dee8e5238353050a454663acf770f31bd46dca98833edfb0718"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_750.npz",
+          "sha256": "3dc0a41e2e0e9dee8e5238353050a454663acf770f31bd46dca98833edfb0718"
+        }
+      ]
+    },
+    {
+      "dot": 770,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_770.npz",
+      "source_sha256": "e9beaa2f10a26ba05e3244e231dd49e86cd51d8aacab38c1e82a81bac29547f0",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_770.npz",
+          "sha256": "e9beaa2f10a26ba05e3244e231dd49e86cd51d8aacab38c1e82a81bac29547f0"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_770.npz",
+          "sha256": "e9beaa2f10a26ba05e3244e231dd49e86cd51d8aacab38c1e82a81bac29547f0"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_770.npz",
+          "sha256": "e9beaa2f10a26ba05e3244e231dd49e86cd51d8aacab38c1e82a81bac29547f0"
+        }
+      ]
+    },
+    {
+      "dot": 779,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_779.npz",
+      "source_sha256": "b6462937009b7ae853bd050adc674a6e8f3dd9768c690b72ef7e068d46cc5ca7",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_779.npz",
+          "sha256": "b6462937009b7ae853bd050adc674a6e8f3dd9768c690b72ef7e068d46cc5ca7"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_779.npz",
+          "sha256": "b6462937009b7ae853bd050adc674a6e8f3dd9768c690b72ef7e068d46cc5ca7"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_779.npz",
+          "sha256": "b6462937009b7ae853bd050adc674a6e8f3dd9768c690b72ef7e068d46cc5ca7"
+        }
+      ]
+    },
+    {
+      "dot": 806,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_806.npz",
+      "source_sha256": "84f91570394db7ba09831d2a0f9cb2172b4ebc12220d487861a70af50783ee7d",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_806.npz",
+          "sha256": "84f91570394db7ba09831d2a0f9cb2172b4ebc12220d487861a70af50783ee7d"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_806.npz",
+          "sha256": "84f91570394db7ba09831d2a0f9cb2172b4ebc12220d487861a70af50783ee7d"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_806.npz",
+          "sha256": "84f91570394db7ba09831d2a0f9cb2172b4ebc12220d487861a70af50783ee7d"
+        }
+      ]
+    },
+    {
+      "dot": 834,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_834.npz",
+      "source_sha256": "bd5cc9a192d02c2aad929c898d023a7e0c8582bffadc3e8aa68b475149857af9",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_834.npz",
+          "sha256": "bd5cc9a192d02c2aad929c898d023a7e0c8582bffadc3e8aa68b475149857af9"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_834.npz",
+          "sha256": "bd5cc9a192d02c2aad929c898d023a7e0c8582bffadc3e8aa68b475149857af9"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_834.npz",
+          "sha256": "bd5cc9a192d02c2aad929c898d023a7e0c8582bffadc3e8aa68b475149857af9"
+        }
+      ]
+    },
+    {
+      "dot": 845,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_845.npz",
+      "source_sha256": "0d028d022006e20a1cf73c89951bf2f88b8130623af38078dfee937ea4c8926a",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_845.npz",
+          "sha256": "0d028d022006e20a1cf73c89951bf2f88b8130623af38078dfee937ea4c8926a"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_845.npz",
+          "sha256": "0d028d022006e20a1cf73c89951bf2f88b8130623af38078dfee937ea4c8926a"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_845.npz",
+          "sha256": "0d028d022006e20a1cf73c89951bf2f88b8130623af38078dfee937ea4c8926a"
+        }
+      ]
+    },
+    {
+      "dot": 846,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_846.npz",
+      "source_sha256": "3e7bc9d2f8c431e2dc942864de30c03e5d5c2e2e8a431d629ec19cc997a8da12",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_846.npz",
+          "sha256": "3e7bc9d2f8c431e2dc942864de30c03e5d5c2e2e8a431d629ec19cc997a8da12"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_846.npz",
+          "sha256": "3e7bc9d2f8c431e2dc942864de30c03e5d5c2e2e8a431d629ec19cc997a8da12"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_846.npz",
+          "sha256": "3e7bc9d2f8c431e2dc942864de30c03e5d5c2e2e8a431d629ec19cc997a8da12"
+        }
+      ]
+    },
+    {
+      "dot": 848,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_848.npz",
+      "source_sha256": "c9cef78943f7859bc257e7e8c495bb8572869d07e698d21a4f7042ea693c017e",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_848.npz",
+          "sha256": "c9cef78943f7859bc257e7e8c495bb8572869d07e698d21a4f7042ea693c017e"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_848.npz",
+          "sha256": "c9cef78943f7859bc257e7e8c495bb8572869d07e698d21a4f7042ea693c017e"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_848.npz",
+          "sha256": "c9cef78943f7859bc257e7e8c495bb8572869d07e698d21a4f7042ea693c017e"
+        }
+      ]
+    },
+    {
+      "dot": 854,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_854.npz",
+      "source_sha256": "bc62c7b976f37a65792eb0041864ab411fd3d2e63d8f5b454cf7749217988d41",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_854.npz",
+          "sha256": "bc62c7b976f37a65792eb0041864ab411fd3d2e63d8f5b454cf7749217988d41"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_854.npz",
+          "sha256": "bc62c7b976f37a65792eb0041864ab411fd3d2e63d8f5b454cf7749217988d41"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_854.npz",
+          "sha256": "bc62c7b976f37a65792eb0041864ab411fd3d2e63d8f5b454cf7749217988d41"
+        }
+      ]
+    },
+    {
+      "dot": 857,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_857.npz",
+      "source_sha256": "c005887d96940d009e0efdbe0c6363b6059900dbacb5b564acb37c2918b2b1ee",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_857.npz",
+          "sha256": "c005887d96940d009e0efdbe0c6363b6059900dbacb5b564acb37c2918b2b1ee"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_857.npz",
+          "sha256": "c005887d96940d009e0efdbe0c6363b6059900dbacb5b564acb37c2918b2b1ee"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_857.npz",
+          "sha256": "c005887d96940d009e0efdbe0c6363b6059900dbacb5b564acb37c2918b2b1ee"
+        }
+      ]
+    },
+    {
+      "dot": 859,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_859.npz",
+      "source_sha256": "738953ae98ff96bd4da593946bf795609b80f6d03d6992de10b3ac19cd7b54db",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_859.npz",
+          "sha256": "738953ae98ff96bd4da593946bf795609b80f6d03d6992de10b3ac19cd7b54db"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_859.npz",
+          "sha256": "738953ae98ff96bd4da593946bf795609b80f6d03d6992de10b3ac19cd7b54db"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_859.npz",
+          "sha256": "738953ae98ff96bd4da593946bf795609b80f6d03d6992de10b3ac19cd7b54db"
+        }
+      ]
+    },
+    {
+      "dot": 872,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_872.npz",
+      "source_sha256": "ef5373850751f5f363c6ab0ee3185aa4f23a3f8caf075c2ef5faa39937cc6c05",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_872.npz",
+          "sha256": "ef5373850751f5f363c6ab0ee3185aa4f23a3f8caf075c2ef5faa39937cc6c05"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_872.npz",
+          "sha256": "ef5373850751f5f363c6ab0ee3185aa4f23a3f8caf075c2ef5faa39937cc6c05"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_872.npz",
+          "sha256": "ef5373850751f5f363c6ab0ee3185aa4f23a3f8caf075c2ef5faa39937cc6c05"
+        }
+      ]
+    },
+    {
+      "dot": 883,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_883.npz",
+      "source_sha256": "bd704d89c20b032105479e105a7e8b8766009ecf7d01531e4e11bdb9f8ba2ebd",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_883.npz",
+          "sha256": "bd704d89c20b032105479e105a7e8b8766009ecf7d01531e4e11bdb9f8ba2ebd"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_883.npz",
+          "sha256": "bd704d89c20b032105479e105a7e8b8766009ecf7d01531e4e11bdb9f8ba2ebd"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_883.npz",
+          "sha256": "bd704d89c20b032105479e105a7e8b8766009ecf7d01531e4e11bdb9f8ba2ebd"
+        }
+      ]
+    },
+    {
+      "dot": 898,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_898.npz",
+      "source_sha256": "49d96309556eee20b55560b6341ee8e032dc7719d15b11f8f7b381e4615a00df",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_898.npz",
+          "sha256": "49d96309556eee20b55560b6341ee8e032dc7719d15b11f8f7b381e4615a00df"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_898.npz",
+          "sha256": "49d96309556eee20b55560b6341ee8e032dc7719d15b11f8f7b381e4615a00df"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_898.npz",
+          "sha256": "49d96309556eee20b55560b6341ee8e032dc7719d15b11f8f7b381e4615a00df"
+        }
+      ]
+    },
+    {
+      "dot": 903,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_903.npz",
+      "source_sha256": "4e4b2aeef964ab2c5edc794ff37bf47a40aba866bcb99ab9fefecd091f023360",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_903.npz",
+          "sha256": "4e4b2aeef964ab2c5edc794ff37bf47a40aba866bcb99ab9fefecd091f023360"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_903.npz",
+          "sha256": "4e4b2aeef964ab2c5edc794ff37bf47a40aba866bcb99ab9fefecd091f023360"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_903.npz",
+          "sha256": "4e4b2aeef964ab2c5edc794ff37bf47a40aba866bcb99ab9fefecd091f023360"
+        }
+      ]
+    },
+    {
+      "dot": 905,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_905.npz",
+      "source_sha256": "5e484a457791a24d8f1850e9be608ccb6381bdf27fa6ef3c3efccaaf04c65a4b",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_905.npz",
+          "sha256": "5e484a457791a24d8f1850e9be608ccb6381bdf27fa6ef3c3efccaaf04c65a4b"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_905.npz",
+          "sha256": "5e484a457791a24d8f1850e9be608ccb6381bdf27fa6ef3c3efccaaf04c65a4b"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_905.npz",
+          "sha256": "5e484a457791a24d8f1850e9be608ccb6381bdf27fa6ef3c3efccaaf04c65a4b"
+        }
+      ]
+    },
+    {
+      "dot": 945,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_945.npz",
+      "source_sha256": "021c27070504c2bc98848ca9f4507b154c213fa58e8f3ad18aab8b3bbb4160e2",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_945.npz",
+          "sha256": "021c27070504c2bc98848ca9f4507b154c213fa58e8f3ad18aab8b3bbb4160e2"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_945.npz",
+          "sha256": "021c27070504c2bc98848ca9f4507b154c213fa58e8f3ad18aab8b3bbb4160e2"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_945.npz",
+          "sha256": "021c27070504c2bc98848ca9f4507b154c213fa58e8f3ad18aab8b3bbb4160e2"
+        }
+      ]
+    },
+    {
+      "dot": 952,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_952.npz",
+      "source_sha256": "c770192e641f9e08488d560158410ca1c04eebfcb47b52409207e528375fa3d4",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_952.npz",
+          "sha256": "c770192e641f9e08488d560158410ca1c04eebfcb47b52409207e528375fa3d4"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_952.npz",
+          "sha256": "c770192e641f9e08488d560158410ca1c04eebfcb47b52409207e528375fa3d4"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_952.npz",
+          "sha256": "c770192e641f9e08488d560158410ca1c04eebfcb47b52409207e528375fa3d4"
+        }
+      ]
+    },
+    {
+      "dot": 958,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_958.npz",
+      "source_sha256": "de8b1f306d80f0d8dd0412b5186dc77f72c7ae645df0dea9a967edd943a511d7",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_958.npz",
+          "sha256": "de8b1f306d80f0d8dd0412b5186dc77f72c7ae645df0dea9a967edd943a511d7"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_958.npz",
+          "sha256": "de8b1f306d80f0d8dd0412b5186dc77f72c7ae645df0dea9a967edd943a511d7"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_958.npz",
+          "sha256": "de8b1f306d80f0d8dd0412b5186dc77f72c7ae645df0dea9a967edd943a511d7"
+        }
+      ]
+    },
+    {
+      "dot": 981,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_981.npz",
+      "source_sha256": "debc5cac388c3909e509cc435902048fa71f2b4cac43fbc98c34c13ce9267a5e",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_981.npz",
+          "sha256": "debc5cac388c3909e509cc435902048fa71f2b4cac43fbc98c34c13ce9267a5e"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_981.npz",
+          "sha256": "debc5cac388c3909e509cc435902048fa71f2b4cac43fbc98c34c13ce9267a5e"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_981.npz",
+          "sha256": "debc5cac388c3909e509cc435902048fa71f2b4cac43fbc98c34c13ce9267a5e"
+        }
+      ]
+    },
+    {
+      "dot": 985,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_985.npz",
+      "source_sha256": "0dcd2413689ce2d71b5448ff336bec459b451da7651ce518722739a699bedc64",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_985.npz",
+          "sha256": "0dcd2413689ce2d71b5448ff336bec459b451da7651ce518722739a699bedc64"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_985.npz",
+          "sha256": "0dcd2413689ce2d71b5448ff336bec459b451da7651ce518722739a699bedc64"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_985.npz",
+          "sha256": "0dcd2413689ce2d71b5448ff336bec459b451da7651ce518722739a699bedc64"
+        }
+      ]
+    },
+    {
+      "dot": 986,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_986.npz",
+      "source_sha256": "c85c3558d6a056e5736e0a6222628efa3292792960a4a1e7fe7ba8181cb70711",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_986.npz",
+          "sha256": "c85c3558d6a056e5736e0a6222628efa3292792960a4a1e7fe7ba8181cb70711"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_986.npz",
+          "sha256": "c85c3558d6a056e5736e0a6222628efa3292792960a4a1e7fe7ba8181cb70711"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_986.npz",
+          "sha256": "c85c3558d6a056e5736e0a6222628efa3292792960a4a1e7fe7ba8181cb70711"
+        }
+      ]
+    },
+    {
+      "dot": 989,
+      "source": "/media/nm/Fast Drive/comp0245-golden11109/overnight_20261105/random_start_data/expert/test/run_989.npz",
+      "source_sha256": "2326a458f98bbf93a7100e504e67d4575f5006bec98db46368546c4dab9e2221",
+      "copies": [
+        {
+          "sensor_seed": 7,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_recovery_reserved_recording_adapter_v1/data/expert/test/run_989.npz",
+          "sha256": "2326a458f98bbf93a7100e504e67d4575f5006bec98db46368546c4dab9e2221"
+        },
+        {
+          "sensor_seed": 1,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed1_v1/data/expert/test/run_989.npz",
+          "sha256": "2326a458f98bbf93a7100e504e67d4575f5006bec98db46368546c4dab9e2221"
+        },
+        {
+          "sensor_seed": 2,
+          "path": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/learned_geometry_branch/stack_reserved_seed2_v1/data/expert/test/run_989.npz",
+          "sha256": "2326a458f98bbf93a7100e504e67d4575f5006bec98db46368546c4dab9e2221"
+        }
+      ]
+    }
+  ],
+  "unique_targets": 100,
+  "noise_realizations": 3
+}

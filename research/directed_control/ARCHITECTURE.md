@@ -31,6 +31,10 @@ Canonical success requires PARK, STOP and true gripper distance no more than 10 
 
 The disturbance stack contains encoder noise, damping, elasticity, additional motor inertia, a nominal 3 ms measurement delay and random starting poses. It excludes occlusion and bursty recording loss. Camera delivery occurs on the 30 Hz clock, so capture age can be 33 or 34 ms despite a nominal 3 ms delay. Any timestamp correction must use only causal delivered sensor data.
 
+The frozen disturbance candidate uses Cartesian gain 2.5, maximum reference speed 0.5 rad/s and Cartesian damping 40. Identified derivative gains on joints 1, 3, 5 and 7 are multiplied by 1/16, and those on joints 4 and 6 by 1/2; joint 2 retains its identified gain. These are validation-selected feedback changes, not additional coefficient training. The arm's accepted camera point is projected from capture to delivery using a constant-twist approximation from delivered wheel speeds, with wheel radius 0.11 m and track width 0.66 m. The driving tracker is unchanged.
+
+The disturbance test plan freezes one model and evaluates the same 100 recorded random-start targets under sensor-noise seeds 7, 1 and 2. Driving training seed remains 7; geometry and torque fits are deterministic. The repeated noise trials do not constitute three training seeds or 300 independent target locations. Missing STOP remains failure even when the final true distance happens to be below 10 mm.
+
 Requested torque is clipped before motor effects are added. The native field `applied_arm_torque` records that clipped request, while `sent_arm_torque` includes the motor correction. A request inside 30 N m does not guarantee the final simulated torque remains inside that limit.
 
 ## Results and reproducibility
