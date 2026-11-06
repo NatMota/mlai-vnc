@@ -11,6 +11,8 @@ Learned version   the saved model with those calculations replaced by parking, t
 Sensor-only       a harder extension with no true positions, using a wrist camera and encoders
 ```
 
+`ITERATIONS.md` lists every iteration in order, with its result and the switches that step into it.
+
 The submission has two folders:
 
 ```
