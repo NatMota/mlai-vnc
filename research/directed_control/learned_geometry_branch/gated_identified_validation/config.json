@@ -1,0 +1,16 @@
+{
+  "ids": [
+    45,
+    80
+  ],
+  "camera": "calibrated_arm_only",
+  "renderer": "egl",
+  "native_sha256": "4fcac465ea0f2a92596a8b73a2dfa1b2f5a2183215f8c91412407f095f92cd35",
+  "baseline_sha256": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+  "position_sha256": "d394c21e86d0f499e569344b8ad6137b8d6ae11cd72cc8ee82921c92e8b0792a",
+  "torque_sha256": "59bd66fc6cef574bc3446be0628d159a6ff2036c4433bb96d04d10a76ea23f94",
+  "runtime_sha256": "13900f2d70cb82b7277ead844ce4304995df24998b3839502348364d0b7aef61",
+  "full_run_sha256": "b964f8824a27bd1950203123b29aea1b0ff86f44157cc393262a9a345113fd62",
+  "envelope_sha256": "4743e2619fcbe1518791221caf36036bffffa079aade5e5b9862ceac12f0b5c2",
+  "test": false
+}

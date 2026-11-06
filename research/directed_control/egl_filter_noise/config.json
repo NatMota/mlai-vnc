@@ -1,0 +1,28 @@
+{
+  "names": [
+    "baseline",
+    "velocity_filter5ms",
+    "velocity_filter10ms"
+  ],
+  "ids": [
+    6,
+    16,
+    23,
+    45,
+    55,
+    80
+  ],
+  "condition": {
+    "encoder_noise_sd": 0.0001,
+    "sensor_seed": 7
+  },
+  "renderer": "egl",
+  "jobs": 2,
+  "selection": "validation-only exploratory fixed candidates; no optimizer or test data",
+  "native_sha": "4fcac465ea0f2a92596a8b73a2dfa1b2f5a2183215f8c91412407f095f92cd35",
+  "model_sha": {
+    "baseline": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+    "velocity_filter5ms": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+    "velocity_filter10ms": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3"
+  }
+}

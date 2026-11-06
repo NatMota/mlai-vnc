@@ -1,0 +1,2801 @@
+{
+  "scope": "Metrics retained for executable notebook; full trajectories and images remain in separate recorded artifacts.",
+  "files": [
+    {
+      "path": "svd_geometry_shadow_audit.json",
+      "original_sha256": "4d4cfb8c7180eb404b79f5e1a87d8d0552cca4e271ca31ce009e3ead12ebc68e",
+      "published_sha256": "4d4cfb8c7180eb404b79f5e1a87d8d0552cca4e271ca31ce009e3ead12ebc68e",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_damping40_targeted3/summary.json",
+      "original_sha256": "57055f762d7af7a3bbf47222c5e538c3398cf5dfb95729f45ff707ec764541e8",
+      "published_sha256": "57055f762d7af7a3bbf47222c5e538c3398cf5dfb95729f45ff707ec764541e8",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_damping40_targeted3/run_438.json",
+      "original_sha256": "95b8e4088a98b14b04adbd1598a84499886f96c3cb9dbaec5ff57853bff8e3fb",
+      "published_sha256": "c717e8052d57186e7d9d26ec39256e69548e7d19b1e8a08a4766a0cfca13344b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "clean_damping40_targeted3/config.json",
+      "original_sha256": "d613fea29fed430609779b6e79dfa075ab1818259db0f8628e39ab377e53e10c",
+      "published_sha256": "d613fea29fed430609779b6e79dfa075ab1818259db0f8628e39ab377e53e10c",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_damping40_targeted3/run_45.json",
+      "original_sha256": "3372e4efef96cddd69d5d5e8c2e41cd5d3e4f7bfa33b0b458b7bc4f89d54c124",
+      "published_sha256": "9403541afde285c09cb7a2922aaffa5d4817f3813265da372793c03da42e4318",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "clean_damping40_targeted3/run_257.json",
+      "original_sha256": "dcf0131a33d0e78db08244938df323075248f78e7787ea2f1a68d24ebfe509ee",
+      "published_sha256": "f22c47344043b128841cbe57bc102c85fde63fab73d5927f33a79e71e9e2a443",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "clean_damping40_targeted3/completion.json",
+      "original_sha256": "c99c70b9ef3948e68892b18225f78a822fb8390dff32481ee4378a933532c0d7",
+      "published_sha256": "c99c70b9ef3948e68892b18225f78a822fb8390dff32481ee4378a933532c0d7",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_gain25_cap1_validation100/summary.json",
+      "original_sha256": "0d9edcf9bd9904d32d9f8f48d4530a75a485b91f7d1c6e21f3127135e61ac6ba",
+      "published_sha256": "0d9edcf9bd9904d32d9f8f48d4530a75a485b91f7d1c6e21f3127135e61ac6ba",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_gain25_cap1_validation100/config.json",
+      "original_sha256": "83c19b10343568a95e48fadc46619e6a7eaf476d0320484866a1556496bad8b2",
+      "published_sha256": "83c19b10343568a95e48fadc46619e6a7eaf476d0320484866a1556496bad8b2",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_gain25_cap1_validation100/completion.json",
+      "original_sha256": "d0faffab3e0b380deb9e55e00d1642a7a88a613beed7316be65f293584736661",
+      "published_sha256": "d0faffab3e0b380deb9e55e00d1642a7a88a613beed7316be65f293584736661",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_gain6_cap1_damping20_probe/summary.json",
+      "original_sha256": "3b7a1701730abdaa712c6861bcd98e3d6e2d272bace4b31a7336412f8d4f6807",
+      "published_sha256": "3b7a1701730abdaa712c6861bcd98e3d6e2d272bace4b31a7336412f8d4f6807",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_gain6_cap1_damping20_probe/completion.json",
+      "original_sha256": "3588a6dd9ee118d80f6e137b4c892927010cc6c48925840b26e877ce5546dd4b",
+      "published_sha256": "f56a60f962c4263d751476ba44d99dbc86102619f920958e78db759c75ee1fc6",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_gain6_cap1_probe/summary.json",
+      "original_sha256": "ac26f0b5bdb24e8ac23515806a337376fc8afd25b8c82976963e92f0cfa27cb2",
+      "published_sha256": "ac26f0b5bdb24e8ac23515806a337376fc8afd25b8c82976963e92f0cfa27cb2",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_gain6_cap1_probe/completion.json",
+      "original_sha256": "3588a6dd9ee118d80f6e137b4c892927010cc6c48925840b26e877ce5546dd4b",
+      "published_sha256": "f56a60f962c4263d751476ba44d99dbc86102619f920958e78db759c75ee1fc6",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_gain6_damping40_validation100/summary.json",
+      "original_sha256": "ac9c535dd931594eb9ef1e8107b0ab8b2d13693c2018832b63f1a08c29639189",
+      "published_sha256": "ac9c535dd931594eb9ef1e8107b0ab8b2d13693c2018832b63f1a08c29639189",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_gain6_damping40_validation100/run_273.json",
+      "original_sha256": "8aaedf05da3679f1033f71b1ee3cb20b81ccc196f213a7a44533ff50ad89d5dc",
+      "published_sha256": "19313a42e1298efb5d8145904987fc725dedc721bb844db795f6fbfc6df3bf38",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "clean_gain6_damping40_validation100/config.json",
+      "original_sha256": "689cfa8b9e6e3a19a1deb7e6613c7b9752cf9193a51d9dfb4c75a88471e82d77",
+      "published_sha256": "689cfa8b9e6e3a19a1deb7e6613c7b9752cf9193a51d9dfb4c75a88471e82d77",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_gain6_damping40_validation100/run_159.json",
+      "original_sha256": "720d427a82b1ffd32f6421e8959eadc79ce71caa8c037f83c67f2e0871e754fb",
+      "published_sha256": "d0c3e7e778e38c137982db5d9e21a0b8d8e0849c0df4be018b940b807d23257e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "clean_gain6_damping40_validation100/completion.json",
+      "original_sha256": "d14709ad6e724bfe1b14f6c4e3ca0bc8b69587528d24f56b03a42f83890f9fe8",
+      "published_sha256": "d14709ad6e724bfe1b14f6c4e3ca0bc8b69587528d24f56b03a42f83890f9fe8",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_expanded12/summary.json",
+      "original_sha256": "8c3bce2393ff88d387a9d77f9c13da5e6519254b2771c11d048872aff2e39b32",
+      "published_sha256": "8c3bce2393ff88d387a9d77f9c13da5e6519254b2771c11d048872aff2e39b32",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_expanded12/config.json",
+      "original_sha256": "aabc723712a2d9ade311193e0ae5a0747f607faaa84c6d3352b3f957b92511f9",
+      "published_sha256": "aabc723712a2d9ade311193e0ae5a0747f607faaa84c6d3352b3f957b92511f9",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_expanded12/completion.json",
+      "original_sha256": "8841cbc18efb4d611035b3de85496cbde4b71b42fe16c4e17ee2f96c6678a23e",
+      "published_sha256": "8841cbc18efb4d611035b3de85496cbde4b71b42fe16c4e17ee2f96c6678a23e",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_targeted3/summary.json",
+      "original_sha256": "3060df44d2aca036d91d1345c7721ed57e508278d1590e536790fb720fd96993",
+      "published_sha256": "3060df44d2aca036d91d1345c7721ed57e508278d1590e536790fb720fd96993",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_targeted3/run_273.json",
+      "original_sha256": "359c6b2410e7c6c67620edd7e7e1704fd760cb9c99cecba2f10d3aff9ff2146e",
+      "published_sha256": "5c20d81cf8f33682b48396767a9649ce47a654827dccf8323ef85e88ae260af0",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "clean_reference_recovery_targeted3/config.json",
+      "original_sha256": "d3d5d76d6bfbea58dc23b8fdd4950a2349028230cdf4072a8a42639da93231b9",
+      "published_sha256": "d3d5d76d6bfbea58dc23b8fdd4950a2349028230cdf4072a8a42639da93231b9",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_targeted3/run_257.json",
+      "original_sha256": "5f0fe4424bd2462bb2bb1ef111554c98c3b7e37598316bb77eaed54d94b22c82",
+      "published_sha256": "f46fa7e18c9fd4ccf1c6d65f6032f50e20018f00f4204ff8b2c4af873e52eee7",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "clean_reference_recovery_targeted3/run_159.json",
+      "original_sha256": "3d4fbdd0bed9774be6e3524cdd565120effc9a1d65e3002080f0f84eca7359fa",
+      "published_sha256": "2a67d0eacafa7b29d823ff026ed689a1f1d04e0ed9808080e59eb34d592297ce",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "clean_reference_recovery_targeted3/completion.json",
+      "original_sha256": "c99c70b9ef3948e68892b18225f78a822fb8390dff32481ee4378a933532c0d7",
+      "published_sha256": "c99c70b9ef3948e68892b18225f78a822fb8390dff32481ee4378a933532c0d7",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_test100/summary.json",
+      "original_sha256": "ca9798a4695d94d62b985692dcc4e2beb79784d31c1aeb38a850fe66a383f8d4",
+      "published_sha256": "ca9798a4695d94d62b985692dcc4e2beb79784d31c1aeb38a850fe66a383f8d4",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_test100/config.json",
+      "original_sha256": "e0dc47ed356b92ac1d475137df77b46b455ffd4517e2cb34c43fc7aafa5ac6bc",
+      "published_sha256": "e0dc47ed356b92ac1d475137df77b46b455ffd4517e2cb34c43fc7aafa5ac6bc",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_test100/motion_audit.json",
+      "original_sha256": "869d291616220cedd7a84f48dd33bf9147cf1cb4a602a9dc8f3ee62bab42e3ee",
+      "published_sha256": "869d291616220cedd7a84f48dd33bf9147cf1cb4a602a9dc8f3ee62bab42e3ee",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_test100/completion.json",
+      "original_sha256": "d14709ad6e724bfe1b14f6c4e3ca0bc8b69587528d24f56b03a42f83890f9fe8",
+      "published_sha256": "d14709ad6e724bfe1b14f6c4e3ca0bc8b69587528d24f56b03a42f83890f9fe8",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_validation100/summary.json",
+      "original_sha256": "561c0e6f42d124532d6a8048dfbb40ab927c3e3fe666bd6bc7e087ca79bfc4f6",
+      "published_sha256": "561c0e6f42d124532d6a8048dfbb40ab927c3e3fe666bd6bc7e087ca79bfc4f6",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_validation100/config.json",
+      "original_sha256": "832ab756a569e44fa1501b5b5e1bfd996d16340aea0097ed85dceb62e1cc8df9",
+      "published_sha256": "832ab756a569e44fa1501b5b5e1bfd996d16340aea0097ed85dceb62e1cc8df9",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_validation100/motion_audit.json",
+      "original_sha256": "d68e852e11e54b60872bdd6591b26dc750a1396e463fec5f6a96bfd77adc1a32",
+      "published_sha256": "d68e852e11e54b60872bdd6591b26dc750a1396e463fec5f6a96bfd77adc1a32",
+      "omitted_fields": []
+    },
+    {
+      "path": "clean_reference_recovery_validation100/completion.json",
+      "original_sha256": "d14709ad6e724bfe1b14f6c4e3ca0bc8b69587528d24f56b03a42f83890f9fe8",
+      "published_sha256": "d14709ad6e724bfe1b14f6c4e3ca0bc8b69587528d24f56b03a42f83890f9fe8",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_arch01/summary.json",
+      "original_sha256": "7c6c58462a28a02af77511f02b22ea015fcafb81b61b45101adf853f072c3594",
+      "published_sha256": "59f78019a47c9306ce536673b86cd8207a17402c07c2229cb4cdd8a6059b2810",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_arch01/config.json",
+      "original_sha256": "697df8aee2d771695d69198b2e14505cd77575b648ccd2b424c8edc4b52691f3",
+      "published_sha256": "d1f35a9dcac3040087807793c703ff02c8576f6e36c14d25fbbdb3e0c3a3e97c",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_arch01/completion.json",
+      "original_sha256": "41f8e6d7750c50b7128f63b67881dd03febd7cdb18c798d1bfd544d2c06700d9",
+      "published_sha256": "638a409e6ed78cf0b4fc6772267087eae45070fb9ee804884decd24b23afdab2",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_batch01/summary.json",
+      "original_sha256": "8f289d0e88ed189abd4ba1fbf7ff6f3bcc21117098f2b43443411d96730e714b",
+      "published_sha256": "122a3abb1cf1bb75a6dbb33852770d3a076fe65de8e866f507f8d5874019cadd",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_batch01/config.json",
+      "original_sha256": "3e3308554b450dc9ec7c0ce91962ad47564687db0e84b46c40b51f2afeeb4e7d",
+      "published_sha256": "3ce4b459394e3cd4f0f33157f8c9f83b252dde4474addbf6e9fe8f8687ada7a2",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_batch01/completion.json",
+      "original_sha256": "19ffc89c7e9b999e4a0fb0dc54efd50b3bfca7ea138914e41c24121b7dcc6017",
+      "published_sha256": "fe353fd48faee80d5ca9ceaa81cc82036e95953557a1e63ef0f2f62eb826b9d7",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_batch01/baseline/run_80.json",
+      "original_sha256": "cadb8d42bd3b17dd4b71dc5080ba66a4e0ea8c9e2a6eb4e59498502a9f9eca2b",
+      "published_sha256": "ae6acf3a3aaf7003223cfc9a39b068b1554b084b054576822007b9898508731e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "egl_batch01/baseline/run_55.json",
+      "original_sha256": "6dd9a2045b43bb0dc2ee1531d45db1c9b0973c12b3708a03871579df139c52bd",
+      "published_sha256": "f9e98709e3b62fb0e486d082c3b6c3b6d071f7735fa906703e54e853d6e91f92",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "egl_batch01/baseline/run_23.json",
+      "original_sha256": "1b58d77209025aa852ef4f78e55a06fa7cd815d674d359692a63e37c3308f3df",
+      "published_sha256": "5da0e20a8105be70c9ce1d3154e6f453e67e79048ac1a101d356ac9fd0f20ad5",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "egl_batch01/baseline/run_45.json",
+      "original_sha256": "e7b092249d57f1952b3b0e1b9a49c0a10bff7cf9043652c326f8f73c6beedbbf",
+      "published_sha256": "bebd8aed85f2f7009be14d0f0f9f12a039c6f3d9f13a9b82bd97bf693c90cf89",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "egl_batch01/baseline/run_6.json",
+      "original_sha256": "8429fe8541bd332a6d8d049d486a7725b982d2d34d4bcde7015d2ae93b72bf45",
+      "published_sha256": "d7aa56a94329fde56c7f8076d15eab843eae1562a8e7d35d86dd0235ce1a5439",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "egl_batch01/baseline/run_16.json",
+      "original_sha256": "8e79a54917e497c980464a4ec50965a88b1d9adbe9b7cd1465564c2cc501c581",
+      "published_sha256": "18ab9f1de2b1ea0dc1eb0621bbd79a182b860f4203953a4ba1406112d304c0a6",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "egl_batch02/summary.json",
+      "original_sha256": "efbf96b15ddbcb817949e1ab45d7599cd6524e0476aed115e625cf0e31769885",
+      "published_sha256": "001a7b274688c3a3abd4fe614279d110487d525de4cb53218665620d66473dea",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_batch02/config.json",
+      "original_sha256": "cb2bee5eec094ca96886a408584ade4896c870672b15e9997c20b2829af0d806",
+      "published_sha256": "2e59b9a4e69a7492084985b84edba0eadabd0394c2d0b6b8b5786031078341e1",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_batch02/completion.json",
+      "original_sha256": "2b2299a1fbfbc72627a55b7eb08f39fa636600842c18cb9aea7b6a92a3138237",
+      "published_sha256": "11a5cc8e269f3ba53126d9100733d96fe54b013ebf624197c50e884d76a36928",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_filter_clean/summary.json",
+      "original_sha256": "b65433ade077fca78cd36970178951081e3fe182358f2e4e63091ba70668eb24",
+      "published_sha256": "bf54c03cb1e24352fbfcca323056a18bc2a288a050170218d8f33e5eaa7c1b87",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_filter_clean/config.json",
+      "original_sha256": "7934eddeae1b9d225a57d4d9c17211d1290688722fd114a92271f00a07862e40",
+      "published_sha256": "68cdcc88082be207cdc83908ddb7826d6a4a3e8c0525add7bab735f365f6a25b",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_filter_clean/completion.json",
+      "original_sha256": "f1bef7fc7eacd3ecda62f6fbde3bdb888ee0bfcdc9340999f1dc0612efaef1c0",
+      "published_sha256": "1c83fd0d34b0b3e5f971ddba67615f35ee55d3dd12f334351b0e54572b2fcd6e",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_filter_noise/summary.json",
+      "original_sha256": "7fa2befcbccf6089b6235c01a57b8ade1a78aa4c3fc8015f9c1d83e191ea6115",
+      "published_sha256": "c81643830e6761bccd03d5998a205adb2859b3a6d5bfae1f646c570d554935b9",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_filter_noise/config.json",
+      "original_sha256": "7dd6655685b1021e35573db7bae350fc734c1e6cba4ebc90862ad3f9be88e1c3",
+      "published_sha256": "c81964a462ac5a9222d2832aacca88c9f872a4f512a0f37e263151496d4bbae0",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_filter_noise/completion.json",
+      "original_sha256": "7a1562c83d42bad85524cb1af9eedb360605ac8012872812e8c91f7b930577c8",
+      "published_sha256": "35676d54e95375984416b9f7f1c93c19efe6344f7f0a9e80d4f80b478d19971a",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_phase125_broad20/summary.json",
+      "original_sha256": "ec1783797b9188d8a62aa1aa6a00287645cff230dc69ff29752a3da29e58dbc4",
+      "published_sha256": "093a4a7aa69d38f8875c974a6675d253d6f09c3a6ac0cc77420b37498565e8ff",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_phase125_broad20/config.json",
+      "original_sha256": "bafa9d66dbaa6422d6be263cc681db78afb4ab18a0865ac7301a41a64c98d918",
+      "published_sha256": "6aa54833f92a40eba10a34fa556562fa070e9f32a96283292ba50ba559fe0a62",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_phase125_broad20/completion.json",
+      "original_sha256": "64d7b56da9821349ea5a8111db012d1a1d232c6b7092ecc690446c0b943aeac1",
+      "published_sha256": "e74002a8b0c04288a8b40c55452f706c328d871d610602367b2d97e5b96a6520",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_sensor01/summary.json",
+      "original_sha256": "a0887255c9cea635cc6317c253b598f9dec76481a2aa421e76cbb70276d76fed",
+      "published_sha256": "da283d9eaf57ba4fb2499115e7dd0cbf61655d96a4b71447e913a2eb3e558be9",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_sensor01/config.json",
+      "original_sha256": "78c66965fcd2bb55ea8fcc46f6bdbf9f2883b07be11253ba6ace00f8c3155f45",
+      "published_sha256": "aac4d83ba6374cb22ffe3a140fd0b9336453370493c35b84dc53720947f616da",
+      "omitted_fields": []
+    },
+    {
+      "path": "egl_sensor01/completion.json",
+      "original_sha256": "5c24036479db3189a64c706714d95fa20d9df7bc0a2b6bab31538d5fd432b42d",
+      "published_sha256": "e8ab1d09915ac1be35a505a68059d2690bb2b8063b54333bcb5d392d8a64604a",
+      "omitted_fields": []
+    },
+    {
+      "path": "identified_torque_training/summary.json",
+      "original_sha256": "641a5707455e15a58f94ea5f367cdbda6893959c6d7b54f636b31c58c3725e7c",
+      "published_sha256": "641a5707455e15a58f94ea5f367cdbda6893959c6d7b54f636b31c58c3725e7c",
+      "omitted_fields": []
+    },
+    {
+      "path": "identified_torque_training/config.json",
+      "original_sha256": "060d6744239f7ad03460e667bf3e8b1af426d0531bd59827c85e315ad22796aa",
+      "published_sha256": "060d6744239f7ad03460e667bf3e8b1af426d0531bd59827c85e315ad22796aa",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/completion.json",
+      "original_sha256": "a83f9a0779b3a054fc79ff5925435c9ef41b2616981d783a19c598a296f26fa9",
+      "published_sha256": "a83f9a0779b3a054fc79ff5925435c9ef41b2616981d783a19c598a296f26fa9",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/calibrated_validation/summary.json",
+      "original_sha256": "ef45ea9d23664062c9edf7e7136dfd6fb8c0f4cd7a00c8fbd9703b1ac5d5696e",
+      "published_sha256": "2b12d05f982d256cc82ad11b8f26f292e3c72f742c46e1d5ddb8780ff59ee526",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/calibrated_validation/run_80.json",
+      "original_sha256": "ea26d01906df97deb83be9fb552cbcf98a21336de6dfa51cd27f0d704c5f8f41",
+      "published_sha256": "be9c441b49fc7c9a7c46378d1d636ddbe6516ae8e0dee07c979ca1e2a62b5d28",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/calibrated_validation/run_55.json",
+      "original_sha256": "f88f2c9786c651a42c10e9dd0f695326585f6c7b317e5b26b1e1f2648beef91d",
+      "published_sha256": "45178a024588835a18d2fb44360d48739b00d7dcf893433b169850dead0ddaa3",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/calibrated_validation/run_23.json",
+      "original_sha256": "a6fc1bac1759dc79ba93ca1205ba3eef22b8365b34917133d3724656fd08fe1f",
+      "published_sha256": "62a547d305f706780479a8db4ac8f6542489c44e1d9fb29c642469a1fb9c8c2e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/calibrated_validation/config.json",
+      "original_sha256": "7366f17be91770a7d831c79758625e10e99e933f1559f1b313e3acf7671359c5",
+      "published_sha256": "69572e3c7a0c3ebb71172a7624f5c2795fe31fee092fcc9ba6fcbb3106f88a8f",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/calibrated_validation/run_45.json",
+      "original_sha256": "5b4b58c154e1e1f4dce4bd1e7729aedcf04a9b9cd673a6cbfdc2cf8359e35a72",
+      "published_sha256": "76d07994286a8d56aa949526aa2f8c00263b181a0dd990e1cbf0c9f8ce993a2e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/calibrated_validation/run_6.json",
+      "original_sha256": "785d895732bcfd3aec640d66cf78660fa4718d4084159d6bf544a43bd0c87fb9",
+      "published_sha256": "cf39afa486e26afb71e4e749160b1716c5b79b958774eaa8a62b16ad56e0bb93",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/calibrated_validation/run_16.json",
+      "original_sha256": "dd158a1b6abe9d6e9b865b7fd93287bbf5d5c1f9f6e039d7047330e1f54377ea",
+      "published_sha256": "5bcb3818d1c104a29249ede52f159962323b31a3de7856ace35857ed90b7b0a1",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/calibrated_validation/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/envelope_calibrated_validation/summary.json",
+      "original_sha256": "c179b53cc00ee119606f0c1d4493e67ecdd77260ae601bf075c786f9c4e6da21",
+      "published_sha256": "52e8526694b3baef455bd3b4673fe1b40696e8c83041d25a9ace331f4c75a0f8",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/envelope_calibrated_validation/run_80.json",
+      "original_sha256": "b4341e6c3c00adc4180be812b02847cd62e2fe18f572f044831fc3763819c1ff",
+      "published_sha256": "6b0f267e6a4c0716d322f77af0885d2032e892da81ccd3d66456869440cb51fb",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_calibrated_validation/run_55.json",
+      "original_sha256": "cbd8ecdd0fca0d1926ac0a32b4c0659692f36107bff420edd49c5e99d00c7b07",
+      "published_sha256": "df635143235c292c9e7ecde40552540181513d54bcd6aacaebeb287530e0eba3",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_calibrated_validation/run_23.json",
+      "original_sha256": "6a868243a2c1b0691e76bce3413aa5e158a02b59b3f5335523aa779ca1454138",
+      "published_sha256": "9d95871f862703b3afdb6f59ed534d6c7ce6d00202aee5219a63f637ee9d48df",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_calibrated_validation/config.json",
+      "original_sha256": "5345c1cec4343a9e7f47141fbd90faccb961b6e7851800891b191cb6d551e1b3",
+      "published_sha256": "d08a83c9e61044d0ce82417c53a02b333de58b634eb5ce6ae6b21bdf87fcf3b2",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/envelope_calibrated_validation/run_45.json",
+      "original_sha256": "18abcd969969acbb33b73ab0316961f05bc82feefd442be0971a3bbc314b68cf",
+      "published_sha256": "f61ab5fbbc852c4dc6fa93f9c31791b79ec0f83884ee1aa1cff24d90fed9bed1",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_calibrated_validation/run_6.json",
+      "original_sha256": "00c08a40ee8521e1e7a55b8576c7c0f3ea05cf94661a27f6bae00e769eeb8ef1",
+      "published_sha256": "031c9bafdcfb99f8266c7343dd515f3077ff96a4c07890dcb64fd715686243be",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_calibrated_validation/run_16.json",
+      "original_sha256": "97c7066e750479d67dac139dfa167b07d433c41d612b0cfe37585ae22ab2d0b1",
+      "published_sha256": "752faa55458bc7bb9dddd4d94a03ee9061b5e7771ab6e99d538ad2ce49c34356",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_calibrated_validation/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/envelope_original_validation/summary.json",
+      "original_sha256": "7ef3af85b88c7482ac19051570e53961c1ad3ba06460b95e84f457186b16c812",
+      "published_sha256": "7e380b2befb18ce58add7e0fc352baf3b2e1fd1b49b9bd84ac08b18703ac0e91",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/envelope_original_validation/run_80.json",
+      "original_sha256": "b103bd814ae680756284da112df96b2de0f0eec88a51a7a0bbb60484df39ccd0",
+      "published_sha256": "e5479326f8456448334a21a10c3407768ad5c8193ccbfc90c6eff6475d5e0411",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_original_validation/run_55.json",
+      "original_sha256": "7866a810b9c97d8f6ac7c07ef4962d4d9f5508708aa865bf2da869b38d570236",
+      "published_sha256": "b0b8199a227400dc4979f0c63197c47c5448713dd28680603c453139d16d4db1",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_original_validation/run_23.json",
+      "original_sha256": "c6c6dee3a82788c12ed853ab9cb21aee84f04b85cd338edadc791762f4e62c5a",
+      "published_sha256": "30adb819b5d45163dab754b092d83b200ed4d3258f547c36bd3455a74a497715",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_original_validation/config.json",
+      "original_sha256": "cd2e17218622b4a759b91793fa09b2d132534b0332594d188d7295ab805cc21a",
+      "published_sha256": "eb900f5dbb5a6fd6f54c0c9c86d791fa15953e6749a4f3762003bedd8cb69a82",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/envelope_original_validation/run_45.json",
+      "original_sha256": "82cfc282e9a34de61cf47adb6d314784ed74fc37adb905ce55a0cdec3fd9036d",
+      "published_sha256": "2b2cd5952a5bfee03eb8cc8b0a7e144ad37d202abd1573aba4983edae45614ca",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_original_validation/run_6.json",
+      "original_sha256": "c69df802e8e14b1cdb9976cb17bb8542de4faaa2b19cf5fbb7f3e72e3b0187be",
+      "published_sha256": "f42414a8419f9db2ceb6662c0265a143df6d3b163edcd95edce0ad6aeedd48bd",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_original_validation/run_16.json",
+      "original_sha256": "7b33085c05fd30c92b44c2788f944b8a2364460a48d0e5a8647e3b8f83acc659",
+      "published_sha256": "63c481754696190758e482c63da843d03724ccc44ec7d1751af896d48b63a442",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/envelope_original_validation/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/filtered6_original_validation/summary.json",
+      "original_sha256": "5a427f6f59e64ecdcc09b81f0ad5dd3e8531b30cb907c18390451aeb288c0f4a",
+      "published_sha256": "416ed670722435835b71da5ba52d006b532983fc3fe12b5a9468347416eace67",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/filtered6_original_validation/run_80.json",
+      "original_sha256": "601886dcf42322bfb2ced599c1cfa501ea9fc78e937d2af5ec6f8759e9fd1f64",
+      "published_sha256": "bae69a8b82b70e11580050f6bd3155f72b8132a512d927b90b2f2cd3078cb758",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/filtered6_original_validation/run_55.json",
+      "original_sha256": "84c05117c50d29bfa55285c0a8e351cf8d14f5f2bfe1388c7d2f3387f92ba13f",
+      "published_sha256": "49df18ce68f3d4b24a821bd71aab761f14eeb00194a29765362f36573bc1220b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/filtered6_original_validation/run_23.json",
+      "original_sha256": "f04eea88879695c81428a5a32002082ad6aacf81438a19208c9dfffb6ff1c40f",
+      "published_sha256": "3f80889678a8340fb0a7f63515ec0e7a35837a885954b58d1923582f950640ba",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/filtered6_original_validation/config.json",
+      "original_sha256": "c0855915e04984c24df05acba1ecff95aa771aed2f8245d4ad01863f6c8a2c79",
+      "published_sha256": "2cc34e836e7c4eb9a78574f1ccb78173d7b7705d06015c9217283af37fbd681c",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/filtered6_original_validation/run_45.json",
+      "original_sha256": "9727c7c3941ef9dc74ab541a00c918e986e913649d38c49e743635f991271d9a",
+      "published_sha256": "68c353a2fbbb4379518ab913c2e6f63f64817be564eacf085002e775574b1c95",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/filtered6_original_validation/run_6.json",
+      "original_sha256": "de518c5339eb405cbfa460b339fd27c6f3d311eb44342d0419894243dfbb115c",
+      "published_sha256": "72c307fa8cd0744748c0f0aac1b2ac3424a4415fa9f8bf0f6915b348515ed96f",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/filtered6_original_validation/run_16.json",
+      "original_sha256": "123650e92cefae9c88dab67c8b2dcc29598d2a211643bbf6d5296f6a26818106",
+      "published_sha256": "f9cf45e667f51732af4de43baafcd01be21a6681af89672686392eb8a628c06f",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/filtered6_original_validation/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/summary.json",
+      "original_sha256": "9d52576b97befd17c25b82c23d14cd84e42dce8c99d00bf9db6dfc00cdf9bcc4",
+      "published_sha256": "46cb9d8b2abf5083af33e73ec95903296d9db49cd944e728a71026f17bc372fa",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_198.json",
+      "original_sha256": "9e5e598ef6385e142dabefaa5c5836cd2367fb9d832573268c3fd04ef40e2b69",
+      "published_sha256": "c369c15b9f4648e2eb20d47a083d6d51f754318bf10fc8c4cd7ffaffed3576cb",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_213.json",
+      "original_sha256": "3c7abf71096dc0a32e960ccecd57cf9f9b185cd259dfc237d2443f4226c06983",
+      "published_sha256": "a52482cb194bafe2ddef49cb7821de9a95e8d2666d8c2ee31cedbe06b5d16aa3",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_204.json",
+      "original_sha256": "bd6825b4f783e6a631d462c9bc294198f334f1e94f9b7d750cb050373dd77cf9",
+      "published_sha256": "6903f74aec3879cdf714807682afe186dfb52d413bc03714dc985672b4d3ac98",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_121.json",
+      "original_sha256": "93da6d258e216e12e660bac85c04440f553ad39d6f06a0dffa0c3433a8b2f632",
+      "published_sha256": "2d0d738710639bd7caca172dc379a15b8f9daa01316d439ee423dbce6ddb8f10",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_199.json",
+      "original_sha256": "0c5d0ca9c0a4dc0c0c23f26a0602d20df4c53bac805bf79eddb7953c75422f15",
+      "published_sha256": "f080eccc0c1acb2d86b9b82db237e0e8c55b23b0209ae8b1f17035054bf21dbc",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_224.json",
+      "original_sha256": "79ece7452daeda51561e1383b4537f9ee40cd5075f9d1dd1f07309c59b163f84",
+      "published_sha256": "832d9786715345486939975c84acb93e45c4d72695b84f256ef47ae6426a1a0c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_151.json",
+      "original_sha256": "094f85598747d436cbddbf818e2b43c32a14088ffdfa4c61ddadf869ddbe9b4e",
+      "published_sha256": "71ea7fc8969afc4598d85f290d93a157786a6288521a5598a9e06902910bbe54",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_86.json",
+      "original_sha256": "5375ccbf0804dc295cd8ddb178cc54fe0e7b9bba78fb6fba88047858b6f43fd1",
+      "published_sha256": "2ad19433425e6a4bd4f8eb1765e8e2a371af208b921ad56be8f003f4a55fb8d0",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/config.json",
+      "original_sha256": "279d0d0a0e112038daeb05fb3227bb2a1dfe3fcccf79e1a0da9ad084af597834",
+      "published_sha256": "3dca3ea39ce9842d06e653853edfea3d24be72e05daaecdb07044721ca9ef3c9",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_235.json",
+      "original_sha256": "44966a2758d56b97b9df057a6a3a17b0038719ca10eb122b13202a01d278f5d5",
+      "published_sha256": "bfcf6b44b56ec2c122bb9c70aa6084e49dcd6c7ecc2e3af1977d184defe81896",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_131.json",
+      "original_sha256": "16405aaeb3ba76995a1e4cb9f712bfdb8243ef47ab93902653c6aea3ea2ee0f4",
+      "published_sha256": "f2f9fad15e3e4c8aecb5b52b841c9921ac4f6b0fd366ab6a921d0c8d8a42567b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_201.json",
+      "original_sha256": "d16a96ab86097cc67a7fbfc4248f155ae34a68a75d45da951105e8ace900e6a8",
+      "published_sha256": "2c0cfcbb2c06b7a84a76421ac9a919fa74114f1d442bfc2841eecc64aa3ddaba",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_104.json",
+      "original_sha256": "5a4541552f95b8ed85b61f537d223ae9f5f29e4580f6f0826876aca63509c7c3",
+      "published_sha256": "ca7dd8295ecc9d9f785337a7aab301760f6c0c1bccf80ee2cacd22bb7a5c2448",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_153.json",
+      "original_sha256": "2efefef88ec1d2ef85c327a715d8948a365eac378226ccbc414b4f8e24675def",
+      "published_sha256": "2573cd576dee0aececf0bab1d3f4190971529c6a0368c2772e9a242ad0a94fa4",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_149.json",
+      "original_sha256": "1ab89861cbeb66332f9770d1196f3efcaa56ca6097b98c84b49512420601967f",
+      "published_sha256": "3556d484c41a71a4cadc1b1312afbf1b9f3edeacc20ab18ab80eb113071d6b9b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_172.json",
+      "original_sha256": "7da2ad38dbd2c18338511105793277662505c5cbbce131222c823385e6bc1937",
+      "published_sha256": "24b61d21827d2196a460d26d327b82602fe2dc63bd14cd6d01851b8c80bb302c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_93.json",
+      "original_sha256": "96b7a24965d5b6b4abce30728ef36dcf3b8d56939672d28bea483e4c7368023c",
+      "published_sha256": "cdcbfdf23de21d4f485ed6cf5088d168ef9c2710410accf2fc6df3fbe4d03e25",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_134.json",
+      "original_sha256": "8267e43fc4016956a7af2a59d0b8eed6df58ce1b4476a457af729f8e0007084d",
+      "published_sha256": "ea223624d55d1b14bd1d3d2b19213edf7bb35074fc52258def081c5946c985d7",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_159.json",
+      "original_sha256": "bc08530d9872fb74e6af4a0e3f551cda280fc353ee22e4a0f50717d4d30a2804",
+      "published_sha256": "fb70cc37cd77815938b617ff106cdf098c187b674dd7c31f8cebfb9ab769dfe4",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_143.json",
+      "original_sha256": "a4e5d08f425f7afbc54b2f869d16784859bfef90e1048881b0af18ced4dc92af",
+      "published_sha256": "1b88cd828b35034da17f5e23633012d9bc997c9334b9401d574852221db98007",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/run_114.json",
+      "original_sha256": "83b1760d963999a577126fea6af1f8805d353c0256c97dadd7c1d2651a156dca",
+      "published_sha256": "0b727523b32a4456075c4eefb0a58553497683c69a632425b80f3d55fd41eb38",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20/completion.json",
+      "original_sha256": "ab54a6c466cefb9c948db052dae2e9f649924cd6d5b540e25d8ae142afc9da7c",
+      "published_sha256": "4432c25463891f5893832fea3fec897b7c9e4e52d4ff97235e4af3ddfdcffff6",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/gated_envelope_validation/summary.json",
+      "original_sha256": "d2ff5b7eec7691f98af3a16a9daefd22f21923e5f9166af99f9f929ab2ddc6c1",
+      "published_sha256": "209e34b1419108090eecf2af14ee5fe6c9efbf3d94bf0c07611416aa775195c4",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/gated_envelope_validation/run_80.json",
+      "original_sha256": "fef8586adbabc8cc6ee148fb837700bae63147275742883dbf944cca6fc9c701",
+      "published_sha256": "5ca13ef1cdbde82b1211f809b59a4eee9a13407222a122851b58eb66b8913b86",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_envelope_validation/run_55.json",
+      "original_sha256": "e3029e5056849ab99eb40bb9a4290ba09439eadc6de46c89d06446a3046a39bd",
+      "published_sha256": "4d8dc64ba9d20a99acacd58ad00388a88ec839d05a907d168c71724df37b3fad",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_envelope_validation/run_23.json",
+      "original_sha256": "753a2ce15fc07ac105b8f2528721a1757bc72cf5a9ab2129acae234a66294a44",
+      "published_sha256": "89da29d539502ad8e50331a95b6c8af14863ff17a1079a328d365e5891596217",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_envelope_validation/config.json",
+      "original_sha256": "447683907e5848dba39650fff5fa73533130c493caea07f12d21908f6c381367",
+      "published_sha256": "537fde923c2bd4915960731b1bef8a49f162b87b0416d12657652f12131a3e0b",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/gated_envelope_validation/run_45.json",
+      "original_sha256": "74c7baa8937118d38a2ad9a077e428c0c25fcec97ac7f87ae1c5db827f3be39d",
+      "published_sha256": "331cfc9e6c8347fbf75e73c38ff4a955421e7ed5afd4c653f9e67c71f8e97858",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_envelope_validation/run_6.json",
+      "original_sha256": "ed4d144c0169f74de9d2e7d2114cf9935c6f9d7dbd39810e0b980d06f5861a37",
+      "published_sha256": "84d269c97074dcf914ba41426765754f4f3dfa33aa9f4db765b470b5f236953a",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_envelope_validation/run_16.json",
+      "original_sha256": "f44852a5fc6b3075b488eb0811e754bcde4687679da8f42552d7f978762ab477",
+      "published_sha256": "ac5a646c572c02bb30e2cbd2d86e1e12e018e38ed2082f2e910c497127fd9fc4",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_envelope_validation/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/gated_identified_validation/summary.json",
+      "original_sha256": "2200a1d657a551df1c94aedadddef514afb4243872caf59e7018213a0806bf49",
+      "published_sha256": "f068cd02976d2a19269597ed7771becdd48b256ec27d4c5e434997db4eb9f7f8",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/gated_identified_validation/run_80.json",
+      "original_sha256": "0d8499adea52061f497fb87ba0fa64007399a0d1f5ec2c8afd307fdd296cdbb1",
+      "published_sha256": "59e2898b210ee182cd4d66ea19dc7fd28a22d8939f6c70c3700ead0771268fef",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_identified_validation/run_55.json",
+      "original_sha256": "aef870e5afb66b92586c866f7530c91e0e2cce471e29679d51cf836dfebe4ae5",
+      "published_sha256": "8595fb1f039a234ecf97a19529f947e7ce882f75257e7224df3abf41217bca61",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_identified_validation/run_23.json",
+      "original_sha256": "6774569c983f8f296ab00a67813f24dc92d3b9a7135bff0abe1db906f67714ce",
+      "published_sha256": "a9e3521867cadbb3569fedd5098dc103974c72d2c06817faf4286f0b8e89ab5f",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_identified_validation/config.json",
+      "original_sha256": "79fa197ec3b02015c44c73940f3897751ef657ecaab1d09f27378761d17a5b60",
+      "published_sha256": "5c6de29ce11c637344a0460a6d65940fca6662bc2839eea0a76ea5b7503d352d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/gated_identified_validation/run_45.json",
+      "original_sha256": "14859e45f41351ecf308c1faae79fa753f68296f341aac12078de755f768eb9a",
+      "published_sha256": "a10409f05789cfb00c80ef9b3591f7cefe38686d17820800bec595fc0048ae36",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_identified_validation/run_6.json",
+      "original_sha256": "1cf9429d5ff1b406744752ac8a550cf390adf5109b28ce595817f8b91a09b92b",
+      "published_sha256": "7b15b391fca7e7ebff2ecda0ee1c41ff427758c7291c5188cdea95401bf47cf6",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_identified_validation/run_16.json",
+      "original_sha256": "d375e7cf46f91b78d24f23c5577a2c908f613f401b6cbf41ac4503cf2e2ffc02",
+      "published_sha256": "45b25430fa0e8106e5e21f7257ae03c4679f603210ba0372f86aaa7438964453",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/gated_identified_validation/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/aggregate_validation100.json",
+      "original_sha256": "f89033a8ccd0745ca3d4f9450da1d437c905ed378f4a50d14966869cb30496c0",
+      "published_sha256": "f89033a8ccd0745ca3d4f9450da1d437c905ed378f4a50d14966869cb30496c0",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/summary.json",
+      "original_sha256": "30430b35ebcef2659480ed1d79050def1136177e8e7b30181fafcf9cb623eb97",
+      "published_sha256": "abb93979ac37c69123fd5bf698ac2462d00d76b1c98a87530af658dc6ab6f29f",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_198.json",
+      "original_sha256": "233ece0dab592aebc56aefdaee4ecd174cd575a8ed00c0392183fc44a8f672db",
+      "published_sha256": "cfde1c56c7ff3ea72b392f369033ab4697b0571749a6d3b6947e65bb66e70f2d",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_213.json",
+      "original_sha256": "acf1a6ba09dc82741a7ccf75d84343178a150707eb5e030a65a01eabaeb0e136",
+      "published_sha256": "0bcba39fa7f36781813644ac956f7c50b310717a7f46576ce3b89d2427bbc5f0",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_204.json",
+      "original_sha256": "a95415044e366398d24be6aabf3f28f245a084018d5b9558860f14465e17cae2",
+      "published_sha256": "aa55ea054004a634c4ade5137f7a9ea7e1a1cb51bbb55a3d5b8fca201de97e8a",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_121.json",
+      "original_sha256": "1f10aab3664379b94a40f21ad5ab112b4fee80eb81dfceca2b8b2ca2b1c19a6f",
+      "published_sha256": "e22495aacf6acfe3e145ec695528de6d2db962d3ee52ac2e73e82f7bee04bb12",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_199.json",
+      "original_sha256": "5af310ed08402d4a6fb3a0799c2c45d3fe1874949d91ccb7fdc4c697a0c224e0",
+      "published_sha256": "f51d0e1e9962d95dd8404e0e265fee97dea3bb0f5393c6e3156689c87b172af4",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_224.json",
+      "original_sha256": "aba925602bf12071a400178fe483a4ba068603e0c787f8c534080bb531cab974",
+      "published_sha256": "d73008164fcf0a3a20c5d47c76d8310f026100305f03d947b2f5116e4ec813aa",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_151.json",
+      "original_sha256": "bd2c035edf33928c1ef298dd863cfa2553828115f38dd1aceccfad0012ef1151",
+      "published_sha256": "98c34f74825353da433baf509013a9b7a6d6950a5efb6df88499f95684cdb369",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_86.json",
+      "original_sha256": "2eef933514536fce9ee531308da876ce3bcd66ed706f59d476e57f3c2472e9f9",
+      "published_sha256": "48979984fda94513a2dfe69b782108fdf4a42e151a5fe85580d3b11681fad92c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/config.json",
+      "original_sha256": "fc56f4e94a352f5dfd21545666b84a209e0ba26b2c7842fe52d33eb7b6dc22ef",
+      "published_sha256": "69b79b144ee162810bd6ac97057894088b5f994fc54fea5541af64826ea16b26",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_235.json",
+      "original_sha256": "5d05a80a4f190a4aaccf5226325a2d8cb8dde61667b6928100a19a5ab4a412d7",
+      "published_sha256": "319b2832d44011bbea0f1461236e04957ac981e6aaccf191a598916e83c9a625",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_131.json",
+      "original_sha256": "ea4dd5b22e1b1f868e7c20b64a77aede8e799e1913cb3d28d2d905843827d06a",
+      "published_sha256": "ce29876b2a183e1bdb76a1c270b2f2e0825bb61199f35039513f51ffa39d09df",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_201.json",
+      "original_sha256": "389ed5d63fc08311de3b5b20fec5faddbb740e3d9e29c1661b9a6d3fe3dcf5a3",
+      "published_sha256": "83f89f6eeb87ef6cd597793e94b21ed19663702030ae0e723409af5b0063420c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_104.json",
+      "original_sha256": "8ffabcea3c3019998ecbae9f17270c8e9462d6dfeef8148393bfade6ec67ec1e",
+      "published_sha256": "d59bdf3db36a6ec33b433e2eda7cae695f1af03a80c4e7444d9c7ea5b1f705fa",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_153.json",
+      "original_sha256": "aa3dd67689572c1662cc9423fa2dc68a69e4304be16d31bc96d9b85925b919d2",
+      "published_sha256": "efb4cf8e7f591b70684b109015deb28f68bdd7582052867977b1c28b3e46b821",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_149.json",
+      "original_sha256": "7b5ef2633b6deeab2dbdc803236c0640c093b1ca5d6b3f6bb9339f35bc23cf76",
+      "published_sha256": "ace732ae89b02da240d2bd0c8bd0e34475095a1e4cf961a9984eaedf70e11065",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_172.json",
+      "original_sha256": "d957ca5c2688871facb61a501fd7d75d817a02b04a76b9197d61022413a4560f",
+      "published_sha256": "2a17e5c068fa9f8767c63e59e476be4df5fd544ac7c5e65fa9f3404ebd6b0001",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_93.json",
+      "original_sha256": "067012ac3cd9cfddc2300b1e563e5bb4b03e413de6133651cb73dab1f702861d",
+      "published_sha256": "1f6f3e7fe51772abd9b1818b2ddd70409b37a0d34a76cb128a10c91a9b226894",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_134.json",
+      "original_sha256": "52fea7b1435b143e9344e4a33303fddc53ed986aa2a283a5c68ec0ec75361858",
+      "published_sha256": "e5a90402c20331fc8dee723d25543dfcf2d3a804905f2bab66e50c93b753dbed",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_159.json",
+      "original_sha256": "b1e343a5389e63cdb26d5e8d036aab03aacf4d978cd4157f4b14404b3e065945",
+      "published_sha256": "9e1876d626f440e3c8319659066ef78e10e092a6cb53a5ca147c0f7ac2f1cb67",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_143.json",
+      "original_sha256": "abdca725e3b3991ad22d2998b954aa5a4ddfb2a68d4244c53f2f69c2d3380db5",
+      "published_sha256": "5edc4d4543301648f50c8f991f5508c6224691a6fd96ae04f704388ed02e9271",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/run_114.json",
+      "original_sha256": "938ee65af012b6c9e7e60a6df1a916259091fea338b52ea31508ceac9cfeb9bc",
+      "published_sha256": "5bf3026798f34ea0f866d5f9f32545844c0e3d83f74a0ae68f217e7d2486bc71",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/broader_validation20/completion.json",
+      "original_sha256": "ab54a6c466cefb9c948db052dae2e9f649924cd6d5b540e25d8ae142afc9da7c",
+      "published_sha256": "4432c25463891f5893832fea3fec897b7c9e4e52d4ff97235e4af3ddfdcffff6",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_622.json",
+      "original_sha256": "54e748130ce8c5dd1ba3ea3f29debf04dc90c5e7338845058e78b7d1b0eb064b",
+      "published_sha256": "e6093190a8975cdf0426de43c330329853e0b9f2c7c4fc41d469ae4495d9b008",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_663.json",
+      "original_sha256": "6099a3b3cc231f65f8ddc0ba2f3bdc640ffa09274506f36a4670744407a57306",
+      "published_sha256": "7b13809202cfd2c8eedf292eedac89138db64da9116cd0151f465a08ce170795",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/summary.json",
+      "original_sha256": "9c9c62cd9113f54764c8fd6710660c9dc79ad40e1e19d795dd37c56f2bec3102",
+      "published_sha256": "c6d3907fae18667208361e3302c9e7ce8fe4000a1c0ab5f211a79e35dc21c373",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_527.json",
+      "original_sha256": "eca771cb67ac9fad9809ba2bf4d9b041954b05d41fc2eae7e09f9e929980870c",
+      "published_sha256": "dee10d13a5e7de4b441dab32f995cc6dd7b5f2cd712862a07bb758b665e5c98d",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_823.json",
+      "original_sha256": "9b9927885b88cd6d7c6ab5f91cc8ec137143483f748ea1040bbf92dddb2763de",
+      "published_sha256": "00f49b3e61bb838e781d117b0e64aff4ac3ec69689968b88b8f52cc64f4058f7",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_950.json",
+      "original_sha256": "0bb81c06c9db59f759edda147342c434b12929d0a65650501c394aa8d9d9bb12",
+      "published_sha256": "eacb36a0d8bce688a82b035c9109613ecd683e99ff4b5ccc881ed8acc1d58b1e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_511.json",
+      "original_sha256": "2ce0e099bf12c04eef9a2acdec216b8db566079ce645e8a4ba4c7bf15179fb46",
+      "published_sha256": "a0e48631dd11e752fd58e810ceff02def962ddadfe70e44aa76e05e0d6c99391",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_268.json",
+      "original_sha256": "8e8594af47e276d10cce97ad7cbc16f971f9eca483d48e7d9aed659e8ec9cbdc",
+      "published_sha256": "9d8ef2e64d1d83d727fe9360699b8475c3477168186bcf619880e4d7a53d4c21",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_881.json",
+      "original_sha256": "05986d2aa913a397c0544ca098b988643aec7ee8146d5a0c30aea9f7a80b4623",
+      "published_sha256": "e855de80b905e1482e87b5dac6c1ba0c73536cfb172fc4f0e5c7054b642fc4b4",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_438.json",
+      "original_sha256": "cc18d0e8a9d2636034e739a21da93ecd0c59a8de4b4b5042a78163bc7503760e",
+      "published_sha256": "4defbea1253448f659d23771d0e13c732375f06789c9944995778607dce161d3",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_253.json",
+      "original_sha256": "aaa016daafdb5c60f342a335df1b9d55124228772e1ba26d0e4db6044c75383c",
+      "published_sha256": "1858fb61446524fe4b6281d6cc3d7723a2cb27b72938d3071de4dbfa20d40c37",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_879.json",
+      "original_sha256": "df5aa4f2751fcffc16606ce2712b8d87783d3a70f868249d7974c34b85af611a",
+      "published_sha256": "143eb9aa3425e27b08a6debe0bb56dcc84860204fb60ff721ce84a898c0b24b6",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_245.json",
+      "original_sha256": "161209dd12733ffe3383980e69f068f341ef6a492f0de3dc05488c64407ba7fa",
+      "published_sha256": "11deb6f9d1260cd9e54a8956a3d0c49d22311f62b12ecb1ff67e45de0a143116",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_880.json",
+      "original_sha256": "9cb9d188b0c0aec8b5a565a8f5927d663ce67fd94f49df9dfa8e315f3309db6d",
+      "published_sha256": "f9d8976ea145749180774da6f58be4f9b6a027943b28bb91ce93c408e76df82a",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_286.json",
+      "original_sha256": "16831b5e294ac7358a9785925f8787e8d552916bda5e20e124e2b430cb703dc7",
+      "published_sha256": "08ab065a81461659313a6f52ef4ff1fe9e189976ae3a2b2ff34eb59d71a9efa1",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_455.json",
+      "original_sha256": "754826fb295e5edb54951b6f9292a5bcef39f5d311b575799918908913196b02",
+      "published_sha256": "18878769ee56d87fc86a52f4c2fef4e9a4677928c86d6ec60a603dfc2cbe6f6b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_910.json",
+      "original_sha256": "9833e78425c1bbcb1158b2c5d46d2b6f77388f2cb0adb183340c5fffa148b371",
+      "published_sha256": "962cd304b1d407f27d2e171cb484ed2d501d6bc7bfc422e59607a2839361ec3a",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_506.json",
+      "original_sha256": "efa3f8d7e4f1727189b5a9ac489952e4edfbd00fc12679e88b6c1a879d11e98f",
+      "published_sha256": "1af69c40c60aef715d76ed5a7a8d28d718c2ff1412c134e8ab9cb4f322a315e4",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_530.json",
+      "original_sha256": "b568a5e5df6e9551519d3c7c79be057672cc693b273e6d2d929c8a0340ef8389",
+      "published_sha256": "273af3ae4c4f6e320419704ad52ae5a0bc326f4ff4c040bec0438bc94b1b07be",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_265.json",
+      "original_sha256": "59039140817f340dbb02929d86c4a363be8c70abd30d6e0711feb9dce33690a8",
+      "published_sha256": "7856c3ea91ffb5bf4393c6f203e4b9eebe29fd8a5507cceb41c0fe2ba4a80267",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_635.json",
+      "original_sha256": "1b4647a060723800aa80b49756cd82b976efe270df9052037467a5d0d38c15cb",
+      "published_sha256": "d4f7821cfebcdbb3bbe21ff8d4edc7b25e1d9a347f3cc57bd89ba73b6fd939ca",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_418.json",
+      "original_sha256": "5a80fccb8122337228fb437a84f34789ce574250da3071cc8a6ded91f0770cff",
+      "published_sha256": "f8db8b9d2a468eba9898afeff2e4b445849023b8715a2d70721e3587c90480c6",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_273.json",
+      "original_sha256": "e19cc49a4c26d6de322771907da6bb75e9c3be97ac5c4a5a17d7939247a81fb3",
+      "published_sha256": "e561373811ba06cb6f4bae66bf1a2b57a7a5d567c175dd63cab35f5d8af59764",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/config.json",
+      "original_sha256": "0950c42658d42a890603cd6675a8fbc5a25320b59df8669763f6f9429ca5fe11",
+      "published_sha256": "f5bf235aca3db82ff1621993672a534c730e84987f5604ee76c8c5945fa6769e",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_673.json",
+      "original_sha256": "d39d75c00874c25809e1f4bc6e893022262a3864951cfb3e978d79f0b6163b0e",
+      "published_sha256": "da1562ab997665e832c7870e27d78bb30ac1468a9a3fe7522cab5ea234a53997",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_720.json",
+      "original_sha256": "3e44fc8645a02798436b38694c69351e3c94f69452a71c005584a772a2cced38",
+      "published_sha256": "9c0082a38aa03c994560d2ac3f71641b7eff41c57474f4a369652cf000d496c7",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_409.json",
+      "original_sha256": "f7ff81687f60c47d4927ac3e90ad67016a3fb39878a7d81de3887728260d5197",
+      "published_sha256": "9d5cf8ad5a6a35af9d1f0c0c856874e229d81eb1d379601a4e0e142a5a9403b1",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_798.json",
+      "original_sha256": "03af0cb826e29e4416dd8d0d9a54d69c2517b28b57e6a0ebc83a482f8f4d74cc",
+      "published_sha256": "5c3cfce7e3581637151e52d097e6f74a0c99bbc617271d74a60e5387a4c3736e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_921.json",
+      "original_sha256": "59d25ba9ab5dd07fee233131819760db0ec560a6a08e2289c9535ac711ea905e",
+      "published_sha256": "4aae3f1723b063e875e2c22d641a3117dcb07d2a22d1ff2e2138ae11094f4a86",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_521.json",
+      "original_sha256": "7dd14187b5ed79df6d76536bf9d948719731ff695687c66262a226bfd2792892",
+      "published_sha256": "756721071d9814b929eaff804e6aa3f3461cbb70339bfc5adc80160477d27de5",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_465.json",
+      "original_sha256": "3f6a0cb62700ae6976f7ae57a69cc5194193bf47afb315adf7fb1eced5e79328",
+      "published_sha256": "10c953b0ccf5e993ef44a17737dc4e8ebef4442688a6421d2b8404f20a48b3bf",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_998.json",
+      "original_sha256": "e02f4bb1b68c9b1e0fe3840cc6a154933c68c4ff704927dce737cbb2ad11b132",
+      "published_sha256": "5fd3f97213d5a598d147c7dcc3bc67413b6e174287d64860b39452f41b62abf6",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_737.json",
+      "original_sha256": "883d9bdf9288a5226538f110fdec8df381a66245908412d9737ea290d377e37c",
+      "published_sha256": "2ea3551ad56a0dd0d8d242077de692231e236fd6d2f5fb186570d6d192182400",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_486.json",
+      "original_sha256": "7cb8ef31d8a99ba683f9d1d1f8a9a1f3fef49049ccdb3e434f7a56f2b77a2e97",
+      "published_sha256": "859159bbc19c87b58092a00e2daf9b944456c7cb9ac13940fe6908d9e1a8e299",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_243.json",
+      "original_sha256": "9c68b98dd2fc4943c3245422683adb442ba30f4d9f025863dffb61dcf999a914",
+      "published_sha256": "f8a5ed75f1b864262e874a4eccde2d5c221c5590f62c27e7ba76c1ed1ff1c7ac",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_582.json",
+      "original_sha256": "143df80c0edb12e5f56fc081eb8c4d0373ce0ef4a5eaf24ae3c1f679e362680c",
+      "published_sha256": "b436d043eecd55982b2fb3dba775ed7d0e022e9fa6bd650baad5e8a44f7837a7",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_795.json",
+      "original_sha256": "2509f8589981a49e902815dc14e6a54028585ba08797215f8aacfc4d69795ef7",
+      "published_sha256": "10ac695d000baec6d7838b53a12e5c2101a262409eee4b77a8e559d0a7c1106d",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_668.json",
+      "original_sha256": "6a0ba8df494b44a55ceb2a4f24a3bd6d74e157fa219a706f54e62b1bcf7c9bef",
+      "published_sha256": "17b47d36d4eadaf091d0047dcafbb20c7b2a1728cb6126f3b0af548a3159f7bc",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_687.json",
+      "original_sha256": "3007cbb32210cf62dbd8bd387836677d53f0c6e99837ae5b9cf203e5a6450278",
+      "published_sha256": "0dfbb8dfda485bc21885c881958c230f74aa82088af36af849b0ca9fed21427d",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_279.json",
+      "original_sha256": "e5f14f4418974fe37ead51aa2a9354240aa7177918ccdec3152ac41b467c84c3",
+      "published_sha256": "32b9eb7308fcf7ea4c3ca76d1048b7df0aa03d8ceceada1165cfdee69621b3c0",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_352.json",
+      "original_sha256": "bcba1d0f5bf67785a8d04d8253dbcdc4ae03d4de51509a24e00d95417fd0a4f2",
+      "published_sha256": "6ff839eac6595160e52a467a737dce860a3a3d93ddb58090511fa59a52e7e1fc",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_329.json",
+      "original_sha256": "9760a9966f8d779968d874c66c749d88dbcb01307f458d1e2f99f9811b9f5aa6",
+      "published_sha256": "81c39be5265b7db81b611d495d2ea26c88ae864d947f775392f805dca9d1aa02",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_692.json",
+      "original_sha256": "9d4c932b24a9ad3c161c9d07b1875dcd13ecf139001ffb6698bdff47bf742fd9",
+      "published_sha256": "b4a89fec75cbd712c0053a3477f2c184c79049780fe5090cbf8509aeff99b408",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_562.json",
+      "original_sha256": "276c19bfa6f4ff4a7e6e7f85fb2dbf45897f6058b3fe26056c736f3faac9f59b",
+      "published_sha256": "69467af2931f459202dc7e34f3662df087ec3a7f2e610bc5c992a5d4e67352a8",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_558.json",
+      "original_sha256": "fe182567105ecff475c8d81751f7959c8daf68df26956385c8ba5c9619e42676",
+      "published_sha256": "387e835523ef652e139872d4095070f911401b1d87ddd0632de55ae9bb41931c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_333.json",
+      "original_sha256": "52da9ce3979ad4d14a2185539ade4cddbe28ed1a1f6c0768309b8128f3ebcbd9",
+      "published_sha256": "5a0dbca9dee8df7db677170df1d07f2f2b2835e80525a81423fc99d14bbe51bf",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_626.json",
+      "original_sha256": "aebf240c27835093e3f9a831512d8c6637a51886fec574497cb842c043d538df",
+      "published_sha256": "6312a7bbdf1456d63defa968d2497502dd83f8b857d473f0ec4a8b5a5318ce4b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_298.json",
+      "original_sha256": "252962362d05b9ad4aa7acf7e2e00818910e412444132ded488b993bacdbfb93",
+      "published_sha256": "bf0e1d729278e247130c7b5363f96b17692a443d24dae474beb9faaf7cac175a",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_830.json",
+      "original_sha256": "a18e023f7ac4d16873b68e162f269e7e1d59c30a996fa9c920cda5c66c3ac0a3",
+      "published_sha256": "44cd12422e112ebdd3f7e6ae5753fbc2c5ddd62727099cc45c7548f2eb60a386",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_758.json",
+      "original_sha256": "c3126948d8d224efee22920bd7b2b0daa4ce88b1599e429691bd36e145516174",
+      "published_sha256": "76d06e242e942e7f5ac986e4c03ba51a9e5ffc526ffa4b383214fd7a0f54b2bc",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_467.json",
+      "original_sha256": "feb0e8416646e551c3d2c565403c5dad4b5b6c742eb27284281fbc9f59c02074",
+      "published_sha256": "34876202b3bb7106da33968549fbdb4e5ab44654eebd84f472b8f75c1ee8e12f",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_934.json",
+      "original_sha256": "eac2a8cdfb5879c1ff46469c42fceb8fe6b30f873cf8c512abd198b6471737ce",
+      "published_sha256": "1a325eb319eff65bb3f890f27f1180a25a5761500684d67e11690424161cc74a",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_447.json",
+      "original_sha256": "ef86c5142f8d9069b7504b207c2385ff4670b27fe7252168165e51be8bcfa670",
+      "published_sha256": "b70ab5b7e28f3876b03de11631cc956365aa2d082f64573dc3c04d712499cc44",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_810.json",
+      "original_sha256": "754d9e39e94680f613a781d535c37dabe0ba1e0d6badeb05f69621a6bd6b7e7c",
+      "published_sha256": "9cae60f8495facf909f7513a3da38f08cb5bef8dd5927677df796b0fa50f780d",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_611.json",
+      "original_sha256": "377def23fc366fcd3c9c593f3a98822f8bc526fd06ba487bd651a62a28888122",
+      "published_sha256": "2cdc0bd39643252b5473b9f06e92c1c1f696e1be7fb516a5240bef83c5b4a19b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_257.json",
+      "original_sha256": "d7e1f244f9053a3af579821dc6134cf39772d29402a4b6566e55ea91b6f48e8a",
+      "published_sha256": "cebd366c807592fae53a1e6b8a3ab69f41cdc4b456c0d3b2a81acfb13692c224",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_345.json",
+      "original_sha256": "c65cfa40a0795f2b269faf27d5d30771cf071ae889f503519665df96bf45849e",
+      "published_sha256": "bbca70f030abfa6c14a4552c69559e0c29e3c0176c783e4c9f2bbbc60185aab2",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_525.json",
+      "original_sha256": "f4c92b33482d8f7af814160afcc0e88fbcbef79f8f7b2c8705aeaa94b102b31b",
+      "published_sha256": "c00e1b31bb09b70fd3ee9621bceff168e9fedc851a8dc6a90f233fa69bf434b2",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_749.json",
+      "original_sha256": "0a997902bbfe20fa48d31e0fe10402a953bfd0e1eb39c06a51b953bce36d91fc",
+      "published_sha256": "dc10b46f77617538afe9a8ddb5a83e8fbd1e31de45d1d91ab9f40bd6a5ace888",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_972.json",
+      "original_sha256": "d037efa2bfb2a80b5ee8fcace2da49be82afaf4fb1a3d332bd24a1e64997e056",
+      "published_sha256": "709b1154b6d8f5f88a5c4390049a743ad0c2e37acbadbf9e340eb2231628d11c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_421.json",
+      "original_sha256": "94f5ecaea93996593a5ab4d769cfd07ff8f8f93712221e425b23767449cf448f",
+      "published_sha256": "e866060b93726bd3e6671d4e2cd7ff4ca54b9a5d21d15516584205b1d745a61b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_358.json",
+      "original_sha256": "3a3035e52bf5922d8b3932a8b5812efe3488aa3930de09737130cd8f9e3fd5ef",
+      "published_sha256": "902f4df3c5ea7ca95839f7a942f478e80375c17b7ab272135f2cf0e91fd8546c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_374.json",
+      "original_sha256": "15d6482ae764f2737d41eb8966a8bad09860d49b0df859c6ca3585677a206938",
+      "published_sha256": "7f7557470ec4b1043e54b9af267ef9e1dc80a6e602bc79efca1d12ee2ada614d",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_620.json",
+      "original_sha256": "bc1fabe4145ac54ae22134424659f423792728c15d62d32fc08b1d54bfe0f65b",
+      "published_sha256": "178f950f5ee683c9e868c0374291584996244d09c32bce5cd69142b2d120d407",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_250.json",
+      "original_sha256": "401b3ce2008ab0705bd73fa51fa129ff6da45f05d3a948e12c27cdc79a93848d",
+      "published_sha256": "08621f002fac9d4662e5ae87b52d942a7de2fd1d904e2f5daeb599929b239c2c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_587.json",
+      "original_sha256": "7c5fa714aa406aa789f5f4682f59e3f1c5c75b0ba41a33a345748f3d3a3eaaa7",
+      "published_sha256": "7771b444c0f08689c5ba59029518c524a9e0d879952287b642de5c578cda492e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_991.json",
+      "original_sha256": "caea6dd60f55911aa6d8de257fd378f039f1964d15f83e3ed1c7812ec5327e0a",
+      "published_sha256": "b6b1a3a98630c0f6004956c1a0d3013b41783cf4ea4e4686c3f2e6e3d798956b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_568.json",
+      "original_sha256": "d9a2e3c24f03b37bc9141d3ecc266a2bf6643b6271803d5b56a5e84ba0d05b6a",
+      "published_sha256": "5a6a1d00b6bc8a46ba18ae8519a925979187b0389516dee9ed6dd08b585b7978",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_544.json",
+      "original_sha256": "ea6943291d2b05f780f90d124d99946b41392722805bead4e4d9994a269ac36f",
+      "published_sha256": "3c1865bbe20a32a65a8b4a54932bf8923216556a2a9728ea316723f58dc660b5",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_457.json",
+      "original_sha256": "4d45b52d0c9a042f8567e25d168c45fe14d36ef9de7728a4a340d34c2338970f",
+      "published_sha256": "b58c035c8beda6d4e79ad6bc14e5969beecae1756d923b5a09236816d217d834",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/completion.json",
+      "original_sha256": "8b2a87d6c73fe56a3721a6d262f3d7d15411cc5c7af21a37bcf8a2155efddc23",
+      "published_sha256": "eae32a1845a86e7c0c91c5700904b9e72344951a7b9f5bc67a73516b7feaab41",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_764.json",
+      "original_sha256": "bbca72f0d3f5a05f647916c46357499eb891d9f7c130e718d7df6b8843f26658",
+      "published_sha256": "f5eca19ce8cb9d0f3cb9713bfb65209f7d44ba292b1b575a051a63537e5d5cc7",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_676.json",
+      "original_sha256": "ca27b713422b55d15f20a43d4549bd05bb0e10cba64575c1b3aa0b88efaecdf0",
+      "published_sha256": "d0ea7d57d34a6409e6cd8f1a9bc547d97b73846565d146f06e64bbb36f1edd11",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_660.json",
+      "original_sha256": "04fbf8ee007b415006ff5a5f754ebdc443d8833bfca36acc9476132cb6f78d67",
+      "published_sha256": "5bb72009be6487c3d4b72ee5f35836f83122078f1a8648b5a1122ca01df73e3f",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_267.json",
+      "original_sha256": "155860e356dba3298b84b6347b0b9fd45cf675a5caa122b7dba906d88d151ce7",
+      "published_sha256": "9946f66224fe92ebbee2aada54ebe20337a89dc46927027f3dfd091fbad9a084",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_637.json",
+      "original_sha256": "bfa69317df315e3656caf19662e4781ef534516e362329fca7ad1f1dc2246a0c",
+      "published_sha256": "7fe3402f616b3411c14d68bcec8517eb9a4bc7d8a2c73ee2d183ac918e4d0af8",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/remaining_validation74/run_359.json",
+      "original_sha256": "bcfa5631086bc990d45b7cec41f0baf869ce7e0e9395ff78004f350bdf3b48e2",
+      "published_sha256": "4a976fda9fa2ea2cdc12a55a56c4418d2a1d25e72055f7373bcb8ebc90216f95",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/validation6/summary.json",
+      "original_sha256": "c2b9ba9f11889eaa0e299640637a7440ad37d2978516341c5acb82345f450303",
+      "published_sha256": "55cb96645418853f11eaad5643260915cde93a4519ae0441bd3b0d4b737a5b46",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/validation6/run_80.json",
+      "original_sha256": "df8b6272f8e66500fbb493db6283214937d837a6cb852f2ec234cd8d179e6615",
+      "published_sha256": "4d3f917e9778463f392095405338b19fbf729fda115baf16f33b8545cd8a8cbd",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/validation6/run_55.json",
+      "original_sha256": "671b4c10ada97a24dc17f711b7f069f1f729651d5be1808b8fedd548425fbf0e",
+      "published_sha256": "e68b33cc10c7ca13e1b1945c8d2ec8b8e2bd5773c0537e848a6d74b737e6d9af",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/validation6/run_23.json",
+      "original_sha256": "1e03210d74031e1af238b89756a60410a601a97e6740825e99df46f870574ba2",
+      "published_sha256": "953e8331781a0d922d9c8b8d2279df4a86da3216c40ce7f1a6647df017b4f69f",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/validation6/config.json",
+      "original_sha256": "f7d10962582e947b4120810e76367584dce71942b58126a3fb0b4be129aa61be",
+      "published_sha256": "e7a54f7363d729a43b5d895ac552f1201847875f156882c4f3592060d6f8f199",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/validation6/run_45.json",
+      "original_sha256": "ff33133a77031d4586a2fd93669ca29d298ab9ebe822a23eec09e5c2e9acd5c2",
+      "published_sha256": "e2de05c79dade67565ac54f3b8656e5d3f21f43c3bf368d37b12ce0c86a90ed1",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/validation6/run_6.json",
+      "original_sha256": "864e9d88b988a6f7ade53411c666040a8c7a37f20dc732286ae89cbc2339742f",
+      "published_sha256": "c5d92a27459f499b611a61d7b933ba8be6b89a55bb2c6c8008febb6fb04354fd",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/validation6/run_16.json",
+      "original_sha256": "c6b8a41879dacdf5aca234d1e9a4c14b1ab1e8388cb2b7970883688bbf9c47c0",
+      "published_sha256": "a0a9d43033e56a0163755890451f574c81d5ad78d10bb94ba71893982f8e8b9c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_stop5_v1/validation6/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/summary.json",
+      "original_sha256": "6adb0017968f96e66282634fd674cb6ac6e34561dc936bf0a4ab2cba1a2c3026",
+      "published_sha256": "282bbe0e0b941f587e712da0d15e03074e72492f038af4dc36c2cebeb897f43e",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_198.json",
+      "original_sha256": "a330321309c7235a09d1853ed4c317b4e899d0b970c7bd732dbe3f040ee86f99",
+      "published_sha256": "09c891b7bc825431413d2abec2ffdbedab4f455aa8bf40d41f7ea3e4f0ecb3a6",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_213.json",
+      "original_sha256": "a5dc502f5d0664bfbee9cfb7143a9c6530de94e31e2fc8a16238bee19f107043",
+      "published_sha256": "b5ce4361734c37648cb0802c860c3b18732e06e2cdc3dac8da9c912f0748ed60",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_204.json",
+      "original_sha256": "81c15d8854f7e929d4378a6cd4b62802523d87479c83af17c83c7dc6011ff1ae",
+      "published_sha256": "0f452018111e48b314ae1fe6aa6baa2e3be17984ebadf5ed49aee8261c4dbb4c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_121.json",
+      "original_sha256": "c38f81127f5ed9490341927b5e0368187c102961363654de249ba43a1ffea7a8",
+      "published_sha256": "610caeea3f1f5083376bf010bf15ede99d09f26533efbc59f6c6802db4f9ae6e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_199.json",
+      "original_sha256": "530b9278039e052795e9d3fa5fc52a83fcfcd217d2e41d42719818d9f4515585",
+      "published_sha256": "176cc62c8c761e4aca3c633ccce9dcf24cd33cd19c1b41986b7dd8a2d8ecb682",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_224.json",
+      "original_sha256": "5d0d357dfffe55ca1585cc0b29ad17309577ef5496e7d53752488d65ed9fa659",
+      "published_sha256": "ad383e91e4043c9eb5f25a567030dff1f41cb46d37e963ad4912ee12c1b36d02",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_151.json",
+      "original_sha256": "1e2ee228427e23695c60a380e4f27927e8e4916dbaa493996980d165a42390b8",
+      "published_sha256": "0a41378ac5065f7b022961aa0c28b240d5889d4a35d67a0f01fc7bb157846937",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_86.json",
+      "original_sha256": "5a9e431b495366a05d9f2e55d964c6194d74e9ff7e21c90cf475914fd6809ef8",
+      "published_sha256": "af56d324e91a2aaf023bef2424853c4e3fe206a996c402fcdb53dc237109e5dc",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/config.json",
+      "original_sha256": "fc56f4e94a352f5dfd21545666b84a209e0ba26b2c7842fe52d33eb7b6dc22ef",
+      "published_sha256": "69b79b144ee162810bd6ac97057894088b5f994fc54fea5541af64826ea16b26",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_235.json",
+      "original_sha256": "20deede164620c5bb3cfed66571717a456c508631fa4d9ac64b2701cbc8acc17",
+      "published_sha256": "388dfb369153b8470e535053ec13a8c53c3ca840b26a42fe49c40cb94279b8e2",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_131.json",
+      "original_sha256": "5e15c5d49eb6b4f4abf4c2265e6bdb45cc82125c3a8291ff0215a6d03bad64d6",
+      "published_sha256": "d158aad8cfacc77599a23325a1ccd529f7d88ce4316cf48e68e3b1893d460d36",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_201.json",
+      "original_sha256": "aa30b35ad143165c9ddc91ed18135cc665e81cdf7609032c05ace2e178ad80ef",
+      "published_sha256": "ea5f5f9fb61617e4259f8602c5c494568e485bda6901b82ac86ea7804a16441c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_104.json",
+      "original_sha256": "8d9522c4f74505c6ce93e2c79c8f5db61599a920ee1eaab0ab53e89485429753",
+      "published_sha256": "f419df84d0c038b95e997388034b05774548bfb565ed334ab51124e565de3cf0",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_153.json",
+      "original_sha256": "079c4e2785715a825791e4bc9313496a8983014e3b7b327e734527e1ed84fabf",
+      "published_sha256": "b2f18f7f9dcd575bb6ef29da7a4bf9dd5e6d7564b9c70f8242f653ae611ef6e0",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_149.json",
+      "original_sha256": "fb178682c4ba235683a14385f3054df3fbc0fd8407aab79a1f7e5e792c075241",
+      "published_sha256": "7cbf4dc227890514d39dca37480c2383ab19ee03a297b22f432dd5d706473e1e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_172.json",
+      "original_sha256": "4dfc2b8378a3821d4a5cf84c2b0e9f58a26c3892998a20664b892cbdbc4b25c2",
+      "published_sha256": "94fd7bfc870e32c757548cc90206760e4179d374275f401d557c0e2c8a5f64fb",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_93.json",
+      "original_sha256": "c900e632d7879e23757f0c8bfcb6b1f2822db13a4c2dd1aac3ffe59e1fcce662",
+      "published_sha256": "8946fef4417ea73e736e65ec35c0423993d1695f54ef403b081fb579d4e5cb72",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_134.json",
+      "original_sha256": "01c8916cd10626ccddb4949580909831e350988ca0109b695d27d20c9b82b361",
+      "published_sha256": "fa53fc9323aba4dad99e607ec39e1661ba381d574f9b6a7856dec9f31c6b7860",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_159.json",
+      "original_sha256": "e327c2b0e905e80c59626440e8a89ad20343e69a0a25825f140f1504b7500f7a",
+      "published_sha256": "346e56f3132adb1a9f0407519a693d839822fbe8c6e97b417a934ca85446fde6",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_143.json",
+      "original_sha256": "9b72c3c89b6aa56bd0566fba49dc6a340b2ccd3d82077f8faef8ca5c9fc106c2",
+      "published_sha256": "b5b21bac61f99422a21b1f022994722659b069c0accce42c9e9c513b72df732a",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/run_114.json",
+      "original_sha256": "5b308d1c1d8c95b26bff24a484f7522e29785fbdf38f3f8201afd6e16e0769a8",
+      "published_sha256": "6d307317217dcf147b554fc68012b6acbda034c1285bec1db8c91b5158c51f28",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/broader_validation20/completion.json",
+      "original_sha256": "ab54a6c466cefb9c948db052dae2e9f649924cd6d5b540e25d8ae142afc9da7c",
+      "published_sha256": "4432c25463891f5893832fea3fec897b7c9e4e52d4ff97235e4af3ddfdcffff6",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/validation6/summary.json",
+      "original_sha256": "dc457b64dbe588d4fa6c08ccf5600821b09a32e70b8beb773dda159d34e392d4",
+      "published_sha256": "0c37f2fe9842730c556b0b8ff7ff2eb91d316e6f86cf49ab894ffee351f12892",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/validation6/run_80.json",
+      "original_sha256": "0226651e4462525abb2d8b4d3b7582890193055fd2bc27f50730bb1acc0cbb08",
+      "published_sha256": "62aed0a682cdfc3491e7408b323fc169d9ccb1ff635e7151338bed8df9c77327",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/validation6/run_55.json",
+      "original_sha256": "211ea50ddc4d7b66f6af63cdcf5753e763227113629f376f5acb05dcd37a99ff",
+      "published_sha256": "7d0699dd6f52aa5e4010cc22f36a5b451281e6aacdb574ef02e4a14fddd4a28f",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/validation6/run_23.json",
+      "original_sha256": "10110e1093f98b88db98e14df3cb7c67a161e49b76f6222f1c0fed06a86adbdb",
+      "published_sha256": "d8966431ab30a74b8f7395c2c0c0a378266c6780be8465cd873947e0f41059e9",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/validation6/config.json",
+      "original_sha256": "f7d10962582e947b4120810e76367584dce71942b58126a3fb0b4be129aa61be",
+      "published_sha256": "e7a54f7363d729a43b5d895ac552f1201847875f156882c4f3592060d6f8f199",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/validation6/run_45.json",
+      "original_sha256": "47146bea5bc22fb21d18ce8b9295c10cb374797c12e63cc787154b844d4d68fa",
+      "published_sha256": "5e631e1e1eef04a7ff023143f5e71fbc1ead48b491cf9493c012944ae7d78614",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/validation6/run_6.json",
+      "original_sha256": "09a63626bf32a07b5adf9c8899419bd161998af6eea9375005e62159482ef821",
+      "published_sha256": "90229567f26c32c7f3bf78a1010f1fc10d91d7a7cd4aeb19a23ba366100824be",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/validation6/run_16.json",
+      "original_sha256": "db7e886e4157044b792557333afce6b99967b2b14d34eb015ad41b96ee91b083",
+      "published_sha256": "a37d43b158d336d9947bca74ee5ac72bd4a451f52a710e0fb93b11a0268d4f0f",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_gain15_v1/validation6/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/summary.json",
+      "original_sha256": "62b6b4d3f9d9f05c755923cc3523d14b02881d4250367317aa952e86f1ee42b6",
+      "published_sha256": "70cf1f6d3c12763669a4c9649b9174adf63f6e87eedb5b35ccd34767c0cb7b4e",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_198.json",
+      "original_sha256": "87a7cf53d6a12e6f6216b7305d7cf68d30d98015d502bb68cf20c2348fe788c9",
+      "published_sha256": "c728564408d90a9a67a280c774119f992ffc5b010f495ed978c6b4a46cf8fd24",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_213.json",
+      "original_sha256": "ec0703ebc1b82edf7e760fd2949a98e5825ba024d9e695382ed2dcdc58fe1f6c",
+      "published_sha256": "eb827100548e5a1032df27365c37da967dbb87ff792309207d671fd17d09f23f",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_204.json",
+      "original_sha256": "1cf697c259afa3aac46364e1ea814774d71bbaaf0b90f9733c2043386f9bb705",
+      "published_sha256": "711ed4617751755c49bff4fb9e7ff926f0ae90f1718a6bce4d3aec53d05893a4",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_121.json",
+      "original_sha256": "05f2f7d88900c303bc4767dbad03c9ebf5c0b65a5854bdd3b1c3bd7749ff3f12",
+      "published_sha256": "a12a28da739d7f17aa3f2a2cf3ae6adf240ff393bff5a2d6a3a755c1602ce117",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_199.json",
+      "original_sha256": "f1a51a35809a251190e3cab6af6d9484476e4914ef442715b089ef57bcea81ff",
+      "published_sha256": "db1167a52503a87f2648d76a6e86827617d087ec4a0b27f8d85bf9604ec43305",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_224.json",
+      "original_sha256": "96815dd84c63648a047175790cbef1a2221d6233ed9d4b14cd20bcc0a0f8df4f",
+      "published_sha256": "f879aadf67869c94305c44a866025e3da96d03747c82ae9f45b7d39fb8881e15",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_151.json",
+      "original_sha256": "67f1eba2dd1456bf8326d60610958d768f723abb8a02b8cb22fb911523ec82c8",
+      "published_sha256": "b1a0592efcb64794787bcac5943bb4feec2b25db8892f1f0c587baeb306f274c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_86.json",
+      "original_sha256": "7fbbcb73671fc9a2218c055237e39b0bc3d05a1cdf05c04ff2109d350c8f529e",
+      "published_sha256": "eb891e3509920984974434a30f644444b814b52d36db268df2744627e19135fc",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/config.json",
+      "original_sha256": "35c4c4b8986ba4638e7c1bcee35c3b261a75fba92bb28f08e4ac5164668eb5ac",
+      "published_sha256": "5cbde2afc5826d458699a4999e8b796b380ad197eb2c8afc074079e9df43d1cb",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_235.json",
+      "original_sha256": "eda06491fb30b44f3ee1b9a51c7b0f199163d8c9c99f227e09b809441af0a14d",
+      "published_sha256": "14b20d4e483debc8a41a85d80df27b81b9ba6aad10a29d606d30013a9e81bccb",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_131.json",
+      "original_sha256": "4c2686acc559b3386215663e2b9a0b5f6c0b7a096253ab1567120769d91ac8b3",
+      "published_sha256": "bcdc0f04946dc616e0a654dc2227a164180d5bd51e4c5fb39aaa611186c36277",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_201.json",
+      "original_sha256": "26906a9e8fef7868fdebdb5b52806f1c280feadd44c21410bbbcbb066c8e87c7",
+      "published_sha256": "395f8b0baecf9b696c4531adb9253a9b95dcd127bd5a7ff6f8709879eafef316",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_104.json",
+      "original_sha256": "431185fc84c39166f0d5b801ffd8bfcd4ca86c85611c17a67fe271b8991fb949",
+      "published_sha256": "c50f59fe1181b331d1ba6ecdd332bf8278fbb9756045e54e063f90991e32d1f2",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_153.json",
+      "original_sha256": "b8d4bb0de6ab26bc504d0b587a96b8efa4556a99e3eda39d54c33f30821856ad",
+      "published_sha256": "55daf881d8adaeb25475b2c48c2bfb0d9e0fe60a34fea776c5a5fd1eaf99f8fd",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_149.json",
+      "original_sha256": "502e81ea70cbe70ab63a2fda248a5f8a29f820fbee63a8e77e7eddc05ca65a9f",
+      "published_sha256": "a194a7bfddc7a014bf7b8e98d12b42941a4d14c2143c9505d64ad4dd8f17e25c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_172.json",
+      "original_sha256": "00c73bc972f732857781016a4e8c8d08eb01ad7a2e1c75a822e326ee98152289",
+      "published_sha256": "4448d20c997636cb218b031ab68d515009ef523d225631ff2ed0ef443cc7d75e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_93.json",
+      "original_sha256": "722b4c014ca4aa3993ee0bb0e3b60ab359820d5bc8885847a5e709613736d359",
+      "published_sha256": "b90cb0b15e5fa4d98e510c769f5473179b67149f4e18d127c628af8264966042",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_134.json",
+      "original_sha256": "242b18bbc544368c9ba44ad165fcd6484a2a42546f30cae44477a2d2843ca0c3",
+      "published_sha256": "0dacebdf2eafc6e845f4c66a03c0a4194caf0d52c6cd9a7d3f49ada540249c2d",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_159.json",
+      "original_sha256": "c8160f32bae88f49bb0f8ad5ef77e503ffb770b027684dcb7acef65a3878613f",
+      "published_sha256": "beb434150be883efc0feb3893c190c7775c7f4edea5eb954ee5dc2c3b6b4bfa9",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_143.json",
+      "original_sha256": "fca95380169480b6fcc2195dc2d570aaef878c40e84354cf681478801a0d66a6",
+      "published_sha256": "fdf114d6ad4261a3b211f4ce2ffd9645d1d887d9e563287c5972b4602d58c6b8",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/run_114.json",
+      "original_sha256": "9bd8b6f5ddec8ebae7432472f3d72a8f9c892ac82d04371d0e8d9320311e31b3",
+      "published_sha256": "e0e29bccd3d591681bb6bf6af41d048519d63e998c767f9d5d425034ca4081d2",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/broader_validation20/completion.json",
+      "original_sha256": "ab54a6c466cefb9c948db052dae2e9f649924cd6d5b540e25d8ae142afc9da7c",
+      "published_sha256": "4432c25463891f5893832fea3fec897b7c9e4e52d4ff97235e4af3ddfdcffff6",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/validation6/summary.json",
+      "original_sha256": "190216f0be2b6669b152b1cfd94c67e407d7caf9383e41fb286f9a12b85394ac",
+      "published_sha256": "af9ef9f597c4c1ee896964c6c4d0b3bd743ae3135995e2536235fa2aebb36ded",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/validation6/run_80.json",
+      "original_sha256": "fcfab73a7b731e530d4b743b950559fa18f27a39319436591dde2b889d458c0f",
+      "published_sha256": "66176c29c58fbc0cf5a1d92d63b59bed24c7fefb120bc141549dc8610d8dfc0d",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/validation6/run_55.json",
+      "original_sha256": "ca4dc344f2055e7d89efa199ce950d81e52f765145ab29d896490dc336cb6ba3",
+      "published_sha256": "848119ea18834b6038a809a80078ad6521145c42ac7c310368214760b4ec5a79",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/validation6/run_23.json",
+      "original_sha256": "74b24678f1a36eb2be5dd148314f11cae6d3e074eecb939c191009eefd69dc0b",
+      "published_sha256": "b6261b3c91b80086d7c30255d94d9cce77e7987c02291625909fdf001dbf7a3e",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/validation6/config.json",
+      "original_sha256": "2683d54c4f67b24d8f31d2ff005c045e23fcd88b8a9390c89913cc080206dff3",
+      "published_sha256": "95033c3d5644d1508319b09e627c80339b95d614dd3d72ccc847127327d98c8a",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/validation6/run_45.json",
+      "original_sha256": "77a34fa9f1357cabc84c88dbb9d38599535dcda0ee27cac10799ebe793387287",
+      "published_sha256": "50a0d660aa9f21e0a3f83cdcffbac6cefffde34a9ca5c62f3ea5ce717cb882ef",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/validation6/run_6.json",
+      "original_sha256": "12b7b29b9c82ac2af1154032e7dd7c264fe397e84349f314fec42a30d8bf2b2c",
+      "published_sha256": "891cc37d88dddd0b4050d0c57c13dab67418bc6a53dfe3819388f40142047c80",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/validation6/run_16.json",
+      "original_sha256": "bb3479a784df6d83524690bf0e6a3907c67587a9142483aa1d0ddbe6350b676a",
+      "published_sha256": "cad7cea8673ac9564c1f6f8df2fdc96afdb8327dbc197d1d70e089c5dc7e8b22",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/hybrid_posture_gate_v1/validation6/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/identified_calibrated_validation/summary.json",
+      "original_sha256": "a20635df60bad123c00ac3d7871876d6a79c229f536e05639dad9e0d412c129f",
+      "published_sha256": "e351078841785828ece35e92fee9b17f96827c63d48da8c4f486f8e64ff0e222",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/identified_calibrated_validation/run_80.json",
+      "original_sha256": "271462d879cf6189975e825be904498b8ade983dbf7d9e4c63184f0de22e4256",
+      "published_sha256": "4be37f8ed2328a65b87c0af70d30970f4826cf727aa8b0d4d31afe087dff6731",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_calibrated_validation/run_55.json",
+      "original_sha256": "7715e027f31c0511da275199b174d83c28e5bb0cc4068a95b85c0d5254e83ac5",
+      "published_sha256": "a95cbd92cefb05049d2766e3a4ea873e80867efdaefc0728c1a95d5030a83348",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_calibrated_validation/run_23.json",
+      "original_sha256": "a82b531bb2c0793cb42d3704637c405358a994fafb3b2afc6a70f67a9cfcd93d",
+      "published_sha256": "f8ba04b5fcd162ed97c0889f8485cf4c0b45d6e5d591f2a6803461a19abd2044",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_calibrated_validation/config.json",
+      "original_sha256": "ca34434c26f38c7074211ca08c2bedca5ab28d67f3d59168c741493f93a7b80a",
+      "published_sha256": "4de0dd2444a3392ba315fcedb701455fa7b0fc550cc7678b6a82406ba74786b1",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/identified_calibrated_validation/run_45.json",
+      "original_sha256": "3f2a49db5f4d704fd000270d7c415c26ba4c8416c588ec31ae1d86ac959e9a09",
+      "published_sha256": "1bd68a26692eb113ec006740af1a851d701bf9c98c061e87aef98ff2fd2a3116",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_calibrated_validation/run_6.json",
+      "original_sha256": "49e18e870bc0945b5f7614a6432cf2eeb0b74e4c5d383aa1460c72a0e67bf18b",
+      "published_sha256": "9d512a8594ec99a59ebd371cccf9d38e03e500da439cc181532acf0ad2b9094b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_calibrated_validation/run_16.json",
+      "original_sha256": "454a7d21af2bb351b837b31ac7312ba6f08b515b1c0385b8e6db839210fc34a5",
+      "published_sha256": "184b82774ea07ffd80cf90dc22b4c2f3abd74844c81124682b38360108ee1db5",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_calibrated_validation/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/identified_original_validation/summary.json",
+      "original_sha256": "570318fe8f09cb43f959d623c680fa195917db476a08607bcb9b00afeb1eb6bc",
+      "published_sha256": "d5ed3e6e6a8e0eb878adcf370c42da7f1fcac1fabb250e90c5ce8cd98f23f3bd",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/identified_original_validation/run_80.json",
+      "original_sha256": "3ece0b22cca2e77ac6f477c299dda830933b7e717210283473779dff896108bb",
+      "published_sha256": "d3124dd39272e4a37dc39f5e8c76f8f1e1cef34c3f4798a6db5070357bb452f4",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_original_validation/run_55.json",
+      "original_sha256": "3d34e6e91aa9ea29d977d0033eae85c5c4bfce79f4064a99ca3d1c878ca1f118",
+      "published_sha256": "79630486d48344a6f2edf221d2ba79664f5154228f8a457e539865e0caa7da8d",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_original_validation/run_23.json",
+      "original_sha256": "55c5a220949c315b9afcb9e8466f5a85edeee88e4a361afef4385b4560616aad",
+      "published_sha256": "8fa5e250021175f11aaf32b494883657692116dd720f441ba0070dab8fbcc47f",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_original_validation/config.json",
+      "original_sha256": "0794c42be1558db666351a017a7a29ce4c4e29e4aba76c28bb79dbe0a4b21487",
+      "published_sha256": "8f309f18625e1cb01403f8e4173123b5a057a02fb9346f38762482ae568b629f",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/identified_original_validation/run_45.json",
+      "original_sha256": "ce3836ee95b4ee2b8f2c5b3786c50e12c65b0de1cb6e6beefc9d6cf361381737",
+      "published_sha256": "9a600f28771ef8bbeabe3450189c13275e4a1826ab5acc88e7e5b527a0f712c4",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_original_validation/run_6.json",
+      "original_sha256": "13d25c88aebf5ab5af6f857daa0d5fba202909fa725616b188731bc616b4fd0a",
+      "published_sha256": "a4a3c18b6c4f3c055c48af4e2b75648101d3c45148111a4942d16adb04b1c9af",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_original_validation/run_16.json",
+      "original_sha256": "fec571d9e40660603910b04ceff498813a07381160257694d5a5ed5233132f61",
+      "published_sha256": "ae014717378fd5bce6582c6f1e2703c756a4fdbea1c513bd62d4ec25267660f2",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/identified_original_validation/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/original_validation/summary.json",
+      "original_sha256": "6b6b675c28e6bceefd27ad6d3ee96aac9240987ab3d0050218e3bf6d55cce9b2",
+      "published_sha256": "dd5c843732ac1321a438f75868d40f90e23716f56bf50afd1c9f77594274f2b7",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/original_validation/run_80.json",
+      "original_sha256": "b49f3c61b1926eeff81854dd9d6d9b10d417fa4d319b8cff5b7cc97adb204e7e",
+      "published_sha256": "027b6c8ac7850a18486279d2bd08ea9ffff101789b3d7fd6d913ae0d9cf6c69c",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/original_validation/run_55.json",
+      "original_sha256": "1d53f40d4fc01f3170e90bcdea49d3750f2e83f1ee2127101205e1de820f75ed",
+      "published_sha256": "2eab5d2e0042c73e7b4be71bc1ee13b268c2b49e9bd4262b613136e93dc9dbdb",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/original_validation/run_23.json",
+      "original_sha256": "8e443953c68fd32b618ffc15af2849b88682c7d46ce2ee24300cce319656c10d",
+      "published_sha256": "ec5dd325118c4626115aee9e197ad28c9a7c7d88d9510da9f452fe91b3dca38b",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/original_validation/config.json",
+      "original_sha256": "44765ef6e9838da2ac9eefb4fd5fe14843373f1fae217cfa8caa4f9800373f3a",
+      "published_sha256": "52af08cae8720be131fa9122063f78a4788e4cd95b1c9e7d7f4d51825882b6d0",
+      "omitted_fields": []
+    },
+    {
+      "path": "learned_geometry_branch/original_validation/run_45.json",
+      "original_sha256": "1921aa96c9b2f602b29ee1edc3171cbbf2007b43999f632511d03442d670b018",
+      "published_sha256": "d8c3f23502dc40fb68a03ea1e68c97b83410b6bf6cc69b8fa0f0febe82d4eaaf",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/original_validation/run_6.json",
+      "original_sha256": "ed5eef95efe3ece46ead7ce47605b7e28bfcf7e22fab3273dda996aef8eb6d06",
+      "published_sha256": "e38609f828faf21eada03b33b84d825227cdd1cc085870437b308fa8d60a1f90",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/original_validation/run_16.json",
+      "original_sha256": "d47e1b507f0a55dc9fadc20a33c3df255beec0af6892456d993940a08eef073e",
+      "published_sha256": "ace739436e4eded9a0a466c040f149b50829f95517dd7fd8a81b6029dc75a9e7",
+      "omitted_fields": [
+        "frames",
+        "log"
+      ]
+    },
+    {
+      "path": "learned_geometry_branch/original_validation/completion.json",
+      "original_sha256": "94dcd090fac89544d5904f18e4844983344f8bc2e049757fc08f2226f49b2d65",
+      "published_sha256": "d914cf698f428dcf606c3249d7c69461a249d3d0c4849a105fb014a1b422194d",
+      "omitted_fields": []
+    },
+    {
+      "path": "trig_position_training/summary.json",
+      "original_sha256": "50478c48d5c011532bc2df084567949baf777f03f0c9355dd016faed1d73b4c2",
+      "published_sha256": "50478c48d5c011532bc2df084567949baf777f03f0c9355dd016faed1d73b4c2",
+      "omitted_fields": []
+    },
+    {
+      "path": "trig_position_training/config.json",
+      "original_sha256": "da337eb7ccdd31f4e3e90f4b11260b5862529c29fc826063f6c72780c07b355b",
+      "published_sha256": "da337eb7ccdd31f4e3e90f4b11260b5862529c29fc826063f6c72780c07b355b",
+      "omitted_fields": []
+    }
+  ]
+}

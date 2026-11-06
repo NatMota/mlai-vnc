@@ -1,0 +1,17 @@
+{
+  "architecture": "tau_j = trig(q1..q6) @ learned_coeff_j + learnedKp_j*(own_reference_j-counted_q_j) + learnedKd_j*(own_desired_speed_j-counted_qd_j); clip output to +/-30Nm",
+  "training_reference": "expert internal q_des and qd_des only during coefficient identification",
+  "runtime_reference": "student generated, never simulator or expert",
+  "ridge_values": [
+    1e-12,
+    1e-10,
+    1e-08,
+    1e-06
+  ],
+  "fit_rule": "linear fit to unsaturated abs(torque)<29.5Nm rows, equal mean per eligible run; validation scores ALL rows after actual output clipping",
+  "no_URDF": true,
+  "no_analytic_mass_or_gravity": true,
+  "no_DART_or_DAgger": true,
+  "no_test_opened": true,
+  "source_sha256": "6c1c79622dbe31ca4cf263c7b87d6eb0a3f950eadd06844d0dfe9309a2ea7d7a"
+}

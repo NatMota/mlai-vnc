@@ -1,0 +1,11 @@
+{
+  "original_source_sha256": "785b6b7f375d8663ac942ada0294520f0b582c2318f1248e96f454589dc3ca96",
+  "portable_source_sha256": "89ed55474b5215dbb1cc78a1c9336ea5eddafe1e753345abc4080bd8dece4b15",
+  "change": "Only replace absolute bounds-file path with path relative to this module.",
+  "parity": {
+    "recorded_validation_target": 45,
+    "rows": 8042,
+    "outputs": "Bit-identical torque, STOP distance and all controller internal state fields at every row.",
+    "elapsed_s": 16.20247513614595
+  }
+}

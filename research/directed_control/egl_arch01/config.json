@@ -1,0 +1,31 @@
+{
+  "names": [
+    "baseline",
+    "damping_skip2",
+    "damping_skip5",
+    "damping_skip10",
+    "phase_gain75",
+    "phase_gain125"
+  ],
+  "ids": [
+    6,
+    16,
+    23,
+    45,
+    55,
+    80
+  ],
+  "condition": {},
+  "renderer": "egl",
+  "jobs": 2,
+  "selection": "validation-only exploratory fixed candidates; no optimizer or test data",
+  "native_sha": "4fcac465ea0f2a92596a8b73a2dfa1b2f5a2183215f8c91412407f095f92cd35",
+  "model_sha": {
+    "baseline": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+    "damping_skip2": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+    "damping_skip5": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+    "damping_skip10": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+    "phase_gain75": "52829c5f5c1238af65b44ae3e0169acce25bc57ad09bda6c30590baf754eef35",
+    "phase_gain125": "bf77280fa339caf732023ff9fb5869b187ec59f65d1a8807f04517f5e62c5bf6"
+  }
+}

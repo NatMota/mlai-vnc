@@ -1,0 +1,48 @@
+{
+  "name": "clean_reference_recovery_expanded12",
+  "ids": [
+    6,
+    16,
+    23,
+    45,
+    55,
+    80,
+    267,
+    352,
+    374,
+    418,
+    506,
+    527
+  ],
+  "split": "val",
+  "camera": false,
+  "runtime": "/media/nm/Fast Drive/comp0245-directed-edit-20261105/clean_reference_recovery_runtime.py",
+  "runtime_sha256": "785b6b7f375d8663ac942ada0294520f0b582c2318f1248e96f454589dc3ca96",
+  "baseline_manifest_sha256": "e2261cfeab97c5fa5f8547964d094d2ae4522219efbc1e752365f553cf86c2a5",
+  "runner_sha256": "96ad902e1ababedca28eff670929b255205000a1c302ac996522eda618df56ec",
+  "evaluation_sha256": "4e488cc8cffd9047b761473b0942eed96ea4071568321da80975c587b9adaedd",
+  "instrumented_source_sha256": "b14d8474bafa150797ed713d5be6d18a9ef22e03c213be47bfc01c005351e245",
+  "data_sha256": {
+    "6": "42f2bfac261f8802758e616e7b8a604cbe53ee447ba4fbfdef4c6e9c8d157588",
+    "16": "5d0cde3f57ff35472b245b481e253bc0dcfaea16e9024ba5e25280bf06724842",
+    "23": "b6d5feb6d7ad1007b2aa332ec486e79fc0533a1046c7d7d0a6b009c3470806cd",
+    "45": "03d922cb7bea31712b09111a7ea0f0c250f836ab843ce685a282006abf64c174",
+    "55": "d6e09b1484119385948a90eabde94930340bcbc747f704b1df27819e2b994c24",
+    "80": "ef6905046545235c6653d4a6ce50360f4cf806b761cd24a7b61eddf8bce4532c",
+    "267": "f5ac271079560c4cbb27428faf89bc7305ef9da067f458cf82e03e745a7929fa",
+    "352": "b9d095ff6139a09acd55d5f85bf58af3cf5f8c41cbcca369270690ec708bdea6",
+    "374": "66cd95980cb0f2e04c45d733b7ef1d95840920b4e390f75d211adea448b13dfa",
+    "418": "50a4a68da479691842f5a330bc9cc725b417663634dbb3c7252abd7db1a673e9",
+    "506": "d5af376017572a3afee2a2ab4d087108af0fde8863a55bcee61be1fa3201e1ea",
+    "527": "5e79e4ce2b990cab489e6386d485d4748b48f6a60ca60763444e2e00921a479c"
+  },
+  "models": {
+    "envelope.npz": "c6506ba11554a23430f9d8c6da651d97f4e83e855828bf84253cfe24f7feadc8",
+    "hybrid_bounds.npz": "9d0be43054151a30b697c3303c242ddb1eeeb47bc345b26da58328a29e1e789d",
+    "identified_bounds.npz": "4743e2619fcbe1518791221caf36036bffffa079aade5e5b9862ceac12f0b5c2",
+    "position.npz": "d394c21e86d0f499e569344b8ad6137b8d6ae11cd72cc8ee82921c92e8b0792a",
+    "torque.npz": "59bd66fc6cef574bc3446be0628d159a6ff2036c4433bb96d04d10a76ea23f94"
+  },
+  "native_sha256": "4fcac465ea0f2a92596a8b73a2dfa1b2f5a2183215f8c91412407f095f92cd35",
+  "truth_usage": "Diagnostic-only recording and scoring; never supplied to policy."
+}

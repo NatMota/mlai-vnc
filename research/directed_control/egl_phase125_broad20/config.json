@@ -1,0 +1,35 @@
+{
+  "names": [
+    "phase_gain125"
+  ],
+  "ids": [
+    86,
+    93,
+    104,
+    114,
+    121,
+    131,
+    134,
+    143,
+    149,
+    151,
+    153,
+    159,
+    172,
+    198,
+    199,
+    201,
+    204,
+    213,
+    224,
+    235
+  ],
+  "condition": {},
+  "renderer": "egl",
+  "jobs": 2,
+  "selection": "validation-only exploratory fixed candidates; no optimizer or test data",
+  "native_sha": "4fcac465ea0f2a92596a8b73a2dfa1b2f5a2183215f8c91412407f095f92cd35",
+  "model_sha": {
+    "phase_gain125": "bf77280fa339caf732023ff9fb5869b187ec59f65d1a8807f04517f5e62c5bf6"
+  }
+}

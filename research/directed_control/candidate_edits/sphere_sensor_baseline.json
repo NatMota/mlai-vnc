@@ -1,0 +1,8 @@
+{
+  "name": "sphere_sensor_baseline",
+  "arm_leaky_slope": 0,
+  "hypothesis": "Correct marker centre reconstruction from calibrated pixel rays and known sphere radius; no oracle position input, same renderedRGBD/rate/resolution. Frozen network may react differently due feature distribution shift.",
+  "model_sha256": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+  "changes": [],
+  "sensor_sphere_fit": true
+}

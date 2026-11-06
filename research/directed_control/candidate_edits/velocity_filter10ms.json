@@ -1,0 +1,8 @@
+{
+  "name": "velocity_filter10ms",
+  "arm_leaky_slope": 0,
+  "velocity_ema_ms": 10,
+  "hypothesis": "Causal lowpass measured joint speeds reduces noise while preserving steady response; adds lag and may harm control. All model weights and thresholds fixed.",
+  "model_sha256": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+  "architecture_change": "Sensor-history state; EMA alpha=1/(1+time_constant_ms) at1kHz; STOP receives same filtered speeds"
+}

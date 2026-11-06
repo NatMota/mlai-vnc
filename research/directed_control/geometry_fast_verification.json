@@ -1,0 +1,30 @@
+[
+  {
+    "model": "trig_position_training/selected.npz",
+    "max_absolute_difference": 1.4988010832439613e-15,
+    "timing": {
+      "learned_geometry_branch.geometry_runtime": {
+        "median_us": 653.6496803164482,
+        "p95_us": 922.2906548529863
+      },
+      "__main__": {
+        "median_us": 279.13879603147507,
+        "p95_us": 442.68756173551054
+      }
+    }
+  },
+  {
+    "model": "trig_svd_training/selected.npz",
+    "max_absolute_difference": 1.2212453270876722e-15,
+    "timing": {
+      "learned_geometry_branch.geometry_runtime": {
+        "median_us": 458.32060277462006,
+        "p95_us": 598.5277239233254
+      },
+      "__main__": {
+        "median_us": 157.59188681840897,
+        "p95_us": 219.41387094557285
+      }
+    }
+  }
+]

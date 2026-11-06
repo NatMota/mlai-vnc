@@ -1,0 +1,9096 @@
+{
+  "name": "velocity_gain075",
+  "arm_leaky_slope": 0,
+  "hypothesis": "Reduce amplification of velocity departures and later measurement noise; may weaken damping",
+  "model_sha256": "528b7074b7a92b3f295a00bec9073faa0e42fe36d8db9fe2a52c5f26a42950d9",
+  "changes": [
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        0,
+        7
+      ],
+      "before": 0.0521843396127224,
+      "after": 0.03913825377821922
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        0,
+        8
+      ],
+      "before": -0.9752827882766724,
+      "after": -0.7314621210098267
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        0,
+        9
+      ],
+      "before": 0.8952539563179016,
+      "after": 0.6714404821395874
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        0,
+        10
+      ],
+      "before": 1.022220492362976,
+      "after": 0.7666653394699097
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        0,
+        11
+      ],
+      "before": 0.202579066157341,
+      "after": 0.15193429589271545
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        0,
+        12
+      ],
+      "before": -0.3936695158481598,
+      "after": -0.29525214433670044
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        0,
+        13
+      ],
+      "before": -3.098905563354492,
+      "after": -2.324179172515869
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        1,
+        7
+      ],
+      "before": -0.4673176407814026,
+      "after": -0.35048824548721313
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        1,
+        8
+      ],
+      "before": 0.22560466825962067,
+      "after": 0.1692035049200058
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        1,
+        9
+      ],
+      "before": -0.22949841618537903,
+      "after": -0.17212381958961487
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        1,
+        10
+      ],
+      "before": 0.5960372090339661,
+      "after": 0.44702792167663574
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        1,
+        11
+      ],
+      "before": -0.4764529764652252,
+      "after": -0.3573397397994995
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        1,
+        12
+      ],
+      "before": 0.8397902846336365,
+      "after": 0.6298426985740662
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        1,
+        13
+      ],
+      "before": 0.28380700945854187,
+      "after": 0.2128552496433258
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        2,
+        7
+      ],
+      "before": 0.3843540549278259,
+      "after": 0.28826552629470825
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        2,
+        8
+      ],
+      "before": 1.7453420162200928,
+      "after": 1.3090064525604248
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        2,
+        9
+      ],
+      "before": -0.40019920468330383,
+      "after": -0.30014941096305847
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        2,
+        10
+      ],
+      "before": 0.298361212015152,
+      "after": 0.22377091646194458
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        2,
+        11
+      ],
+      "before": -0.31463170051574707,
+      "after": -0.2359737753868103
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        2,
+        12
+      ],
+      "before": 0.4368213415145874,
+      "after": 0.32761600613594055
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        2,
+        13
+      ],
+      "before": -1.5237213373184204,
+      "after": -1.1427910327911377
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        3,
+        7
+      ],
+      "before": -0.49651387333869934,
+      "after": -0.3723854124546051
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        3,
+        8
+      ],
+      "before": 1.1398388147354126,
+      "after": 0.8548791408538818
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        3,
+        9
+      ],
+      "before": -1.082700252532959,
+      "after": -0.8120251893997192
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        3,
+        10
+      ],
+      "before": -0.4046400189399719,
+      "after": -0.30348002910614014
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        3,
+        11
+      ],
+      "before": 0.6514672040939331,
+      "after": 0.48860040307044983
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        3,
+        12
+      ],
+      "before": -1.674945592880249,
+      "after": -1.256209135055542
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        3,
+        13
+      ],
+      "before": -0.19811850786209106,
+      "after": -0.1485888808965683
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        4,
+        7
+      ],
+      "before": 0.4925660192966461,
+      "after": 0.3694245219230652
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        4,
+        8
+      ],
+      "before": 0.8083834648132324,
+      "after": 0.6062875986099243
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        4,
+        9
+      ],
+      "before": -0.6464071869850159,
+      "after": -0.4848054051399231
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        4,
+        10
+      ],
+      "before": -0.05873037502169609,
+      "after": -0.04404778033494949
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        4,
+        11
+      ],
+      "before": -0.4419597387313843,
+      "after": -0.3314698040485382
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        4,
+        12
+      ],
+      "before": -1.0092815160751343,
+      "after": -0.7569611072540283
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        4,
+        13
+      ],
+      "before": 0.5502736568450928,
+      "after": 0.4127052426338196
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        5,
+        7
+      ],
+      "before": 1.0509439706802368,
+      "after": 0.7882080078125
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        5,
+        8
+      ],
+      "before": 1.5772961378097534,
+      "after": 1.1829720735549927
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        5,
+        9
+      ],
+      "before": 0.34634119272232056,
+      "after": 0.2597559094429016
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        5,
+        10
+      ],
+      "before": -2.2411105632781982,
+      "after": -1.680832862854004
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        5,
+        11
+      ],
+      "before": -1.0347589254379272,
+      "after": -0.776069164276123
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        5,
+        12
+      ],
+      "before": -1.2301504611968994,
+      "after": -0.9226128458976746
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        5,
+        13
+      ],
+      "before": -0.40166300535202026,
+      "after": -0.301247239112854
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        6,
+        7
+      ],
+      "before": -1.338263988494873,
+      "after": -1.0036979913711548
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        6,
+        8
+      ],
+      "before": -0.7005470991134644,
+      "after": -0.5254102945327759
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        6,
+        9
+      ],
+      "before": 0.06597152352333069,
+      "after": 0.049478642642498016
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        6,
+        10
+      ],
+      "before": -1.8111331462860107,
+      "after": -1.3583498001098633
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        6,
+        11
+      ],
+      "before": -0.06933504343032837,
+      "after": -0.05200128257274628
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        6,
+        12
+      ],
+      "before": 0.33207449316978455,
+      "after": 0.2490558624267578
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        6,
+        13
+      ],
+      "before": -1.1974295377731323,
+      "after": -0.8980721235275269
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        7,
+        7
+      ],
+      "before": -0.09091836959123611,
+      "after": -0.06818877905607224
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        7,
+        8
+      ],
+      "before": 0.7981154322624207,
+      "after": 0.5985865592956543
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        7,
+        9
+      ],
+      "before": -0.6627002954483032,
+      "after": -0.4970252215862274
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        7,
+        10
+      ],
+      "before": -2.5579452514648438,
+      "after": -1.9184589385986328
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        7,
+        11
+      ],
+      "before": 2.5327141284942627,
+      "after": 1.8995356559753418
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        7,
+        12
+      ],
+      "before": 0.6548951864242554,
+      "after": 0.49117138981819153
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        7,
+        13
+      ],
+      "before": -1.9357630014419556,
+      "after": -1.451822280883789
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        8,
+        7
+      ],
+      "before": -2.0839767456054688,
+      "after": -1.5629825592041016
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        8,
+        8
+      ],
+      "before": -0.07225646823644638,
+      "after": -0.054192349314689636
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        8,
+        9
+      ],
+      "before": -0.21525202691555023,
+      "after": -0.16143901646137238
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        8,
+        10
+      ],
+      "before": 0.29766255617141724,
+      "after": 0.22324691712856293
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        8,
+        11
+      ],
+      "before": 0.25974950194358826,
+      "after": 0.1948121190071106
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        8,
+        12
+      ],
+      "before": -0.3025560677051544,
+      "after": -0.2269170582294464
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        8,
+        13
+      ],
+      "before": 1.9496275186538696,
+      "after": 1.4622206687927246
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        9,
+        7
+      ],
+      "before": -1.0234352350234985,
+      "after": -0.7675764560699463
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        9,
+        8
+      ],
+      "before": -0.6087825298309326,
+      "after": -0.45658689737319946
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        9,
+        9
+      ],
+      "before": -0.2762570381164551,
+      "after": -0.2071927785873413
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        9,
+        10
+      ],
+      "before": 1.4468508958816528,
+      "after": 1.085138201713562
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        9,
+        11
+      ],
+      "before": -0.8974796533584595,
+      "after": -0.673109769821167
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        9,
+        12
+      ],
+      "before": 0.46339380741119385,
+      "after": 0.3475453555583954
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        9,
+        13
+      ],
+      "before": -0.8389440178871155,
+      "after": -0.6292080283164978
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        10,
+        7
+      ],
+      "before": -0.3788408935070038,
+      "after": -0.28413066267967224
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        10,
+        8
+      ],
+      "before": -0.11826954036951065,
+      "after": -0.08870215713977814
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        10,
+        9
+      ],
+      "before": 0.04058874025940895,
+      "after": 0.030441556125879288
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        10,
+        10
+      ],
+      "before": 0.12952174246311188,
+      "after": 0.0971413105726242
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        10,
+        11
+      ],
+      "before": 0.8688845634460449,
+      "after": 0.6516634225845337
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        10,
+        12
+      ],
+      "before": 1.8133066892623901,
+      "after": 1.3599799871444702
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        10,
+        13
+      ],
+      "before": -2.237684965133667,
+      "after": -1.6782636642456055
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        11,
+        7
+      ],
+      "before": -0.13990981876850128,
+      "after": -0.10493236780166626
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        11,
+        8
+      ],
+      "before": 0.2696520984172821,
+      "after": 0.20223906636238098
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        11,
+        9
+      ],
+      "before": -0.006567643955349922,
+      "after": -0.004925732966512442
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        11,
+        10
+      ],
+      "before": -0.18176381289958954,
+      "after": -0.13632285594940186
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        11,
+        11
+      ],
+      "before": 0.8984941840171814,
+      "after": 0.6738706231117249
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        11,
+        12
+      ],
+      "before": 0.1253916323184967,
+      "after": 0.09404372423887253
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        11,
+        13
+      ],
+      "before": 1.3504034280776978,
+      "after": 1.0128026008605957
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        12,
+        7
+      ],
+      "before": -0.6188023686408997,
+      "after": -0.46410179138183594
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        12,
+        8
+      ],
+      "before": 1.800326943397522,
+      "after": 1.3502452373504639
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        12,
+        9
+      ],
+      "before": -0.7237361073493958,
+      "after": -0.542802095413208
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        12,
+        10
+      ],
+      "before": -1.031693696975708,
+      "after": -0.773770272731781
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        12,
+        11
+      ],
+      "before": -1.7213109731674194,
+      "after": -1.2909832000732422
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        12,
+        12
+      ],
+      "before": -1.299599289894104,
+      "after": -0.9746994972229004
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        12,
+        13
+      ],
+      "before": -3.444728136062622,
+      "after": -2.5835461616516113
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        13,
+        7
+      ],
+      "before": 0.7173463702201843,
+      "after": 0.538009762763977
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        13,
+        8
+      ],
+      "before": -1.3553704023361206,
+      "after": -1.016527771949768
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        13,
+        9
+      ],
+      "before": -0.45488274097442627,
+      "after": -0.3411620557308197
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        13,
+        10
+      ],
+      "before": -0.19861996173858643,
+      "after": -0.14896497130393982
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        13,
+        11
+      ],
+      "before": 0.5565875768661499,
+      "after": 0.4174406826496124
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        13,
+        12
+      ],
+      "before": -1.2981411218643188,
+      "after": -0.9736058712005615
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        13,
+        13
+      ],
+      "before": -2.377851724624634,
+      "after": -1.7833888530731201
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        14,
+        7
+      ],
+      "before": -0.25609099864959717,
+      "after": -0.19206824898719788
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        14,
+        8
+      ],
+      "before": -1.5848608016967773,
+      "after": -1.188645601272583
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        14,
+        9
+      ],
+      "before": 0.48358532786369324,
+      "after": 0.36268898844718933
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        14,
+        10
+      ],
+      "before": -0.8054018616676331,
+      "after": -0.604051411151886
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        14,
+        11
+      ],
+      "before": -0.7021211385726929,
+      "after": -0.5265908241271973
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        14,
+        12
+      ],
+      "before": 0.08882200717926025,
+      "after": 0.06661650538444519
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        14,
+        13
+      ],
+      "before": -0.60346919298172,
+      "after": -0.45260190963745117
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        15,
+        7
+      ],
+      "before": 0.3726372718811035,
+      "after": 0.27947795391082764
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        15,
+        8
+      ],
+      "before": 1.4497449398040771,
+      "after": 1.087308645248413
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        15,
+        9
+      ],
+      "before": 1.1905999183654785,
+      "after": 0.8929499387741089
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        15,
+        10
+      ],
+      "before": 4.148741722106934,
+      "after": 3.1115562915802
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        15,
+        11
+      ],
+      "before": 0.9288488626480103,
+      "after": 0.6966366767883301
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        15,
+        12
+      ],
+      "before": -3.398940324783325,
+      "after": -2.5492053031921387
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        15,
+        13
+      ],
+      "before": 1.0210742950439453,
+      "after": 0.765805721282959
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        16,
+        7
+      ],
+      "before": 0.12412566691637039,
+      "after": 0.09309425204992294
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        16,
+        8
+      ],
+      "before": -0.3105594515800476,
+      "after": -0.2329195886850357
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        16,
+        9
+      ],
+      "before": -0.2717161178588867,
+      "after": -0.20378708839416504
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        16,
+        10
+      ],
+      "before": -0.34066569805145264,
+      "after": -0.2554992735385895
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        16,
+        11
+      ],
+      "before": 2.4700894355773926,
+      "after": 1.8525670766830444
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        16,
+        12
+      ],
+      "before": 1.5037308931350708,
+      "after": 1.1277981996536255
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        16,
+        13
+      ],
+      "before": 0.6507249474525452,
+      "after": 0.48804372549057007
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        17,
+        7
+      ],
+      "before": 0.0009608896798454225,
+      "after": 0.0007206672453321517
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        17,
+        8
+      ],
+      "before": 2.152682065963745,
+      "after": 1.614511489868164
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        17,
+        9
+      ],
+      "before": 0.32030773162841797,
+      "after": 0.24023079872131348
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        17,
+        10
+      ],
+      "before": -0.025938335806131363,
+      "after": -0.019453752785921097
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        17,
+        11
+      ],
+      "before": 2.1846165657043457,
+      "after": 1.6384624242782593
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        17,
+        12
+      ],
+      "before": 0.697344958782196,
+      "after": 0.5230087041854858
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        17,
+        13
+      ],
+      "before": -1.7777131795883179,
+      "after": -1.333284854888916
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        18,
+        7
+      ],
+      "before": 1.2430769205093384,
+      "after": 0.9323077201843262
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        18,
+        8
+      ],
+      "before": -1.6694804430007935,
+      "after": -1.2521103620529175
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        18,
+        9
+      ],
+      "before": -1.1955032348632812,
+      "after": -0.8966274261474609
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        18,
+        10
+      ],
+      "before": 0.3493712842464447,
+      "after": 0.26202845573425293
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        18,
+        11
+      ],
+      "before": 0.3582218885421753,
+      "after": 0.26866641640663147
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        18,
+        12
+      ],
+      "before": -0.3354174494743347,
+      "after": -0.25156307220458984
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        18,
+        13
+      ],
+      "before": 0.6821292638778687,
+      "after": 0.5115969181060791
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        19,
+        7
+      ],
+      "before": 1.0464297533035278,
+      "after": 0.7848223447799683
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        19,
+        8
+      ],
+      "before": -2.4986727237701416,
+      "after": -1.874004602432251
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        19,
+        9
+      ],
+      "before": -0.24313513934612274,
+      "after": -0.18235135078430176
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        19,
+        10
+      ],
+      "before": 0.9337761998176575,
+      "after": 0.7003321647644043
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        19,
+        11
+      ],
+      "before": 1.0331684350967407,
+      "after": 0.7748763561248779
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        19,
+        12
+      ],
+      "before": -1.7023341655731201,
+      "after": -1.2767505645751953
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        19,
+        13
+      ],
+      "before": -2.671490430831909,
+      "after": -2.003617763519287
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        20,
+        7
+      ],
+      "before": 0.577102541923523,
+      "after": 0.4328269064426422
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        20,
+        8
+      ],
+      "before": 0.5019239187240601,
+      "after": 0.37644293904304504
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        20,
+        9
+      ],
+      "before": -1.124107003211975,
+      "after": -0.8430802822113037
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        20,
+        10
+      ],
+      "before": 0.12298645824193954,
+      "after": 0.09223984181880951
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        20,
+        11
+      ],
+      "before": 0.4630207419395447,
+      "after": 0.3472655415534973
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        20,
+        12
+      ],
+      "before": 0.5753756165504456,
+      "after": 0.43153172731399536
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        20,
+        13
+      ],
+      "before": 0.16461695730686188,
+      "after": 0.1234627217054367
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        21,
+        7
+      ],
+      "before": 1.3689210414886475,
+      "after": 1.0266907215118408
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        21,
+        8
+      ],
+      "before": 0.5505427122116089,
+      "after": 0.41290703415870667
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        21,
+        9
+      ],
+      "before": 0.5566130876541138,
+      "after": 0.4174598157405853
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        21,
+        10
+      ],
+      "before": 0.31040945649147034,
+      "after": 0.23280709981918335
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        21,
+        11
+      ],
+      "before": 1.3720159530639648,
+      "after": 1.0290119647979736
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        21,
+        12
+      ],
+      "before": -0.30642181634902954,
+      "after": -0.22981636226177216
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        21,
+        13
+      ],
+      "before": -2.522665023803711,
+      "after": -1.8919987678527832
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        22,
+        7
+      ],
+      "before": -0.23148202896118164,
+      "after": -0.17361152172088623
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        22,
+        8
+      ],
+      "before": -0.2408490926027298,
+      "after": -0.18063682317733765
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        22,
+        9
+      ],
+      "before": 1.08889901638031,
+      "after": 0.8166742324829102
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        22,
+        10
+      ],
+      "before": 0.03771479055285454,
+      "after": 0.02828609198331833
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        22,
+        11
+      ],
+      "before": 0.3756868541240692,
+      "after": 0.2817651331424713
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        22,
+        12
+      ],
+      "before": -0.15125615894794464,
+      "after": -0.11344212293624878
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        22,
+        13
+      ],
+      "before": 0.5384109616279602,
+      "after": 0.40380823612213135
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        23,
+        7
+      ],
+      "before": 0.843168318271637,
+      "after": 0.6323762536048889
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        23,
+        8
+      ],
+      "before": -1.0147544145584106,
+      "after": -0.7610658407211304
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        23,
+        9
+      ],
+      "before": -0.06539303809404373,
+      "after": -0.04904478043317795
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        23,
+        10
+      ],
+      "before": 0.07772966474294662,
+      "after": 0.05829724669456482
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        23,
+        11
+      ],
+      "before": -0.7626489400863647,
+      "after": -0.5719866752624512
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        23,
+        12
+      ],
+      "before": 1.1902925968170166,
+      "after": 0.8927194476127625
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        23,
+        13
+      ],
+      "before": 2.8973608016967773,
+      "after": 2.173020601272583
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        24,
+        7
+      ],
+      "before": 0.3213396370410919,
+      "after": 0.24100473523139954
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        24,
+        8
+      ],
+      "before": 1.3464550971984863,
+      "after": 1.0098413228988647
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        24,
+        9
+      ],
+      "before": -0.35189980268478394,
+      "after": -0.26392483711242676
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        24,
+        10
+      ],
+      "before": -1.8367735147476196,
+      "after": -1.377580165863037
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        24,
+        11
+      ],
+      "before": -2.6055071353912354,
+      "after": -1.9541304111480713
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        24,
+        12
+      ],
+      "before": -0.06797000020742416,
+      "after": -0.050977498292922974
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        24,
+        13
+      ],
+      "before": -0.5117340087890625,
+      "after": -0.3838005065917969
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        25,
+        7
+      ],
+      "before": -2.2201552391052246,
+      "after": -1.6651164293289185
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        25,
+        8
+      ],
+      "before": 0.2738902270793915,
+      "after": 0.205417662858963
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        25,
+        9
+      ],
+      "before": 1.9761031866073608,
+      "after": 1.4820773601531982
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        25,
+        10
+      ],
+      "before": -2.0549700260162354,
+      "after": -1.5412275791168213
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        25,
+        11
+      ],
+      "before": 2.266529083251953,
+      "after": 1.6998968124389648
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        25,
+        12
+      ],
+      "before": 1.1673638820648193,
+      "after": 0.8755229115486145
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        25,
+        13
+      ],
+      "before": 0.5361152291297913,
+      "after": 0.40208643674850464
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        26,
+        7
+      ],
+      "before": -0.8279377818107605,
+      "after": -0.6209533214569092
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        26,
+        8
+      ],
+      "before": 2.6804568767547607,
+      "after": 2.010342597961426
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        26,
+        9
+      ],
+      "before": -0.29319724440574646,
+      "after": -0.21989792585372925
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        26,
+        10
+      ],
+      "before": -0.6108946204185486,
+      "after": -0.45817095041275024
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        26,
+        11
+      ],
+      "before": -1.5697543621063232,
+      "after": -1.1773157119750977
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        26,
+        12
+      ],
+      "before": 1.069559097290039,
+      "after": 0.8021693229675293
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        26,
+        13
+      ],
+      "before": 1.94392991065979,
+      "after": 1.4579474925994873
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        27,
+        7
+      ],
+      "before": -0.21698465943336487,
+      "after": -0.16273850202560425
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        27,
+        8
+      ],
+      "before": -2.39880108833313,
+      "after": -1.7991008758544922
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        27,
+        9
+      ],
+      "before": 1.4567668437957764,
+      "after": 1.0925750732421875
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        27,
+        10
+      ],
+      "before": 1.9980440139770508,
+      "after": 1.498533010482788
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        27,
+        11
+      ],
+      "before": 0.5837337374687195,
+      "after": 0.4378002882003784
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        27,
+        12
+      ],
+      "before": -0.43426576256752014,
+      "after": -0.3256993293762207
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        27,
+        13
+      ],
+      "before": -0.5304259061813354,
+      "after": -0.3978194296360016
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        28,
+        7
+      ],
+      "before": -0.6428457498550415,
+      "after": -0.48213431239128113
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        28,
+        8
+      ],
+      "before": 1.8662621974945068,
+      "after": 1.3996965885162354
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        28,
+        9
+      ],
+      "before": -1.1710625886917114,
+      "after": -0.878296971321106
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        28,
+        10
+      ],
+      "before": 0.7869657278060913,
+      "after": 0.5902242660522461
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        28,
+        11
+      ],
+      "before": 0.2263423651456833,
+      "after": 0.16975677013397217
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        28,
+        12
+      ],
+      "before": -0.32632970809936523,
+      "after": -0.24474728107452393
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        28,
+        13
+      ],
+      "before": -0.8640914559364319,
+      "after": -0.6480686068534851
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        29,
+        7
+      ],
+      "before": 1.500073790550232,
+      "after": 1.1250553131103516
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        29,
+        8
+      ],
+      "before": 0.1807631552219391,
+      "after": 0.1355723738670349
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        29,
+        9
+      ],
+      "before": 1.1612671613693237,
+      "after": 0.8709503412246704
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        29,
+        10
+      ],
+      "before": -1.655519723892212,
+      "after": -1.2416398525238037
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        29,
+        11
+      ],
+      "before": -0.7220786213874817,
+      "after": -0.5415589809417725
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        29,
+        12
+      ],
+      "before": 0.855927050113678,
+      "after": 0.6419453024864197
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        29,
+        13
+      ],
+      "before": 2.3639025688171387,
+      "after": 1.772926926612854
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        30,
+        7
+      ],
+      "before": 2.582914113998413,
+      "after": 1.937185525894165
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        30,
+        8
+      ],
+      "before": 0.039170365780591965,
+      "after": 0.0293777734041214
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        30,
+        9
+      ],
+      "before": 0.1981910914182663,
+      "after": 0.14864331483840942
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        30,
+        10
+      ],
+      "before": 0.34971264004707336,
+      "after": 0.2622844874858856
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        30,
+        11
+      ],
+      "before": -1.1828854084014893,
+      "after": -0.8871640563011169
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        30,
+        12
+      ],
+      "before": -1.3183379173278809,
+      "after": -0.9887534379959106
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        30,
+        13
+      ],
+      "before": 2.975109815597534,
+      "after": 2.231332302093506
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        31,
+        7
+      ],
+      "before": 0.15245258808135986,
+      "after": 0.1143394410610199
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        31,
+        8
+      ],
+      "before": -1.3308900594711304,
+      "after": -0.9981675148010254
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        31,
+        9
+      ],
+      "before": -0.37985584139823914,
+      "after": -0.28489187359809875
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        31,
+        10
+      ],
+      "before": -0.9253152012825012,
+      "after": -0.6939864158630371
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        31,
+        11
+      ],
+      "before": 0.6649240255355835,
+      "after": 0.4986930191516876
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        31,
+        12
+      ],
+      "before": 0.844577431678772,
+      "after": 0.6334331035614014
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        31,
+        13
+      ],
+      "before": 0.2874796390533447,
+      "after": 0.21560972929000854
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        32,
+        7
+      ],
+      "before": -1.266350507736206,
+      "after": -0.9497628808021545
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        32,
+        8
+      ],
+      "before": 1.0156753063201904,
+      "after": 0.7617564797401428
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        32,
+        9
+      ],
+      "before": -1.1230099201202393,
+      "after": -0.8422574400901794
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        32,
+        10
+      ],
+      "before": -1.7363965511322021,
+      "after": -1.3022973537445068
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        32,
+        11
+      ],
+      "before": -0.8690757751464844,
+      "after": -0.6518068313598633
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        32,
+        12
+      ],
+      "before": 0.9838770031929016,
+      "after": 0.7379077672958374
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        32,
+        13
+      ],
+      "before": 0.844153642654419,
+      "after": 0.6331152319908142
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        33,
+        7
+      ],
+      "before": -1.1155149936676025,
+      "after": -0.8366362452507019
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        33,
+        8
+      ],
+      "before": -0.384869784116745,
+      "after": -0.28865233063697815
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        33,
+        9
+      ],
+      "before": 1.1236169338226318,
+      "after": 0.8427127003669739
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        33,
+        10
+      ],
+      "before": -0.627044141292572,
+      "after": -0.4702830910682678
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        33,
+        11
+      ],
+      "before": 1.3199453353881836,
+      "after": 0.9899590015411377
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        33,
+        12
+      ],
+      "before": 1.185347080230713,
+      "after": 0.8890103101730347
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        33,
+        13
+      ],
+      "before": -2.946789026260376,
+      "after": -2.2100918292999268
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        34,
+        7
+      ],
+      "before": 0.377760112285614,
+      "after": 0.2833200693130493
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        34,
+        8
+      ],
+      "before": -1.0912997722625732,
+      "after": -0.8184748291969299
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        34,
+        9
+      ],
+      "before": 1.376741886138916,
+      "after": 1.032556414604187
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        34,
+        10
+      ],
+      "before": -0.433758944272995,
+      "after": -0.32531920075416565
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        34,
+        11
+      ],
+      "before": -2.288175344467163,
+      "after": -1.7161314487457275
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        34,
+        12
+      ],
+      "before": 0.279819130897522,
+      "after": 0.20986434817314148
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        34,
+        13
+      ],
+      "before": 2.7797000408172607,
+      "after": 2.084774971008301
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        35,
+        7
+      ],
+      "before": 0.12841272354125977,
+      "after": 0.09630954265594482
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        35,
+        8
+      ],
+      "before": -0.09408864378929138,
+      "after": -0.07056648284196854
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        35,
+        9
+      ],
+      "before": -0.7194636464118958,
+      "after": -0.539597749710083
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        35,
+        10
+      ],
+      "before": -0.3900662362575531,
+      "after": -0.29254966974258423
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        35,
+        11
+      ],
+      "before": 1.133067011833191,
+      "after": 0.8498002290725708
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        35,
+        12
+      ],
+      "before": -1.4699982404708862,
+      "after": -1.1024986505508423
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        35,
+        13
+      ],
+      "before": 0.6806867718696594,
+      "after": 0.5105150938034058
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        36,
+        7
+      ],
+      "before": 1.5087474584579468,
+      "after": 1.1315605640411377
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        36,
+        8
+      ],
+      "before": -0.7518616914749146,
+      "after": -0.5638962984085083
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        36,
+        9
+      ],
+      "before": -2.5069997310638428,
+      "after": -1.8802497386932373
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        36,
+        10
+      ],
+      "before": 0.8733018040657043,
+      "after": 0.6549763679504395
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        36,
+        11
+      ],
+      "before": -1.8950138092041016,
+      "after": -1.4212603569030762
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        36,
+        12
+      ],
+      "before": 0.05320051312446594,
+      "after": 0.03990038484334946
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        36,
+        13
+      ],
+      "before": -0.9896613359451294,
+      "after": -0.7422460317611694
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        37,
+        7
+      ],
+      "before": 0.18421122431755066,
+      "after": 0.1381584107875824
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        37,
+        8
+      ],
+      "before": 0.479715496301651,
+      "after": 0.35978662967681885
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        37,
+        9
+      ],
+      "before": -0.20275238156318665,
+      "after": -0.15206429362297058
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        37,
+        10
+      ],
+      "before": -1.2189199924468994,
+      "after": -0.9141899943351746
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        37,
+        11
+      ],
+      "before": -0.9831215739250183,
+      "after": -0.7373411655426025
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        37,
+        12
+      ],
+      "before": 1.3305407762527466,
+      "after": 0.9979056119918823
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        37,
+        13
+      ],
+      "before": 2.4896042346954346,
+      "after": 1.8672032356262207
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        38,
+        7
+      ],
+      "before": 1.5273213386535645,
+      "after": 1.1454910039901733
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        38,
+        8
+      ],
+      "before": 1.722426176071167,
+      "after": 1.2918195724487305
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        38,
+        9
+      ],
+      "before": -0.44378650188446045,
+      "after": -0.33283987641334534
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        38,
+        10
+      ],
+      "before": -0.7195401191711426,
+      "after": -0.5396550893783569
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        38,
+        11
+      ],
+      "before": 1.010231375694275,
+      "after": 0.7576735019683838
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        38,
+        12
+      ],
+      "before": 0.8245859146118164,
+      "after": 0.6184394359588623
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        38,
+        13
+      ],
+      "before": -0.05370534583926201,
+      "after": -0.04027900844812393
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        39,
+        7
+      ],
+      "before": -0.8463518023490906,
+      "after": -0.6347638368606567
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        39,
+        8
+      ],
+      "before": 1.0601533651351929,
+      "after": 0.7951149940490723
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        39,
+        9
+      ],
+      "before": -0.33368536829948425,
+      "after": -0.2502640187740326
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        39,
+        10
+      ],
+      "before": -1.0143086910247803,
+      "after": -0.7607315182685852
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        39,
+        11
+      ],
+      "before": -1.0595576763153076,
+      "after": -0.7946682572364807
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        39,
+        12
+      ],
+      "before": 0.9820743203163147,
+      "after": 0.7365557551383972
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        39,
+        13
+      ],
+      "before": -2.9217514991760254,
+      "after": -2.1913137435913086
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        40,
+        7
+      ],
+      "before": 0.5534273982048035,
+      "after": 0.4150705337524414
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        40,
+        8
+      ],
+      "before": -0.5818675756454468,
+      "after": -0.4364006817340851
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        40,
+        9
+      ],
+      "before": -0.7339922785758972,
+      "after": -0.5504941940307617
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        40,
+        10
+      ],
+      "before": 0.5554630160331726,
+      "after": 0.41659724712371826
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        40,
+        11
+      ],
+      "before": 0.31323158740997314,
+      "after": 0.23492369055747986
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        40,
+        12
+      ],
+      "before": -0.4254191815853119,
+      "after": -0.3190643787384033
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        40,
+        13
+      ],
+      "before": 1.2945023775100708,
+      "after": 0.9708768129348755
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        41,
+        7
+      ],
+      "before": -0.6262013912200928,
+      "after": -0.4696510434150696
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        41,
+        8
+      ],
+      "before": -1.9333934783935547,
+      "after": -1.450045108795166
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        41,
+        9
+      ],
+      "before": 0.9313071370124817,
+      "after": 0.6984803676605225
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        41,
+        10
+      ],
+      "before": -0.2730075418949127,
+      "after": -0.20475566387176514
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        41,
+        11
+      ],
+      "before": 1.7203993797302246,
+      "after": 1.2902995347976685
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        41,
+        12
+      ],
+      "before": 0.24949528276920319,
+      "after": 0.1871214658021927
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        41,
+        13
+      ],
+      "before": -2.7031972408294678,
+      "after": -2.027397871017456
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        42,
+        7
+      ],
+      "before": 0.5665911436080933,
+      "after": 0.42494335770606995
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        42,
+        8
+      ],
+      "before": 1.7639210224151611,
+      "after": 1.3229408264160156
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        42,
+        9
+      ],
+      "before": -2.1841039657592773,
+      "after": -1.638077974319458
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        42,
+        10
+      ],
+      "before": -1.027846336364746,
+      "after": -0.7708847522735596
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        42,
+        11
+      ],
+      "before": -1.6818286180496216,
+      "after": -1.2613714933395386
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        42,
+        12
+      ],
+      "before": -0.4905754327774048,
+      "after": -0.3679315745830536
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        42,
+        13
+      ],
+      "before": -1.0253753662109375,
+      "after": -0.7690315246582031
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        43,
+        7
+      ],
+      "before": 1.5762227773666382,
+      "after": 1.1821670532226562
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        43,
+        8
+      ],
+      "before": -1.0654103755950928,
+      "after": -0.7990577816963196
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        43,
+        9
+      ],
+      "before": 0.933262825012207,
+      "after": 0.6999471187591553
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        43,
+        10
+      ],
+      "before": 0.15486854314804077,
+      "after": 0.11615140736103058
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        43,
+        11
+      ],
+      "before": -0.28155720233917236,
+      "after": -0.21116790175437927
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        43,
+        12
+      ],
+      "before": -0.4038330018520355,
+      "after": -0.30287474393844604
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        43,
+        13
+      ],
+      "before": -0.3616374433040619,
+      "after": -0.2712280750274658
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        44,
+        7
+      ],
+      "before": 1.4165396690368652,
+      "after": 1.062404751777649
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        44,
+        8
+      ],
+      "before": -0.16502618789672852,
+      "after": -0.12376964092254639
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        44,
+        9
+      ],
+      "before": 0.19646121561527252,
+      "after": 0.1473459154367447
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        44,
+        10
+      ],
+      "before": -2.569368600845337,
+      "after": -1.9270265102386475
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        44,
+        11
+      ],
+      "before": 0.5439497232437134,
+      "after": 0.40796229243278503
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        44,
+        12
+      ],
+      "before": 0.26769930124282837,
+      "after": 0.20077447593212128
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        44,
+        13
+      ],
+      "before": -1.290466070175171,
+      "after": -0.9678495526313782
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        45,
+        7
+      ],
+      "before": 1.1529531478881836,
+      "after": 0.8647148609161377
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        45,
+        8
+      ],
+      "before": 0.2197159230709076,
+      "after": 0.1647869348526001
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        45,
+        9
+      ],
+      "before": 0.6325197219848633,
+      "after": 0.47438979148864746
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        45,
+        10
+      ],
+      "before": 0.11584676057100296,
+      "after": 0.08688507229089737
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        45,
+        11
+      ],
+      "before": 0.4938417077064514,
+      "after": 0.37038129568099976
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        45,
+        12
+      ],
+      "before": -0.000326275359839201,
+      "after": -0.00024470651987940073
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        45,
+        13
+      ],
+      "before": 2.0188515186309814,
+      "after": 1.5141386985778809
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        46,
+        7
+      ],
+      "before": 0.4997726082801819,
+      "after": 0.3748294711112976
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        46,
+        8
+      ],
+      "before": -0.9466732740402222,
+      "after": -0.7100049257278442
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        46,
+        9
+      ],
+      "before": -0.014384587295353413,
+      "after": -0.010788440704345703
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        46,
+        10
+      ],
+      "before": 0.07005288451910019,
+      "after": 0.05253966152667999
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        46,
+        11
+      ],
+      "before": -1.7827099561691284,
+      "after": -1.337032437324524
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        46,
+        12
+      ],
+      "before": -0.3537966310977936,
+      "after": -0.2653474807739258
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        46,
+        13
+      ],
+      "before": 1.583150029182434,
+      "after": 1.187362551689148
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        47,
+        7
+      ],
+      "before": -0.2956828474998474,
+      "after": -0.22176213562488556
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        47,
+        8
+      ],
+      "before": 0.7705203294754028,
+      "after": 0.5778902769088745
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        47,
+        9
+      ],
+      "before": 0.7459641098976135,
+      "after": 0.5594730973243713
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        47,
+        10
+      ],
+      "before": -1.3625613451004028,
+      "after": -1.0219210386276245
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        47,
+        11
+      ],
+      "before": -0.18917208909988403,
+      "after": -0.14187906682491302
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        47,
+        12
+      ],
+      "before": -3.095109701156616,
+      "after": -2.3213322162628174
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        47,
+        13
+      ],
+      "before": -0.5122886896133423,
+      "after": -0.3842165172100067
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        48,
+        7
+      ],
+      "before": 0.506604790687561,
+      "after": 0.3799535930156708
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        48,
+        8
+      ],
+      "before": -0.04754611849784851,
+      "after": -0.03565958887338638
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        48,
+        9
+      ],
+      "before": -0.008872345089912415,
+      "after": -0.006654258817434311
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        48,
+        10
+      ],
+      "before": -0.4687206745147705,
+      "after": -0.3515405058860779
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        48,
+        11
+      ],
+      "before": 0.09744234383106232,
+      "after": 0.07308176159858704
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        48,
+        12
+      ],
+      "before": 0.2995041608810425,
+      "after": 0.22462812066078186
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        48,
+        13
+      ],
+      "before": -1.1441665887832642,
+      "after": -0.8581249713897705
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        49,
+        7
+      ],
+      "before": -0.9229670166969299,
+      "after": -0.6922252774238586
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        49,
+        8
+      ],
+      "before": -1.1800974607467651,
+      "after": -0.8850730657577515
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        49,
+        9
+      ],
+      "before": -1.0592222213745117,
+      "after": -0.7944166660308838
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        49,
+        10
+      ],
+      "before": -0.546943187713623,
+      "after": -0.4102073907852173
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        49,
+        11
+      ],
+      "before": -2.225567102432251,
+      "after": -1.669175386428833
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        49,
+        12
+      ],
+      "before": 0.2122434377670288,
+      "after": 0.1591825783252716
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        49,
+        13
+      ],
+      "before": -1.1347332000732422,
+      "after": -0.8510499000549316
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        50,
+        7
+      ],
+      "before": 0.23214510083198547,
+      "after": 0.1741088330745697
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        50,
+        8
+      ],
+      "before": 0.5780271887779236,
+      "after": 0.4335203766822815
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        50,
+        9
+      ],
+      "before": 1.0598818063735962,
+      "after": 0.7949113845825195
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        50,
+        10
+      ],
+      "before": -0.9984806776046753,
+      "after": -0.7488604784011841
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        50,
+        11
+      ],
+      "before": 0.7082520127296448,
+      "after": 0.5311890244483948
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        50,
+        12
+      ],
+      "before": 0.290254682302475,
+      "after": 0.21769100427627563
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        50,
+        13
+      ],
+      "before": -1.6253694295883179,
+      "after": -1.219027042388916
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        51,
+        7
+      ],
+      "before": -0.9980629682540894,
+      "after": -0.7485471963882446
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        51,
+        8
+      ],
+      "before": 1.0306153297424316,
+      "after": 0.7729614973068237
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        51,
+        9
+      ],
+      "before": 0.6759198904037476,
+      "after": 0.5069398880004883
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        51,
+        10
+      ],
+      "before": 0.2283443808555603,
+      "after": 0.17125828564167023
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        51,
+        11
+      ],
+      "before": 1.2843666076660156,
+      "after": 0.9632749557495117
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        51,
+        12
+      ],
+      "before": -0.22762469947338104,
+      "after": -0.17071852087974548
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        51,
+        13
+      ],
+      "before": -0.6219772696495056,
+      "after": -0.466482937335968
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        52,
+        7
+      ],
+      "before": 0.05626041069626808,
+      "after": 0.042195308953523636
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        52,
+        8
+      ],
+      "before": 0.3399830758571625,
+      "after": 0.25498729944229126
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        52,
+        9
+      ],
+      "before": 0.613822877407074,
+      "after": 0.4603671431541443
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        52,
+        10
+      ],
+      "before": 0.31672564148902893,
+      "after": 0.2375442385673523
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        52,
+        11
+      ],
+      "before": -0.7727202773094177,
+      "after": -0.5795401930809021
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        52,
+        12
+      ],
+      "before": 0.26271501183509827,
+      "after": 0.1970362663269043
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        52,
+        13
+      ],
+      "before": 0.08383985608816147,
+      "after": 0.06287989020347595
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        53,
+        7
+      ],
+      "before": -1.1124484539031982,
+      "after": -0.8343363404273987
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        53,
+        8
+      ],
+      "before": 1.2383077144622803,
+      "after": 0.9287307858467102
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        53,
+        9
+      ],
+      "before": 0.7025740742683411,
+      "after": 0.526930570602417
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        53,
+        10
+      ],
+      "before": -0.8587196469306946,
+      "after": -0.6440397500991821
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        53,
+        11
+      ],
+      "before": 1.0789178609848022,
+      "after": 0.8091883659362793
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        53,
+        12
+      ],
+      "before": 0.731635570526123,
+      "after": 0.5487266778945923
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        53,
+        13
+      ],
+      "before": -3.1722805500030518,
+      "after": -2.3792104721069336
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        54,
+        7
+      ],
+      "before": 0.3378722369670868,
+      "after": 0.2534041702747345
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        54,
+        8
+      ],
+      "before": 2.1934094429016113,
+      "after": 1.6450570821762085
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        54,
+        9
+      ],
+      "before": 0.923318088054657,
+      "after": 0.6924885511398315
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        54,
+        10
+      ],
+      "before": 1.0795972347259521,
+      "after": 0.8096979260444641
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        54,
+        11
+      ],
+      "before": 0.7719094753265381,
+      "after": 0.5789321064949036
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        54,
+        12
+      ],
+      "before": -0.8957152366638184,
+      "after": -0.6717864274978638
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        54,
+        13
+      ],
+      "before": -1.479386806488037,
+      "after": -1.1095401048660278
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        55,
+        7
+      ],
+      "before": -1.4106758832931519,
+      "after": -1.0580068826675415
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        55,
+        8
+      ],
+      "before": 0.8037769794464111,
+      "after": 0.6028327345848083
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        55,
+        9
+      ],
+      "before": 0.7524615526199341,
+      "after": 0.564346194267273
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        55,
+        10
+      ],
+      "before": 1.904919981956482,
+      "after": 1.428689956665039
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        55,
+        11
+      ],
+      "before": 1.3510690927505493,
+      "after": 1.0133018493652344
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        55,
+        12
+      ],
+      "before": -0.9350646138191223,
+      "after": -0.7012984752655029
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        55,
+        13
+      ],
+      "before": -1.2954918146133423,
+      "after": -0.9716188907623291
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        56,
+        7
+      ],
+      "before": 0.9871084094047546,
+      "after": 0.7403312921524048
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        56,
+        8
+      ],
+      "before": -1.4479644298553467,
+      "after": -1.0859732627868652
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        56,
+        9
+      ],
+      "before": -2.3626952171325684,
+      "after": -1.7720214128494263
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        56,
+        10
+      ],
+      "before": 2.4815776348114014,
+      "after": 1.8611831665039062
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        56,
+        11
+      ],
+      "before": -0.6765315532684326,
+      "after": -0.5073986649513245
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        56,
+        12
+      ],
+      "before": -0.7745472192764282,
+      "after": -0.5809104442596436
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        56,
+        13
+      ],
+      "before": -2.10440731048584,
+      "after": -1.5783054828643799
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        57,
+        7
+      ],
+      "before": 1.8788963556289673,
+      "after": 1.4091722965240479
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        57,
+        8
+      ],
+      "before": -1.7750511169433594,
+      "after": -1.3312883377075195
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        57,
+        9
+      ],
+      "before": -1.2022556066513062,
+      "after": -0.9016916751861572
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        57,
+        10
+      ],
+      "before": -0.5517327785491943,
+      "after": -0.41379958391189575
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        57,
+        11
+      ],
+      "before": 0.027169102802872658,
+      "after": 0.02037682756781578
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        57,
+        12
+      ],
+      "before": 1.3208909034729004,
+      "after": 0.9906681776046753
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        57,
+        13
+      ],
+      "before": 0.17243382334709167,
+      "after": 0.12932536005973816
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        58,
+        7
+      ],
+      "before": -0.11455342173576355,
+      "after": -0.08591506630182266
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        58,
+        8
+      ],
+      "before": -2.2817227840423584,
+      "after": -1.711292028427124
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        58,
+        9
+      ],
+      "before": -0.7945536971092224,
+      "after": -0.5959152579307556
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        58,
+        10
+      ],
+      "before": -0.8156566023826599,
+      "after": -0.6117424368858337
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        58,
+        11
+      ],
+      "before": -0.34082499146461487,
+      "after": -0.25561875104904175
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        58,
+        12
+      ],
+      "before": -1.088680624961853,
+      "after": -0.8165104389190674
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        58,
+        13
+      ],
+      "before": 1.0936200618743896,
+      "after": 0.8202150464057922
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        59,
+        7
+      ],
+      "before": -0.43004781007766724,
+      "after": -0.3225358724594116
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        59,
+        8
+      ],
+      "before": 0.5098161697387695,
+      "after": 0.38236212730407715
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        59,
+        9
+      ],
+      "before": -0.0681966096162796,
+      "after": -0.0511474572122097
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        59,
+        10
+      ],
+      "before": 0.22881171107292175,
+      "after": 0.17160877585411072
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        59,
+        11
+      ],
+      "before": -0.1035802811384201,
+      "after": -0.07768520712852478
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        59,
+        12
+      ],
+      "before": 1.6525771617889404,
+      "after": 1.2394328117370605
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        59,
+        13
+      ],
+      "before": 1.2796332836151123,
+      "after": 0.9597249627113342
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        60,
+        7
+      ],
+      "before": -0.2870779037475586,
+      "after": -0.21530842781066895
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        60,
+        8
+      ],
+      "before": 0.41895920038223267,
+      "after": 0.3142194151878357
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        60,
+        9
+      ],
+      "before": -0.3467772901058197,
+      "after": -0.2600829601287842
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        60,
+        10
+      ],
+      "before": 1.5202873945236206,
+      "after": 1.140215516090393
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        60,
+        11
+      ],
+      "before": -0.92147296667099,
+      "after": -0.6911047101020813
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        60,
+        12
+      ],
+      "before": -2.7321135997772217,
+      "after": -2.0490851402282715
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        60,
+        13
+      ],
+      "before": 0.807275116443634,
+      "after": 0.6054563522338867
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        61,
+        7
+      ],
+      "before": 0.048196326941251755,
+      "after": 0.03614724427461624
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        61,
+        8
+      ],
+      "before": 1.1078606843948364,
+      "after": 0.8308955430984497
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        61,
+        9
+      ],
+      "before": 0.8430765867233276,
+      "after": 0.6323074102401733
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        61,
+        10
+      ],
+      "before": -2.030885696411133,
+      "after": -1.5231642723083496
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        61,
+        11
+      ],
+      "before": -0.9251781702041626,
+      "after": -0.6938836574554443
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        61,
+        12
+      ],
+      "before": -0.6072192788124084,
+      "after": -0.45541447401046753
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        61,
+        13
+      ],
+      "before": 1.3683606386184692,
+      "after": 1.0262705087661743
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        62,
+        7
+      ],
+      "before": -0.456633061170578,
+      "after": -0.3424747884273529
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        62,
+        8
+      ],
+      "before": 1.8839921951293945,
+      "after": 1.412994146347046
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        62,
+        9
+      ],
+      "before": 0.3068327307701111,
+      "after": 0.2301245480775833
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        62,
+        10
+      ],
+      "before": -1.0341535806655884,
+      "after": -0.7756152153015137
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        62,
+        11
+      ],
+      "before": 0.7173222303390503,
+      "after": 0.5379916429519653
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        62,
+        12
+      ],
+      "before": 1.0755656957626343,
+      "after": 0.8066742420196533
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        62,
+        13
+      ],
+      "before": -4.692690849304199,
+      "after": -3.5195181369781494
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        63,
+        7
+      ],
+      "before": 0.4873316287994385,
+      "after": 0.36549872159957886
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        63,
+        8
+      ],
+      "before": 0.477073073387146,
+      "after": 0.3578048050403595
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        63,
+        9
+      ],
+      "before": -1.0117913484573364,
+      "after": -0.7588435411453247
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        63,
+        10
+      ],
+      "before": 0.5804221630096436,
+      "after": 0.43531662225723267
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        63,
+        11
+      ],
+      "before": -2.251277446746826,
+      "after": -1.6884580850601196
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        63,
+        12
+      ],
+      "before": -0.6877606511116028,
+      "after": -0.5158205032348633
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        63,
+        13
+      ],
+      "before": 2.3992137908935547,
+      "after": 1.799410343170166
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        64,
+        7
+      ],
+      "before": 1.7991198301315308,
+      "after": 1.3493398427963257
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        64,
+        8
+      ],
+      "before": 0.14855580031871796,
+      "after": 0.11141684651374817
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        64,
+        9
+      ],
+      "before": -1.7178678512573242,
+      "after": -1.2884008884429932
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        64,
+        10
+      ],
+      "before": -0.8020933270454407,
+      "after": -0.6015700101852417
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        64,
+        11
+      ],
+      "before": -0.059300389140844345,
+      "after": -0.044475290924310684
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        64,
+        12
+      ],
+      "before": 0.20115555822849274,
+      "after": 0.15086667239665985
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        64,
+        13
+      ],
+      "before": 2.8319225311279297,
+      "after": 2.1239418983459473
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        65,
+        7
+      ],
+      "before": -0.5826446413993835,
+      "after": -0.43698346614837646
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        65,
+        8
+      ],
+      "before": -0.04403962939977646,
+      "after": -0.033029720187187195
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        65,
+        9
+      ],
+      "before": -1.3991203308105469,
+      "after": -1.0493402481079102
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        65,
+        10
+      ],
+      "before": -1.270725131034851,
+      "after": -0.9530438184738159
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        65,
+        11
+      ],
+      "before": -1.0475959777832031,
+      "after": -0.7856969833374023
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        65,
+        12
+      ],
+      "before": 0.672428548336029,
+      "after": 0.5043213963508606
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        65,
+        13
+      ],
+      "before": 1.9408632516860962,
+      "after": 1.4556474685668945
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        66,
+        7
+      ],
+      "before": 0.7419774532318115,
+      "after": 0.5564830899238586
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        66,
+        8
+      ],
+      "before": -0.5440393090248108,
+      "after": -0.4080294966697693
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        66,
+        9
+      ],
+      "before": 0.7756155729293823,
+      "after": 0.5817116498947144
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        66,
+        10
+      ],
+      "before": -0.6946836709976196,
+      "after": -0.5210127830505371
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        66,
+        11
+      ],
+      "before": -0.24731001257896423,
+      "after": -0.18548250198364258
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        66,
+        12
+      ],
+      "before": 0.8790179491043091,
+      "after": 0.6592634916305542
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        66,
+        13
+      ],
+      "before": -0.29902899265289307,
+      "after": -0.2242717444896698
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        67,
+        7
+      ],
+      "before": -0.521278440952301,
+      "after": -0.39095884561538696
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        67,
+        8
+      ],
+      "before": 0.34264013171195984,
+      "after": 0.2569800913333893
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        67,
+        9
+      ],
+      "before": 0.20123587548732758,
+      "after": 0.15092690289020538
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        67,
+        10
+      ],
+      "before": 0.7630496621131897,
+      "after": 0.5722872614860535
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        67,
+        11
+      ],
+      "before": -0.38695764541625977,
+      "after": -0.2902182340621948
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        67,
+        12
+      ],
+      "before": 0.10551312565803528,
+      "after": 0.07913484424352646
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        67,
+        13
+      ],
+      "before": 1.7588775157928467,
+      "after": 1.3191580772399902
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        68,
+        7
+      ],
+      "before": -1.3636224269866943,
+      "after": -1.022716760635376
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        68,
+        8
+      ],
+      "before": -1.1717225313186646,
+      "after": -0.8787919282913208
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        68,
+        9
+      ],
+      "before": 0.1699001044034958,
+      "after": 0.12742507457733154
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        68,
+        10
+      ],
+      "before": 1.281015157699585,
+      "after": 0.9607613682746887
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        68,
+        11
+      ],
+      "before": 2.1362786293029785,
+      "after": 1.6022089719772339
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        68,
+        12
+      ],
+      "before": -0.9899030327796936,
+      "after": -0.7424272894859314
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        68,
+        13
+      ],
+      "before": 0.9717042446136475,
+      "after": 0.7287781834602356
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        69,
+        7
+      ],
+      "before": 0.3432517647743225,
+      "after": 0.2574388384819031
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        69,
+        8
+      ],
+      "before": -0.473090261220932,
+      "after": -0.3548176884651184
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        69,
+        9
+      ],
+      "before": 1.0813435316085815,
+      "after": 0.8110076189041138
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        69,
+        10
+      ],
+      "before": -0.12129262834787369,
+      "after": -0.09096947312355042
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        69,
+        11
+      ],
+      "before": 0.1472223997116089,
+      "after": 0.11041679978370667
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        69,
+        12
+      ],
+      "before": -0.3475644886493683,
+      "after": -0.2606733739376068
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        69,
+        13
+      ],
+      "before": 1.0247026681900024,
+      "after": 0.7685270309448242
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        70,
+        7
+      ],
+      "before": -0.33656156063079834,
+      "after": -0.25242117047309875
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        70,
+        8
+      ],
+      "before": -1.4710566997528076,
+      "after": -1.103292465209961
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        70,
+        9
+      ],
+      "before": 0.6109595894813538,
+      "after": 0.4582197070121765
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        70,
+        10
+      ],
+      "before": 1.1647061109542847,
+      "after": 0.8735295534133911
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        70,
+        11
+      ],
+      "before": -1.2244677543640137,
+      "after": -0.9183508157730103
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        70,
+        12
+      ],
+      "before": -0.5246524810791016,
+      "after": -0.39348936080932617
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        70,
+        13
+      ],
+      "before": -0.14691175520420074,
+      "after": -0.11018382012844086
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        71,
+        7
+      ],
+      "before": 1.131655216217041,
+      "after": 0.8487414121627808
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        71,
+        8
+      ],
+      "before": 0.5739531517028809,
+      "after": 0.43046486377716064
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        71,
+        9
+      ],
+      "before": -0.57648766040802,
+      "after": -0.432365745306015
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        71,
+        10
+      ],
+      "before": -0.03734626621007919,
+      "after": -0.028009699657559395
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        71,
+        11
+      ],
+      "before": -1.7168018817901611,
+      "after": -1.2876014709472656
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        71,
+        12
+      ],
+      "before": 0.28641757369041443,
+      "after": 0.21481317281723022
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        71,
+        13
+      ],
+      "before": -1.4853935241699219,
+      "after": -1.1140451431274414
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        72,
+        7
+      ],
+      "before": -0.5063590407371521,
+      "after": -0.3797692656517029
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        72,
+        8
+      ],
+      "before": 0.7554486393928528,
+      "after": 0.5665864944458008
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        72,
+        9
+      ],
+      "before": 0.20218604803085327,
+      "after": 0.15163953602313995
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        72,
+        10
+      ],
+      "before": -3.4418790340423584,
+      "after": -2.581409215927124
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        72,
+        11
+      ],
+      "before": 0.17771455645561218,
+      "after": 0.13328590989112854
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        72,
+        12
+      ],
+      "before": 0.4515594244003296,
+      "after": 0.3386695683002472
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        72,
+        13
+      ],
+      "before": 1.3387041091918945,
+      "after": 1.004028081893921
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        73,
+        7
+      ],
+      "before": -2.0672855377197266,
+      "after": -1.550464153289795
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        73,
+        8
+      ],
+      "before": -0.4203224778175354,
+      "after": -0.31524187326431274
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        73,
+        9
+      ],
+      "before": 0.838773250579834,
+      "after": 0.6290799379348755
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        73,
+        10
+      ],
+      "before": 1.203091025352478,
+      "after": 0.9023182392120361
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        73,
+        11
+      ],
+      "before": 0.42925721406936646,
+      "after": 0.32194292545318604
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        73,
+        12
+      ],
+      "before": -0.7402806878089905,
+      "after": -0.555210530757904
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        73,
+        13
+      ],
+      "before": -2.8748037815093994,
+      "after": -2.1561028957366943
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        74,
+        7
+      ],
+      "before": -0.2492552250623703,
+      "after": -0.18694141507148743
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        74,
+        8
+      ],
+      "before": -2.0701208114624023,
+      "after": -1.5525906085968018
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        74,
+        9
+      ],
+      "before": -0.7350441217422485,
+      "after": -0.5512831211090088
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        74,
+        10
+      ],
+      "before": -0.16280601918697357,
+      "after": -0.12210451066493988
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        74,
+        11
+      ],
+      "before": -0.4322333335876465,
+      "after": -0.32417500019073486
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        74,
+        12
+      ],
+      "before": -0.5093610286712646,
+      "after": -0.3820207715034485
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        74,
+        13
+      ],
+      "before": 2.2913458347320557,
+      "after": 1.7185094356536865
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        75,
+        7
+      ],
+      "before": 1.444226622581482,
+      "after": 1.083169937133789
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        75,
+        8
+      ],
+      "before": 0.8476104736328125,
+      "after": 0.6357078552246094
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        75,
+        9
+      ],
+      "before": 1.05253005027771,
+      "after": 0.7893975377082825
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        75,
+        10
+      ],
+      "before": 1.5727647542953491,
+      "after": 1.1795735359191895
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        75,
+        11
+      ],
+      "before": -0.46728652715682983,
+      "after": -0.3504648804664612
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        75,
+        12
+      ],
+      "before": 0.12396013736724854,
+      "after": 0.0929701030254364
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        75,
+        13
+      ],
+      "before": -2.664438247680664,
+      "after": -1.998328685760498
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        76,
+        7
+      ],
+      "before": -0.9595220685005188,
+      "after": -0.7196415662765503
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        76,
+        8
+      ],
+      "before": -0.7083436846733093,
+      "after": -0.5312577486038208
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        76,
+        9
+      ],
+      "before": -0.437828928232193,
+      "after": -0.32837170362472534
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        76,
+        10
+      ],
+      "before": -0.8701671957969666,
+      "after": -0.6526253819465637
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        76,
+        11
+      ],
+      "before": 1.651549220085144,
+      "after": 1.2386618852615356
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        76,
+        12
+      ],
+      "before": 0.22421112656593323,
+      "after": 0.16815835237503052
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        76,
+        13
+      ],
+      "before": 0.30485162138938904,
+      "after": 0.22863870859146118
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        77,
+        7
+      ],
+      "before": 0.29038628935813904,
+      "after": 0.21778970956802368
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        77,
+        8
+      ],
+      "before": -0.16492889821529388,
+      "after": -0.12369666993618011
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        77,
+        9
+      ],
+      "before": 0.5242642760276794,
+      "after": 0.3931981921195984
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        77,
+        10
+      ],
+      "before": 0.8454923033714294,
+      "after": 0.6341192126274109
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        77,
+        11
+      ],
+      "before": 0.5161961317062378,
+      "after": 0.38714709877967834
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        77,
+        12
+      ],
+      "before": 1.0036169290542603,
+      "after": 0.7527127265930176
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        77,
+        13
+      ],
+      "before": 2.0688209533691406,
+      "after": 1.5516157150268555
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        78,
+        7
+      ],
+      "before": -1.9448682069778442,
+      "after": -1.4586511850357056
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        78,
+        8
+      ],
+      "before": 1.1642426252365112,
+      "after": 0.873181939125061
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        78,
+        9
+      ],
+      "before": -0.8790432810783386,
+      "after": -0.6592824459075928
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        78,
+        10
+      ],
+      "before": -1.2258542776107788,
+      "after": -0.9193906784057617
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        78,
+        11
+      ],
+      "before": 0.45533278584480286,
+      "after": 0.34149959683418274
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        78,
+        12
+      ],
+      "before": -0.9700865149497986,
+      "after": -0.7275648713111877
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        78,
+        13
+      ],
+      "before": 0.06455439329147339,
+      "after": 0.04841579496860504
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        79,
+        7
+      ],
+      "before": 0.2993192672729492,
+      "after": 0.22448945045471191
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        79,
+        8
+      ],
+      "before": 0.21098777651786804,
+      "after": 0.15824082493782043
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        79,
+        9
+      ],
+      "before": 0.7234657406806946,
+      "after": 0.5425993204116821
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        79,
+        10
+      ],
+      "before": -0.2955145835876465,
+      "after": -0.22163593769073486
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        79,
+        11
+      ],
+      "before": -0.23835711181163788,
+      "after": -0.1787678301334381
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        79,
+        12
+      ],
+      "before": -0.15904946625232697,
+      "after": -0.11928710341453552
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        79,
+        13
+      ],
+      "before": -0.681190013885498,
+      "after": -0.5108925104141235
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        80,
+        7
+      ],
+      "before": 0.024487558752298355,
+      "after": 0.01836566999554634
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        80,
+        8
+      ],
+      "before": 0.5526736378669739,
+      "after": 0.4145052433013916
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        80,
+        9
+      ],
+      "before": 0.38374799489974976,
+      "after": 0.2878109812736511
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        80,
+        10
+      ],
+      "before": -0.23417997360229492,
+      "after": -0.1756349802017212
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        80,
+        11
+      ],
+      "before": -0.5736356973648071,
+      "after": -0.43022677302360535
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        80,
+        12
+      ],
+      "before": 1.3245940208435059,
+      "after": 0.9934455156326294
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        80,
+        13
+      ],
+      "before": 1.6608017683029175,
+      "after": 1.2456012964248657
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        81,
+        7
+      ],
+      "before": 1.0592037439346313,
+      "after": 0.7944028377532959
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        81,
+        8
+      ],
+      "before": -2.376234531402588,
+      "after": -1.782175898551941
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        81,
+        9
+      ],
+      "before": 0.412153959274292,
+      "after": 0.309115469455719
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        81,
+        10
+      ],
+      "before": 1.9738532304763794,
+      "after": 1.480389952659607
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        81,
+        11
+      ],
+      "before": -1.2711198329925537,
+      "after": -0.9533398747444153
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        81,
+        12
+      ],
+      "before": 0.45264455676078796,
+      "after": 0.3394834101200104
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        81,
+        13
+      ],
+      "before": -1.2738711833953857,
+      "after": -0.9554033875465393
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        82,
+        7
+      ],
+      "before": 0.09058300405740738,
+      "after": 0.06793725490570068
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        82,
+        8
+      ],
+      "before": 0.8975675106048584,
+      "after": 0.6731756329536438
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        82,
+        9
+      ],
+      "before": 1.1617610454559326,
+      "after": 0.8713207840919495
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        82,
+        10
+      ],
+      "before": -0.34438687562942505,
+      "after": -0.25829017162323
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        82,
+        11
+      ],
+      "before": 1.1415457725524902,
+      "after": 0.8561593294143677
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        82,
+        12
+      ],
+      "before": 0.4973277151584625,
+      "after": 0.3729957938194275
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        82,
+        13
+      ],
+      "before": 2.1063711643218994,
+      "after": 1.5797784328460693
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        83,
+        7
+      ],
+      "before": -0.27344897389411926,
+      "after": -0.20508673787117004
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        83,
+        8
+      ],
+      "before": -1.5717966556549072,
+      "after": -1.1788475513458252
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        83,
+        9
+      ],
+      "before": -0.06520738452672958,
+      "after": -0.04890553653240204
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        83,
+        10
+      ],
+      "before": -0.5187658667564392,
+      "after": -0.3890743851661682
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        83,
+        11
+      ],
+      "before": -1.0657049417495728,
+      "after": -0.799278736114502
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        83,
+        12
+      ],
+      "before": -2.1785571575164795,
+      "after": -1.6339178085327148
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        83,
+        13
+      ],
+      "before": -1.5812795162200928,
+      "after": -1.1859595775604248
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        84,
+        7
+      ],
+      "before": 0.5230667591094971,
+      "after": 0.3923000693321228
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        84,
+        8
+      ],
+      "before": 1.14872145652771,
+      "after": 0.8615410923957825
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        84,
+        9
+      ],
+      "before": 0.12831009924411774,
+      "after": 0.0962325781583786
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        84,
+        10
+      ],
+      "before": -1.1564621925354004,
+      "after": -0.8673466444015503
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        84,
+        11
+      ],
+      "before": -0.029761554673314095,
+      "after": -0.022321166470646858
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        84,
+        12
+      ],
+      "before": 1.0454219579696655,
+      "after": 0.7840664386749268
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        84,
+        13
+      ],
+      "before": -0.021398717537522316,
+      "after": -0.016049038618803024
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        85,
+        7
+      ],
+      "before": 1.070804476737976,
+      "after": 0.8031033277511597
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        85,
+        8
+      ],
+      "before": -0.9985597729682922,
+      "after": -0.7489198446273804
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        85,
+        9
+      ],
+      "before": -0.27453508973121643,
+      "after": -0.20590132474899292
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        85,
+        10
+      ],
+      "before": 0.809059739112854,
+      "after": 0.6067948341369629
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        85,
+        11
+      ],
+      "before": 0.2362213134765625,
+      "after": 0.17716598510742188
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        85,
+        12
+      ],
+      "before": -0.0642385482788086,
+      "after": -0.048178911209106445
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        85,
+        13
+      ],
+      "before": -1.710494041442871,
+      "after": -1.2828705310821533
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        86,
+        7
+      ],
+      "before": -1.2904112339019775,
+      "after": -0.9678084254264832
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        86,
+        8
+      ],
+      "before": -0.6412370800971985,
+      "after": -0.48092782497406006
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        86,
+        9
+      ],
+      "before": 0.9400113821029663,
+      "after": 0.7050085067749023
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        86,
+        10
+      ],
+      "before": -2.075056552886963,
+      "after": -1.5562924146652222
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        86,
+        11
+      ],
+      "before": 2.9497084617614746,
+      "after": 2.2122812271118164
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        86,
+        12
+      ],
+      "before": -1.7158657312393188,
+      "after": -1.2868993282318115
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        86,
+        13
+      ],
+      "before": -2.6668455600738525,
+      "after": -2.000134229660034
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        87,
+        7
+      ],
+      "before": 0.22263678908348083,
+      "after": 0.16697758436203003
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        87,
+        8
+      ],
+      "before": 3.5077226161956787,
+      "after": 2.6307919025421143
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        87,
+        9
+      ],
+      "before": 0.8152305483818054,
+      "after": 0.6114228963851929
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        87,
+        10
+      ],
+      "before": -0.31079962849617004,
+      "after": -0.23309972882270813
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        87,
+        11
+      ],
+      "before": 0.903538167476654,
+      "after": 0.6776536107063293
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        87,
+        12
+      ],
+      "before": -1.2998428344726562,
+      "after": -0.9748821258544922
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        87,
+        13
+      ],
+      "before": 2.3732616901397705,
+      "after": 1.7799463272094727
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        88,
+        7
+      ],
+      "before": 1.0123785734176636,
+      "after": 0.7592839002609253
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        88,
+        8
+      ],
+      "before": 2.339884042739868,
+      "after": 1.754913091659546
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        88,
+        9
+      ],
+      "before": 0.25528228282928467,
+      "after": 0.1914617121219635
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        88,
+        10
+      ],
+      "before": 0.8249078392982483,
+      "after": 0.6186808943748474
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        88,
+        11
+      ],
+      "before": -0.9084572792053223,
+      "after": -0.6813429594039917
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        88,
+        12
+      ],
+      "before": 0.015234722755849361,
+      "after": 0.011426041834056377
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        88,
+        13
+      ],
+      "before": 1.2095868587493896,
+      "after": 0.9071901440620422
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        89,
+        7
+      ],
+      "before": 0.3307373523712158,
+      "after": 0.24805301427841187
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        89,
+        8
+      ],
+      "before": 0.7941482067108154,
+      "after": 0.5956111550331116
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        89,
+        9
+      ],
+      "before": 0.30804723501205444,
+      "after": 0.23103542625904083
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        89,
+        10
+      ],
+      "before": -0.9640371799468994,
+      "after": -0.7230278849601746
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        89,
+        11
+      ],
+      "before": -1.2904560565948486,
+      "after": -0.9678420424461365
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        89,
+        12
+      ],
+      "before": 1.8239222764968872,
+      "after": 1.3679417371749878
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        89,
+        13
+      ],
+      "before": 0.08004038780927658,
+      "after": 0.060030288994312286
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        90,
+        7
+      ],
+      "before": 1.1918997764587402,
+      "after": 0.8939248323440552
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        90,
+        8
+      ],
+      "before": -0.5218671560287476,
+      "after": -0.39140036702156067
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        90,
+        9
+      ],
+      "before": -0.07878860831260681,
+      "after": -0.05909145623445511
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        90,
+        10
+      ],
+      "before": -0.17215803265571594,
+      "after": -0.12911853194236755
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        90,
+        11
+      ],
+      "before": -1.076639175415039,
+      "after": -0.8074793815612793
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        90,
+        12
+      ],
+      "before": -0.14175039529800415,
+      "after": -0.10631279647350311
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        90,
+        13
+      ],
+      "before": 2.822096347808838,
+      "after": 2.116572380065918
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        91,
+        7
+      ],
+      "before": 1.8992325067520142,
+      "after": 1.424424409866333
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        91,
+        8
+      ],
+      "before": -2.354321002960205,
+      "after": -1.7657407522201538
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        91,
+        9
+      ],
+      "before": -1.3264139890670776,
+      "after": -0.9948104619979858
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        91,
+        10
+      ],
+      "before": 0.4315944314002991,
+      "after": 0.3236958384513855
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        91,
+        11
+      ],
+      "before": 0.5515144467353821,
+      "after": 0.41363584995269775
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        91,
+        12
+      ],
+      "before": -0.45733198523521423,
+      "after": -0.3429989814758301
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        91,
+        13
+      ],
+      "before": 0.35902005434036255,
+      "after": 0.2692650556564331
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        92,
+        7
+      ],
+      "before": -1.0384571552276611,
+      "after": -0.7788428664207458
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        92,
+        8
+      ],
+      "before": 1.1662371158599854,
+      "after": 0.874677836894989
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        92,
+        9
+      ],
+      "before": 0.7619854211807251,
+      "after": 0.5714890956878662
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        92,
+        10
+      ],
+      "before": -0.4478749632835388,
+      "after": -0.3359062075614929
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        92,
+        11
+      ],
+      "before": -0.3337903618812561,
+      "after": -0.25034278631210327
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        92,
+        12
+      ],
+      "before": 0.8879428505897522,
+      "after": 0.6659571528434753
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        92,
+        13
+      ],
+      "before": 1.640151858329773,
+      "after": 1.2301138639450073
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        93,
+        7
+      ],
+      "before": -0.24191468954086304,
+      "after": -0.18143601715564728
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        93,
+        8
+      ],
+      "before": 2.3468337059020996,
+      "after": 1.7601252794265747
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        93,
+        9
+      ],
+      "before": -0.7086424827575684,
+      "after": -0.5314818620681763
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        93,
+        10
+      ],
+      "before": -0.5661783218383789,
+      "after": -0.4246337413787842
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        93,
+        11
+      ],
+      "before": -2.2194457054138184,
+      "after": -1.6645842790603638
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        93,
+        12
+      ],
+      "before": 0.7565729022026062,
+      "after": 0.5674296617507935
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        93,
+        13
+      ],
+      "before": -1.419331669807434,
+      "after": -1.064498782157898
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        94,
+        7
+      ],
+      "before": -2.9373362064361572,
+      "after": -2.2030022144317627
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        94,
+        8
+      ],
+      "before": -0.1632152795791626,
+      "after": -0.12241145968437195
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        94,
+        9
+      ],
+      "before": -0.1872011423110962,
+      "after": -0.14040085673332214
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        94,
+        10
+      ],
+      "before": 0.3219420313835144,
+      "after": 0.2414565235376358
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        94,
+        11
+      ],
+      "before": -1.931910753250122,
+      "after": -1.4489331245422363
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        94,
+        12
+      ],
+      "before": -0.189684197306633,
+      "after": -0.14226314425468445
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        94,
+        13
+      ],
+      "before": -0.883266806602478,
+      "after": -0.6624500751495361
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        95,
+        7
+      ],
+      "before": 0.6787322759628296,
+      "after": 0.5090491771697998
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        95,
+        8
+      ],
+      "before": -0.6562893986701965,
+      "after": -0.4922170639038086
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        95,
+        9
+      ],
+      "before": -1.6850076913833618,
+      "after": -1.2637557983398438
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        95,
+        10
+      ],
+      "before": 0.30656495690345764,
+      "after": 0.22992372512817383
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        95,
+        11
+      ],
+      "before": 2.692406177520752,
+      "after": 2.0193047523498535
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        95,
+        12
+      ],
+      "before": 0.9162163138389587,
+      "after": 0.6871622204780579
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        95,
+        13
+      ],
+      "before": -1.8144620656967163,
+      "after": -1.3608465194702148
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        96,
+        7
+      ],
+      "before": -1.1073576211929321,
+      "after": -0.8305182456970215
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        96,
+        8
+      ],
+      "before": 1.2542893886566162,
+      "after": 0.9407170414924622
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        96,
+        9
+      ],
+      "before": 0.4692479372024536,
+      "after": 0.3519359529018402
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        96,
+        10
+      ],
+      "before": -1.9770506620407104,
+      "after": -1.4827879667282104
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        96,
+        11
+      ],
+      "before": -0.6283944845199585,
+      "after": -0.47129586338996887
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        96,
+        12
+      ],
+      "before": -2.9622628688812256,
+      "after": -2.2216970920562744
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        96,
+        13
+      ],
+      "before": 0.18151850998401642,
+      "after": 0.1361388862133026
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        97,
+        7
+      ],
+      "before": 0.9337306022644043,
+      "after": 0.7002979516983032
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        97,
+        8
+      ],
+      "before": -0.2269691377878189,
+      "after": -0.17022685706615448
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        97,
+        9
+      ],
+      "before": 0.3306620121002197,
+      "after": 0.2479965090751648
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        97,
+        10
+      ],
+      "before": -0.16918492317199707,
+      "after": -0.1268886923789978
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        97,
+        11
+      ],
+      "before": 0.2353636920452118,
+      "after": 0.17652276158332825
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        97,
+        12
+      ],
+      "before": -1.2996444702148438,
+      "after": -0.9747333526611328
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        97,
+        13
+      ],
+      "before": -0.8543616533279419,
+      "after": -0.6407712697982788
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        98,
+        7
+      ],
+      "before": 0.05173340439796448,
+      "after": 0.03880005329847336
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        98,
+        8
+      ],
+      "before": 0.8410924077033997,
+      "after": 0.6308193206787109
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        98,
+        9
+      ],
+      "before": 0.47757989168167114,
+      "after": 0.35818493366241455
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        98,
+        10
+      ],
+      "before": 2.1108381748199463,
+      "after": 1.5831286907196045
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        98,
+        11
+      ],
+      "before": -0.7795785069465637,
+      "after": -0.584683895111084
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        98,
+        12
+      ],
+      "before": -1.1673725843429565,
+      "after": -0.875529408454895
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        98,
+        13
+      ],
+      "before": -0.4714832007884979,
+      "after": -0.35361239314079285
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        99,
+        7
+      ],
+      "before": 0.0419011227786541,
+      "after": 0.031425841152668
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        99,
+        8
+      ],
+      "before": -1.1343320608139038,
+      "after": -0.8507490158081055
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        99,
+        9
+      ],
+      "before": 0.4741080105304718,
+      "after": 0.35558101534843445
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        99,
+        10
+      ],
+      "before": 0.711690366268158,
+      "after": 0.5337677597999573
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        99,
+        11
+      ],
+      "before": 1.012750506401062,
+      "after": 0.7595628499984741
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        99,
+        12
+      ],
+      "before": 0.9909603595733643,
+      "after": 0.7432202696800232
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        99,
+        13
+      ],
+      "before": -3.4829583168029785,
+      "after": -2.6122188568115234
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        100,
+        7
+      ],
+      "before": 0.3905411660671234,
+      "after": 0.29290586709976196
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        100,
+        8
+      ],
+      "before": 0.46279436349868774,
+      "after": 0.347095787525177
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        100,
+        9
+      ],
+      "before": -0.3066662847995758,
+      "after": -0.22999972105026245
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        100,
+        10
+      ],
+      "before": 0.0239590834826231,
+      "after": 0.017969312146306038
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        100,
+        11
+      ],
+      "before": 0.2378612756729126,
+      "after": 0.17839595675468445
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        100,
+        12
+      ],
+      "before": 0.11938606947660446,
+      "after": 0.0895395502448082
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        100,
+        13
+      ],
+      "before": 0.45274052023887634,
+      "after": 0.33955538272857666
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        101,
+        7
+      ],
+      "before": -0.9197990298271179,
+      "after": -0.6898492574691772
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        101,
+        8
+      ],
+      "before": 0.47375792264938354,
+      "after": 0.35531842708587646
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        101,
+        9
+      ],
+      "before": 1.0088067054748535,
+      "after": 0.7566050291061401
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        101,
+        10
+      ],
+      "before": -0.5125116109848022,
+      "after": -0.3843837082386017
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        101,
+        11
+      ],
+      "before": -2.3882904052734375,
+      "after": -1.7912178039550781
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        101,
+        12
+      ],
+      "before": 1.4938994646072388,
+      "after": 1.1204246282577515
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        101,
+        13
+      ],
+      "before": 3.3449294567108154,
+      "after": 2.508697032928467
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        102,
+        7
+      ],
+      "before": -0.14077208936214447,
+      "after": -0.10557906329631805
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        102,
+        8
+      ],
+      "before": 0.33412671089172363,
+      "after": 0.2505950331687927
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        102,
+        9
+      ],
+      "before": 0.26192808151245117,
+      "after": 0.19644606113433838
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        102,
+        10
+      ],
+      "before": -1.4320669174194336,
+      "after": -1.0740501880645752
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        102,
+        11
+      ],
+      "before": 1.501432180404663,
+      "after": 1.1260740756988525
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        102,
+        12
+      ],
+      "before": -2.6129112243652344,
+      "after": -1.9596834182739258
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        102,
+        13
+      ],
+      "before": 1.2344995737075806,
+      "after": 0.9258747100830078
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        103,
+        7
+      ],
+      "before": 0.3864579498767853,
+      "after": 0.28984346985816956
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        103,
+        8
+      ],
+      "before": 0.11262920498847961,
+      "after": 0.08447190374135971
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        103,
+        9
+      ],
+      "before": -0.3734765946865082,
+      "after": -0.28010743856430054
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        103,
+        10
+      ],
+      "before": -0.47549596428871155,
+      "after": -0.35662198066711426
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        103,
+        11
+      ],
+      "before": -1.8699537515640259,
+      "after": -1.4024653434753418
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        103,
+        12
+      ],
+      "before": -0.9252290725708008,
+      "after": -0.6939218044281006
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        103,
+        13
+      ],
+      "before": 1.5993226766586304,
+      "after": 1.1994919776916504
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        104,
+        7
+      ],
+      "before": 0.6179874539375305,
+      "after": 0.4634906053543091
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        104,
+        8
+      ],
+      "before": -0.6461945176124573,
+      "after": -0.48464590311050415
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        104,
+        9
+      ],
+      "before": 0.8789690732955933,
+      "after": 0.6592267751693726
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        104,
+        10
+      ],
+      "before": -0.4891175329685211,
+      "after": -0.36683815717697144
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        104,
+        11
+      ],
+      "before": -0.7060660719871521,
+      "after": -0.5295495390892029
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        104,
+        12
+      ],
+      "before": -0.7797425985336304,
+      "after": -0.5848069190979004
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        104,
+        13
+      ],
+      "before": -2.0394814014434814,
+      "after": -1.5296111106872559
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        105,
+        7
+      ],
+      "before": -1.1524882316589355,
+      "after": -0.8643661737442017
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        105,
+        8
+      ],
+      "before": -1.049251675605774,
+      "after": -0.7869387865066528
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        105,
+        9
+      ],
+      "before": 1.7434823513031006,
+      "after": 1.3076117038726807
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        105,
+        10
+      ],
+      "before": -0.3309325575828552,
+      "after": -0.24819941818714142
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        105,
+        11
+      ],
+      "before": 0.2703557014465332,
+      "after": 0.2027667760848999
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        105,
+        12
+      ],
+      "before": -0.06061822921037674,
+      "after": -0.045463673770427704
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        105,
+        13
+      ],
+      "before": 0.9231512546539307,
+      "after": 0.692363440990448
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        106,
+        7
+      ],
+      "before": -0.921339750289917,
+      "after": -0.6910048127174377
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        106,
+        8
+      ],
+      "before": -0.7958837151527405,
+      "after": -0.5969128012657166
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        106,
+        9
+      ],
+      "before": 1.1433151960372925,
+      "after": 0.857486367225647
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        106,
+        10
+      ],
+      "before": -1.7010027170181274,
+      "after": -1.275752067565918
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        106,
+        11
+      ],
+      "before": -0.5916019678115845,
+      "after": -0.44370147585868835
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        106,
+        12
+      ],
+      "before": -0.4590335488319397,
+      "after": -0.34427517652511597
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        106,
+        13
+      ],
+      "before": -1.65392005443573,
+      "after": -1.240440011024475
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        107,
+        7
+      ],
+      "before": -0.020283721387386322,
+      "after": -0.015212791040539742
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        107,
+        8
+      ],
+      "before": 0.5332279801368713,
+      "after": 0.3999210000038147
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        107,
+        9
+      ],
+      "before": -0.1770726591348648,
+      "after": -0.1328044980764389
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        107,
+        10
+      ],
+      "before": 0.1450376659631729,
+      "after": 0.10877825319766998
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        107,
+        11
+      ],
+      "before": -0.001868898281827569,
+      "after": -0.0014016737695783377
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        107,
+        12
+      ],
+      "before": -0.9607197046279907,
+      "after": -0.7205398082733154
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        107,
+        13
+      ],
+      "before": 1.3524338006973267,
+      "after": 1.0143253803253174
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        108,
+        7
+      ],
+      "before": -0.4639700949192047,
+      "after": -0.34797757863998413
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        108,
+        8
+      ],
+      "before": 0.8453997373580933,
+      "after": 0.6340497732162476
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        108,
+        9
+      ],
+      "before": -0.06714000552892685,
+      "after": -0.05035500228404999
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        108,
+        10
+      ],
+      "before": -0.9892323017120361,
+      "after": -0.7419242262840271
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        108,
+        11
+      ],
+      "before": 0.16120363771915436,
+      "after": 0.12090273201465607
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        108,
+        12
+      ],
+      "before": 1.075567603111267,
+      "after": 0.8066756725311279
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        108,
+        13
+      ],
+      "before": -0.9219486117362976,
+      "after": -0.691461443901062
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        109,
+        7
+      ],
+      "before": 0.6946924328804016,
+      "after": 0.5210193395614624
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        109,
+        8
+      ],
+      "before": 1.1220532655715942,
+      "after": 0.8415399789810181
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        109,
+        9
+      ],
+      "before": -0.6555958986282349,
+      "after": -0.49169692397117615
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        109,
+        10
+      ],
+      "before": -0.9416951537132263,
+      "after": -0.7062713503837585
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        109,
+        11
+      ],
+      "before": 1.4287364482879639,
+      "after": 1.0715522766113281
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        109,
+        12
+      ],
+      "before": -0.05140586942434311,
+      "after": -0.03855440020561218
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        109,
+        13
+      ],
+      "before": 0.1996629387140274,
+      "after": 0.14974720776081085
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        110,
+        7
+      ],
+      "before": -1.2534559965133667,
+      "after": -0.9400919675827026
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        110,
+        8
+      ],
+      "before": -0.4022408425807953,
+      "after": -0.30168062448501587
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        110,
+        9
+      ],
+      "before": 0.7280263900756836,
+      "after": 0.5460197925567627
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        110,
+        10
+      ],
+      "before": -0.5782590508460999,
+      "after": -0.4336943030357361
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        110,
+        11
+      ],
+      "before": -0.9002643823623657,
+      "after": -0.6751983165740967
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        110,
+        12
+      ],
+      "before": 1.8227006196975708,
+      "after": 1.3670254945755005
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        110,
+        13
+      ],
+      "before": 0.11204726248979568,
+      "after": 0.08403544872999191
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        111,
+        7
+      ],
+      "before": -1.2077165842056274,
+      "after": -0.905787467956543
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        111,
+        8
+      ],
+      "before": 0.9036749601364136,
+      "after": 0.6777561902999878
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        111,
+        9
+      ],
+      "before": -1.5077714920043945,
+      "after": -1.130828619003296
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        111,
+        10
+      ],
+      "before": 0.11449339240789413,
+      "after": 0.08587004244327545
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        111,
+        11
+      ],
+      "before": 0.9255156517028809,
+      "after": 0.6941367387771606
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        111,
+        12
+      ],
+      "before": 1.214365005493164,
+      "after": 0.910773754119873
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        111,
+        13
+      ],
+      "before": 0.34042051434516907,
+      "after": 0.2553153932094574
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        112,
+        7
+      ],
+      "before": -1.1707682609558105,
+      "after": -0.8780761957168579
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        112,
+        8
+      ],
+      "before": -0.25802651047706604,
+      "after": -0.19351989030838013
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        112,
+        9
+      ],
+      "before": 0.522439181804657,
+      "after": 0.39182937145233154
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        112,
+        10
+      ],
+      "before": -0.23716403543949127,
+      "after": -0.17787303030490875
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        112,
+        11
+      ],
+      "before": -0.525969922542572,
+      "after": -0.3944774270057678
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        112,
+        12
+      ],
+      "before": 0.0761134922504425,
+      "after": 0.05708511918783188
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        112,
+        13
+      ],
+      "before": -1.2077598571777344,
+      "after": -0.9058198928833008
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        113,
+        7
+      ],
+      "before": -0.06197085976600647,
+      "after": -0.04647814482450485
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        113,
+        8
+      ],
+      "before": -2.0015463829040527,
+      "after": -1.5011597871780396
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        113,
+        9
+      ],
+      "before": 0.22850294411182404,
+      "after": 0.17137721180915833
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        113,
+        10
+      ],
+      "before": -0.20421336591243744,
+      "after": -0.15316002070903778
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        113,
+        11
+      ],
+      "before": 0.832497775554657,
+      "after": 0.6243733167648315
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        113,
+        12
+      ],
+      "before": -0.9461168050765991,
+      "after": -0.709587574005127
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        113,
+        13
+      ],
+      "before": -3.596513509750366,
+      "after": -2.69738507270813
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        114,
+        7
+      ],
+      "before": -0.8150330185890198,
+      "after": -0.611274778842926
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        114,
+        8
+      ],
+      "before": -0.1060296893119812,
+      "after": -0.0795222669839859
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        114,
+        9
+      ],
+      "before": -1.0210535526275635,
+      "after": -0.7657901644706726
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        114,
+        10
+      ],
+      "before": 0.7607401609420776,
+      "after": 0.5705550909042358
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        114,
+        11
+      ],
+      "before": 0.437517374753952,
+      "after": 0.3281380236148834
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        114,
+        12
+      ],
+      "before": -0.504784345626831,
+      "after": -0.3785882592201233
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        114,
+        13
+      ],
+      "before": 1.6381151676177979,
+      "after": 1.2285864353179932
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        115,
+        7
+      ],
+      "before": 1.1858576536178589,
+      "after": 0.8893932104110718
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        115,
+        8
+      ],
+      "before": -0.12273769080638885,
+      "after": -0.09205326437950134
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        115,
+        9
+      ],
+      "before": 1.0766187906265259,
+      "after": 0.8074641227722168
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        115,
+        10
+      ],
+      "before": -1.0226191282272339,
+      "after": -0.766964316368103
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        115,
+        11
+      ],
+      "before": 0.6184079051017761,
+      "after": 0.4638059139251709
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        115,
+        12
+      ],
+      "before": 1.289711594581604,
+      "after": 0.9672837257385254
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        115,
+        13
+      ],
+      "before": -1.689892053604126,
+      "after": -1.2674190998077393
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        116,
+        7
+      ],
+      "before": -0.2568938136100769,
+      "after": -0.19267036020755768
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        116,
+        8
+      ],
+      "before": -0.5650768876075745,
+      "after": -0.42380768060684204
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        116,
+        9
+      ],
+      "before": 0.9659835696220398,
+      "after": 0.7244876623153687
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        116,
+        10
+      ],
+      "before": -0.025242116302251816,
+      "after": -0.018931586295366287
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        116,
+        11
+      ],
+      "before": -1.485525131225586,
+      "after": -1.1141438484191895
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        116,
+        12
+      ],
+      "before": -0.249179407954216,
+      "after": -0.1868845522403717
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        116,
+        13
+      ],
+      "before": 0.8276749849319458,
+      "after": 0.6207562685012817
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        117,
+        7
+      ],
+      "before": 0.5641775727272034,
+      "after": 0.4231331944465637
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        117,
+        8
+      ],
+      "before": -0.6552667617797852,
+      "after": -0.49145007133483887
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        117,
+        9
+      ],
+      "before": 0.9503427147865295,
+      "after": 0.7127570509910583
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        117,
+        10
+      ],
+      "before": 0.4214000403881073,
+      "after": 0.3160500228404999
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        117,
+        11
+      ],
+      "before": 0.40979450941085815,
+      "after": 0.3073458671569824
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        117,
+        12
+      ],
+      "before": 0.2869192361831665,
+      "after": 0.21518942713737488
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        117,
+        13
+      ],
+      "before": -3.9888393878936768,
+      "after": -2.9916296005249023
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        118,
+        7
+      ],
+      "before": -1.9287116527557373,
+      "after": -1.4465336799621582
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        118,
+        8
+      ],
+      "before": -0.7581374645233154,
+      "after": -0.5686030983924866
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        118,
+        9
+      ],
+      "before": 0.517142653465271,
+      "after": 0.38785699009895325
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        118,
+        10
+      ],
+      "before": 0.6592035889625549,
+      "after": 0.4944027066230774
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        118,
+        11
+      ],
+      "before": 0.10759996622800827,
+      "after": 0.08069997280836105
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        118,
+        12
+      ],
+      "before": -0.5399072766304016,
+      "after": -0.4049304723739624
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        118,
+        13
+      ],
+      "before": -3.0401384830474854,
+      "after": -2.280103921890259
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        119,
+        7
+      ],
+      "before": 0.47068101167678833,
+      "after": 0.35301077365875244
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        119,
+        8
+      ],
+      "before": 1.3748338222503662,
+      "after": 1.0311253070831299
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        119,
+        9
+      ],
+      "before": 0.43290233612060547,
+      "after": 0.3246767520904541
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        119,
+        10
+      ],
+      "before": -1.1461478471755981,
+      "after": -0.859610915184021
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        119,
+        11
+      ],
+      "before": 0.5520902276039124,
+      "after": 0.41406768560409546
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        119,
+        12
+      ],
+      "before": 0.5530816316604614,
+      "after": 0.41481122374534607
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        119,
+        13
+      ],
+      "before": -0.8356791734695435,
+      "after": -0.62675940990448
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        120,
+        7
+      ],
+      "before": 1.187218189239502,
+      "after": 0.8904136419296265
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        120,
+        8
+      ],
+      "before": 0.13053704798221588,
+      "after": 0.09790278971195221
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        120,
+        9
+      ],
+      "before": 0.827467679977417,
+      "after": 0.6206007599830627
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        120,
+        10
+      ],
+      "before": -0.05959460884332657,
+      "after": -0.044695958495140076
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        120,
+        11
+      ],
+      "before": -0.2284504771232605,
+      "after": -0.17133785784244537
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        120,
+        12
+      ],
+      "before": -2.2359330654144287,
+      "after": -1.6769497394561768
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        120,
+        13
+      ],
+      "before": -1.1351419687271118,
+      "after": -0.8513565063476562
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        121,
+        7
+      ],
+      "before": -0.7955892086029053,
+      "after": -0.596691906452179
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        121,
+        8
+      ],
+      "before": 0.44273295998573303,
+      "after": 0.33204972743988037
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        121,
+        9
+      ],
+      "before": -0.8927543759346008,
+      "after": -0.6695657968521118
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        121,
+        10
+      ],
+      "before": 0.5560358762741089,
+      "after": 0.41702690720558167
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        121,
+        11
+      ],
+      "before": -0.008472388610243797,
+      "after": -0.006354291457682848
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        121,
+        12
+      ],
+      "before": 0.2624034583568573,
+      "after": 0.19680258631706238
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        121,
+        13
+      ],
+      "before": -3.244872808456421,
+      "after": -2.433654546737671
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        122,
+        7
+      ],
+      "before": 1.32235586643219,
+      "after": 0.9917669296264648
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        122,
+        8
+      ],
+      "before": 1.0041147470474243,
+      "after": 0.7530860900878906
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        122,
+        9
+      ],
+      "before": -1.0065513849258423,
+      "after": -0.7549135684967041
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        122,
+        10
+      ],
+      "before": 1.410714864730835,
+      "after": 1.0580360889434814
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        122,
+        11
+      ],
+      "before": -0.49154841899871826,
+      "after": -0.3686613142490387
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        122,
+        12
+      ],
+      "before": -1.5991466045379639,
+      "after": -1.1993598937988281
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        122,
+        13
+      ],
+      "before": -0.7601521611213684,
+      "after": -0.5701141357421875
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        123,
+        7
+      ],
+      "before": -0.508273720741272,
+      "after": -0.381205290555954
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        123,
+        8
+      ],
+      "before": -0.3900117874145508,
+      "after": -0.2925088405609131
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        123,
+        9
+      ],
+      "before": -0.5162637233734131,
+      "after": -0.3871977925300598
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        123,
+        10
+      ],
+      "before": -2.299633502960205,
+      "after": -1.7247251272201538
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        123,
+        11
+      ],
+      "before": 0.7799574732780457,
+      "after": 0.584968090057373
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        123,
+        12
+      ],
+      "before": 0.7854490280151367,
+      "after": 0.5890867710113525
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        123,
+        13
+      ],
+      "before": -0.471284955739975,
+      "after": -0.35346370935440063
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        124,
+        7
+      ],
+      "before": -0.24715246260166168,
+      "after": -0.18536435067653656
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        124,
+        8
+      ],
+      "before": 1.8319900035858154,
+      "after": 1.3739924430847168
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        124,
+        9
+      ],
+      "before": 2.1118907928466797,
+      "after": 1.5839180946350098
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        124,
+        10
+      ],
+      "before": 0.24245081841945648,
+      "after": 0.18183811008930206
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        124,
+        11
+      ],
+      "before": 1.4083096981048584,
+      "after": 1.056232213973999
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        124,
+        12
+      ],
+      "before": -1.0866546630859375,
+      "after": -0.8149909973144531
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        124,
+        13
+      ],
+      "before": -0.031138630583882332,
+      "after": -0.023353973403573036
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        125,
+        7
+      ],
+      "before": -0.18779440224170685,
+      "after": -0.14084580540657043
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        125,
+        8
+      ],
+      "before": 0.2890230417251587,
+      "after": 0.21676728129386902
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        125,
+        9
+      ],
+      "before": -0.37992191314697266,
+      "after": -0.2849414348602295
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        125,
+        10
+      ],
+      "before": -0.5375029444694519,
+      "after": -0.40312719345092773
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        125,
+        11
+      ],
+      "before": -0.05695811286568642,
+      "after": -0.04271858558058739
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        125,
+        12
+      ],
+      "before": 0.4614793360233307,
+      "after": 0.3461095094680786
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        125,
+        13
+      ],
+      "before": 0.7760044932365417,
+      "after": 0.5820033550262451
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        126,
+        7
+      ],
+      "before": 0.8835189342498779,
+      "after": 0.6626392006874084
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        126,
+        8
+      ],
+      "before": 1.2148395776748657,
+      "after": 0.9111297130584717
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        126,
+        9
+      ],
+      "before": -0.4131259024143219,
+      "after": -0.309844434261322
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        126,
+        10
+      ],
+      "before": -1.2503385543823242,
+      "after": -0.9377539157867432
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        126,
+        11
+      ],
+      "before": -0.8375169634819031,
+      "after": -0.6281377077102661
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        126,
+        12
+      ],
+      "before": -1.0957807302474976,
+      "after": -0.8218355178833008
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        126,
+        13
+      ],
+      "before": -2.0576231479644775,
+      "after": -1.543217420578003
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        127,
+        7
+      ],
+      "before": 2.450786590576172,
+      "after": 1.838089942932129
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        127,
+        8
+      ],
+      "before": 0.4673021733760834,
+      "after": 0.35047662258148193
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        127,
+        9
+      ],
+      "before": -0.3179018497467041,
+      "after": -0.23842638731002808
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        127,
+        10
+      ],
+      "before": -2.175290822982788,
+      "after": -1.6314680576324463
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        127,
+        11
+      ],
+      "before": -0.8978286385536194,
+      "after": -0.6733714938163757
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        127,
+        12
+      ],
+      "before": -0.384616494178772,
+      "after": -0.288462370634079
+    },
+    {
+      "tensor": "shared.0.weight",
+      "index": [
+        127,
+        13
+      ],
+      "before": 0.21606262028217316,
+      "after": 0.16204696893692017
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        0
+      ],
+      "before": 1.1893045902252197,
+      "after": 1.1936005353927612
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        1
+      ],
+      "before": -2.43532395362854,
+      "after": -2.4248828887939453
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        2
+      ],
+      "before": 3.101400375366211,
+      "after": 3.0979368686676025
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        3
+      ],
+      "before": -1.529331922531128,
+      "after": -1.550207257270813
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        4
+      ],
+      "before": -2.7011122703552246,
+      "after": -2.7140471935272217
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        5
+      ],
+      "before": 1.8381575345993042,
+      "after": 1.8065298795700073
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        6
+      ],
+      "before": -2.1225485801696777,
+      "after": -2.1226866245269775
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        7
+      ],
+      "before": -4.143877983093262,
+      "after": -4.153352737426758
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        8
+      ],
+      "before": 1.5010781288146973,
+      "after": 1.5026518106460571
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        9
+      ],
+      "before": 6.581862926483154,
+      "after": 6.598105430603027
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        10
+      ],
+      "before": 0.8128172159194946,
+      "after": 0.8307717442512512
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        11
+      ],
+      "before": 2.1525754928588867,
+      "after": 2.151261568069458
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        12
+      ],
+      "before": 0.06965223699808121,
+      "after": 0.04607796669006348
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        13
+      ],
+      "before": 1.0657957792282104,
+      "after": 1.0602039098739624
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        14
+      ],
+      "before": -2.0753233432769775,
+      "after": -2.070128917694092
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        15
+      ],
+      "before": -0.049618128687143326,
+      "after": -0.07303368300199509
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        16
+      ],
+      "before": 0.24184849858283997,
+      "after": 0.2553282678127289
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        17
+      ],
+      "before": 4.089234828948975,
+      "after": 4.0824151039123535
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        18
+      ],
+      "before": 6.7081708908081055,
+      "after": 6.716748237609863
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        19
+      ],
+      "before": -0.5178232192993164,
+      "after": -0.5167601704597473
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        20
+      ],
+      "before": 0.10270591825246811,
+      "after": 0.107454814016819
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        21
+      ],
+      "before": 0.6299806833267212,
+      "after": 0.6224243640899658
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        22
+      ],
+      "before": -0.6630126237869263,
+      "after": -0.6651410460472107
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        23
+      ],
+      "before": 1.3027451038360596,
+      "after": 1.3190749883651733
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        24
+      ],
+      "before": -0.8852413892745972,
+      "after": -0.9001724720001221
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        25
+      ],
+      "before": -2.403238534927368,
+      "after": -2.4060487747192383
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        26
+      ],
+      "before": -0.639232337474823,
+      "after": -0.6445221900939941
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        27
+      ],
+      "before": 1.666118860244751,
+      "after": 1.6811540126800537
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        28
+      ],
+      "before": -2.8002381324768066,
+      "after": -2.8066115379333496
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        29
+      ],
+      "before": -3.122699737548828,
+      "after": -3.1271958351135254
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        30
+      ],
+      "before": 3.069723129272461,
+      "after": 3.056191921234131
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        31
+      ],
+      "before": -4.050963878631592,
+      "after": -4.039852142333984
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        32
+      ],
+      "before": -2.7763147354125977,
+      "after": -2.776609420776367
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        33
+      ],
+      "before": -2.1406261920928955,
+      "after": -2.1321749687194824
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        34
+      ],
+      "before": -0.2558683156967163,
+      "after": -0.2518478333950043
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        35
+      ],
+      "before": -4.799777030944824,
+      "after": -4.813667297363281
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        36
+      ],
+      "before": 1.7907118797302246,
+      "after": 1.80368971824646
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        37
+      ],
+      "before": -0.8988674879074097,
+      "after": -0.8941755294799805
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        38
+      ],
+      "before": 1.3703514337539673,
+      "after": 1.3642619848251343
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        39
+      ],
+      "before": 5.638331890106201,
+      "after": 5.639044761657715
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        40
+      ],
+      "before": 0.5546983480453491,
+      "after": 0.5573036670684814
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        41
+      ],
+      "before": 0.19652153551578522,
+      "after": 0.20604895055294037
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        42
+      ],
+      "before": 7.266890048980713,
+      "after": 7.252793788909912
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        43
+      ],
+      "before": 0.10506697744131088,
+      "after": 0.10422597825527191
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        44
+      ],
+      "before": 0.6829802989959717,
+      "after": 0.6723863482475281
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        45
+      ],
+      "before": 0.36693036556243896,
+      "after": 0.3634923994541168
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        46
+      ],
+      "before": 2.045961618423462,
+      "after": 2.048299789428711
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        47
+      ],
+      "before": 0.19005881249904633,
+      "after": 0.1498994529247284
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        48
+      ],
+      "before": 1.0880180597305298,
+      "after": 1.0883204936981201
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        49
+      ],
+      "before": 1.056701898574829,
+      "after": 1.066617727279663
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        50
+      ],
+      "before": -2.7836804389953613,
+      "after": -2.791478157043457
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        51
+      ],
+      "before": -1.7580047845840454,
+      "after": -1.7654656171798706
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        52
+      ],
+      "before": 0.0260351300239563,
+      "after": 0.027009861543774605
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        53
+      ],
+      "before": -0.43029677867889404,
+      "after": -0.4348723590373993
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        54
+      ],
+      "before": 1.577103853225708,
+      "after": 1.5593409538269043
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        55
+      ],
+      "before": 2.1835265159606934,
+      "after": 2.1787219047546387
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        56
+      ],
+      "before": 4.847406387329102,
+      "after": 4.863683223724365
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        57
+      ],
+      "before": -2.364548444747925,
+      "after": -2.3448057174682617
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        58
+      ],
+      "before": -0.7778130769729614,
+      "after": -0.7773469090461731
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        59
+      ],
+      "before": -2.42197322845459,
+      "after": -2.4077813625335693
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        60
+      ],
+      "before": 2.325765371322632,
+      "after": 2.306680202484131
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        61
+      ],
+      "before": -0.22888953983783722,
+      "after": -0.2512865364551544
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        62
+      ],
+      "before": 0.8868306875228882,
+      "after": 0.8814089894294739
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        63
+      ],
+      "before": -2.6333701610565186,
+      "after": -2.637144088745117
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        64
+      ],
+      "before": 0.2657966911792755,
+      "after": 0.2648885250091553
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        65
+      ],
+      "before": 0.06453980505466461,
+      "after": 0.06914415210485458
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        66
+      ],
+      "before": -4.3626179695129395,
+      "after": -4.35711669921875
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        67
+      ],
+      "before": -1.9572932720184326,
+      "after": -1.9543830156326294
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        68
+      ],
+      "before": -5.861349105834961,
+      "after": -5.857979774475098
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        69
+      ],
+      "before": 0.9591885209083557,
+      "after": 0.9552539587020874
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        70
+      ],
+      "before": 0.4780026078224182,
+      "after": 0.4859866797924042
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        71
+      ],
+      "before": 1.2923188209533691,
+      "after": 1.2923516035079956
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        72
+      ],
+      "before": 0.5324578285217285,
+      "after": 0.5167884826660156
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        73
+      ],
+      "before": 3.359271764755249,
+      "after": 3.360529661178589
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        74
+      ],
+      "before": 2.897949695587158,
+      "after": 2.9056687355041504
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        75
+      ],
+      "before": 0.96940678358078,
+      "after": 0.9695845246315002
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        76
+      ],
+      "before": 0.5520997047424316,
+      "after": 0.5553292632102966
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        77
+      ],
+      "before": 0.9360290765762329,
+      "after": 0.9484329223632812
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        78
+      ],
+      "before": -4.4919514656066895,
+      "after": -4.509019374847412
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        79
+      ],
+      "before": -6.516116142272949,
+      "after": -6.521846771240234
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        80
+      ],
+      "before": -2.393440008163452,
+      "after": -2.3859026432037354
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        81
+      ],
+      "before": 2.9674570560455322,
+      "after": 2.991990566253662
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        82
+      ],
+      "before": 5.57678747177124,
+      "after": 5.5719451904296875
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        83
+      ],
+      "before": 2.036259174346924,
+      "after": 2.0231072902679443
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        84
+      ],
+      "before": -1.1777234077453613,
+      "after": -1.1804165840148926
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        85
+      ],
+      "before": 2.737760543823242,
+      "after": 2.745609998703003
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        86
+      ],
+      "before": -1.8786146640777588,
+      "after": -1.9022384881973267
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        87
+      ],
+      "before": 2.9970602989196777,
+      "after": 2.9623892307281494
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        88
+      ],
+      "before": -1.4319933652877808,
+      "after": -1.4419838190078735
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        89
+      ],
+      "before": -2.234947919845581,
+      "after": -2.227353096008301
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        90
+      ],
+      "before": 4.420240879058838,
+      "after": 4.420246601104736
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        91
+      ],
+      "before": 0.45699259638786316,
+      "after": 0.46801403164863586
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        92
+      ],
+      "before": 5.0444512367248535,
+      "after": 5.04392147064209
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        93
+      ],
+      "before": -2.9410183429718018,
+      "after": -2.946687698364258
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        94
+      ],
+      "before": 3.4252758026123047,
+      "after": 3.430198907852173
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        95
+      ],
+      "before": 1.4500560760498047,
+      "after": 1.4652734994888306
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        96
+      ],
+      "before": -0.6537278294563293,
+      "after": -0.6964623928070068
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        97
+      ],
+      "before": -0.532714307308197,
+      "after": -0.5460559129714966
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        98
+      ],
+      "before": -4.069007396697998,
+      "after": -4.075393199920654
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        99
+      ],
+      "before": -1.3686769008636475,
+      "after": -1.3515797853469849
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        100
+      ],
+      "before": -0.39363864064216614,
+      "after": -0.39478787779808044
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        101
+      ],
+      "before": 1.7209283113479614,
+      "after": 1.729561448097229
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        102
+      ],
+      "before": -1.0591237545013428,
+      "after": -1.0925880670547485
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        103
+      ],
+      "before": 0.5698546767234802,
+      "after": 0.5596169829368591
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        104
+      ],
+      "before": -0.6412541270256042,
+      "after": -0.6494669318199158
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        105
+      ],
+      "before": 4.155609607696533,
+      "after": 4.156633377075195
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        106
+      ],
+      "before": -0.16921696066856384,
+      "after": -0.1781700998544693
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        107
+      ],
+      "before": -0.2870073616504669,
+      "after": -0.2976851165294647
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        108
+      ],
+      "before": -4.32573938369751,
+      "after": -4.324339389801025
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        109
+      ],
+      "before": -0.2027570605278015,
+      "after": -0.2135181576013565
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        110
+      ],
+      "before": 0.14008790254592896,
+      "after": 0.15657168626785278
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        111
+      ],
+      "before": 0.141098290681839,
+      "after": 0.15210121870040894
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        112
+      ],
+      "before": 0.04113767668604851,
+      "after": 0.0425027534365654
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        113
+      ],
+      "before": 4.221770763397217,
+      "after": 4.222175598144531
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        114
+      ],
+      "before": 0.25085604190826416,
+      "after": 0.25314444303512573
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        115
+      ],
+      "before": 1.6399617195129395,
+      "after": 1.6440232992172241
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        116
+      ],
+      "before": -3.960886240005493,
+      "after": -3.961456537246704
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        117
+      ],
+      "before": 3.838883399963379,
+      "after": 3.8442227840423584
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        118
+      ],
+      "before": 2.6179606914520264,
+      "after": 2.621048927307129
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        119
+      ],
+      "before": 3.6300923824310303,
+      "after": 3.6208724975585938
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        120
+      ],
+      "before": -3.9616901874542236,
+      "after": -3.986246109008789
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        121
+      ],
+      "before": 2.9189999103546143,
+      "after": 2.9243476390838623
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        122
+      ],
+      "before": -2.0258665084838867,
+      "after": -2.038662910461426
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        123
+      ],
+      "before": -0.7838097810745239,
+      "after": -0.7836719155311584
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        124
+      ],
+      "before": -2.249711513519287,
+      "after": -2.273266077041626
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        125
+      ],
+      "before": -1.835537314414978,
+      "after": -1.8342779874801636
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        126
+      ],
+      "before": 0.3166276514530182,
+      "after": 0.2944658100605011
+    },
+    {
+      "tensor": "shared.0.bias",
+      "index": [
+        127
+      ],
+      "before": 0.225626140832901,
+      "after": 0.20793548226356506
+    }
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "scope": "Native source and rendering/physics assets recorded after freeze; original freeze file unchanged.",
+  "files": {
+    "bullet_api.hpp": {
+      "bytes": 12237,
+      "sha256": "7c66bf4e5940fe73824040e8cd11b180659a43f2c26fbd110b9dc28b0d5bb1dd"
+    },
+    "collect_curriculum.cpp": {
+      "bytes": 3953,
+      "sha256": "b48665694b11f9dccfd8e1cd9fb622cc6297975c14349460dbe9db7df78a5dcd"
+    },
+    "controller.cpp": {
+      "bytes": 5821,
+      "sha256": "ca3120541d61adf00ec0cc1885cfffee3ccbc9292b8e4a8dfa3a51b4b6165893"
+    },
+    "expert.hpp": {
+      "bytes": 2176,
+      "sha256": "96ab9ba6bd6d033367964ef0365a8b55567e466f7915e96447e2f732dc064c7a"
+    },
+    "golden_camera_stream.cpp": {
+      "bytes": 1724,
+      "sha256": "880f5c6ed43b7e48066491e22ca7d3d11ec9c8bf404c1901c0927c9ae001f6b8"
+    },
+    "main.cpp": {
+      "bytes": 27059,
+      "sha256": "ed7066eeb963616c6cf69e02647a493761668ba587b1fad47b271f626eeb671e"
+    },
+    "numerics.hpp": {
+      "bytes": 2495,
+      "sha256": "8f58cce4f19826204b7b67bb74a94b897b6fcfb2437c58307bc3a2d47acd151a"
+    },
+    "parking_ppo.cpp": {
+      "bytes": 9079,
+      "sha256": "5902b66d77e78085bb399ee13becd802319459647b2fe409fad7cd705707cac9"
+    },
+    "physics.cpp": {
+      "bytes": 7658,
+      "sha256": "f568ff93d5bf56003bc5814a4925123b954b8392b3e253d267aef898d4df2c60"
+    },
+    "policy_replay.cpp": {
+      "bytes": 10790,
+      "sha256": "bc7205aee5195a48af99f2f940a80bf1cece89ab9f0bfc390a4cde27158e9bf4"
+    },
+    "sensor_curriculum.cpp": {
+      "bytes": 8784,
+      "sha256": "85a6236a4d1fdc0c9dc2d0e991e460cc150e12abb2e153c596f3c8b247ed60d6"
+    },
+    "sensor_parking.cpp": {
+      "bytes": 5615,
+      "sha256": "a5b41dda5672b9c9bf5e3cae0b78ecd85d985b0f8cc940149c110a27a754d0f6"
+    },
+    "assets/plane.mtl": {
+      "bytes": 255,
+      "sha256": "421de8c371462058b3eaa022fe19aad28c32524603d9c3b72c3bee1995a7a652"
+    },
+    "assets/plane.urdf": {
+      "bytes": 684,
+      "sha256": "0854ed06ba0b15079ba05396b4138f366dc784d670583d96230f3b5a4105bae2"
+    },
+    "assets/plane100.obj": {
+      "bytes": 365,
+      "sha256": "0ef1366701af4d234af4f98789249ec6e9383914d9497c85d8113d9a445bf4da"
+    },
+    "assets/summit_xl_arm_description/forearm_mico.dae": {
+      "bytes": 556683,
+      "sha256": "ba6649b3568630b70bddd8b1e5596f12c301fcc549c6ce57bf7e0389f3e1c0da"
+    },
+    "assets/summit_xl_arm_description/arm.dae": {
+      "bytes": 645873,
+      "sha256": "34fbe87b12d0878546ad8f01541c61d4a54d204e52b03f3aa83955d47b5fc067"
+    },
+    "assets/summit_xl_arm_description/arm.SLDPRT": {
+      "bytes": 597168,
+      "sha256": "ff05abaddc04044f074de1415194c99591f6e3615102ad83264a776ae0262465"
+    },
+    "assets/summit_xl_arm_description/arm.STL": {
+      "bytes": 410884,
+      "sha256": "cc77aeb83ea0e648fd4e028fa5dcca91c14af098cbd27a19c44befe4e5792a92"
+    },
+    "assets/summit_xl_arm_description/arm_half_1.dae": {
+      "bytes": 469714,
+      "sha256": "b1d9bf67a736e22f587c58de16699a212b1818786815f03ce83300076edf951b"
+    },
+    "assets/summit_xl_arm_description/arm_half_1.STL": {
+      "bytes": 321084,
+      "sha256": "e3845b39cf479174a0405b4ae1830ca1fa445e5451ed9a26b7870f3d7773dc19"
+    },
+    "assets/summit_xl_arm_description/arm_half_2.dae": {
+      "bytes": 467085,
+      "sha256": "cb0cde072c2ebca152f121df98f37dae98c1ed8c6dd5364925fabaf03c954078"
+    },
+    "assets/summit_xl_arm_description/arm_half_2.STL": {
+      "bytes": 321084,
+      "sha256": "f8ec7a8deb28027d4c785611449ba83da2b61245c408646f7dbe15b297563143"
+    },
+    "assets/summit_xl_arm_description/arm_mico.dae": {
+      "bytes": 633481,
+      "sha256": "7806101c64584157486a1fbcd1f9cf077435b26694695e77d71626419af4acfb"
+    },
+    "assets/summit_xl_arm_description/arm_mico.STL": {
+      "bytes": 430884,
+      "sha256": "b55798decb047af93487d56ab7fada341fbdaaea3fa080946a9eb5cfbde6ba69"
+    },
+    "assets/summit_xl_arm_description/base.dae": {
+      "bytes": 1336047,
+      "sha256": "84d6c46a5cf934f8d9abd669928948857ef8eec0d537ea226e9e44cd72e5133c"
+    },
+    "assets/summit_xl_arm_description/base.STL": {
+      "bytes": 853484,
+      "sha256": "5889fe8e3c490dc41b8532c92deb7895dbf62ecd1544bd43942681efe0336b60"
+    },
+    "assets/summit_xl_arm_description/finger_distal.dae": {
+      "bytes": 141699,
+      "sha256": "73f6662e0e9c47e43b9f3018069cf6285f40e163d3555a6928607f058ed7cffb"
+    },
+    "assets/summit_xl_arm_description/finger_distal.STL": {
+      "bytes": 97184,
+      "sha256": "27ce521eedbd5e70b6bfa364a29b357d2b03f15ebf1ffeb08c46bf28ccf7f6ca"
+    },
+    "assets/summit_xl_arm_description/finger_proximal.dae": {
+      "bytes": 200973,
+      "sha256": "ce16acaa3571b4023c131c7310744fc28894c9703c9833a3d274bb38a704fa33"
+    },
+    "assets/summit_xl_arm_description/finger_proximal.STL": {
+      "bytes": 135584,
+      "sha256": "4e4c3b68fe806f53fbae43503176981be61aca54a396d1aa9f3e10f87bc4e4f5"
+    },
+    "assets/summit_xl_arm_description/forearm.dae": {
+      "bytes": 547752,
+      "sha256": "4da6f9148f2b3fd0d4fdfa13129f1a1f2080277a07598540636c4b9eccabc170"
+    },
+    "assets/summit_xl_arm_description/forearm.STL": {
+      "bytes": 350384,
+      "sha256": "48cdf606a4d84b329bdb37508cc2aac522312ad61c216c3dbc8106f7df022256"
+    },
+    "assets/summit_xl_arm_description/forearm_mico.STL": {
+      "bytes": 381684,
+      "sha256": "b19a47da4089e2f7baa25ba63c4dabff2c19400185373bd8689d825a56a4949e"
+    },
+    "assets/summit_xl_arm_description/hand_2finger.dae": {
+      "bytes": 3952875,
+      "sha256": "25d70ab15bcbece6b50e819656624e7d7374ba48e0a54a14742dc4612f73c2c9"
+    },
+    "assets/summit_xl_arm_description/hand_2finger.STL": {
+      "bytes": 2522684,
+      "sha256": "ce4ebd0c7a258e5f8ef52da36fbf2c12c3b7a484feac60eb1f8eeedae15bddb5"
+    },
+    "assets/summit_xl_arm_description/hand_3finger.dae": {
+      "bytes": 2286771,
+      "sha256": "018d65704e40f198c2af21ce69de59b955f13c238875f0df229ac7f8436bb003"
+    },
+    "assets/summit_xl_arm_description/hand_3finger.STL": {
+      "bytes": 1395484,
+      "sha256": "7e1a0ecb85ee2c8213ec197e75e53c30dbfcca06ca114bef1a1a80c798349a22"
+    },
+    "assets/summit_xl_arm_description/omni_wheel_1.dae": {
+      "bytes": 994095,
+      "sha256": "728f46627110dda2ea1f6061bc3121eff107ac25f189fbcc86403d6369a13b95"
+    },
+    "assets/summit_xl_arm_description/omni_wheel_2.dae": {
+      "bytes": 931943,
+      "sha256": "1a935046c78a2f321f43d3f3f6b1b4d4e7c09484162997d569f0ae561afecc8e"
+    },
+    "assets/summit_xl_arm_description/ring_big.dae": {
+      "bytes": 34042,
+      "sha256": "ddd3db4dd2e64ef0673b90a0b2aead433c65ee81fa485a64c169356dcea2b952"
+    },
+    "assets/summit_xl_arm_description/ring_big.STL": {
+      "bytes": 22684,
+      "sha256": "e0715633b6d217880a8291843f4716de29faa317c7365be7d3c2c6b95ad47c58"
+    },
+    "assets/summit_xl_arm_description/ring_small.dae": {
+      "bytes": 35177,
+      "sha256": "cf4d3b83ed06116b66c6d33a7e2d5e2d2643b7a822147c44bfbba80b5b27a234"
+    },
+    "assets/summit_xl_arm_description/ring_small.STL": {
+      "bytes": 22684,
+      "sha256": "9d60973e9d9ff8c6b05d49a120bab2fc8df42e7270d72e369808e9c1678db5eb"
+    },
+    "assets/summit_xl_arm_description/rubber_wheel_left.dae": {
+      "bytes": 791199,
+      "sha256": "325e6eb606a8e053568bd9e64635a681f61947cc8b547761d60968f7f1fda0e8"
+    },
+    "assets/summit_xl_arm_description/rubber_wheel_right.dae": {
+      "bytes": 791235,
+      "sha256": "528d7ca0bcfa8e082983333bf57ea4083aed98128b67808908857a6947348d9f"
+    },
+    "assets/summit_xl_arm_description/shoulder.dae": {
+      "bytes": 643584,
+      "sha256": "c94f20e293244a5cf55b724cc19573fb5f4dd3e7fa3ba6fb17f1582bc9bf9963"
+    },
+    "assets/summit_xl_arm_description/shoulder.STL": {
+      "bytes": 410184,
+      "sha256": "142067f7985c4fe9cdd94738a0fa8a7fa2d0ed713851d275c4491048b6157e99"
+    },
+    "assets/summit_xl_arm_description/summit_xl_chassis.dae": {
+      "bytes": 1109107,
+      "sha256": "cb66463c5a39768f5bbefb564b47d6da51c49f0cb3ee7a94bef747416d9b13b2"
+    },
+    "assets/summit_xl_arm_description/summit_xl_chassis.stl": {
+      "bytes": 144684,
+      "sha256": "6a64a888414db6758c963ae0fedd01e2fd72ce11d55a555ce2ca0f5d1f90d9d3"
+    },
+    "assets/summit_xl_arm_description/summit_xl_chassis_collision.dae": {
+      "bytes": 134860,
+      "sha256": "f45990127ea91d007197931078d201e96f71f0db5b9c4c5d1ffa079e821280fd"
+    },
+    "assets/summit_xl_arm_description/summit_xl_chassis_copy.dae": {
+      "bytes": 1111548,
+      "sha256": "a95b3806cb798dcaba6e1086dabdac1c3b1c3e1e477be718461681a59bb939bf"
+    },
+    "assets/summit_xl_arm_description/summit_xl_chassis_simple.stl": {
+      "bytes": 46684,
+      "sha256": "b66d5f361c23ab5cfaa555d3e665424b13e39728d53e6ca7334fe5225e7c730e"
+    },
+    "assets/summit_xl_arm_description/summit_xl_complete.urdf": {
+      "bytes": 21233,
+      "sha256": "25923594d151ed8fdf953de09072adc41e07ba29374b6bcdf44fa3a90bb1b180"
+    },
+    "assets/summit_xl_arm_description/summit_xl_complete_pin.urdf": {
+      "bytes": 21481,
+      "sha256": "aea40a17a794e73d1b8058b0308431130f9b055e35a6092c51074406e951f369"
+    },
+    "assets/summit_xl_arm_description/summit_xl_covers.stl": {
+      "bytes": 330284,
+      "sha256": "c0106995971bdf9250411e3c453381aba21e9c4c42c24d9adacce9100480f004"
+    },
+    "assets/summit_xl_arm_description/summit_xl_hl_chassis.dae": {
+      "bytes": 1085021,
+      "sha256": "c5cef29a3dfba5ab2d4f92e429e98da8dfbe96b3157d0d68cb02168ba4bffff5"
+    },
+    "assets/summit_xl_arm_description/summit_xl_logos.stl": {
+      "bytes": 58584,
+      "sha256": "9d76e3a8f737840b71134dde84c0d452c8d5aaad6577b9e39f2dfafb6f62f8c5"
+    },
+    "assets/summit_xl_arm_description/wrist.dae": {
+      "bytes": 290082,
+      "sha256": "dd7f14d83ee829804b780d152adb878034d2fc3e142a3a2ea9ac26ed8e68c4a4"
+    },
+    "assets/summit_xl_arm_description/wrist.STL": {
+      "bytes": 184384,
+      "sha256": "8b71f21d669472de8b29eb08f296940a236f8fafd39165fb4d44aeeeba79c6bc"
+    },
+    "assets/summit_xl_arm_description/wrist_spherical_1.dae": {
+      "bytes": 566958,
+      "sha256": "37c505698084ecf21d724f36c0771c58da7458829340503f7ca494e6080e2089"
+    },
+    "assets/summit_xl_arm_description/wrist_spherical_1.STL": {
+      "bytes": 387384,
+      "sha256": "e703075888eeded30c99b3daa83a98513ef3dfb6d57456b89f2f2240781bd62d"
+    },
+    "assets/summit_xl_arm_description/wrist_spherical_2.dae": {
+      "bytes": 568875,
+      "sha256": "bdb261fe1d11d9aaaa92232de57c54a0b8a738ed261eafb2ca10dbc3d10cd841"
+    },
+    "assets/summit_xl_arm_description/wrist_spherical_2.STL": {
+      "bytes": 387384,
+      "sha256": "7eafa8be6d2d91ca4592c1bb642c116d879b5c0ba952a0ec3dc9d111a86b5dbd"
+    }
+  }
+}

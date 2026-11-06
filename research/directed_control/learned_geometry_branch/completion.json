@@ -1,0 +1,9 @@
+{
+  "status": "earlier experiments complete; raw-envelope confidence-gating six running",
+  "completed_six_case_variants": 8,
+  "additional_exponential_filter_probe_cases": 2,
+  "originals_untouched": true,
+  "active_training": false,
+  "active_simulation": true,
+  "main_notebook_or_MLflow_publication": false
+}

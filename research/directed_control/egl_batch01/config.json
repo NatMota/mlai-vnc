@@ -1,0 +1,33 @@
+{
+  "names": [
+    "baseline",
+    "velocity_gain075",
+    "velocity_gain125",
+    "camera_gain125",
+    "leaky0001",
+    "leaky001",
+    "torque7_gain110"
+  ],
+  "ids": [
+    6,
+    16,
+    23,
+    45,
+    55,
+    80
+  ],
+  "condition": {},
+  "renderer": "egl",
+  "jobs": 2,
+  "selection": "validation-only exploratory fixed candidates; no optimizer or test data",
+  "native_sha": "4fcac465ea0f2a92596a8b73a2dfa1b2f5a2183215f8c91412407f095f92cd35",
+  "model_sha": {
+    "baseline": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+    "velocity_gain075": "528b7074b7a92b3f295a00bec9073faa0e42fe36d8db9fe2a52c5f26a42950d9",
+    "velocity_gain125": "7501fc9d7479de0c7ff6a9b2fca725ec5c9872c3326afd137f8501a1edb13c39",
+    "camera_gain125": "59171fcb299a301662631f4b8a8ad59be609f6d34a3deef7bd1e69c2a98bf4e5",
+    "leaky0001": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+    "leaky001": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+    "torque7_gain110": "610f8c87eafbec3b8f22d34cc3d82bc5d560b0a0e7dab48352b55ab1844db1a1"
+  }
+}

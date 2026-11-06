@@ -1,0 +1,1067 @@
+{
+  "status": "complete frozen validation100, not test",
+  "attempted": 100,
+  "PARK": 100,
+  "STOP": 95,
+  "success_10mm": 95,
+  "execution_failures": 0,
+  "median_closest_mm": 3.697556671615933,
+  "median_final_mm_all_attempts": 3.763994523915957,
+  "median_STOP_mm_conditional": 5.408003951665687,
+  "p95_STOP_mm_conditional": 6.24248799097052,
+  "max_STOP_mm_conditional": 6.373010483453872,
+  "STOP_denominator": 95,
+  "final_within10mm_descriptive_only": 99,
+  "failures": [
+    {
+      "dot": 257,
+      "status": "no_stop_timeout",
+      "park_s": 10.433,
+      "limit_s": 12.0,
+      "min_mm": 85.07805190329691,
+      "at_network_stop_mm": null,
+      "end_mm": 84.96361240682305
+    },
+    {
+      "dot": 359,
+      "status": "no_stop_timeout",
+      "park_s": 9.5,
+      "limit_s": 12.0,
+      "min_mm": 6.8633644937239415,
+      "at_network_stop_mm": null,
+      "end_mm": 6.856775310424914
+    },
+    {
+      "dot": 421,
+      "status": "no_stop_timeout",
+      "park_s": 9.267,
+      "limit_s": 12.0,
+      "min_mm": 3.6666499639863943,
+      "at_network_stop_mm": null,
+      "end_mm": 3.6402024033253046
+    },
+    {
+      "dot": 438,
+      "status": "no_stop_timeout",
+      "park_s": 10.733,
+      "limit_s": 13.399000000000001,
+      "min_mm": 7.5903576107005355,
+      "at_network_stop_mm": null,
+      "end_mm": 7.58152118416684
+    },
+    {
+      "dot": 749,
+      "status": "no_stop_timeout",
+      "park_s": 10.833,
+      "limit_s": 12.354,
+      "min_mm": 7.34351696877356,
+      "at_network_stop_mm": null,
+      "end_mm": 7.333327859633716
+    }
+  ],
+  "source_manifest_verified": true,
+  "all_three_batch_configs_match": true,
+  "development_history": "Initial6 and subsequent20 used for architecture/gain/STOP development; remaining74 ran withoutchanges. Entire set is reusedvalidation, not an untouchedtest.",
+  "rows": [
+    {
+      "dot": 6,
+      "status": "success",
+      "success": true,
+      "park_s": 8.0,
+      "stop_s": 11.351,
+      "min_mm": 1.6169728280029305,
+      "at_network_stop_mm": 3.3915863906325314,
+      "end_mm": 1.6156250051594154
+    },
+    {
+      "dot": 16,
+      "status": "success",
+      "success": true,
+      "park_s": 4.6,
+      "stop_s": 7.915,
+      "min_mm": 2.2135386091210654,
+      "at_network_stop_mm": 3.7539148621608738,
+      "end_mm": 2.2121679033175163
+    },
+    {
+      "dot": 23,
+      "status": "success",
+      "success": true,
+      "park_s": 9.733,
+      "stop_s": 13.723,
+      "min_mm": 2.162384431606971,
+      "at_network_stop_mm": 3.5018548011281196,
+      "end_mm": 2.16167700938499
+    },
+    {
+      "dot": 45,
+      "status": "success",
+      "success": true,
+      "park_s": 5.833,
+      "stop_s": 10.071,
+      "min_mm": 4.214481832038347,
+      "at_network_stop_mm": 5.57131327439811,
+      "end_mm": 4.213446726442502
+    },
+    {
+      "dot": 55,
+      "status": "success",
+      "success": true,
+      "park_s": 6.0,
+      "stop_s": 8.311,
+      "min_mm": 2.6796989505242625,
+      "at_network_stop_mm": 4.911279100530213,
+      "end_mm": 2.677076717024084
+    },
+    {
+      "dot": 80,
+      "status": "success",
+      "success": true,
+      "park_s": 8.133,
+      "stop_s": 10.853,
+      "min_mm": 1.9916915856678323,
+      "at_network_stop_mm": 3.796130352883831,
+      "end_mm": 1.9900544110804719
+    },
+    {
+      "dot": 86,
+      "status": "success",
+      "success": true,
+      "park_s": 7.433,
+      "stop_s": 9.779,
+      "min_mm": 4.001466141285757,
+      "at_network_stop_mm": 6.00036732243384,
+      "end_mm": 3.999058951093393
+    },
+    {
+      "dot": 93,
+      "status": "success",
+      "success": true,
+      "park_s": 7.167,
+      "stop_s": 10.265,
+      "min_mm": 1.8567715494349548,
+      "at_network_stop_mm": 3.534849331112113,
+      "end_mm": 1.8555329770179672
+    },
+    {
+      "dot": 104,
+      "status": "success",
+      "success": true,
+      "park_s": 10.533,
+      "stop_s": 14.989,
+      "min_mm": 3.3406757430660607,
+      "at_network_stop_mm": 4.796673580254614,
+      "end_mm": 3.3397325464799414
+    },
+    {
+      "dot": 114,
+      "status": "success",
+      "success": true,
+      "park_s": 6.567,
+      "stop_s": 10.564,
+      "min_mm": 4.465797750854564,
+      "at_network_stop_mm": 6.195884757876737,
+      "end_mm": 4.46377968887
+    },
+    {
+      "dot": 121,
+      "status": "success",
+      "success": true,
+      "park_s": 9.433,
+      "stop_s": 12.014000000000001,
+      "min_mm": 2.6699915106769243,
+      "at_network_stop_mm": 3.899503235034364,
+      "end_mm": 2.6693988919186857
+    },
+    {
+      "dot": 131,
+      "status": "success",
+      "success": true,
+      "park_s": 9.367,
+      "stop_s": 12.094,
+      "min_mm": 1.7924197029718372,
+      "at_network_stop_mm": 3.4195648249704895,
+      "end_mm": 1.7915029975853862
+    },
+    {
+      "dot": 134,
+      "status": "success",
+      "success": true,
+      "park_s": 11.267,
+      "stop_s": 13.039,
+      "min_mm": 3.7027547679530746,
+      "at_network_stop_mm": 5.652770913763449,
+      "end_mm": 3.7008346745904883
+    },
+    {
+      "dot": 143,
+      "status": "success",
+      "success": true,
+      "park_s": 5.867,
+      "stop_s": 8.561,
+      "min_mm": 2.2218628296245524,
+      "at_network_stop_mm": 3.597801222192778,
+      "end_mm": 2.2212381363643954
+    },
+    {
+      "dot": 149,
+      "status": "success",
+      "success": true,
+      "park_s": 6.467,
+      "stop_s": 10.454,
+      "min_mm": 3.9679015266119513,
+      "at_network_stop_mm": 5.088535373231904,
+      "end_mm": 3.965696597557516
+    },
+    {
+      "dot": 151,
+      "status": "success",
+      "success": true,
+      "park_s": 8.133,
+      "stop_s": 12.3,
+      "min_mm": 4.265373643943347,
+      "at_network_stop_mm": 5.19834297509114,
+      "end_mm": 4.26545797865216
+    },
+    {
+      "dot": 153,
+      "status": "success",
+      "success": true,
+      "park_s": 7.7,
+      "stop_s": 10.091000000000001,
+      "min_mm": 4.247246344720995,
+      "at_network_stop_mm": 6.060445392687635,
+      "end_mm": 4.245272796945432
+    },
+    {
+      "dot": 159,
+      "status": "success",
+      "success": true,
+      "park_s": 2.7,
+      "stop_s": 6.423,
+      "min_mm": 5.271340655258389,
+      "at_network_stop_mm": 6.058748957407609,
+      "end_mm": 5.269614367550223
+    },
+    {
+      "dot": 172,
+      "status": "success",
+      "success": true,
+      "park_s": 10.833,
+      "stop_s": 14.739,
+      "min_mm": 3.837195557916822,
+      "at_network_stop_mm": 4.999075454816617,
+      "end_mm": 3.8367757543712004
+    },
+    {
+      "dot": 198,
+      "status": "success",
+      "success": true,
+      "park_s": 4.0,
+      "stop_s": 6.311,
+      "min_mm": 1.3901920152996248,
+      "at_network_stop_mm": 3.2539883257361666,
+      "end_mm": 1.3893779879593067
+    },
+    {
+      "dot": 199,
+      "status": "success",
+      "success": true,
+      "park_s": 7.333,
+      "stop_s": 10.290000000000001,
+      "min_mm": 2.444273362647965,
+      "at_network_stop_mm": 3.9037795572388805,
+      "end_mm": 2.4429979535513353
+    },
+    {
+      "dot": 201,
+      "status": "success",
+      "success": true,
+      "park_s": 4.9,
+      "stop_s": 6.604,
+      "min_mm": 4.155373576474188,
+      "at_network_stop_mm": 6.167363424557958,
+      "end_mm": 4.1532211193429855
+    },
+    {
+      "dot": 204,
+      "status": "success",
+      "success": true,
+      "park_s": 8.5,
+      "stop_s": 11.02,
+      "min_mm": 4.206686921878343,
+      "at_network_stop_mm": 5.9575348432357815,
+      "end_mm": 4.204860230462302
+    },
+    {
+      "dot": 213,
+      "status": "success",
+      "success": true,
+      "park_s": 8.333,
+      "stop_s": 11.796,
+      "min_mm": 4.161663167917318,
+      "at_network_stop_mm": 5.8330466657459334,
+      "end_mm": 4.159769599056481
+    },
+    {
+      "dot": 224,
+      "status": "success",
+      "success": true,
+      "park_s": 6.5,
+      "stop_s": 8.61,
+      "min_mm": 2.897141456954072,
+      "at_network_stop_mm": 4.130040883101146,
+      "end_mm": 2.896268294812114
+    },
+    {
+      "dot": 235,
+      "status": "success",
+      "success": true,
+      "park_s": 9.633,
+      "stop_s": 12.367,
+      "min_mm": 4.1471814608621465,
+      "at_network_stop_mm": 5.8764291459999045,
+      "end_mm": 4.145457359817072
+    },
+    {
+      "dot": 243,
+      "status": "success",
+      "success": true,
+      "park_s": 9.167,
+      "stop_s": 11.913,
+      "min_mm": 2.1546514843179976,
+      "at_network_stop_mm": 3.655190777111416,
+      "end_mm": 2.1539758899250776
+    },
+    {
+      "dot": 245,
+      "status": "success",
+      "success": true,
+      "park_s": 7.8,
+      "stop_s": 9.71,
+      "min_mm": 3.1440866133212464,
+      "at_network_stop_mm": 5.041682518911812,
+      "end_mm": 3.1422136409478254
+    },
+    {
+      "dot": 250,
+      "status": "success",
+      "success": true,
+      "park_s": 8.367,
+      "stop_s": 12.884,
+      "min_mm": 3.446679937172539,
+      "at_network_stop_mm": 3.848974160728311,
+      "end_mm": 3.4675412817629736
+    },
+    {
+      "dot": 253,
+      "status": "success",
+      "success": true,
+      "park_s": 6.267,
+      "stop_s": 9.667,
+      "min_mm": 4.260659887736863,
+      "at_network_stop_mm": 5.815306810820369,
+      "end_mm": 4.258617688555288
+    },
+    {
+      "dot": 257,
+      "status": "no_stop_timeout",
+      "success": false,
+      "park_s": 10.433,
+      "stop_s": null,
+      "min_mm": 85.07805190329691,
+      "at_network_stop_mm": null,
+      "end_mm": 84.96361240682305
+    },
+    {
+      "dot": 265,
+      "status": "success",
+      "success": true,
+      "park_s": 10.4,
+      "stop_s": 11.968,
+      "min_mm": 2.7053347259965213,
+      "at_network_stop_mm": 4.463046752518734,
+      "end_mm": 2.704575153166241
+    },
+    {
+      "dot": 267,
+      "status": "success",
+      "success": true,
+      "park_s": 5.233,
+      "stop_s": 8.961,
+      "min_mm": 3.6923585752787917,
+      "at_network_stop_mm": 5.588219803823444,
+      "end_mm": 3.6905781659124735
+    },
+    {
+      "dot": 268,
+      "status": "success",
+      "success": true,
+      "park_s": 9.133,
+      "stop_s": 12.195,
+      "min_mm": 2.296719263587354,
+      "at_network_stop_mm": 3.7080519255985673,
+      "end_mm": 2.2957023978189652
+    },
+    {
+      "dot": 273,
+      "status": "success",
+      "success": true,
+      "park_s": 6.333,
+      "stop_s": 9.479000000000001,
+      "min_mm": 2.285177844516769,
+      "at_network_stop_mm": 3.86615987878386,
+      "end_mm": 2.2837893602931154
+    },
+    {
+      "dot": 279,
+      "status": "success",
+      "success": true,
+      "park_s": 4.367,
+      "stop_s": 8.244,
+      "min_mm": 3.8289802987173833,
+      "at_network_stop_mm": 5.3755696268934345,
+      "end_mm": 3.8271543732414255
+    },
+    {
+      "dot": 286,
+      "status": "success",
+      "success": true,
+      "park_s": 8.533,
+      "stop_s": 11.414,
+      "min_mm": 4.433566320994685,
+      "at_network_stop_mm": 6.238325485171472,
+      "end_mm": 4.431540098671967
+    },
+    {
+      "dot": 298,
+      "status": "success",
+      "success": true,
+      "park_s": 9.6,
+      "stop_s": 11.773,
+      "min_mm": 3.5837548824549685,
+      "at_network_stop_mm": 5.408003951665687,
+      "end_mm": 3.581824559581801
+    },
+    {
+      "dot": 329,
+      "status": "success",
+      "success": true,
+      "park_s": 11.333,
+      "stop_s": 12.621,
+      "min_mm": 2.422004611184175,
+      "at_network_stop_mm": 5.320674900813861,
+      "end_mm": 2.4196681899780166
+    },
+    {
+      "dot": 333,
+      "status": "success",
+      "success": true,
+      "park_s": 4.6,
+      "stop_s": 8.572000000000001,
+      "min_mm": 2.3878851089969793,
+      "at_network_stop_mm": 3.50412851732818,
+      "end_mm": 2.3931294663233045
+    },
+    {
+      "dot": 345,
+      "status": "success",
+      "success": true,
+      "park_s": 3.033,
+      "stop_s": 5.979,
+      "min_mm": 4.670949617406035,
+      "at_network_stop_mm": 6.164745464723323,
+      "end_mm": 4.860093682305123
+    },
+    {
+      "dot": 352,
+      "status": "success",
+      "success": true,
+      "park_s": 7.133,
+      "stop_s": 10.981,
+      "min_mm": 5.509476139051262,
+      "at_network_stop_mm": 5.8122714160030124,
+      "end_mm": 5.508105992256257
+    },
+    {
+      "dot": 358,
+      "status": "success",
+      "success": true,
+      "park_s": 10.567,
+      "stop_s": 12.964,
+      "min_mm": 4.370449389374355,
+      "at_network_stop_mm": 6.252200504501634,
+      "end_mm": 4.368339637535353
+    },
+    {
+      "dot": 359,
+      "status": "no_stop_timeout",
+      "success": false,
+      "park_s": 9.5,
+      "stop_s": null,
+      "min_mm": 6.8633644937239415,
+      "at_network_stop_mm": null,
+      "end_mm": 6.856775310424914
+    },
+    {
+      "dot": 374,
+      "status": "success",
+      "success": true,
+      "park_s": 7.367,
+      "stop_s": 10.741,
+      "min_mm": 4.258327492642943,
+      "at_network_stop_mm": 5.677919387945866,
+      "end_mm": 4.409281496693672
+    },
+    {
+      "dot": 409,
+      "status": "success",
+      "success": true,
+      "park_s": 9.7,
+      "stop_s": 13.079,
+      "min_mm": 4.445997278616899,
+      "at_network_stop_mm": 5.553701693126441,
+      "end_mm": 4.444600299173305
+    },
+    {
+      "dot": 418,
+      "status": "success",
+      "success": true,
+      "park_s": 8.7,
+      "stop_s": 12.492,
+      "min_mm": 4.65734710266323,
+      "at_network_stop_mm": 5.908599028211855,
+      "end_mm": 4.6536525714671235
+    },
+    {
+      "dot": 421,
+      "status": "no_stop_timeout",
+      "success": false,
+      "park_s": 9.267,
+      "stop_s": null,
+      "min_mm": 3.6666499639863943,
+      "at_network_stop_mm": null,
+      "end_mm": 3.6402024033253046
+    },
+    {
+      "dot": 438,
+      "status": "no_stop_timeout",
+      "success": false,
+      "park_s": 10.733,
+      "stop_s": null,
+      "min_mm": 7.5903576107005355,
+      "at_network_stop_mm": null,
+      "end_mm": 7.58152118416684
+    },
+    {
+      "dot": 447,
+      "status": "success",
+      "success": true,
+      "park_s": 8.7,
+      "stop_s": 11.224,
+      "min_mm": 2.386591109681937,
+      "at_network_stop_mm": 4.016864093823347,
+      "end_mm": 2.3850531699304756
+    },
+    {
+      "dot": 455,
+      "status": "success",
+      "success": true,
+      "park_s": 8.367,
+      "stop_s": 10.941,
+      "min_mm": 2.0603298496672813,
+      "at_network_stop_mm": 3.726937469036891,
+      "end_mm": 2.058945151529237
+    },
+    {
+      "dot": 457,
+      "status": "success",
+      "success": true,
+      "park_s": 9.0,
+      "stop_s": 11.25,
+      "min_mm": 4.062615495286963,
+      "at_network_stop_mm": 6.295950434893905,
+      "end_mm": 4.059844832502336
+    },
+    {
+      "dot": 465,
+      "status": "success",
+      "success": true,
+      "park_s": 9.367,
+      "stop_s": 12.958,
+      "min_mm": 4.611847142852134,
+      "at_network_stop_mm": 5.675241754052051,
+      "end_mm": 4.6106454715776675
+    },
+    {
+      "dot": 467,
+      "status": "success",
+      "success": true,
+      "park_s": 6.667,
+      "stop_s": 8.788,
+      "min_mm": 3.459984719721203,
+      "at_network_stop_mm": 5.651374656937713,
+      "end_mm": 3.457495288421235
+    },
+    {
+      "dot": 486,
+      "status": "success",
+      "success": true,
+      "park_s": 9.167,
+      "stop_s": 12.9,
+      "min_mm": 1.1256604762548506,
+      "at_network_stop_mm": 3.751407377284319,
+      "end_mm": 1.1548028771306278
+    },
+    {
+      "dot": 506,
+      "status": "success",
+      "success": true,
+      "park_s": 6.067,
+      "stop_s": 10.007,
+      "min_mm": 5.639030208400264,
+      "at_network_stop_mm": 6.268573298033205,
+      "end_mm": 5.638664490455784
+    },
+    {
+      "dot": 511,
+      "status": "success",
+      "success": true,
+      "park_s": 9.167,
+      "stop_s": 12.66,
+      "min_mm": 4.0074639110868615,
+      "at_network_stop_mm": 5.518909337245466,
+      "end_mm": 4.007022051869649
+    },
+    {
+      "dot": 521,
+      "status": "success",
+      "success": true,
+      "park_s": 8.467,
+      "stop_s": 12.451,
+      "min_mm": 3.217117232841297,
+      "at_network_stop_mm": 3.624158107789772,
+      "end_mm": 3.6299634099946796
+    },
+    {
+      "dot": 525,
+      "status": "success",
+      "success": true,
+      "park_s": 10.133,
+      "stop_s": 12.35,
+      "min_mm": 3.0680200078413478,
+      "at_network_stop_mm": 4.818019264583759,
+      "end_mm": 3.0662171411270838
+    },
+    {
+      "dot": 527,
+      "status": "success",
+      "success": true,
+      "park_s": 8.233,
+      "stop_s": 12.388,
+      "min_mm": 4.370383878199161,
+      "at_network_stop_mm": 5.292939105453978,
+      "end_mm": 4.369212918138993
+    },
+    {
+      "dot": 530,
+      "status": "success",
+      "success": true,
+      "park_s": 4.467,
+      "stop_s": 6.986,
+      "min_mm": 4.525051260425073,
+      "at_network_stop_mm": 6.373010483453872,
+      "end_mm": 4.523329687675393
+    },
+    {
+      "dot": 544,
+      "status": "success",
+      "success": true,
+      "park_s": 9.5,
+      "stop_s": 11.728,
+      "min_mm": 4.19128712852024,
+      "at_network_stop_mm": 5.511715479584966,
+      "end_mm": 4.188208629935396
+    },
+    {
+      "dot": 558,
+      "status": "success",
+      "success": true,
+      "park_s": 7.167,
+      "stop_s": 9.379,
+      "min_mm": 4.2639199388945865,
+      "at_network_stop_mm": 5.601398884973058,
+      "end_mm": 4.2626189384769955
+    },
+    {
+      "dot": 562,
+      "status": "success",
+      "success": true,
+      "park_s": 3.433,
+      "stop_s": 6.679,
+      "min_mm": 5.003259487173783,
+      "at_network_stop_mm": 5.781983304507795,
+      "end_mm": 5.600318371192441
+    },
+    {
+      "dot": 568,
+      "status": "success",
+      "success": true,
+      "park_s": 8.4,
+      "stop_s": 11.414,
+      "min_mm": 2.495625913519771,
+      "at_network_stop_mm": 3.7778751604006042,
+      "end_mm": 2.494723496609835
+    },
+    {
+      "dot": 582,
+      "status": "success",
+      "success": true,
+      "park_s": 4.867,
+      "stop_s": 7.533,
+      "min_mm": 4.378991724951859,
+      "at_network_stop_mm": 6.113474775021194,
+      "end_mm": 4.37782821955207
+    },
+    {
+      "dot": 587,
+      "status": "success",
+      "success": true,
+      "park_s": 3.6,
+      "stop_s": 5.285,
+      "min_mm": 4.2336152178812005,
+      "at_network_stop_mm": 6.156485199845085,
+      "end_mm": 4.4938495399365435
+    },
+    {
+      "dot": 611,
+      "status": "success",
+      "success": true,
+      "park_s": 10.8,
+      "stop_s": 14.129,
+      "min_mm": 2.660790846459287,
+      "at_network_stop_mm": 3.8181717631006573,
+      "end_mm": 2.6598576025678833
+    },
+    {
+      "dot": 620,
+      "status": "success",
+      "success": true,
+      "park_s": 6.533,
+      "stop_s": 9.513,
+      "min_mm": 4.711460325788383,
+      "at_network_stop_mm": 6.202642050409769,
+      "end_mm": 4.906455689672439
+    },
+    {
+      "dot": 622,
+      "status": "success",
+      "success": true,
+      "park_s": 5.433,
+      "stop_s": 8.09,
+      "min_mm": 2.2131180556059973,
+      "at_network_stop_mm": 3.7330544737981493,
+      "end_mm": 2.2119704226811403
+    },
+    {
+      "dot": 626,
+      "status": "success",
+      "success": true,
+      "park_s": 7.833,
+      "stop_s": 10.462,
+      "min_mm": 1.8102637931298724,
+      "at_network_stop_mm": 3.740358058249416,
+      "end_mm": 1.8082911852415617
+    },
+    {
+      "dot": 635,
+      "status": "success",
+      "success": true,
+      "park_s": 6.667,
+      "stop_s": 10.109,
+      "min_mm": 1.9830014501617883,
+      "at_network_stop_mm": 3.679137421360969,
+      "end_mm": 1.9812037830636933
+    },
+    {
+      "dot": 637,
+      "status": "success",
+      "success": true,
+      "park_s": 8.533,
+      "stop_s": 11.133000000000001,
+      "min_mm": 4.108535590289406,
+      "at_network_stop_mm": 5.954334316766038,
+      "end_mm": 4.106648138339633
+    },
+    {
+      "dot": 660,
+      "status": "success",
+      "success": true,
+      "park_s": 5.8,
+      "stop_s": 8.368,
+      "min_mm": 1.8006211558571084,
+      "at_network_stop_mm": 3.602108445140166,
+      "end_mm": 1.799238400108268
+    },
+    {
+      "dot": 663,
+      "status": "success",
+      "success": true,
+      "park_s": 10.367,
+      "stop_s": 12.479000000000001,
+      "min_mm": 3.470720201589528,
+      "at_network_stop_mm": 6.013154409268054,
+      "end_mm": 4.211779231875672
+    },
+    {
+      "dot": 668,
+      "status": "success",
+      "success": true,
+      "park_s": 11.067,
+      "stop_s": 13.906,
+      "min_mm": 3.512879413697162,
+      "at_network_stop_mm": 5.638842853407568,
+      "end_mm": 3.5103669357629252
+    },
+    {
+      "dot": 673,
+      "status": "success",
+      "success": true,
+      "park_s": 3.1,
+      "stop_s": 6.841,
+      "min_mm": 5.211179018643786,
+      "at_network_stop_mm": 5.964860507460637,
+      "end_mm": 5.210310215185713
+    },
+    {
+      "dot": 676,
+      "status": "success",
+      "success": true,
+      "park_s": 6.367,
+      "stop_s": 8.505,
+      "min_mm": 2.4085513411672586,
+      "at_network_stop_mm": 3.858994732308577,
+      "end_mm": 2.40765675430052
+    },
+    {
+      "dot": 687,
+      "status": "success",
+      "success": true,
+      "park_s": 6.033,
+      "stop_s": 10.616,
+      "min_mm": 4.825203540809625,
+      "at_network_stop_mm": 6.337149248825622,
+      "end_mm": 4.8225579023546405
+    },
+    {
+      "dot": 692,
+      "status": "success",
+      "success": true,
+      "park_s": 7.733,
+      "stop_s": 10.775,
+      "min_mm": 3.6390056383180287,
+      "at_network_stop_mm": 5.601014721949643,
+      "end_mm": 3.6367983566537347
+    },
+    {
+      "dot": 720,
+      "status": "success",
+      "success": true,
+      "park_s": 6.0,
+      "stop_s": 7.259,
+      "min_mm": 0.9572349653973863,
+      "at_network_stop_mm": 4.252858868637285,
+      "end_mm": 2.4037508042552798
+    },
+    {
+      "dot": 737,
+      "status": "success",
+      "success": true,
+      "park_s": 9.767,
+      "stop_s": 12.825000000000001,
+      "min_mm": 2.031086690592659,
+      "at_network_stop_mm": 3.6795215686614013,
+      "end_mm": 2.030124124213092
+    },
+    {
+      "dot": 749,
+      "status": "no_stop_timeout",
+      "success": false,
+      "park_s": 10.833,
+      "stop_s": null,
+      "min_mm": 7.34351696877356,
+      "at_network_stop_mm": null,
+      "end_mm": 7.333327859633716
+    },
+    {
+      "dot": 758,
+      "status": "success",
+      "success": true,
+      "park_s": 6.9,
+      "stop_s": 9.624,
+      "min_mm": 2.0810091668665334,
+      "at_network_stop_mm": 3.6526288881824267,
+      "end_mm": 2.080070686853057
+    },
+    {
+      "dot": 764,
+      "status": "success",
+      "success": true,
+      "park_s": 9.967,
+      "stop_s": 13.728,
+      "min_mm": 4.67388993648304,
+      "at_network_stop_mm": 5.524916193009225,
+      "end_mm": 4.67839753008689
+    },
+    {
+      "dot": 795,
+      "status": "success",
+      "success": true,
+      "park_s": 8.167,
+      "stop_s": 11.378,
+      "min_mm": 4.075744300760422,
+      "at_network_stop_mm": 5.599923522922881,
+      "end_mm": 4.074447867502502
+    },
+    {
+      "dot": 798,
+      "status": "success",
+      "success": true,
+      "park_s": 8.167,
+      "stop_s": 11.062,
+      "min_mm": 2.2719423365441385,
+      "at_network_stop_mm": 3.7631667680260743,
+      "end_mm": 2.2707005100989646
+    },
+    {
+      "dot": 810,
+      "status": "success",
+      "success": true,
+      "park_s": 5.2,
+      "stop_s": 7.982,
+      "min_mm": 1.9281488770411865,
+      "at_network_stop_mm": 3.581110256346628,
+      "end_mm": 1.9270190125179945
+    },
+    {
+      "dot": 823,
+      "status": "success",
+      "success": true,
+      "park_s": 3.933,
+      "stop_s": 8.56,
+      "min_mm": 4.3865063091064025,
+      "at_network_stop_mm": 5.520545962914849,
+      "end_mm": 4.473988898168971
+    },
+    {
+      "dot": 830,
+      "status": "success",
+      "success": true,
+      "park_s": 5.167,
+      "stop_s": 7.797000000000001,
+      "min_mm": 2.567195494774179,
+      "at_network_stop_mm": 3.7304349315040004,
+      "end_mm": 2.56691267768587
+    },
+    {
+      "dot": 879,
+      "status": "success",
+      "success": true,
+      "park_s": 9.933,
+      "stop_s": 13.780000000000001,
+      "min_mm": 3.6865400491442584,
+      "at_network_stop_mm": 5.973151898661813,
+      "end_mm": 3.6824193304080954
+    },
+    {
+      "dot": 880,
+      "status": "success",
+      "success": true,
+      "park_s": 6.6,
+      "stop_s": 9.058,
+      "min_mm": 2.913160938187285,
+      "at_network_stop_mm": 4.865475268771658,
+      "end_mm": 2.911104893641217
+    },
+    {
+      "dot": 881,
+      "status": "success",
+      "success": true,
+      "park_s": 9.4,
+      "stop_s": 13.254,
+      "min_mm": 2.565379984652492,
+      "at_network_stop_mm": 3.9893663244575808,
+      "end_mm": 2.564917841141837
+    },
+    {
+      "dot": 910,
+      "status": "success",
+      "success": true,
+      "park_s": 2.8,
+      "stop_s": 6.926,
+      "min_mm": 5.2954047110025195,
+      "at_network_stop_mm": 5.960180749458862,
+      "end_mm": 5.293461591518551
+    },
+    {
+      "dot": 921,
+      "status": "success",
+      "success": true,
+      "park_s": 5.467,
+      "stop_s": 8.618,
+      "min_mm": 3.930801314758681,
+      "at_network_stop_mm": 5.876985827713392,
+      "end_mm": 3.928657885423471
+    },
+    {
+      "dot": 934,
+      "status": "success",
+      "success": true,
+      "park_s": 7.5,
+      "stop_s": 11.396,
+      "min_mm": 5.359722224375954,
+      "at_network_stop_mm": 5.875877132118003,
+      "end_mm": 5.361201852616444
+    },
+    {
+      "dot": 950,
+      "status": "success",
+      "success": true,
+      "park_s": 6.7,
+      "stop_s": 9.934000000000001,
+      "min_mm": 3.9240641735911255,
+      "at_network_stop_mm": 5.9742260581190205,
+      "end_mm": 3.9200963050486277
+    },
+    {
+      "dot": 972,
+      "status": "success",
+      "success": true,
+      "park_s": 8.5,
+      "stop_s": 11.725,
+      "min_mm": 2.4308965464814505,
+      "at_network_stop_mm": 3.733175450309661,
+      "end_mm": 2.429918437096759
+    },
+    {
+      "dot": 991,
+      "status": "success",
+      "success": true,
+      "park_s": 8.1,
+      "stop_s": 11.944,
+      "min_mm": 4.129254383603549,
+      "at_network_stop_mm": 5.4152295458717985,
+      "end_mm": 4.128296883625213
+    },
+    {
+      "dot": 998,
+      "status": "success",
+      "success": true,
+      "park_s": 3.533,
+      "stop_s": 6.726,
+      "min_mm": 4.116173179501943,
+      "at_network_stop_mm": 5.800204361571032,
+      "end_mm": 4.114602860434232
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "baseline",
+  "arm_leaky_slope": 0,
+  "hypothesis": "Unmodified baseline, matched same runtime",
+  "model_sha256": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+  "changes": []
+}

@@ -1,0 +1,31 @@
+{
+  "names": [
+    "phase_gain110",
+    "phase_gain150",
+    "phase125_vel125",
+    "phase125_leaky0001",
+    "phase125_damping05",
+    "phase125_damping1"
+  ],
+  "ids": [
+    6,
+    16,
+    23,
+    45,
+    55,
+    80
+  ],
+  "condition": {},
+  "renderer": "egl",
+  "jobs": 2,
+  "selection": "validation-only exploratory fixed candidates; no optimizer or test data",
+  "native_sha": "4fcac465ea0f2a92596a8b73a2dfa1b2f5a2183215f8c91412407f095f92cd35",
+  "model_sha": {
+    "phase_gain110": "0df90e4c52ab46bc272c95cbdb079303b1803461aad790f622c29a091646aaf8",
+    "phase_gain150": "251f5eec474f888dfa1ec28eae2bdf668d8801a111b8fdddb23d5534f32d507e",
+    "phase125_vel125": "e3dec4d97b02c7dc35b2f0d294378cdee8fa87276e1f116ac6b09f5ba772ea85",
+    "phase125_leaky0001": "bf77280fa339caf732023ff9fb5869b187ec59f65d1a8807f04517f5e62c5bf6",
+    "phase125_damping05": "bf77280fa339caf732023ff9fb5869b187ec59f65d1a8807f04517f5e62c5bf6",
+    "phase125_damping1": "bf77280fa339caf732023ff9fb5869b187ec59f65d1a8807f04517f5e62c5bf6"
+  }
+}

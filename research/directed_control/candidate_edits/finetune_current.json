@@ -1,0 +1,72 @@
+{
+  "name": "finetune_current",
+  "arm_leaky_slope": 0,
+  "velocity_ema_ms": 0,
+  "training": {
+    "seed": 7,
+    "epochs": 300,
+    "lr": 0.0001,
+    "weighting": "equal mean per episode",
+    "arm_loss": "standardised torque MSE + original auxiliary distance MSE",
+    "STOP_loss": "original clipped distance MSE",
+    "selection": "separate earliest minimum validation total for each network",
+    "filter_ms": [
+      0,
+      5
+    ],
+    "time_cap_seconds": 1800,
+    "original_sha256": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3",
+    "trainer_sha256": "49cdd5db56121f26eedcf640f31f8c4bbb2c31dc084a0acb8d14296720d4899b",
+    "test_files_opened": 0
+  },
+  "models": {
+    "torque": {
+      "selected_epoch": 300,
+      "selected_val_total": 0.011745937168598175,
+      "initial": {
+        "epoch": 0,
+        "train_command": 0.008476867340505123,
+        "train_aux": 0.0007500690408051014,
+        "val_command": 0.010978654026985168,
+        "val_aux": 0.0010719698620960116,
+        "train_total": 0.009226936846971512,
+        "val_total": 0.012050624005496502
+      },
+      "initial_unfold_max_difference": 1.52587890625e-05,
+      "export_checks": [
+        {
+          "split": "train",
+          "max_difference": 3.814697265625e-06
+        },
+        {
+          "split": "val",
+          "max_difference": 5.7220458984375e-06
+        }
+      ]
+    },
+    "stop": {
+      "selected_epoch": 300,
+      "selected_val_total": 0.0008203692268580198,
+      "initial": {
+        "epoch": 0,
+        "train_command": 0.0007592583424411714,
+        "train_aux": 0.0,
+        "val_command": 0.0009144675568677485,
+        "val_aux": 0.0,
+        "train_total": 0.0007592583424411714,
+        "val_total": 0.0009144675568677485
+      },
+      "initial_unfold_max_difference": 6.556510925292969e-07,
+      "export_checks": [
+        {
+          "split": "train",
+          "max_difference": 2.384185791015625e-07
+        },
+        {
+          "split": "val",
+          "max_difference": 2.384185791015625e-07
+        }
+      ]
+    }
+  }
+}

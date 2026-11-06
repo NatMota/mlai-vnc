@@ -1,0 +1,597 @@
+{
+  "scope": "Shadow predictions only; current completed validation traces. No controller changes or test data.",
+  "rows": [
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 16,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.054888881345848996,
+      "p95_mm": 0.1496764149800064,
+      "max_mm": 0.23671133242057063,
+      "frames": 65
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 16,
+      "model": "six_angle_svd",
+      "median_mm": 0.020383685415988607,
+      "p95_mm": 0.07080333618666819,
+      "max_mm": 0.08395613574507677,
+      "frames": 65
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 23,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.007611357066877385,
+      "p95_mm": 3.046574530187226,
+      "max_mm": 8.070866131796096,
+      "frames": 74
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 23,
+      "model": "six_angle_svd",
+      "median_mm": 0.004067988826136897,
+      "p95_mm": 2.6897461035556365,
+      "max_mm": 4.057654960952787,
+      "frames": 74
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 45,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.08803086144209976,
+      "p95_mm": 4.151153028460677,
+      "max_mm": 4.360289659835814,
+      "frames": 139
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 45,
+      "model": "six_angle_svd",
+      "median_mm": 0.03559261985405933,
+      "p95_mm": 0.7641075896409432,
+      "max_mm": 1.5164050019839748,
+      "frames": 139
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 55,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.39191537362842355,
+      "p95_mm": 39.246602016914395,
+      "max_mm": 81.1064769809273,
+      "frames": 65
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 55,
+      "model": "six_angle_svd",
+      "median_mm": 0.05368564046014282,
+      "p95_mm": 6.7155608931420465,
+      "max_mm": 8.198911563928036,
+      "frames": 65
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 6,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.04780931463391576,
+      "p95_mm": 0.24668718407652343,
+      "max_mm": 0.2823695807151115,
+      "frames": 76
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 6,
+      "model": "six_angle_svd",
+      "median_mm": 0.014992764777802241,
+      "p95_mm": 0.07997982715593717,
+      "max_mm": 0.08509205123935736,
+      "frames": 76
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 80,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.039021059836518344,
+      "p95_mm": 0.2705347557508913,
+      "max_mm": 0.3884316877820807,
+      "frames": 39
+    },
+    {
+      "group": "egl_batch01/baseline",
+      "dot": 80,
+      "model": "six_angle_svd",
+      "median_mm": 0.008618244858383672,
+      "p95_mm": 0.04410139381364667,
+      "max_mm": 0.055167350404619904,
+      "frames": 39
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 16,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.0984749273483196,
+      "p95_mm": 0.12151869561219411,
+      "max_mm": 0.12265717248823997,
+      "frames": 157
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 16,
+      "model": "six_angle_svd",
+      "median_mm": 0.025725911924716672,
+      "p95_mm": 0.04460096756333514,
+      "max_mm": 0.04543014058132756,
+      "frames": 157
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 23,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.07371357132639063,
+      "p95_mm": 0.11462415272911024,
+      "max_mm": 0.11519945607402787,
+      "frames": 175
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 23,
+      "model": "six_angle_svd",
+      "median_mm": 0.033283544833142935,
+      "p95_mm": 0.07593758295490455,
+      "max_mm": 0.077540699359073,
+      "frames": 175
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 45,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.08397598924982069,
+      "p95_mm": 0.12650976697138291,
+      "max_mm": 0.1272648408948227,
+      "frames": 209
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 45,
+      "model": "six_angle_svd",
+      "median_mm": 0.010272048184227502,
+      "p95_mm": 0.016995357889325734,
+      "max_mm": 0.018342931968285854,
+      "frames": 209
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 55,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.017036147314805808,
+      "p95_mm": 0.029642615406123986,
+      "max_mm": 0.030679622168105807,
+      "frames": 120
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 55,
+      "model": "six_angle_svd",
+      "median_mm": 0.004662747544780665,
+      "p95_mm": 0.008046278647278669,
+      "max_mm": 0.008653682414052772,
+      "frames": 120
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 6,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.034805769275333805,
+      "p95_mm": 0.04559497349368066,
+      "max_mm": 0.04627685376365476,
+      "frames": 162
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 6,
+      "model": "six_angle_svd",
+      "median_mm": 0.01095532712014808,
+      "p95_mm": 0.01720075452162052,
+      "max_mm": 0.017693662734210094,
+      "frames": 162
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 80,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.011517804250936393,
+      "p95_mm": 0.019721002100966254,
+      "max_mm": 0.020598445759305993,
+      "frames": 124
+    },
+    {
+      "group": "learned_geometry_branch/gated_identified_validation",
+      "dot": 80,
+      "model": "six_angle_svd",
+      "median_mm": 0.008005590883572902,
+      "p95_mm": 0.013296790087140785,
+      "max_mm": 0.014031092797695936,
+      "frames": 124
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 104,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.1572474818032045,
+      "p95_mm": 0.4689184039198392,
+      "max_mm": 0.48778832291860097,
+      "frames": 172
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 104,
+      "model": "six_angle_svd",
+      "median_mm": 0.021930631228354196,
+      "p95_mm": 0.0938395529770176,
+      "max_mm": 0.09825626613767072,
+      "frames": 172
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 114,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.25720457246594236,
+      "p95_mm": 0.3996997403917447,
+      "max_mm": 0.40674507676328675,
+      "frames": 169
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 114,
+      "model": "six_angle_svd",
+      "median_mm": 0.04471883493265817,
+      "p95_mm": 0.05670741911778668,
+      "max_mm": 0.05812173228788995,
+      "frames": 169
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 121,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.0010971108639306326,
+      "p95_mm": 0.0016620822909698242,
+      "max_mm": 0.0019561618708755155,
+      "frames": 106
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 121,
+      "model": "six_angle_svd",
+      "median_mm": 0.001662255793256697,
+      "p95_mm": 0.0025383825006899995,
+      "max_mm": 0.0027645704138672326,
+      "frames": 106
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 131,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.004655690605974153,
+      "p95_mm": 0.009686090465157265,
+      "max_mm": 0.010238424036047331,
+      "frames": 136
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 131,
+      "model": "six_angle_svd",
+      "median_mm": 0.0017709097864401077,
+      "p95_mm": 0.0025948625492456323,
+      "max_mm": 0.0030741563095529434,
+      "frames": 136
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 134,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.0013930780260851517,
+      "p95_mm": 0.0033263409145470723,
+      "max_mm": 0.003574987178091891,
+      "frames": 62
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 134,
+      "model": "six_angle_svd",
+      "median_mm": 0.000526331808159349,
+      "p95_mm": 0.0008653798062615666,
+      "max_mm": 0.0010028074612438514,
+      "frames": 62
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 143,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.0016862661522432459,
+      "p95_mm": 0.0023336037694680852,
+      "max_mm": 0.002587789274886837,
+      "frames": 132
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 143,
+      "model": "six_angle_svd",
+      "median_mm": 0.000691910999647852,
+      "p95_mm": 0.001377358623563296,
+      "max_mm": 0.001770731398318436,
+      "frames": 132
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 149,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.08801564861811839,
+      "p95_mm": 0.1472991926397787,
+      "max_mm": 0.14821540585590726,
+      "frames": 223
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 149,
+      "model": "six_angle_svd",
+      "median_mm": 0.00990134322201307,
+      "p95_mm": 0.017609634114201356,
+      "max_mm": 0.018044986208622018,
+      "frames": 223
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 151,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.013689978374010196,
+      "p95_mm": 0.025382040164317707,
+      "max_mm": 0.027144216552674075,
+      "frames": 150
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 151,
+      "model": "six_angle_svd",
+      "median_mm": 0.005134592524721622,
+      "p95_mm": 0.009811296327219226,
+      "max_mm": 0.010101353571832351,
+      "frames": 150
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 153,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.019273376300768127,
+      "p95_mm": 0.03278911147595577,
+      "max_mm": 0.03340406365719965,
+      "frames": 122
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 153,
+      "model": "six_angle_svd",
+      "median_mm": 0.005924019148496049,
+      "p95_mm": 0.009080660600347575,
+      "max_mm": 0.009317630297762019,
+      "frames": 122
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 159,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.008602220403652355,
+      "p95_mm": 0.01455864129952523,
+      "max_mm": 0.015645720712220212,
+      "frames": 279
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 159,
+      "model": "six_angle_svd",
+      "median_mm": 0.004945795614102104,
+      "p95_mm": 0.00631137633073129,
+      "max_mm": 0.006759908829041278,
+      "frames": 279
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 172,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.03555388539812217,
+      "p95_mm": 0.14062650313166647,
+      "max_mm": 0.15071536727233012,
+      "frames": 132
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 172,
+      "model": "six_angle_svd",
+      "median_mm": 0.006427771663248174,
+      "p95_mm": 0.015278164981956947,
+      "max_mm": 0.01677736197272704,
+      "frames": 132
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 198,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.0015883936634062228,
+      "p95_mm": 0.002444171789528491,
+      "max_mm": 0.002697691831967276,
+      "frames": 114
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 198,
+      "model": "six_angle_svd",
+      "median_mm": 0.0005186705893314276,
+      "p95_mm": 0.0008850386924846284,
+      "max_mm": 0.0010985865477938436,
+      "frames": 114
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 199,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.01913855526776275,
+      "p95_mm": 0.028015497275762805,
+      "max_mm": 0.028993362919979608,
+      "frames": 153
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 199,
+      "model": "six_angle_svd",
+      "median_mm": 0.004781196842506474,
+      "p95_mm": 0.007689202274517898,
+      "max_mm": 0.008204367172843011,
+      "frames": 153
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 201,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.001462043680151404,
+      "p95_mm": 0.0024505696839954203,
+      "max_mm": 0.0027327587076498476,
+      "frames": 85
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 201,
+      "model": "six_angle_svd",
+      "median_mm": 0.000777591086133881,
+      "p95_mm": 0.00149999527176017,
+      "max_mm": 0.00185587620936351,
+      "frames": 85
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 204,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.018289999606813108,
+      "p95_mm": 0.029379286679375508,
+      "max_mm": 0.03038061838628109,
+      "frames": 128
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 204,
+      "model": "six_angle_svd",
+      "median_mm": 0.006086749091295304,
+      "p95_mm": 0.008411845772549952,
+      "max_mm": 0.008619474755541642,
+      "frames": 128
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 213,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.17248526796694405,
+      "p95_mm": 0.24689878905831175,
+      "max_mm": 0.2502377393876644,
+      "frames": 155
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 213,
+      "model": "six_angle_svd",
+      "median_mm": 0.04086666016920613,
+      "p95_mm": 0.04764720160619914,
+      "max_mm": 0.048358425406319,
+      "frames": 155
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 224,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.006709399039444099,
+      "p95_mm": 0.009636521562523127,
+      "max_mm": 0.01037886047388601,
+      "frames": 106
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 224,
+      "model": "six_angle_svd",
+      "median_mm": 0.004422013477405341,
+      "p95_mm": 0.0064682786864543595,
+      "max_mm": 0.00667745737822051,
+      "frames": 106
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 235,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.02967577736519622,
+      "p95_mm": 0.04701314650650626,
+      "max_mm": 0.04778892752073383,
+      "frames": 134
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 235,
+      "model": "six_angle_svd",
+      "median_mm": 0.008943603766206504,
+      "p95_mm": 0.012957707635579348,
+      "max_mm": 0.013357767730719821,
+      "frames": 134
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 86,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.021216050859489896,
+      "p95_mm": 0.03949580423011479,
+      "max_mm": 0.040365553783376966,
+      "frames": 120
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 86,
+      "model": "six_angle_svd",
+      "median_mm": 0.005931912489916246,
+      "p95_mm": 0.00991299755395951,
+      "max_mm": 0.010388451741570305,
+      "frames": 120
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 93,
+      "model": "seven_angle_ridge",
+      "median_mm": 0.01840182807562067,
+      "p95_mm": 0.028056849080652764,
+      "max_mm": 0.029132451774097477,
+      "frames": 156
+    },
+    {
+      "group": "learned_geometry_branch/frozen_identified_gate_v1/broader_validation20",
+      "dot": 93,
+      "model": "six_angle_svd",
+      "median_mm": 0.004827911807565257,
+      "p95_mm": 0.0074597297116350495,
+      "max_mm": 0.007789417224640922,
+      "frames": 156
+    }
+  ],
+  "timing": [
+    {
+      "model": "seven_angle_ridge",
+      "median_us": 705.172773450613,
+      "p95_us": 949.5424106717109,
+      "samples": 184,
+      "max_jacobian_finite_difference_error": 4.579776879953812e-08
+    },
+    {
+      "model": "six_angle_svd",
+      "median_us": 491.55019223690033,
+      "p95_us": 607.0409901440144,
+      "samples": 184,
+      "max_jacobian_finite_difference_error": 4.041111767438821e-08
+    }
+  ]
+}

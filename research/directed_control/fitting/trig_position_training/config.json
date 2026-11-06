@@ -1,0 +1,37 @@
+{
+  "architecture": "tensor product of [1,sin(qj),cos(qj)] with learned 3D linear coefficients",
+  "axes_variants": [
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  ],
+  "ridge_values": [
+    1e-12,
+    1e-10,
+    1e-08,
+    1e-06,
+    0.0001
+  ],
+  "training_weight": "equal mean per episode",
+  "selection": "minimum weighted validation coordinate MSE",
+  "stride_ms": 10,
+  "no_URDF": true,
+  "no_link_lengths": true,
+  "no_runtime_truth": true,
+  "no_test_data": true,
+  "source_sha256": "a9a66f2a963d8af202b2f504c330da95017f5d6949a64b35e0931129975e8201"
+}

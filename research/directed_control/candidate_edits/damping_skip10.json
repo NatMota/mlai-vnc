@@ -1,0 +1,74 @@
+{
+  "name": "damping_skip10",
+  "arm_leaky_slope": 0,
+  "velocity_skip_gain": 10,
+  "hypothesis": "Hand-specified viscous feedback added to learned torques may damp unstable coupling; risks slowing or blocking reaching; not claimed learned",
+  "architecture_change": "tau = original_tau - gain * measured_encoder_velocity",
+  "fixed_velocity_skip_weights": [
+    [
+      -10.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0
+    ],
+    [
+      -0.0,
+      -10.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0
+    ],
+    [
+      -0.0,
+      -0.0,
+      -10.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0
+    ],
+    [
+      -0.0,
+      -0.0,
+      -0.0,
+      -10.0,
+      -0.0,
+      -0.0,
+      -0.0
+    ],
+    [
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -10.0,
+      -0.0,
+      -0.0
+    ],
+    [
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -10.0,
+      -0.0
+    ],
+    [
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      -10.0
+    ]
+  ],
+  "all_original_weights_unchanged": true,
+  "model_sha256": "6513ad9d528841e36806f11843be5d79f04e9f5f231be44d60385f3fae4569b3"
+}
