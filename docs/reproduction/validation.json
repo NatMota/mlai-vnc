@@ -18,6 +18,11 @@
     "analysis_table_matches": 1200,
     "technical_gate_status": "preserved; not changed by this check"
   },
+  "closed_loop_statistics": {
+    "condition_summaries": 24,
+    "paired_comparisons": 18,
+    "identical_to_archived_notebook_input": true
+  },
   "navigation": {
     "iterations": 57,
     "notebook_cell_links": 59,

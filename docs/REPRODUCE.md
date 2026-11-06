@@ -71,6 +71,16 @@ python3 -m venv "$REPRO/statistics-venv"
 
 All **32 code cells** were executed successfully on 6 November using the extracted archive, Python 3.14.7 on macOS arm64 and the pinned packages above. The runner creates a new notebook and fails on a cell error. This regenerates figures and statistics computed in those cells from archived analysis inputs; it does not rerun the upstream simulations or every offline diagnostic that produced those inputs.
 
+Recalculate the closed-loop confidence intervals and paired comparisons directly from the repository's per-target CSV records:
+
+```sh
+"$REPRO/statistics-venv/bin/python" \
+  "$REPRO/data/analysis-evidence/analysis-source/closed_loop_stats.py" \
+  "$REPO/v2_sensors/arm/results" "$REPRO/closed-loop-statistics"
+```
+
+This regenerated all **24 condition summaries and 18 paired comparisons**, and its output JSON was identical to the notebook's packaged `closed_loop_stats.json`. [validation.json](reproduction/validation.json) records the verification scope and native smoke result.
+
 For interactive local use, install JupyterLab in that environment, set `COMP0245_REPORT_DATA` to the same data directory, then open a copy of the notebook. The [live links](NOTEBOOKS.md) remain restricted to Tailscale.
 
 ## Run a frozen V2 policy
