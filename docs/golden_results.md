@@ -297,8 +297,7 @@ Original execution HEAD was 57f28a669d1f4787368499af2b9d977775d632e1 on
 the original local working branch. The working folder already contained unrelated
 changes before this continuation; no existing protected branch has been moved.
 
-ECC code-reviewer and python-reviewer reviewed all three experiment modules and
-their tests, then re-reviewed the fixes. Regression tests proved parity arm
+Regression tests proved parity arm
 disabling and terminal finite-state validation failed before correction. Other
 tests cover copied source, per-file hashes, input width, tracker height, STOP
 boundaries, timeout and 500-step continuation, process receipts/resume, frozen

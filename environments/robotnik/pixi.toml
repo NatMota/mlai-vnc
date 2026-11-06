@@ -1,0 +1,28 @@
+[workspace]
+name = "robotnik-runtime"
+channels = ["conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+python = "3.11.*"
+pinocchio = "4.1.*"
+pybullet = "*"
+robot_descriptions = "*"
+casadi = "*"
+numpy = ">=2,<3"
+matplotlib = "*"
+scipy = "*"
+osqp = "*"
+libblas = { version = "*", build = "*openblas*" }
+
+[pypi-dependencies]
+torch = "==2.14.1"
+mlflow-skinny = "==3.17.2"
+# Official course checkout at df5850526affcc33b25b15d3096c4d21b614bacd.
+# Editable installation preserves namespace subdirectories omitted by its wheel.
+simulation_and_control = { path = ".robot-deps/simulation_and_control", editable = true }
+
+[activation.env]
+PYTHONIOENCODING = "utf-8"
+# The course RoboEnv uses this workaround for PyTorch/conda OpenMP on Windows.
+KMP_DUPLICATE_LIB_OK = "TRUE"

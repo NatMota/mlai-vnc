@@ -285,7 +285,7 @@ def build_plan(bundle: Path, repo: Path, tokens: list[str]) -> dict:
 
 def make_client():
     """Use only the explicitly configured service, with no automatic POST retries."""
-    os.environ.update(MLFLOW_DISABLE_AGENT_HINT="1", MLFLOW_HTTP_REQUEST_MAX_RETRIES="0",
+    os.environ.update(MLFLOW_HTTP_REQUEST_MAX_RETRIES="0",
                       MLFLOW_HTTP_REQUEST_TIMEOUT="60")
     import mlflow
     mlflow.set_tracking_uri(TRACKING_URI)

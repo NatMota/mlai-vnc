@@ -20,3 +20,7 @@ outputs/
 data_dart2/
 data_dagger/
 data_dart_mem/
+
+# External course library and verification outputs
+.robot-deps/
+.coverage

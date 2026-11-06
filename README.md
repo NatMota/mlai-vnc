@@ -18,6 +18,13 @@ The STOP rule was frozen using 12 validation points: estimated distance at most
 See [the full report](docs/golden_results.md) for all 100 pointwise comparisons,
 training and simulator limitations, and the exact success definition.
 
+## Reviewer starting point
+
+1. Download the [reproduction release](https://github.com/NatMota/mlai-vnc/releases/tag/comp0245-reproduction-2026-11-06-r2) and read its `DOWNLOAD_GUIDE.md`.
+2. Prepare the [locked robot environment](docs/ENVIRONMENT.md).
+3. Follow the [code map and iteration guide](docs/ITERATIONS.md), then the [golden reproduction steps](docs/REPRODUCE_GOLDEN.md) or [fused evaluation guide](docs/REPRODUCE.md).
+4. Read [revision verification](docs/VERIFICATION.md). Archived results remain separate from new output directories.
+
 ## Environment and verification
 
 Use the course robot simulation Python environment with NumPy, PyTorch, PyBullet,
@@ -29,7 +36,7 @@ Set KMP_DUPLICATE_LIB_OK=TRUE, PYTHONIOENCODING=utf-8, ROBOENV_HEADLESS=1 and
 CAMERA_RENDERER=tiny. The evaluator sets these values for its workers.
 
 ```powershell
-python -B -m unittest tests.test_golden tests.test_golden_eval tests.test_golden_compare tests.test_v2_sensor tests.test_fused_policy tests.test_memory_policy
+python -B -m unittest discover -s tests
 python -B golden_eval.py --validation-case 6 --workers 1 --out-dir work/validation6
 ```
 

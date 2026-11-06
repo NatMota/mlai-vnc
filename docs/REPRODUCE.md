@@ -1,5 +1,8 @@
 # Reproduce the final Fused 30 Hz model
 
+Start with [ENVIRONMENT.md](ENVIRONMENT.md) and [ITERATIONS.md](ITERATIONS.md).
+The current evaluator refuses existing outputs unless matching `--resume` is explicit.
+
 ## What is released
 
 The policy is `fused30:outputs/ablation/all_world/policy.pt`.
@@ -189,6 +192,6 @@ from the downloaded checkpoint. The velocity and torque networks take 23 and
 python -B v2_eval.py A B C D E1 E2 E3 F G --workers 12 --fresh
 ```
 
-The nine groups take about 30 minutes with 12 workers. Use C and E1–E3 for
+The nine groups take about 30 minutes with 12 workers. Use C and E1鈥揈3 for
 the sensor-only V2 scores. A checks driving parity. B, D, F and G are
 upper-bound or diagnostic runs. See the [results by group](v2_sensor_results.md).
