@@ -1,0 +1,6 @@
+{
+  "clean_mlflow": "https://nm-linmint-mlflow.taile381c0.ts.net/#/experiments/4/runs/f82809dca6c84cb08ddeb79d8f070656",
+  "source": "https://github.com/NatMota/mlai-vnc/tree/experiment/directed-control-rnd-20261106/research/directed_control",
+  "notebook": "https://nm-linmint-mlflow.taile381c0.ts.net:8443/lab/tree/directed-control-rnd/research_notebook.ipynb",
+  "player": "https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/directed-control-rnd/clean_reference_recovery_test100/viewer_clean_reference_recovery_test100.html"
+}

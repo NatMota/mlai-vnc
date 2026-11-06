@@ -1,0 +1,13 @@
+{
+  "run_id": "f82809dca6c84cb08ddeb79d8f070656",
+  "experiment_id": "4",
+  "verified": true,
+  "source_commit": "41235dd3f0ed08ee314f3329f3bea03087a2fb37",
+  "url": "https://nm-linmint-mlflow.taile381c0.ts.net/#/experiments/4/runs/f82809dca6c84cb08ddeb79d8f070656",
+  "artifact_receipt": {
+    "file": "clean_test100_recordings.zip",
+    "bytes": 402962099,
+    "sha256": "3db9ed91a3b3670db4f8b227377de0b4a13cd6b3706c3138e16a5c9f59d21d5d",
+    "source_archive_sha256": "e77d62e052338f32db7ced9ceda55f480db58bae6dd400239bb6312158ae88b6"
+  }
+}

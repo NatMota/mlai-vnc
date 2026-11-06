@@ -1738,3 +1738,78 @@ The recorded camera, wheel measurements and commands, PARK prediction, geometric
 [Open all 100 frozen clean test replays](https://nm-linmint-mlflow.taile381c0.ts.net:8443/golden-replays/directed-control-rnd/clean_reference_recovery_test100/viewer_clean_reference_recovery_test100.html)
 
 The player opens separately to avoid loading a 3D scene until requested.
+
+## Comparison with the original tuned baseline
+
+The original iteration43 and the frozen research controller were evaluated on the same 100 test target IDs. Their driving checkpoint hashes match. The table is loaded from both saved evaluations, with every attempt retained. The research result changes the arm architecture, camera estimation and STOP mechanism together, so it is a system comparison, not a one-factor weight-edit ablation. Conditional STOP error has different denominators because nine baseline attempts did not issue STOP.
+
+
+```python
+comparison=json.loads((ROOT/'clean_baseline_comparison.json').read_text())
+display(pd.DataFrame({'Original iteration43':comparison['baseline'],'Learned-geometry research':comparison['research']}).T.round(3))
+```
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>attempts</th>
+      <th>PARK</th>
+      <th>STOP</th>
+      <th>success</th>
+      <th>median_STOP_mm</th>
+      <th>median_closest_mm</th>
+      <th>median_final_mm</th>
+      <th>median_park_error_cm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Original iteration43</th>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>91.0</td>
+      <td>0.0</td>
+      <td>168.809</td>
+      <td>75.066</td>
+      <td>297.079</td>
+      <td>5.348</td>
+    </tr>
+    <tr>
+      <th>Learned-geometry research</th>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>100.0</td>
+      <td>5.279</td>
+      <td>1.865</td>
+      <td>2.897</td>
+      <td>5.348</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+## Saved result and reproduction
+
+[Verified clean test in MLflow](https://nm-linmint-mlflow.taile381c0.ts.net/#/experiments/4/runs/f82809dca6c84cb08ddeb79d8f070656) · [Separate source branch](https://github.com/NatMota/mlai-vnc/tree/experiment/directed-control-rnd-20261106/research/directed_control)
+
+The historical clean simulator sources were recovered and rebuilt. The rebuilt executable has exactly the same SHA-256 as the binary used for evaluation. A fresh published directory, with relative-path model loading and that rebuilt binary, reproduced the saved validation45 episode bit for bit: every result/replay field, all 8,042 control inputs and outputs, and the exact-time diagnostic trace. Only the run label and wall-clock timing differed. This reproduction check does not add another test attempt.
+
+The MLflow recording archive contains all 100 model trajectories, corresponding expert ghosts, exact-time diagnostics and recorded camera previews. The original project notebook, branch and checkpoints are unchanged.

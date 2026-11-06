@@ -1,0 +1,22 @@
+{
+  "validation_target": 45,
+  "recorded_rows": 8042,
+  "result_and_frames": "All fields identical except run name and wall time.",
+  "arrays_bit_identical": [
+    "trace_45.npz:x",
+    "trace_45.npz:tau_raw",
+    "trace_45.npz:STOP_distance",
+    "trace_45.npz:reference",
+    "trace_45.npz:velocity",
+    "trace_45.npz:position",
+    "trace_45.npz:jacobian_condition",
+    "trace_45.npz:feedforward",
+    "trace_45.npz:filtered_velocity",
+    "trace_45.npz:blocked",
+    "trace_45.npz:step",
+    "truth_45.npz:time_s",
+    "truth_45.npz:distance_m"
+  ],
+  "recovered_binary_sha256": "4fcac465ea0f2a92596a8b73a2dfa1b2f5a2183215f8c91412407f095f92cd35",
+  "scope": "Fresh published layout with relative-path controller and rebuilt native binary; validation reproduction, not another test evaluation."
+}

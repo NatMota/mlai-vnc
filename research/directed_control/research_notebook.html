@@ -9819,6 +9819,110 @@ a.anchor-link {
 </div>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=rnd-paired-comparison">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Comparison-with-the-original-tuned-baseline">Comparison with the original tuned baseline<a class="anchor-link" href="#Comparison-with-the-original-tuned-baseline">¶</a></h2><p>The original iteration43 and the frozen research controller were evaluated on the same 100 test target IDs. Their driving checkpoint hashes match. The table is loaded from both saved evaluations, with every attempt retained. The research result changes the arm architecture, camera estimation and STOP mechanism together, so it is a system comparison, not a one-factor weight-edit ablation. Conditional STOP error has different denominators because nine baseline attempts did not issue STOP.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=rnd-paired-table">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">comparison</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">ROOT</span><span class="o">/</span><span class="s1">'clean_baseline_comparison.json'</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">'Original iteration43'</span><span class="p">:</span><span class="n">comparison</span><span class="p">[</span><span class="s1">'baseline'</span><span class="p">],</span><span class="s1">'Learned-geometry research'</span><span class="p">:</span><span class="n">comparison</span><span class="p">[</span><span class="s1">'research'</span><span class="p">]})</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>attempts</th>
+<th>PARK</th>
+<th>STOP</th>
+<th>success</th>
+<th>median_STOP_mm</th>
+<th>median_closest_mm</th>
+<th>median_final_mm</th>
+<th>median_park_error_cm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>Original iteration43</th>
+<td>100.0</td>
+<td>100.0</td>
+<td>91.0</td>
+<td>0.0</td>
+<td>168.809</td>
+<td>75.066</td>
+<td>297.079</td>
+<td>5.348</td>
+</tr>
+<tr>
+<th>Learned-geometry research</th>
+<td>100.0</td>
+<td>100.0</td>
+<td>100.0</td>
+<td>100.0</td>
+<td>5.279</td>
+<td>1.865</td>
+<td>2.897</td>
+<td>5.348</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=rnd-reproduction">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Saved-result-and-reproduction">Saved result and reproduction<a class="anchor-link" href="#Saved-result-and-reproduction">¶</a></h2><p><a href="https://nm-linmint-mlflow.taile381c0.ts.net/#/experiments/4/runs/f82809dca6c84cb08ddeb79d8f070656">Verified clean test in MLflow</a> · <a href="https://github.com/NatMota/mlai-vnc/tree/experiment/directed-control-rnd-20261106/research/directed_control">Separate source branch</a></p>
+<p>The historical clean simulator sources were recovered and rebuilt. The rebuilt executable has exactly the same SHA-256 as the binary used for evaluation. A fresh published directory, with relative-path model loading and that rebuilt binary, reproduced the saved validation45 episode bit for bit: every result/replay field, all 8,042 control inputs and outputs, and the exact-time diagnostic trace. Only the run label and wall-clock timing differed. This reproduction check does not add another test attempt.</p>
+<p>The MLflow recording archive contains all 100 model trajectories, corresponding expert ghosts, exact-time diagnostics and recorded camera previews. The original project notebook, branch and checkpoints are unchanged.</p>
+</div>
+</div>
+</div>
+</div>
 </main>
 </body>
 </html>

@@ -46,3 +46,12 @@ Run `jupyter nbconvert --to notebook --execute research_notebook.ipynb` from thi
 `native_clean/` contains the recovered historical simulator sources and exact build receipt. Rebuilding these on the evaluation machine reproduced the frozen binary SHA-256 exactly. With the native project's pinned Pixi dependencies installed, `python native_clean/rebuild.py --native-project /path/to/native-project --output /new/build/folder` replays those compile/link commands. A different platform or dependency build may produce a different binary and requires separate parity checks. The robot assets come from the existing course/native dataset and are listed by hash in the freeze receipts.
 
 The clean simulator and the disturbance simulator are different preserved versions. The clean version implements arm control from reset without the later optional motor-effect and random-start interfaces. It is used only with clean settings. The disturbance evaluation uses the later simulator with those effects enabled.
+
+For a complete validation replay with the same Linux/EGL environment, first build the clean native executable, then run:
+
+```sh
+python prepare_native_layout.py --binary /path/to/rebuilt_sensor_curriculum --assets /path/to/course/assets
+python source/evaluate_recorded_candidate.py --runtime portable/clean_controller.py --data /path/to/golden-dataset --split val --ids 45 --jobs 1 --out validation_reproduction45
+```
+
+The simulation Python needs NumPy and PyBullet; Pixi must be installed in the normal user location. The golden dataset supplies `split.json` and `expert/val/run_45.npz`. This exact fresh-layout workflow reproduced every result and replay field, all 8,042 input/control rows and every recorded true-distance sample bit for bit on validation target45. Only the descriptive run name and wall-clock timing differed. See `publication_reproduction_receipt.json`.
