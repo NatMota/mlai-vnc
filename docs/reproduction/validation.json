@@ -26,7 +26,7 @@
   "navigation": {
     "iterations": 57,
     "notebook_cell_links": 59,
-    "local_links": 971
+    "local_link_check": "pass"
   },
   "native": {
     "build": "fresh directory and locked environment",

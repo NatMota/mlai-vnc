@@ -4,7 +4,7 @@
 
 Generated from saved outputs without running cells. Code is collapsed. Interactive players remain in the original notebook; plots and tables appear below. Original notebook wording is preserved, including historical hypotheses and status notes.
 
-Source SHA-256: `c44f779f3cf9cde23aa60bd313dccb4f96c36997d99ccbe97f9c84f83b4df27e`
+Source SHA-256: `b276ff1cd563ba1b2d61d5b77075c0ffd137917f8e2154951d14cc09f6943858`
 
 ## Contents
 - [Report statistics: frozen analysis notebook](#cell-0)
@@ -48,7 +48,7 @@ Source SHA-256: `c44f779f3cf9cde23aa60bd313dccb4f96c36997d99ccbe97f9c84f83b4df27
 
 This copy contains the setup and Parts 2–3 of the report workspace, preserving the saved analysis and cell IDs. It excludes working notes and report prose. The original workspace is unchanged.
 
-Set `COMP0245_REPORT_DATA` to the extracted `report-analysis/notebook/data` directory before running. See [reproduction instructions](../driving_v2/../../docs/REPRODUCE.md).
+Set `COMP0245_REPORT_DATA` to the extracted `report-analysis/notebook/data` directory before running. See [reproduction instructions](https://github.com/NatMota/mlai-vnc/blob/v2-sensor/docs/REPRODUCE.md).
 
 Source SHA-256: `d7e4327a33a395252e4d35330649bf44e0d8697714408cda1660d0308db445cd`. Only the setup data path was made configurable in this copy.
 
