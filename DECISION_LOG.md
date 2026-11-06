@@ -1,4 +1,4 @@
-We moved the tables of our COMP0245 report (Group 02) into this file to fit the 6-page paper. The paper covers behaviour cloning of a simulated mobile manipulator from onboard sensors, and it cites these tables as Appendix A to Appendix F. The notebooks behind them are not shared, so each row names the saved result file that backs it. A row that rests only on our working notes says "development record".
+We moved the tables of our COMP0245 report (Group 02) into this file to fit the 6-page paper. The paper covers behaviour cloning of a simulated mobile manipulator from onboard sensors, and it cites these tables as Appendix A to Appendix H. The notebooks behind them are not shared, so each row names the saved result file that backs it. A row that rests only on our working notes says "development record".
 
 Source paths start in `v2_sensors/` unless they start with `collection/`. Distances are in millimetres unless a unit is given.
 
@@ -9,7 +9,7 @@ Source paths start in `v2_sensors/` unless they start with `collection/`. Distan
 - Iteration: one trained and tested configuration.
 - Bearing: the direction of a target from the robot's start, in degrees from straight ahead. Up to iteration 33 each bearing is one target, 1.1 m away and 0.5 m high.
 - Full run: both networks (driving and arm) in control with no expert, from reset to STOP plus 0.5 s.
-- DART-style: fixed-noise augmentation, an approximation of DART. Fixed noise is added to the expert's commands while collecting data, and each row keeps the expert's clean command as its label.
+- DART-inspired: fixed-noise augmentation, an approximation of DART. Fixed noise is added to the expert's commands while collecting data, and each row keeps the expert's clean command as its label.
 - DAgger: we run the networks, label every state they reach with the expert's command, add those rows to the training data and retrain. We use three rounds.
 - Closest: the smallest gripper-to-target distance in a run, counted up to 0.5 s after STOP. At STOP: that distance at the STOP step. Park error: the distance from the expert's parking position to where the robot parked. Values are medians over targets unless a count is given.
 
@@ -61,13 +61,13 @@ Parked counts are of 25 bearings up to iteration 33, and of 100 test targets fro
 | Item | Value | Source |
 |---|---|---|
 | Targets | Range 1 to 2 m, any bearing, height 0.10 to 1.25 m; expert reached 997 of 1,000; split 800, 100, 100; 100 training targets by Latin hypercube selection | `collection/native/effects/targets_1000.json`, `split_1000.json`, `dots_spread.json`; `collection/native/tools/select_dots.py`; `arm/results/effects_collection_summary.json` (baseline: 997 reached, 3 stalled) |
-| Encoders | Binarised readings: each angle is a whole number of counts, 4,096 per wheel turn and the Kinova datasheet resolution on the arm; speeds are backward differences | `driving_v2/sensors.py` (4,096 per wheel turn; 3,686,400 per turn on arm joints 1 to 4 and 2,534,400 on joints 5 to 7) |
+| Encoders | Quantised readings: each angle is a whole number of counts, 4,096 per wheel turn and the Kinova datasheet resolution on the arm; speeds are backward differences | `driving_v2/sensors.py` (4,096 per wheel turn; 3,686,400 per turn on arm joints 1 to 4 and 2,534,400 on joints 5 to 7) |
 | Camera | 180° fisheye RGB-D, 256×256, 30 Hz; at (0.29, −0.13, 0.36) m on the front-right chassis corner | `driving_v2/camera/corner_fisheye_check.npz` (mount and 256×256 frames), `arm/results/time_cumulative_test/config.json` (`camera_hz` 30, `driving_hz` 30, `arm_hz` 1000) |
 | Driving MLP | 11 inputs; ReLU 16, 16; 549 parameters; 30 Hz | `arm/results/overnight_20261105/baseline/models/driving_seed7.npz` (549 counted, PARK output included) |
 | Torque MLP | 18 inputs; ReLU 128, 128; torques clipped at ±30 N m; 19,847 parameters plus 129 for the distance output used in training, 19,976 in all; 1 kHz | `arm/results/overnight_20261105/baseline/models/torque_seed7.npz` |
 | STOP MLP | 18 inputs; ReLU 32, 16; STOP at 10 mm or less, after PARK; 1153 parameters; 1 kHz | `arm/results/overnight_20261105/baseline/models/stop_seed7.npz` (1,153 counted) |
 | Training | Adam, learning rate 0.01, full batches; up to 300, 1,200 and 600 epochs; lowest validation loss; seed 7 | `arm/results/overnight_20261105/baseline/models/config.json` (1,200 and 600 epochs, rate 0.01, seed 7), `driving_seed7_summary.json` (selected epoch 299) |
-| DART-style | 0.025 rad/s on wheels, 0.5 N m on arm, held 33 ms; 199 usable runs from 200; 2,657,685 STOP rows against 884,912 | `arm/results/overnight_20261105/dart/models/stop_seed7_summary.json` (2,657,685 rows), `baseline/models/stop_seed7_summary.json` (884,912 rows), `arm/collect_recovery.py` (defaults 0.025 and 0.5, held 33 steps). The 199 usable runs: development record. |
+| DART-inspired | 0.025 rad/s on wheels, 0.5 N m on arm, held 33 ms; 199 usable runs from 200; 2,657,685 STOP rows against 884,912 | `arm/results/overnight_20261105/dart/models/stop_seed7_summary.json` (2,657,685 rows), `baseline/models/stop_seed7_summary.json` (884,912 rows), `arm/collect_recovery.py` (defaults 0.025 and 0.5, held 33 steps). The 199 usable runs: development record. |
 | DAgger | Three rounds on 100 training targets; six validation targets chose the round | `arm/results/overnight_20261105/dagger/` (`scores.csv`, `models/`). The round choice: development record. |
 | Effects | Encoder angle noise 0.0001 rad before counting; τ += M(q)(−c·q̇ − k·q) with c = 1 s⁻¹, k = 1 s⁻²; motor inertia −J·q̈ with J = 0.001 kg m²; 3 ms delay; random starts ±0.15 m and ±30° | `collection/native/effects/noise.json`, `damping.json`, `elasticity.json`, `inertia.json`, `delay.json`; `arm/collect_recovery.py` (random start range) |
 | Full run | Reset to STOP plus 0.5 s; deadline 4 s after the expert's finish | `arm/results/time_cumulative_test/config.json` (`timeout`: expert completion + 4 s; observe 0.5 s after STOP) |
@@ -170,3 +170,54 @@ Limits. The exact match holds for these ten targets, this engine build and this 
 ## Appendix F: Background
 
 We describe behaviour cloning (BC) and DAgger by what each one matches: BC matches the expert's actions on the expert's own states, and DAgger matches them on the states the learner reaches. This framing follows Choudhury's imitation learning lecture series, https://www.youtube.com/watch?v=V38omEpfbjI.
+
+## Appendix G: V2 systems and what differs
+
+All three systems use the same 100 test targets and the same sensors. The main baseline, the two-rate system and the target-memory system use one identical driving checkpoint, `driving_seed7.npz`. Outcomes are counts of 100 test attempts, and median distance covers stopped runs. These are descriptive results of separate systems, and no difference here is the measured effect of one change.
+
+| System | Arm training data | Arm before PARK | Arm controller after PARK | STOP | Simulator, renderer | PARK, STOP, success; mm at STOP | Source |
+|---|---|---|---|---|---|---|---|
+| Main baseline | 100 golden runs, 884,912 rows | Learned torque MLP from reset | Same direct-torque MLP, 18 inputs | MLP distance, 10 mm or less | Native, EGL | 100, 91, 0; 169 | `v2_sensors/arm/results/overnight_20261105/basics_standard/scores.csv` |
+| Main combined | Adds 199 noisy runs and DAgger rows on commands | As above | As above, retrained | As above, trained with noisy expert runs | Native, EGL | 87, 66, 4; 34 | `v2_sensors/arm/results/overnight_20261105/dart_dagger/scores.csv` |
+| Two-rate system | 4,000 V1 expert runs, with expert reference labels; world inputs removed | Conventional hold using true joint state and gravity | Velocity MLP, bounded integrator, torque MLP | Fixed rule: FK to tracked target, 5 mm for 100 ms | PyBullet, CPU | 100, 68, 1; 17 | `docs/golden_results.md` on branch `experiments/v2-golden-arm` |
+| Target-memory system | Reaching rows of 1,350 V1 runs with pushes; ball and stop networks on recorded V2 runs | Conventional hold, until PARK and a first target estimate | Direct-torque MLP, 16 inputs, with target memory | Stop MLP, 9 mm for 15 frames, none in first 300 ms | Native, CPU | 100, 87, 82; 5.9 | `vincent_final/sensor_only/` on branch `vincent/final` |
+
+## Appendix H: Secondary results
+
+These results support the report and sit here so its argument stays short. Some also appear in the report.
+
+V1 controllers:
+
+- An earlier two-part model reached 100 of 120 test targets, with 118 of 120 within 2 cm at closest. The earlier single model and rejected inputs are in the branch `vincent/final`.
+- Four early DAgger attempts on an earlier single model reached 0 to 3 of the first 20 test targets.
+- Extra history inputs lowered validation error from 0.064 to 0.054 and reached 46 of 50 against 43, too small a difference to call. An IMU input to driving showed no clear benefit across seeds.
+- Independent sensor errors at the largest level did not hurt either model (saved model 50 of 50, learned version 44). A constant joint speed error alone gave 15 of 50 on the learned version, while the other sensors gave 43 or 44, and retraining with speed errors did not help.
+- Physical pushes matching training: saved model 50 of 50 at half size and 47 of 50 at full size, learned version 45 and 44, against 43 with no pushes.
+- Two-rate arm: every miss on new goals by either policy was less than 0.8 m from the start. Outside the training box both reached 279 of 400 and missed different goals. Removing the world goal position alone gave a mean of 106.3 of 120, so input groups interact. At a 10 mm goal offset, 116 of 120 still ended under 2 cm.
+
+Main V2 family:
+
+- Cumulative effects used motor damping and elasticity through τ += M(q)(−c·q̇ − k·q) with c = 1 s⁻¹ and k = 1 s⁻², and motor inertia of 0.001 kg m². Median closest distance on parked runs was 184 mm with none, then 574, 556, 662, 641, 764 and 860 mm.
+- The tracker's median range error at PARK is 9 mm. A 20% fall in the speed inputs lowered the wheel command by 0.18 to 0.25 rad/s, while 20 cm more range changed it by at most 0.03 rad/s.
+- Wen's action predictability diagnostic did not separate the driving models: the better one was the more predictable from its previous commands (log ratio 3.97 against 3.30).
+- Larger weights on the STOP loss raised validation torque loss by 11% to 109%. DART-inspired collection gave 199 usable demonstrations from 200. Laskey et al. find isotropic noise poor, while Zhang et al. find fixed noise with clean labels and a clean plus noisy mix enough in theory.
+- After DAgger's first round a classifier still separates the model's states from the expert's with an AUC of 0.969, on folds split by run. Growth exponents of joint distance from the expert's path are 0.91 and 0.77, with overlapping ranges.
+- Validation and test rank DAgger and the combined model differently: 4 against 1 validation successes, and 2 against 4 test successes.
+- Before STOP, the gripper visited the 10 mm band on 7 DAgger and 6 combined runs, and the network stopped inside it on 2 and 4. A different STOP would also change what follows. Encoder noise alone moves the STOP output by 32 mm (SD). Over the 0.5 s after STOP, distance to the target changes by a median 103.1 mm for the baseline and -0.6 mm for DAgger, each on its own stopped runs.
+- Under all effects the baseline's 48 PARK uses the same driving network as the cumulative test's 89, so its arm's motion may disturb the base, which was not tested. Retraining on random starts gave PARK on 85 with a 29.5 cm park error, possibly because the expert parks relative to the world origin. DAgger raised the torque noise predicted from encoder noise from 1.6 to 2.9 N m to 4.0 to 8.4 N m.
+- Training STOP on recovery rows in a six-target pilot improved its loss on those rows, and it issued STOP on two targets instead of five. Bursty packet loss was planned and not done. The strongest direct weight edit scaled the arm's PARK-input weights by 1.25 and cut median closest distance from 86 to 52 mm on twenty validation targets, with no 10 mm successes.
+
+Targets:
+
+- Training and test targets from the robot's start pose are plotted in [docs/report_target_distribution.png](docs/report_target_distribution.png). Shaded bearings are beyond ±80°, where 52 of the 55 blind training starts lie.
+
+Next steps in more detail:
+
+- A time to PARK on the policy's own states could be defined from the true distance to the expert's parking position.
+- After filtering the speed estimate over several readings, we would measure how much encoder noise reaches the STOP output.
+- For occlusion we would compare normal tracker updates with holding the last camera estimate before sweeping screen frequency and phase.
+
+Alternative V2 systems:
+
+- Two-rate system: 32 runs had no STOP, 63 were short reaches and 4 were missed stops. On one validation goal the estimated distance at STOP was 4.3 mm with a true distance of 37.1 mm.
+- Target-memory system: failed runs parked a median 3.7 s later than the expert, against 0.4 s for successes. Success was similar across target heights (27 of 34 low, 33 of 38 middle, 22 of 28 high).
