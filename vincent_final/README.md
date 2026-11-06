@@ -58,7 +58,8 @@ train_input_nets.py                  no data
 make_targets_file.py                 data_dart (2.9 GB) and the golden dataset (836 MB)
 ```
 
-The data folders are too large to submit. They are available here: ADD LINK HERE
+The data folders are too large to submit. They are in one zip file (7.2 GB, UCL login needed):
+https://liveuclac-my.sharepoint.com/:u:/g/personal/ucabcy7_ucl_ac_uk/IQDmVRMPgJ3jQLptnikBDr7pAdfgebgWc3X80FUjRUIn2Qc?e=00NfCi
 
 
 ## Step 1: collect the data
